@@ -83,8 +83,8 @@ export default component$(() => {
             <Link href="/" class={loc.url.pathname === "/" ? "active" : ""}>
               Home
             </Link>
-            <Link href="/apparel/" class={isApparel ? "active" : ""}>
-              Shop
+            <Link href="/apparel/#products" class={isApparel ? "active" : ""}>
+              Apparel
             </Link>
             {auth.value.loggedIn ? (
               <Form action={logoutAction}>

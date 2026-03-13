@@ -84,7 +84,7 @@ export default component$(() => {
               From the job site to the office — gear that fits your role.
             </p>
             <div class="hero__actions">
-              <Link href="/apparel/" class="btn btn--primary">
+              <Link href="/apparel/#products" class="btn btn--primary">
                 Browse Apparel
               </Link>
             </div>
@@ -169,7 +169,7 @@ export default component$(() => {
               with the Carmichael logo embroidered on chest and back.
             </p>
             <div>
-              <Link href="/apparel/" class="btn btn--primary">Shop Jackets</Link>
+              <Link href="/apparel/#products" class="btn btn--primary">Shop Jackets</Link>
             </div>
           </div>
           <div class="featured-banner__image">
@@ -212,7 +212,7 @@ export default component$(() => {
             ))}
           </div>
           <div style={{ textAlign: "center", marginTop: "3rem" }}>
-            <Link href="/apparel/" class="btn btn--outline">
+            <Link href="/apparel/#products" class="btn btn--outline">
               View All Items
             </Link>
           </div>

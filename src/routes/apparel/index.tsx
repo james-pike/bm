@@ -19,7 +19,8 @@ const allProducts = [
 ];
 
 const categories = ["All", "Polos", "T-Shirts", "Jackets", "Hoodies", "Hats", "Safety"];
-const sizes = ["XS", "S", "M", "L", "XL", "2XL", "3XL"];
+
+type SortKey = "popular" | "newest" | "name";
 
 const badgeClass = (badge: string) => {
   if (badge === "New") return "product-card__badge product-card__badge--orange";
@@ -29,70 +30,70 @@ const badgeClass = (badge: string) => {
 
 export default component$(() => {
   const activeCategory = useSignal("All");
+  const sortBy = useSignal<SortKey>("popular");
 
   const filtered = useComputed$(() => {
-    if (activeCategory.value === "All") return allProducts;
-    return allProducts.filter((p) => p.category === activeCategory.value);
+    const items = activeCategory.value === "All"
+      ? [...allProducts]
+      : allProducts.filter((p) => p.category === activeCategory.value);
+
+    if (sortBy.value === "name") {
+      items.sort((a, b) => a.name.localeCompare(b.name));
+    } else if (sortBy.value === "newest") {
+      items.sort((a, b) => (b.badge === "New" ? 1 : 0) - (a.badge === "New" ? 1 : 0));
+    }
+    return items;
   });
 
   return (
-    <div class="apparel-layout">
-      <aside class="apparel-sidebar">
-        <div class="apparel-sidebar__title">Category</div>
-        <div class="apparel-sidebar__chips">
-          {categories.map((cat) => (
-            <button
-              key={cat}
-              class={`apparel-sidebar__chip ${activeCategory.value === cat ? "active" : ""}`}
-              onClick$={() => (activeCategory.value = cat)}
-            >
-              {cat}
-            </button>
-          ))}
+    <div class="apparel-catalog" id="products">
+      <div class="apparel-catalog__header">
+        <div class="apparel-catalog__title-row">
+          <h1 class="apparel-catalog__title">
+            {activeCategory.value === "All" ? "All Apparel" : activeCategory.value}
+          </h1>
+          <span class="apparel-catalog__count">{filtered.value.length} items</span>
         </div>
-        <hr class="apparel-sidebar__divider" />
-        <div class="apparel-sidebar__filter-title">Size</div>
-        <div class="apparel-sidebar__sizes">
-          {sizes.map((s) => (
-            <button key={s} class="apparel-sidebar__size">{s}</button>
-          ))}
-        </div>
-      </aside>
-      <div>
-        <div class="apparel-content__header">
-          <div>
-            <h1 class="apparel-content__title">
-              {activeCategory.value === "All" ? "All Apparel" : activeCategory.value}
-              <span class="apparel-content__count">({filtered.value.length} items)</span>
-            </h1>
+        <div class="apparel-catalog__controls">
+          <div class="apparel-catalog__chips">
+            {categories.map((cat) => (
+              <button
+                key={cat}
+                class={`apparel-catalog__chip ${activeCategory.value === cat ? "active" : ""}`}
+                onClick$={() => (activeCategory.value = cat)}
+              >
+                {cat}
+              </button>
+            ))}
           </div>
-          <div class="apparel-content__sort">
-            <span>Sort by:</span>
-            <select>
-              <option>Most Popular</option>
-              <option>Newest</option>
-              <option>Name A-Z</option>
-            </select>
-          </div>
+          <select
+            class="apparel-catalog__sort"
+            value={sortBy.value}
+            onChange$={(_, el) => (sortBy.value = el.value as SortKey)}
+          >
+            <option value="popular">Most Popular</option>
+            <option value="newest">Newest First</option>
+            <option value="name">Name A–Z</option>
+          </select>
         </div>
-        <div class="apparel-grid">
-          {filtered.value.map((item) => (
-            <div key={item.name} class="product-card">
-              <div class="product-card__image">
-                <img src={item.img} alt={item.name} width="440" height="330" />
-                <div class="product-card__image-overlay" />
-              </div>
-              <div class="product-card__info">
-                <div class="product-card__category">{item.category}</div>
-                <div class="product-card__name">{item.name}</div>
-                <div class="product-card__meta">
-                  <span class="product-card__sizes">{item.sizes}</span>
-                  {item.badge && <span class={badgeClass(item.badge)}>{item.badge}</span>}
-                </div>
+      </div>
+      <div class="apparel-grid">
+        {filtered.value.map((item) => (
+          <div key={item.name} class="product-card">
+            <div class="product-card__image">
+              <img src={item.img} alt={item.name} width="440" height="330" />
+              <div class="product-card__image-overlay" />
+            </div>
+            <div class="product-card__info">
+              <div class="product-card__category">{item.category}</div>
+              <div class="product-card__name">{item.name}</div>
+              <div class="product-card__meta">
+                <span class="product-card__sizes">{item.sizes}</span>
+                {item.badge && <span class={badgeClass(item.badge)}>{item.badge}</span>}
               </div>
             </div>
-          ))}
-        </div>
+          </div>
+        ))}
       </div>
     </div>
   );
