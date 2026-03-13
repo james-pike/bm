@@ -49,7 +49,6 @@ export default component$(() => {
   const auth = useAuthCheck();
   const loginAction = useLogin();
   const logoutAction = useLogout();
-  const isApparel = loc.url.pathname.startsWith("/apparel");
   const showLogin = useSignal(false);
 
   // Auto-open login modal when redirected with ?login=1
@@ -83,9 +82,9 @@ export default component$(() => {
             <Link href="/" class={loc.url.pathname === "/" ? "active" : ""}>
               Home
             </Link>
-            <Link href="/apparel/#products" class={isApparel ? "active" : ""}>
+            <a href="/#products">
               Apparel
-            </Link>
+            </a>
             {auth.value.loggedIn ? (
               <Form action={logoutAction}>
                 <button type="submit" class="site-header__login site-header__login--logout">
@@ -171,7 +170,8 @@ export default component$(() => {
       <footer class="site-footer">
         <div class="site-footer__inner">
           <div class="site-footer__brand">
-            Carmichael <span>Engineering</span> &mdash; Employee Apparel Store
+            <img src="/logo-carmichael.jpg" alt="Carmichael Engineering" class="site-footer__logo" />
+            <span>&mdash; Employee Apparel</span>
           </div>
           <div class="site-footer__text">
             Internal use only. Contact HR for order assistance.
