@@ -56,7 +56,7 @@ export default component$(() => {
   useVisibleTask$(() => {
     if (!auth.value.loggedIn) {
       showLogin.value = true;
-      document.body.style.overflow = "hidden";
+      document.documentElement.style.overflow = "hidden";
     }
   });
 
@@ -66,7 +66,7 @@ export default component$(() => {
     track(() => loginAction.value);
     if (loginAction.value && !loginAction.value.failed) {
       showLogin.value = false;
-      document.body.style.overflow = "";
+      document.documentElement.style.overflow = "";
     }
   });
 
