@@ -112,11 +112,10 @@ export default component$(() => {
               Employee Exclusive
             </div> */}
             <h1 class="hero__title">
-              Wear Your<br /><em>Carmichael</em>
+              <span class="hero__title--accent">Wear</span> Your<br /><em>Carmichael</em> Brand
             </h1>
             <div class="hero__apparel-row">
-              <span class="hero__title hero__title--last">Brand</span>
-              <p class="hero__subtitle-inline">Premium branded gear to fit all roles, from the job site to the office.</p>
+              <p class="hero__subtitle-inline">Premium apparel to fit all roles, from the job site to the office.</p>
             </div>
             {/* <div class="hero__actions">
               <a href="/apparel/" class="hero__badge hero__badge--cta">

@@ -226,6 +226,10 @@ img { max-width: 100%; display: block; }
   letter-spacing: -0.035em;
 }
 
+.hero__title--accent {
+  color: #F5A623;
+}
+
 .hero__title em {
   font-style: normal;
   position: relative;
@@ -247,9 +251,10 @@ img { max-width: 100%; display: block; }
   display: flex;
   justify-content: space-between;
   align-items: baseline;
+  margin-top: 0.4rem;
   width: 100%;
   gap: 2rem;
-  margin-bottom: 2rem;
+  margin-bottom: 0.4rem;
 }
 
 .hero__title--last {
@@ -263,8 +268,8 @@ img { max-width: 100%; display: block; }
   letter-spacing: -0.01em;
   line-height: 1.5;
   color: var(--ce-white);
-  text-align: right;
-  margin-left: 3rem;
+  text-align: left;
+  margin-left: 0;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -1098,6 +1103,7 @@ img { max-width: 100%; display: block; }
   .hero__subtitle { margin: 0 0 2rem; }
   .hero__actions { flex-wrap: wrap; }
   .hero__apparel-row { flex-direction: column; gap: 0.5rem; margin-bottom: 0.5rem; align-items: center; }
+  .section--teasers { margin-top: -1rem; }
   .section--teasers::before { top: 2rem; }
   .hero__subtitle-inline { margin-left: 0; font-size: 1.35rem; white-space: normal; text-align: center; margin-top: 1.25rem; }
   .hero__bento { display: none; }
