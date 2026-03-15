@@ -10,6 +10,8 @@ const heroSlides = [
 
 const teasers = [
   {
+    slug: "jackets",
+    category: "Jackets",
     tag: "Just Landed",
     title: "New Season Jackets",
     text: "Softshell and insulated options built for Canadian weather.",
@@ -20,6 +22,8 @@ const teasers = [
     ],
   },
   {
+    slug: "polos",
+    category: "Polos",
     tag: "Team Favourite",
     title: "Classic Polos",
     text: "The go-to for site visits and the office.",
@@ -30,6 +34,8 @@ const teasers = [
     ],
   },
   {
+    slug: "hoodies",
+    category: "Hoodies",
     tag: "Cold Weather",
     title: "Hoodies & Layers",
     text: "Pullover and zip-up hoodies for cooler days.",
@@ -40,6 +46,8 @@ const teasers = [
     ],
   },
   {
+    slug: "hats",
+    category: "Hats",
     tag: "Headwear",
     title: "Caps & Beanies",
     text: "Embroidered caps and knit beanies for every season.",
@@ -50,6 +58,8 @@ const teasers = [
     ],
   },
   {
+    slug: "tees",
+    category: "T-Shirts",
     tag: "Essentials",
     title: "Crew Neck Tees",
     text: "Lightweight branded tees for everyday wear.",
@@ -60,6 +70,8 @@ const teasers = [
     ],
   },
   {
+    slug: "safety",
+    category: "Safety",
     tag: "Job Site",
     title: "Safety Gear",
     text: "Hi-vis vests and rain jackets that meet safety standards.",
@@ -70,6 +82,7 @@ const teasers = [
     ],
   },
 ];
+
 
 const TeaserCard = component$<{ t: typeof teasers[0] }>(({ t }) => {
   const imgIndex = useSignal(0);
@@ -154,6 +167,7 @@ export default component$(() => {
             <div class="hero__apparel-row">
               <p class="hero__subtitle-inline">Premium apparel to fit all roles, from the job site to the office.</p>
             </div>
+
             {/* <div class="hero__actions">
               <a href="/apparel/" class="hero__badge hero__badge--cta">
                 <span class="hero__badge-dot" />
@@ -189,34 +203,10 @@ export default component$(() => {
               </div>
             </div>
           </div>
-          {/* Desktop bento gallery */}
-          <div class="hero__bento">
-            <div class="hero__photo hero__bento-a">
-              <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=600&h=900&fit=crop" alt="Construction worker in safety gear" width="600" height="900" />
-              <div class="hero__photo-overlay" />
-              <span class="hero__photo-label">On the Job</span>
-            </div>
-            <div class="hero__photo hero__bento-b">
-              <img src="https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=600&h=400&fit=crop" alt="Folded polo shirts" width="600" height="400" />
-              <div class="hero__photo-overlay" />
-              <span class="hero__photo-label">Polos</span>
-            </div>
-            <div class="hero__photo hero__bento-c">
-              <img src="https://images.unsplash.com/photo-1556306535-0f09a537f0a3?w=600&h=400&fit=crop" alt="Baseball cap" width="600" height="400" />
-              <div class="hero__photo-overlay" />
-              <span class="hero__photo-label">Hats</span>
-            </div>
-            <div class="hero__photo hero__bento-d">
-              <img src="https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=600&h=400&fit=crop" alt="Hoodies" width="600" height="400" />
-              <div class="hero__photo-overlay" />
-              <span class="hero__photo-label">Hoodies</span>
-            </div>
-          </div>
         </div>
 
         {/* Featured Teasers */}
         <div class="section section--teasers">
-          {/* Desktop: grid of cards */}
           <div class="teaser-grid">
             {teasers.map((t) => (
               <TeaserCard key={t.tag} t={t} />
