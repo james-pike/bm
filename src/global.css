@@ -179,7 +179,7 @@ img { max-width: 100%; display: block; }
     radial-gradient(ellipse 50% 22% at 30% 60%, rgba(255,255,255,0.13), transparent 60%),
     radial-gradient(ellipse 25% 20% at 85% 55%, rgba(255,255,255,0.14), transparent 70%),
     radial-gradient(ellipse 40% 18% at 15% 52%, rgba(255,255,255,0.12), transparent 75%),
-    linear-gradient(172deg, #1a3a28 0%, #2d6e45 19%, #4a9465 30%, #8ec4a0 38%, #c4e2d0 44%, #e4f2ea 50%, #f3f9f5 55%, #fafdfb 60%, #ffffff 68%);
+    linear-gradient(180deg, #1a3a28 0%, #2d6e45 22%, #4a9465 34%, #8ec4a0 44%, #c4e2d0 51%, #e4f2ea 57%, #f3f9f5 62%, #fafdfb 67%, #ffffff 74%);
 }
 
 .hero__content {
@@ -591,9 +591,9 @@ img { max-width: 100%; display: block; }
   box-shadow: 0 4px 20px rgba(245,166,35,0.3), inset 0 1px 0 rgba(255,255,255,0.15);
 }
 .btn--primary:hover {
-  background: #e6991a;
+  background: #ec6a10;
   transform: translateY(-2px);
-  box-shadow: 0 8px 30px rgba(245,166,35,0.35);
+  box-shadow: 0 8px 30px rgba(236,106,16,0.35);
 }
 
 .btn--ghost {
@@ -842,7 +842,7 @@ img { max-width: 100%; display: block; }
 }
 
 .teaser-card:hover {
-  filter: saturate(1) brightness(1.1);
+  filter: saturate(1) brightness(1);
 }
 
 .teaser-card:hover .teaser-card__img {
@@ -960,6 +960,7 @@ img { max-width: 100%; display: block; }
   color: var(--tc-btn-color);
   box-shadow: 0 4px 20px rgba(0,0,0,0.15);
 }
+.teaser-card:hover .btn--primary,
 .teaser-card .btn--primary:hover {
   background: #ec6a10;
   color: #fff;
