@@ -1,10 +1,11 @@
-import { component$, useSignal, useVisibleTask$, $ } from "@builder.io/qwik";
+import { component$, useSignal, useVisibleTask$, $, useContext } from "@builder.io/qwik";
 import type { DocumentHead } from "@builder.io/qwik-city";
+import { LocaleContext, t } from "../i18n";
 
 const heroSlides = [
-  { src: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=600&h=400&fit=crop", label: "On the Job" },
-  { src: "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=600&h=400&fit=crop", label: "Polos" },
-  { src: "https://images.unsplash.com/photo-1556306535-0f09a537f0a3?w=600&h=400&fit=crop", label: "Hats" },
+  { src: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=600&h=400&fit=crop", labelKey: "hero.label.onthejob" as const },
+  { src: "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=600&h=400&fit=crop", labelKey: "hero.label.polos" as const },
+  { src: "https://images.unsplash.com/photo-1556306535-0f09a537f0a3?w=600&h=400&fit=crop", labelKey: "hero.label.hats" as const },
 ];
 
 
@@ -12,10 +13,10 @@ const teasers = [
   {
     slug: "jackets",
     category: "Jackets",
-    tag: "Just Landed",
-    title: "New Season Jackets",
-    text: "Softshell and insulated options built for Canadian weather.",
-    cta: "Shop Jackets",
+    tagKey: "teaser.jackets.tag" as const,
+    titleKey: "teaser.jackets.title" as const,
+    textKey: "teaser.jackets.text" as const,
+    ctaKey: "teaser.jackets.cta" as const,
     imgs: [
       "https://images.unsplash.com/photo-1551488831-00ddcb6c6bd3?w=600&h=400&fit=crop",
       "https://images.unsplash.com/photo-1586363104862-3a5e2ab60d99?w=600&h=400&fit=crop",
@@ -24,10 +25,10 @@ const teasers = [
   {
     slug: "polos",
     category: "Polos",
-    tag: "Team Favourite",
-    title: "Classic Polos",
-    text: "The go-to for site visits and the office.",
-    cta: "Shop Polos",
+    tagKey: "teaser.polos.tag" as const,
+    titleKey: "teaser.polos.title" as const,
+    textKey: "teaser.polos.text" as const,
+    ctaKey: "teaser.polos.cta" as const,
     imgs: [
       "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=600&h=400&fit=crop",
       "https://images.unsplash.com/photo-1618354691373-d851c5c3a990?w=600&h=400&fit=crop",
@@ -36,10 +37,10 @@ const teasers = [
   {
     slug: "hoodies",
     category: "Hoodies",
-    tag: "Cold Weather",
-    title: "Hoodies & Layers",
-    text: "Pullover and zip-up hoodies for cooler days.",
-    cta: "Shop Hoodies",
+    tagKey: "teaser.hoodies.tag" as const,
+    titleKey: "teaser.hoodies.title" as const,
+    textKey: "teaser.hoodies.text" as const,
+    ctaKey: "teaser.hoodies.cta" as const,
     imgs: [
       "https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=600&h=400&fit=crop",
       "https://images.unsplash.com/photo-1620799140188-3b2a02fd9a77?w=600&h=400&fit=crop",
@@ -48,22 +49,23 @@ const teasers = [
   {
     slug: "hats",
     category: "Hats",
-    tag: "Headwear",
-    title: "Caps & Beanies",
-    text: "Embroidered caps and knit beanies for every season.",
-    cta: "Shop Hats",
+    tagKey: "teaser.hats.tag" as const,
+    titleKey: "teaser.hats.title" as const,
+    textKey: "teaser.hats.text" as const,
+    ctaKey: "teaser.hats.cta" as const,
     imgs: [
-      "https://images.unsplash.com/photo-1556306535-0f09a537f0a3?w=600&h=400&fit=crop",
-      "https://images.unsplash.com/photo-1576871337632-b9aef4c17ab9?w=600&h=400&fit=crop",
+      "/hat/30109107PS2_FRONT.JPG",
+      "/hat/30109107PS2_BACK.JPG",
     ],
+    imgClass: "teaser-card__img--zoomed",
   },
   {
     slug: "tees",
     category: "T-Shirts",
-    tag: "Essentials",
-    title: "Crew Neck Tees",
-    text: "Lightweight branded tees for everyday wear.",
-    cta: "Shop Tees",
+    tagKey: "teaser.tees.tag" as const,
+    titleKey: "teaser.tees.title" as const,
+    textKey: "teaser.tees.text" as const,
+    ctaKey: "teaser.tees.cta" as const,
     imgs: [
       "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=600&h=400&fit=crop",
       "https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=600&h=400&fit=crop",
@@ -72,10 +74,10 @@ const teasers = [
   {
     slug: "safety",
     category: "Safety",
-    tag: "Job Site",
-    title: "Safety Gear",
-    text: "Hi-vis vests and rain jackets that meet safety standards.",
-    cta: "Shop Safety",
+    tagKey: "teaser.safety.tag" as const,
+    titleKey: "teaser.safety.title" as const,
+    textKey: "teaser.safety.text" as const,
+    ctaKey: "teaser.safety.cta" as const,
     imgs: [
       "https://images.unsplash.com/photo-1545594861-3bef43ff2fc8?w=600&h=400&fit=crop",
       "https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=600&h=400&fit=crop",
@@ -84,7 +86,8 @@ const teasers = [
 ];
 
 
-const TeaserCard = component$<{ t: typeof teasers[0] }>(({ t }) => {
+const TeaserCard = component$<{ t: typeof teasers[0] }>(({ t: teaser }) => {
+  const locale = useContext(LocaleContext);
   const imgIndex = useSignal(0);
   const hovering = useSignal(false);
 
@@ -96,42 +99,43 @@ const TeaserCard = component$<{ t: typeof teasers[0] }>(({ t }) => {
       return;
     }
     const interval = setInterval(() => {
-      imgIndex.value = (imgIndex.value + 1) % t.imgs.length;
+      imgIndex.value = (imgIndex.value + 1) % teaser.imgs.length;
     }, 2000);
     cleanup(() => clearInterval(interval));
   });
 
   return (
     <a
-      href="/apparel/"
+      href={`/apparel/?category=${teaser.category}`}
       class="teaser-card"
       onMouseEnter$={() => (hovering.value = true)}
       onMouseLeave$={() => (hovering.value = false)}
     >
       <div class="teaser-card__image">
-        {t.imgs.map((src, i) => (
+        {teaser.imgs.map((src, i) => (
           <img
             key={i}
             src={src}
-            alt={t.title}
+            alt={t(teaser.titleKey, locale.value)}
             width="600"
             height="400"
-            class={`teaser-card__img ${imgIndex.value === i ? "active" : ""}`}
+            class={`teaser-card__img ${imgIndex.value === i ? "active" : ""} ${(teaser as any).imgClass || ""}`}
           />
         ))}
       </div>
       <div class="teaser-card__dots" />
       <div class="teaser-card__body">
-        <div class="featured-banner__tag">{t.tag}</div>
-        <h3 class="teaser-card__title">{t.title}</h3>
-        <p class="teaser-card__text">{t.text}</p>
-        <span class="btn btn--primary btn--sm">{t.cta}</span>
+        <div class="featured-banner__tag">{t(teaser.tagKey, locale.value)}</div>
+        <h3 class="teaser-card__title">{t(teaser.titleKey, locale.value)}</h3>
+        <p class="teaser-card__text">{t(teaser.textKey, locale.value)}</p>
+        <span class="btn btn--primary btn--sm">{t(teaser.ctaKey, locale.value)}</span>
       </div>
     </a>
   );
 });
 
 export default component$(() => {
+  const locale = useContext(LocaleContext);
   const activeSlide = useSignal(0);
   const touchStart = useSignal(0);
   const activeTeaser = useSignal(0);
@@ -157,23 +161,13 @@ export default component$(() => {
         <div class="hero__bg" />
         <div class="hero__content">
           <div class="hero__text">
-            {/* <div class="hero__badge">
-              <span class="hero__badge-dot" />
-              Employee Exclusive
-            </div> */}
             <h1 class="hero__title">
-              <span class="hero__title--accent">Wear</span> Your<br /><em>Carmichael</em> Brand
+              <span class="hero__title--accent">{t("hero.accent", locale.value)}</span> {t("hero.title.your", locale.value)}<br /><em>Carmichael</em> {t("hero.title.brand", locale.value)}
             </h1>
             <div class="hero__apparel-row">
-              <p class="hero__subtitle-inline">Premium apparel to fit all roles, from the job site to the office.</p>
+              <p class="hero__subtitle-inline">{t("hero.subtitle", locale.value)}</p>
             </div>
 
-            {/* <div class="hero__actions">
-              <a href="/apparel/" class="hero__badge hero__badge--cta">
-                <span class="hero__badge-dot" />
-                Browse Apparel
-              </a>
-            </div> */}
             {/* Mobile carousel */}
             <div
               class="hero__carousel"
@@ -183,18 +177,18 @@ export default component$(() => {
               <div class="hero__carousel-viewport">
                 {heroSlides.map((slide, i) => (
                   <div
-                    key={slide.label}
+                    key={slide.labelKey}
                     class={`hero__carousel-slide ${activeSlide.value === i ? "active" : ""}`}
                   >
-                    <img src={slide.src} alt={slide.label} width="600" height="400" />
-                    <span class="hero__photo-label">{slide.label}</span>
+                    <img src={slide.src} alt={t(slide.labelKey, locale.value)} width="600" height="400" />
+                    <span class="hero__photo-label">{t(slide.labelKey, locale.value)}</span>
                   </div>
                 ))}
               </div>
               <div class="hero__carousel-dots">
                 {heroSlides.map((slide, i) => (
                   <button
-                    key={slide.label}
+                    key={slide.labelKey}
                     class={`hero__carousel-dot ${activeSlide.value === i ? "active" : ""}`}
                     onClick$={() => (activeSlide.value = i)}
                     aria-label={`Slide ${i + 1}`}
@@ -208,39 +202,39 @@ export default component$(() => {
         {/* Featured Teasers */}
         <div class="section section--teasers">
           <div class="teaser-grid">
-            {teasers.map((t) => (
-              <TeaserCard key={t.tag} t={t} />
+            {teasers.map((teaser) => (
+              <TeaserCard key={teaser.slug} t={teaser} />
             ))}
           </div>
 
           {/* Mobile: fade carousel */}
           <div class="teaser-carousel">
             <div class="teaser-carousel__viewport">
-              {teasers.map((t, i) => (
+              {teasers.map((teaser, i) => (
                 <div
-                  key={t.tag}
+                  key={teaser.slug}
                   class={`teaser-carousel__slide ${activeTeaser.value === i ? "active" : ""}`}
                 >
                   <div class="featured-banner">
                     <div class="featured-banner__content">
-                      <div class="featured-banner__tag">{t.tag}</div>
-                      <h2 class="featured-banner__title">{t.title}</h2>
-                      <p class="featured-banner__text">{t.text}</p>
+                      <div class="featured-banner__tag">{t(teaser.tagKey, locale.value)}</div>
+                      <h2 class="featured-banner__title">{t(teaser.titleKey, locale.value)}</h2>
+                      <p class="featured-banner__text">{t(teaser.textKey, locale.value)}</p>
                       <div>
-                        <a href="/apparel/" class="btn btn--primary">{t.cta}</a>
+                        <a href={`/apparel/?category=${teaser.category}`} class="btn btn--primary">{t(teaser.ctaKey, locale.value)}</a>
                       </div>
                     </div>
                     <div class="featured-banner__image">
-                      <img src={t.imgs[0]} alt={t.title} width="700" height="500" />
+                      <img src={teaser.imgs[0]} alt={t(teaser.titleKey, locale.value)} width="700" height="500" />
                     </div>
                   </div>
                 </div>
               ))}
             </div>
             <div class="teaser-carousel__dots">
-              {teasers.map((t, i) => (
+              {teasers.map((teaser, i) => (
                 <button
-                  key={t.tag}
+                  key={teaser.slug}
                   class={`teaser-carousel__dot ${activeTeaser.value === i ? "active" : ""}`}
                   onClick$={() => (activeTeaser.value = i)}
                   aria-label={`Teaser ${i + 1}`}
@@ -250,26 +244,6 @@ export default component$(() => {
           </div>
         </div>
       </section>
-
-
-      {/* <div class="stats-row dot-pattern">
-        <div class="stats-row__card">
-          <div class="stats-row__number">14</div>
-          <div class="stats-row__label">Available Items</div>
-        </div>
-        <div class="stats-row__card">
-          <div class="stats-row__number">XS-5XL</div>
-          <div class="stats-row__label">Size Range</div>
-        </div>
-        <div class="stats-row__card">
-          <div class="stats-row__number">Free</div>
-          <div class="stats-row__label">Shipping to Site</div>
-        </div>
-        <div class="stats-row__card">
-          <div class="stats-row__number">Payroll</div>
-          <div class="stats-row__label">Deduction Available</div>
-        </div>
-      </div> */}
     </>
   );
 });

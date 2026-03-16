@@ -9,7 +9,7 @@ export const useApparelAuthGuard = routeLoader$(({ cookie, redirect }) => {
 
 export default component$(() => {
   return (
-    <div class="apparel-page dot-pattern">
+    <div class="apparel-page dot-pattern dot-pattern--light">
       <Slot />
     </div>
   );

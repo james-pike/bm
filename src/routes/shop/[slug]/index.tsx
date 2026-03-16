@@ -1,20 +1,21 @@
-import { component$, useSignal, $ } from "@builder.io/qwik";
+import { component$, useSignal, $, useContext } from "@builder.io/qwik";
 import { useLocation } from "@builder.io/qwik-city";
 import type { DocumentHead } from "@builder.io/qwik-city";
+import { LocaleContext, t } from "../../../i18n";
 
 const heroSlides = [
-  { src: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=600&h=400&fit=crop", label: "On the Job" },
-  { src: "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=600&h=400&fit=crop", label: "Polos" },
-  { src: "https://images.unsplash.com/photo-1556306535-0f09a537f0a3?w=600&h=400&fit=crop", label: "Hats" },
+  { src: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=600&h=400&fit=crop", labelKey: "hero.label.onthejob" as const },
+  { src: "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=600&h=400&fit=crop", labelKey: "hero.label.polos" as const },
+  { src: "https://images.unsplash.com/photo-1556306535-0f09a537f0a3?w=600&h=400&fit=crop", labelKey: "hero.label.hats" as const },
 ];
 
 const teasers = [
-  { slug: "jackets", category: "Jackets", tag: "Just Landed", title: "New Season Jackets", text: "Softshell and insulated options built for Canadian weather.", imgs: ["https://images.unsplash.com/photo-1551488831-00ddcb6c6bd3?w=600&h=400&fit=crop", "https://images.unsplash.com/photo-1586363104862-3a5e2ab60d99?w=600&h=400&fit=crop"] },
-  { slug: "polos", category: "Polos", tag: "Team Favourite", title: "Classic Polos", text: "The go-to for site visits and the office.", imgs: ["https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=600&h=400&fit=crop", "https://images.unsplash.com/photo-1618354691373-d851c5c3a990?w=600&h=400&fit=crop"] },
-  { slug: "hoodies", category: "Hoodies", tag: "Cold Weather", title: "Hoodies & Layers", text: "Pullover and zip-up hoodies for cooler days.", imgs: ["https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=600&h=400&fit=crop", "https://images.unsplash.com/photo-1620799140188-3b2a02fd9a77?w=600&h=400&fit=crop"] },
-  { slug: "hats", category: "Hats", tag: "Headwear", title: "Caps & Beanies", text: "Embroidered caps and knit beanies for every season.", imgs: ["https://images.unsplash.com/photo-1556306535-0f09a537f0a3?w=600&h=400&fit=crop", "https://images.unsplash.com/photo-1576871337632-b9aef4c17ab9?w=600&h=400&fit=crop"] },
-  { slug: "tees", category: "T-Shirts", tag: "Essentials", title: "Crew Neck Tees", text: "Lightweight branded tees for everyday wear.", imgs: ["https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=600&h=400&fit=crop", "https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=600&h=400&fit=crop"] },
-  { slug: "safety", category: "Safety", tag: "Job Site", title: "Safety Gear", text: "Hi-vis vests and rain jackets that meet safety standards.", imgs: ["https://images.unsplash.com/photo-1545594861-3bef43ff2fc8?w=600&h=400&fit=crop", "https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=600&h=400&fit=crop"] },
+  { slug: "jackets", category: "Jackets", tagKey: "teaser.jackets.tag" as const, titleKey: "teaser.jackets.title" as const, textKey: "teaser.jackets.text" as const, ctaKey: "teaser.jackets.cta" as const, imgs: ["https://images.unsplash.com/photo-1551488831-00ddcb6c6bd3?w=600&h=400&fit=crop", "https://images.unsplash.com/photo-1586363104862-3a5e2ab60d99?w=600&h=400&fit=crop"] },
+  { slug: "polos", category: "Polos", tagKey: "teaser.polos.tag" as const, titleKey: "teaser.polos.title" as const, textKey: "teaser.polos.text" as const, ctaKey: "teaser.polos.cta" as const, imgs: ["https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=600&h=400&fit=crop", "https://images.unsplash.com/photo-1618354691373-d851c5c3a990?w=600&h=400&fit=crop"] },
+  { slug: "hoodies", category: "Hoodies", tagKey: "teaser.hoodies.tag" as const, titleKey: "teaser.hoodies.title" as const, textKey: "teaser.hoodies.text" as const, ctaKey: "teaser.hoodies.cta" as const, imgs: ["https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=600&h=400&fit=crop", "https://images.unsplash.com/photo-1620799140188-3b2a02fd9a77?w=600&h=400&fit=crop"] },
+  { slug: "hats", category: "Hats", tagKey: "teaser.hats.tag" as const, titleKey: "teaser.hats.title" as const, textKey: "teaser.hats.text" as const, ctaKey: "teaser.hats.cta" as const, imgs: ["https://images.unsplash.com/photo-1556306535-0f09a537f0a3?w=600&h=400&fit=crop", "https://images.unsplash.com/photo-1576871337632-b9aef4c17ab9?w=600&h=400&fit=crop"] },
+  { slug: "tees", category: "T-Shirts", tagKey: "teaser.tees.tag" as const, titleKey: "teaser.tees.title" as const, textKey: "teaser.tees.text" as const, ctaKey: "teaser.tees.cta" as const, imgs: ["https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=600&h=400&fit=crop", "https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=600&h=400&fit=crop"] },
+  { slug: "safety", category: "Safety", tagKey: "teaser.safety.tag" as const, titleKey: "teaser.safety.title" as const, textKey: "teaser.safety.text" as const, ctaKey: "teaser.safety.cta" as const, imgs: ["https://images.unsplash.com/photo-1545594861-3bef43ff2fc8?w=600&h=400&fit=crop", "https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=600&h=400&fit=crop"] },
 ];
 
 const allProducts = [
@@ -37,9 +38,10 @@ const allProducts = [
 ];
 
 export default component$(() => {
+  const locale = useContext(LocaleContext);
   const loc = useLocation();
   const slug = loc.params.slug;
-  const activeTeaser = teasers.find((t) => t.slug === slug) || teasers[0];
+  const activeTeaser = teasers.find((ts) => ts.slug === slug) || teasers[0];
   const products = allProducts.filter((p) => p.category === activeTeaser.category);
 
   const activeSlide = useSignal(0);
@@ -65,10 +67,10 @@ export default component$(() => {
         <div class="hero__content">
           <div class="hero__text">
             <h1 class="hero__title">
-              <span class="hero__title--accent">Wear</span> Your<br /><em>Carmichael</em> Brand
+              <span class="hero__title--accent">{t("hero.accent", locale.value)}</span> {t("hero.title.your", locale.value)}<br /><em>Carmichael</em> {t("hero.title.brand", locale.value)}
             </h1>
             <div class="hero__apparel-row">
-              <p class="hero__subtitle-inline">Premium apparel to fit all roles, from the job site to the office.</p>
+              <p class="hero__subtitle-inline">{t("hero.subtitle", locale.value)}</p>
             </div>
             <div
               class="hero__carousel"
@@ -78,18 +80,18 @@ export default component$(() => {
               <div class="hero__carousel-viewport">
                 {heroSlides.map((slide, i) => (
                   <div
-                    key={slide.label}
+                    key={slide.labelKey}
                     class={`hero__carousel-slide ${activeSlide.value === i ? "active" : ""}`}
                   >
-                    <img src={slide.src} alt={slide.label} width="600" height="400" />
-                    <span class="hero__photo-label">{slide.label}</span>
+                    <img src={slide.src} alt={t(slide.labelKey, locale.value)} width="600" height="400" />
+                    <span class="hero__photo-label">{t(slide.labelKey, locale.value)}</span>
                   </div>
                 ))}
               </div>
               <div class="hero__carousel-dots">
                 {heroSlides.map((slide, i) => (
                   <button
-                    key={slide.label}
+                    key={slide.labelKey}
                     class={`hero__carousel-dot ${activeSlide.value === i ? "active" : ""}`}
                     onClick$={() => (activeSlide.value = i)}
                     aria-label={`Slide ${i + 1}`}
@@ -100,29 +102,29 @@ export default component$(() => {
           </div>
         </div>
 
-        {/* Browse section — same position as teasers on homepage */}
+        {/* Browse section */}
         <div class="section section--teasers">
           <div class="hero__browse">
             <nav class="hero-nav">
-              {teasers.map((t) => (
+              {teasers.map((ts) => (
                 <a
-                  key={t.slug}
-                  href={`/shop/${t.slug}/`}
-                  class={`hero-nav__item ${t.slug === slug ? "active" : ""}`}
+                  key={ts.slug}
+                  href={`/shop/${ts.slug}/`}
+                  class={`hero-nav__item ${ts.slug === slug ? "active" : ""}`}
                 >
-                  <img src={t.imgs[0]} alt={t.title} width="60" height="40" />
+                  <img src={ts.imgs[0]} alt={t(ts.titleKey, locale.value)} width="60" height="40" />
                   <div class="hero-nav__info">
-                    <span class="hero-nav__tag">{t.tag}</span>
-                    <span class="hero-nav__title">{t.title}</span>
+                    <span class="hero-nav__tag">{t(ts.tagKey, locale.value)}</span>
+                    <span class="hero-nav__title">{t(ts.titleKey, locale.value)}</span>
                   </div>
                 </a>
               ))}
-              <a href="/" class="hero-nav__back">← All Categories</a>
+              <a href="/" class="hero-nav__back">{t("shop.back", locale.value)}</a>
             </nav>
             <div class="hero__products">
               <div class="hero__products-header">
-                <h2 class="hero__products-title">{activeTeaser.title}</h2>
-                <span class="hero__products-count">{products.length} items</span>
+                <h2 class="hero__products-title">{t(activeTeaser.titleKey, locale.value)}</h2>
+                <span class="hero__products-count">{products.length} {t("shop.items", locale.value)}</span>
               </div>
               <div class="hero__products-grid">
                 {products.map((item) => (
