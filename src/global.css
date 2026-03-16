@@ -252,7 +252,7 @@ img { max-width: 100%; display: block; }
   font-style: normal;
   position: relative;
   display: inline-block;
-  color: var(--ce-orange-light);
+  color: #ec6a10;
 }
 
 .hero__subtitle {
@@ -826,9 +826,9 @@ img { max-width: 100%; display: block; }
 }
 
 /* Teaser card color rotation: green, gold, orange */
-.teaser-card:nth-child(3n+1) { --tc-bg: #3d7d58; --tc-text: #fff; --tc-tag-bg: rgba(245,166,35,0.15); --tc-tag-border: rgba(245,166,35,0.3); --tc-tag-color: #F5A623; --tc-btn-bg: #F5A623; --tc-btn-color: #fff; --tc-dot-color: rgba(255,255,255,0.4); --tc-glow: #F5A623; }
-.teaser-card:nth-child(3n+2) { --tc-bg: #c4623a; --tc-text: #fff; --tc-tag-bg: rgba(255,255,255,0.15); --tc-tag-border: rgba(255,255,255,0.3); --tc-tag-color: #fff; --tc-btn-bg: #fff; --tc-btn-color: #b5502e; --tc-dot-color: rgba(255,255,255,0.35); --tc-glow: #fff; }
-.teaser-card:nth-child(3n+3) { --tc-bg: #d4a040; --tc-text: #1a3a28; --tc-tag-bg: rgba(0,112,60,0.12); --tc-tag-border: rgba(0,112,60,0.25); --tc-tag-color: #00703c; --tc-btn-bg: #1a3a28; --tc-btn-color: #fff; --tc-dot-color: rgba(0,0,0,0.08); --tc-glow: #1a3a28; }
+.teaser-card:nth-child(3n+1) { --tc-bg: #2d6e45; --tc-text: #fff; --tc-tag-bg: rgba(245,166,35,0.15); --tc-tag-border: rgba(245,166,35,0.3); --tc-tag-color: #F5A623; --tc-btn-bg: #F5A623; --tc-btn-color: #fff; --tc-dot-color: rgba(255,255,255,0.4); --tc-glow: #F5A623; }
+.teaser-card:nth-child(3n+2) { --tc-bg: #ec6a10; --tc-text: #fff; --tc-tag-bg: rgba(255,255,255,0.15); --tc-tag-border: rgba(255,255,255,0.3); --tc-tag-color: #fff; --tc-btn-bg: #fff; --tc-btn-color: #b5502e; --tc-dot-color: rgba(255,255,255,0.35); --tc-glow: #fff; }
+.teaser-card:nth-child(3n+3) { --tc-bg: #F5A623; --tc-text: #1a3a28; --tc-tag-bg: rgba(0,112,60,0.12); --tc-tag-border: rgba(0,112,60,0.25); --tc-tag-color: #00703c; --tc-btn-bg: #1a3a28; --tc-btn-color: #fff; --tc-dot-color: rgba(0,0,0,0.08); --tc-glow: #1a3a28; }
 
 .teaser-card {
   background: var(--tc-bg);
