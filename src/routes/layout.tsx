@@ -389,11 +389,13 @@ export default component$(() => {
                     <div key={`${item.name}-${item.size}-${item.color}-${i}`} class="cart-item">
                       <img src={item.img} alt={item.name} width="60" height="45" class="cart-item__img" />
                       <div class="cart-item__info">
-                        <div class="cart-item__name">{item.name}</div>
+                        <div class="cart-item__name-row">
+                          <div class="cart-item__name">{item.name}</div>
+                          <div class="cart-item__price">${(Number(item.price) || 0) * item.quantity}</div>
+                        </div>
                         <div class="cart-item__meta">
                           {colorName(item.color, locale.value)} / {item.size} / {t("cart.qty", locale.value)}: {item.quantity}
                         </div>
-                        <div class="cart-item__price">${(Number(item.price) || 0) * item.quantity}</div>
                       </div>
                       <button class="cart-item__remove" onClick$={() => removeFromCart(i)}>x</button>
                     </div>

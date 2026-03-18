@@ -7,8 +7,8 @@ import type { Locale } from "../../i18n";
 const allProducts = [
   { sku: "CM-1", name: "UA Men's Tech Polo", category: "Polos", sizes: "S - 4XL", badge: "", colors: ["#1a1a18", "#94a3b8"], price: 60, img: "https://images.unsplash.com/photo-1586363104862-3a5e2ab60d99?w=440&h=330&fit=crop", material: "100% polyester", details: "Moisture-wicking, anti-odor technology, textured soft & breathable fabric, self-fabric collar, 3-button placket" },
   { sku: "CM-2", name: "Men's Snag Resistant Polo", category: "Polos", sizes: "XS - 4XL", badge: "", colors: ["#1a1a18", "#94a3b8"], price: 40, img: "https://images.unsplash.com/photo-1586363104862-3a5e2ab60d99?w=440&h=330&fit=crop", material: "100% performance polyester micropique", details: "Snag resistant, moisture-wicking, breathable, tagless, rib knit collar, classic fit" },
-  { sku: "CM-5", name: "Men's Soft Shell Jacket", category: "Jackets", sizes: "XS - 4XL", badge: "", colors: ["#1a1a18", "#4a4a4a", "#2c3e50"], price: 68, img: "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=440&h=330&fit=crop", material: "100% polyester with mechanical stretch, bonded micro fleece lining", details: "Water repellent, wind resistant, anti-pill, YKK zippers, 1000mm waterproof rating, classic fit" },
-  { sku: "CM-6", name: "Women's Soft Shell Jacket", category: "Jackets", sizes: "XS - 4XL", badge: "", colors: ["#1a1a18", "#4a4a4a", "#2c3e50"], price: 68, img: "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=440&h=330&fit=crop", material: "100% polyester with mechanical stretch, bonded micro fleece lining", details: "Water repellent, wind resistant, anti-pill, YKK zippers, 1000mm waterproof rating, classic fit" },
+  { sku: "CM-5", name: "Men's Soft Shell Jacket", category: "Jackets", sizes: "XS - 4XL", badge: "", colors: ["#1a1a18", "#4a4a4a", "#2c3e50"], price: 68, img: "/softshell/j7603 soft shell.png", material: "100% polyester with mechanical stretch, bonded micro fleece lining", details: "Water repellent, wind resistant, anti-pill, YKK zippers, 1000mm waterproof rating, classic fit" },
+  { sku: "CM-6", name: "Women's Soft Shell Jacket", category: "Jackets", sizes: "XS - 4XL", badge: "", colors: ["#1a1a18", "#4a4a4a", "#2c3e50"], price: 68, img: "/softshell/l7603 ladies soft shell.png", material: "100% polyester with mechanical stretch, bonded micro fleece lining", details: "Water repellent, wind resistant, anti-pill, YKK zippers, 1000mm waterproof rating, classic fit" },
   { sku: "CM-7", name: "Women's Golf Polo", category: "Polos", sizes: "XS - 4XL", badge: "", colors: ["#1a1a18", "#00703c", "#94a3b8"], price: 40, img: "https://images.unsplash.com/photo-1618354691373-d851c5c3a990?w=440&h=330&fit=crop", material: "100% performance polyester micropique", details: "Snag resistant, moisture-wicking, breathable, tagless, self-fabric collar, relaxed fit" },
   { sku: "CM-10", name: "Men's Alpine Fleece", category: "Jackets", sizes: "XS - 4XL", badge: "New", colors: ["#1a1a18", "#2c3e50", "#4a4a4a"], price: 120, img: "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=440&h=330&fit=crop", material: "60% Cotton / 40% Acrylic", details: "Full zip, heavyweight cuffs & hem, stand-up collar, long sleeves, FW branded zipper pull" },
   { sku: "CM-11", name: "Women's Alpine Fleece", category: "Jackets", sizes: "XS - 3XL", badge: "New", colors: ["#1a1a18", "#2c3e50", "#4a4a4a"], price: 120, img: "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=440&h=330&fit=crop", material: "60% Cotton / 40% Acrylic", details: "Full zip, heavyweight cuffs & hem, stand-up collar, long sleeves, FW branded zipper pull" },
@@ -269,8 +269,10 @@ export default component$(() => {
               </div>
               <div class="product-modal__details">
                 <div class="product-card__category product-modal__category">{categoryLabel(selectedProduct.value.category, locale.value)}</div>
-                <h2 class="product-modal__name">{selectedProduct.value.name}</h2>
-                <div class="product-modal__price">${selectedProduct.value.price}</div>
+                <div class="product-modal__name-row">
+                  <h2 class="product-modal__name">{selectedProduct.value.name}</h2>
+                  <div class="product-modal__price">${selectedProduct.value.price}</div>
+                </div>
                 {selectedProduct.value.material && (
                   <div class="product-modal__material">
                     <strong>{t("modal.material", locale.value)}:</strong> {selectedProduct.value.material}
