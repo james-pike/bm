@@ -174,6 +174,7 @@ export default component$(() => {
     selectedSize.value = "";
     selectedColor.value = item.colors[0];
     selectedQty.value = 1;
+    document.documentElement.style.overflow = "hidden";
   });
 
   const addToCart = $(() => {
@@ -200,7 +201,7 @@ export default component$(() => {
       localStorage.setItem("ce_cart", JSON.stringify(items));
       window.dispatchEvent(new CustomEvent("cart-updated"));
     } catch { /* ignore */ }
-    selectedProduct.value = null;
+    selectedProduct.value = null; document.documentElement.style.overflow = "";
   });
 
   const filtered = useComputed$(() => {
@@ -254,9 +255,9 @@ export default component$(() => {
 
       {/* Product Modal */}
       {selectedProduct.value && (
-        <div class="modal-overlay" onClick$={() => (selectedProduct.value = null)}>
+        <div class="modal-overlay" onClick$={() => (selectedProduct.value = null; document.documentElement.style.overflow = "")}>
           <div class="modal product-modal" onClick$={(e) => e.stopPropagation()}>
-            <button class="modal__close" onClick$={() => (selectedProduct.value = null)}>x</button>
+            <button class="modal__close" onClick$={() => (selectedProduct.value = null; document.documentElement.style.overflow = "")}>x</button>
             <div class="product-modal__layout">
               <div class="product-modal__image">
                 <img src={selectedProduct.value.img} alt={selectedProduct.value.name} width="440" height="330" />

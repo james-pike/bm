@@ -1347,6 +1347,7 @@ img { max-width: 100%; display: block; }
   position: relative;
   margin-top: -67px;
   padding-top: 67px;
+  overflow-x: hidden;
 }
 .apparel-page::after {
   content: '';
