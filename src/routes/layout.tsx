@@ -385,49 +385,38 @@ export default component$(() => {
             ) : (
               <>
                 <div class="cart-drawer__items">
-                  {cart.items.map((item, i) => (
-                    <div key={`${item.name}-${item.size}-${item.color}-${i}`} class="cart-item">
-                      <img src={item.img} alt={item.name} width="60" height="45" class="cart-item__img" />
-                      <div class="cart-item__info">
-                        <div class="cart-item__name-row">
-                          <div class="cart-item__name">{item.name}</div>
-                          <div class="cart-item__price">${(Number(item.price) || 0) * item.quantity}</div>
-                        </div>
-                        <div class="cart-item__meta">
-                          {colorName(item.color, locale.value)} / {item.size} / {t("cart.qty", locale.value)}: {item.quantity}
-                        </div>
-                      </div>
-                      <button class="cart-item__remove" onClick$={() => removeFromCart(i)}>x</button>
-                    </div>
-                  ))}
-                </div>
-                <div class="cart-drawer__invoice">
-                  <div class="cart-invoice__title">{t("cart.invoice", locale.value)}</div>
-                  <table class="cart-invoice__table">
+                  <table class="cart-table">
                     <thead>
                       <tr>
-                        <th>{t("cart.invoice.product", locale.value)}</th>
-                        <th>{t("cart.invoice.details", locale.value)}</th>
-                        <th class="cart-invoice__num">{t("cart.invoice.qty", locale.value)}</th>
-                        <th class="cart-invoice__num">{t("cart.invoice.unit", locale.value)}</th>
-                        <th class="cart-invoice__num">{t("cart.invoice.total", locale.value)}</th>
+                        <th class="cart-table__th-product">{t("cart.invoice.product", locale.value)}</th>
+                        <th class="cart-table__th-qty">{t("cart.invoice.qty", locale.value)}</th>
+                        <th class="cart-table__th-total">{t("cart.invoice.total", locale.value)}</th>
                       </tr>
                     </thead>
                     <tbody>
                       {cart.items.map((item, i) => (
-                        <tr key={`inv-${item.name}-${item.size}-${item.color}-${i}`}>
-                          <td class="cart-invoice__product">{item.name}</td>
-                          <td class="cart-invoice__details">{colorName(item.color, locale.value)} / {item.size}</td>
-                          <td class="cart-invoice__num">{item.quantity}</td>
-                          <td class="cart-invoice__num">${Number(item.price) || 0}</td>
-                          <td class="cart-invoice__num">${(Number(item.price) || 0) * item.quantity}</td>
+                        <tr key={`${item.name}-${item.size}-${item.color}-${i}`}>
+                          <td class="cart-table__product">
+                            <div class="cart-table__product-row">
+                            <img src={item.img} alt={item.name} width="40" height="30" class="cart-table__img" />
+                            <div>
+                            <div class="cart-table__name">{item.name}</div>
+                            <div class="cart-table__meta">
+                              {colorName(item.color, locale.value)} / {item.size} &middot; ${Number(item.price) || 0} {t("cart.each", locale.value)}
+                              <button class="cart-table__remove" onClick$={() => removeFromCart(i)}>&times;</button>
+                            </div>
+                            </div>
+                            </div>
+                          </td>
+                          <td class="cart-table__qty">{item.quantity}</td>
+                          <td class="cart-table__total">${(Number(item.price) || 0) * item.quantity}</td>
                         </tr>
                       ))}
                     </tbody>
                     <tfoot>
                       <tr>
-                        <td colSpan={4} class="cart-invoice__subtotal-label">{t("cart.invoice.subtotal", locale.value)}</td>
-                        <td class="cart-invoice__num cart-invoice__subtotal-val">${cart.items.reduce((sum, i) => sum + (Number(i.price) || 0) * i.quantity, 0)}</td>
+                        <td colSpan={2} class="cart-table__subtotal-label">{t("cart.invoice.subtotal", locale.value)}</td>
+                        <td class="cart-table__subtotal-val">${cart.items.reduce((sum, i) => sum + (Number(i.price) || 0) * i.quantity, 0)}</td>
                       </tr>
                     </tfoot>
                   </table>
