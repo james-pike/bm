@@ -2058,7 +2058,15 @@ img { max-width: 100%; display: block; }
   .product-modal__category { display: none; }
   .popular-grid { grid-template-columns: 1fr 1fr; }
   .product-modal__layout { grid-template-columns: 1fr; }
-  .modal { padding: 1.5rem; margin: 1rem; }
+  .product-modal__image { max-height: 180px; }
+  .product-modal__image img { height: 180px; object-fit: cover; }
+  .product-modal__name { font-size: 1.1rem; margin: 0.15rem 0; }
+  .product-modal__price { margin-bottom: 0.25rem; }
+  .product-modal__material { margin-bottom: 0.2rem; }
+  .product-modal__material:last-of-type { margin-bottom: 0.75rem; }
+  .product-modal__field { margin-bottom: 0.75rem; }
+  .product-modal__add { margin-top: 0.25rem; }
+  .modal { padding: 1rem; margin: 0.5rem; }
   .modal-overlay { padding: 0; }
   .drawer { width: 100%; }
 }
