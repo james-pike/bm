@@ -242,9 +242,6 @@ export default component$(() => {
     empDept.value = "";
   });
 
-  const openCart = $(() => {
-    cartOpen.value = true;
-  });
 
   // Listen for open-cart events from child pages
   // eslint-disable-next-line qwik/no-use-visible-task
@@ -298,9 +295,15 @@ export default component$(() => {
             <button class="locale-btn" onClick$={toggleLocale} aria-label="Toggle language">
               {locale.value === "en" ? "FR" : "EN"}
             </button>
-            <button class="cart-btn" onClick$={openCart}>
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/></svg>
-              {cartCount.value > 0 && <span class="cart-btn__badge">{cartCount.value}</span>}
+            <button class="cart-btn" onClick$={() => { cartOpen.value = !cartOpen.value; }}>
+              {cartOpen.value ? (
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg>
+              ) : (
+                <>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/></svg>
+                  {cartCount.value > 0 && <span class="cart-btn__badge">{cartCount.value}</span>}
+                </>
+              )}
             </button>
           </nav>
         </div>
@@ -378,7 +381,7 @@ export default component$(() => {
           <div class="drawer cart-drawer" onClick$={(e) => e.stopPropagation()}>
             <div class="cart-drawer__header">
               <h2 class="cart-drawer__title"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style={{ marginRight: '0.4rem', verticalAlign: '-2px' }}><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/></svg>{t("cart.title", locale.value)}</h2>
-              <button class="modal__close" onClick$={() => (cartOpen.value = false)}>x</button>
+              <button class="modal__close cart-drawer__close-desktop" onClick$={() => (cartOpen.value = false)}>x</button>
             </div>
             {cart.items.length === 0 ? (
               <p class="cart-drawer__empty">{t("cart.empty", locale.value)}</p>
@@ -420,8 +423,8 @@ export default component$(() => {
                     </tfoot>
                   </table>
                 </div>
-                <div class="cart-drawer__checkout">
-                  <div class="cart-drawer__checkout-title">{t("cart.orderdetails", locale.value)}</div>
+                <details class="cart-drawer__checkout">
+                  <summary class="cart-drawer__checkout-title">{t("cart.orderdetails", locale.value)}</summary>
                   {formError.value && (
                     <div class="cart-drawer__error">{formError.value}</div>
                   )}
@@ -451,7 +454,7 @@ export default component$(() => {
                       onInput$={(_, el) => (empDept.value = el.value)}
                     />
                   </div>
-                </div>
+                </details>
                 <div class="cart-drawer__footer">
                   <span class="cart-drawer__total">
                     {cartCount.value} {cartCount.value !== 1 ? t("cart.items", locale.value) : t("cart.item", locale.value)} — ${cart.items.reduce((sum, i) => sum + (Number(i.price) || 0) * i.quantity, 0)}

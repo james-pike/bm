@@ -123,10 +123,9 @@ const ProductCard = component$<{ item: typeof allProducts[0]; onSelect$: QRL<() 
         )}
       </div>
       <div class="product-card__info">
-        <div class="product-card__category">{item.sku}</div>
         <div class="product-card__name-row">
           <div class="product-card__name">{item.name}</div>
-          <div class="product-card__price">${item.price}</div>
+          <div class="product-card__price"><span class="product-card__sku">{item.sku}</span> ${item.price}</div>
         </div>
         <div class="product-card__colors">
           {item.colors.map((color) => (
@@ -221,7 +220,7 @@ export default component$(() => {
       <div class="apparel-catalog__header">
         <div class="apparel-catalog__title-row">
           <h1 class="apparel-catalog__title">
-            {categoryLabel(activeCategory.value, locale.value)}
+            {t("apparel.title", locale.value)}
           </h1>
           <span class="apparel-catalog__count">{filtered.value.length} {t("apparel.items", locale.value)}</span>
         </div>
