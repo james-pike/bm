@@ -175,6 +175,7 @@ export default component$(() => {
     selectedColor.value = item.colors[0];
     selectedQty.value = 1;
     document.documentElement.style.overflow = "hidden";
+    window.scrollTo(0, 0);
   });
 
   const addToCart = $(() => {

@@ -402,8 +402,7 @@ export default component$(() => {
                             <div>
                             <div class="cart-table__name">{item.name}</div>
                             <div class="cart-table__meta">
-                              {colorName(item.color, locale.value)} / {item.size} &middot; ${Number(item.price) || 0} {t("cart.each", locale.value)}
-                              <button class="cart-table__remove" onClick$={() => removeFromCart(i)}>&times;</button>
+                              {colorName(item.color, locale.value)} / {item.size}                              <button class="cart-table__remove" onClick$={() => removeFromCart(i)}>&times;</button>
                             </div>
                             </div>
                             </div>
