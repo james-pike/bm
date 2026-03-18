@@ -377,7 +377,7 @@ export default component$(() => {
         <div class="modal-overlay" onClick$={() => (cartOpen.value = false)}>
           <div class="drawer cart-drawer" onClick$={(e) => e.stopPropagation()}>
             <div class="cart-drawer__header">
-              <h2 class="cart-drawer__title">{t("cart.title", locale.value)}</h2>
+              <h2 class="cart-drawer__title"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style={{ marginRight: '0.4rem', verticalAlign: '-2px' }}><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/></svg>{t("cart.title", locale.value)}</h2>
               <button class="modal__close" onClick$={() => (cartOpen.value = false)}>x</button>
             </div>
             {cart.items.length === 0 ? (
@@ -426,23 +426,23 @@ export default component$(() => {
                   {formError.value && (
                     <div class="cart-drawer__error">{formError.value}</div>
                   )}
-                  <div class={`checkout-modal__field ${formTouched.value && !empNumber.value ? "checkout-modal__field--error" : ""}`}>
-                    <label>{t("cart.empnumber", locale.value)}</label>
-                    <input
-                      type="text"
-                      value={empNumber.value}
-                      onInput$={(_, el) => { empNumber.value = el.value; formError.value = ""; }}
-                      placeholder={t("cart.empnumber.placeholder", locale.value)}
-                    />
-                  </div>
-                  <div class={`checkout-modal__field ${formTouched.value && !empName.value ? "checkout-modal__field--error" : ""}`}>
-                    <label>{t("cart.fullname", locale.value)}</label>
-                    <input
-                      type="text"
-                      value={empName.value}
-                      onInput$={(_, el) => { empName.value = el.value; formError.value = ""; }}
-                      placeholder={t("cart.fullname.placeholder", locale.value)}
-                    />
+                  <div class="checkout-modal__row">
+                    <div class={`checkout-modal__field ${formTouched.value && !empNumber.value ? "checkout-modal__field--error" : ""}`}>
+                      <label>{t("cart.empnumber", locale.value)}</label>
+                      <input
+                        type="text"
+                        value={empNumber.value}
+                        onInput$={(_, el) => { empNumber.value = el.value; formError.value = ""; }}
+                      />
+                    </div>
+                    <div class={`checkout-modal__field ${formTouched.value && !empName.value ? "checkout-modal__field--error" : ""}`}>
+                      <label>{t("cart.fullname", locale.value)}</label>
+                      <input
+                        type="text"
+                        value={empName.value}
+                        onInput$={(_, el) => { empName.value = el.value; formError.value = ""; }}
+                      />
+                    </div>
                   </div>
                   <div class="checkout-modal__field">
                     <label>{t("cart.department", locale.value)}</label>
@@ -450,7 +450,6 @@ export default component$(() => {
                       type="text"
                       value={empDept.value}
                       onInput$={(_, el) => (empDept.value = el.value)}
-                      placeholder={t("cart.department.placeholder", locale.value)}
                     />
                   </div>
                 </div>
