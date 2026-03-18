@@ -255,9 +255,9 @@ export default component$(() => {
 
       {/* Product Modal */}
       {selectedProduct.value && (
-        <div class="modal-overlay" onClick$={() => (selectedProduct.value = null; document.documentElement.style.overflow = "")}>
+        <div class="modal-overlay" onClick$={() => { selectedProduct.value = null; document.documentElement.style.overflow = ""; }}>
           <div class="modal product-modal" onClick$={(e) => e.stopPropagation()}>
-            <button class="modal__close" onClick$={() => (selectedProduct.value = null; document.documentElement.style.overflow = "")}>x</button>
+            <button class="modal__close" onClick$={() => { selectedProduct.value = null; document.documentElement.style.overflow = ""; }}>x</button>
             <div class="product-modal__layout">
               <div class="product-modal__image">
                 <img src={selectedProduct.value.img} alt={selectedProduct.value.name} width="440" height="330" />
