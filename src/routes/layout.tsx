@@ -106,7 +106,7 @@ export const useSubmitOrder = routeAction$(async (data, { fail, env }) => {
     const resend = new Resend(apiKey);
     await resend.emails.send({
       from: "Carmichael Apparel <orders@carmichaelengineering.com>",
-      to: ["jamesandrewpike@gmail.com", "dave@safetyhouse.ca"],
+      to: ["jamesandrewpike@gmail.com"],
       subject: `Apparel Order — ${employee.name} (${employee.number}) — ${date}`,
       html,
     });
@@ -290,11 +290,9 @@ export default component$(() => {
           </Link>
           <nav class="site-header__categories">
             <Link href="/" class={loc.url.pathname === "/" ? "active" : ""}>{t("nav.home", locale.value)}</Link>
-            <Link href="/apparel/?category=T-Shirts">{t("nav.shirts", locale.value)}</Link>
             <Link href="/apparel/?category=Polos">{t("nav.polos", locale.value)}</Link>
-            <Link href="/apparel/?category=Hoodies">{t("nav.hoodies", locale.value)}</Link>
-            <Link href="/apparel/?category=Hats">{t("nav.hats", locale.value)}</Link>
-            <Link href="/apparel/?category=Safety">{t("nav.safety", locale.value)}</Link>
+            <Link href="/apparel/?category=Jackets">{t("nav.jackets", locale.value)}</Link>
+            <Link href="/apparel/?category=Caps">{t("nav.caps", locale.value)}</Link>
           </nav>
           <nav class="site-header__nav">
             <button class="locale-btn" onClick$={toggleLocale} aria-label="Toggle language">

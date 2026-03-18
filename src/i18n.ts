@@ -12,6 +12,8 @@ const translations = {
   "nav.polos": { en: "Polos", fr: "Polos" },
   "nav.hoodies": { en: "Hoodies", fr: "Kangourous" },
   "nav.hats": { en: "Hats", fr: "Chapeaux" },
+  "nav.caps": { en: "Caps", fr: "Casquettes" },
+  "nav.jackets": { en: "Jackets", fr: "Manteaux" },
   "nav.safety": { en: "Safety", fr: "Sécurité" },
 
   // Login modal
@@ -104,6 +106,7 @@ const translations = {
   "color.yellow": { en: "Yellow", fr: "Jaune" },
 
   // Product modal
+  "modal.material": { en: "Material", fr: "Matière" },
   "modal.size": { en: "Size", fr: "Taille" },
   "modal.color": { en: "Color", fr: "Couleur" },
   "modal.quantity": { en: "Quantity", fr: "Quantité" },
@@ -152,6 +155,7 @@ const translations = {
   "cat.Hoodies": { en: "Hoodies", fr: "Kangourous" },
   "cat.Hats": { en: "Hats", fr: "Chapeaux" },
   "cat.Safety": { en: "Safety", fr: "Sécurité" },
+  "cat.Caps": { en: "Caps & Beanies", fr: "Casquettes et tuques" },
   "cat.Jackets": { en: "Jackets", fr: "Manteaux" },
 } as const;
 
