@@ -47,6 +47,7 @@ export default component$(() => {
       } else {
         items.push({
           name: p.name,
+          sku: p.sku,
           category: p.category,
           size: selectedSize.value,
           color: selectedColor.value,
@@ -131,6 +132,13 @@ export default component$(() => {
                 {t("product.specsheet.pdf", locale.value)}
               </a>
             )}
+          </div>
+          <div class="product-modal__breadcrumb">
+            <span class="breadcrumb__link" onClick$={() => nav(`/apparel/?category=${p.category}`)}>
+              {t("apparel.title", locale.value)}
+            </span>
+            <span class="breadcrumb__sep">/</span>
+            <span>{p.sku}</span>
           </div>
           <div class="product-modal__details">
             <div class="product-card__category product-modal__category">{categoryLabel(p.category, locale.value)}</div>

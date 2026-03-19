@@ -119,6 +119,7 @@ export const useSubmitOrder = routeAction$(async (data, { fail, env }) => {
 
 interface CartItem {
   name: string;
+  sku: string;
   category: string;
   size: string;
   color: string;
@@ -205,6 +206,14 @@ export default component$(() => {
 
   const removeFromCart = $(async (index: number) => {
     cart.items = cart.items.filter((_, i) => i !== index);
+    await saveCart();
+    window.dispatchEvent(new CustomEvent("cart-updated"));
+  });
+
+  const updateQty = $(async (index: number, delta: number) => {
+    const newQty = cart.items[index].quantity + delta;
+    if (newQty < 1) return;
+    cart.items = cart.items.map((item, i) => i === index ? { ...item, quantity: newQty } : item);
     await saveCart();
     window.dispatchEvent(new CustomEvent("cart-updated"));
   });
@@ -414,14 +423,20 @@ export default component$(() => {
                             <div class="cart-table__product-row">
                             <img src={item.img} alt={item.name} width="40" height="30" class="cart-table__img" />
                             <div>
-                            <div class="cart-table__name">{item.name}</div>
+                            <Link href={item.sku ? `/apparel/${item.sku}/` : "/apparel/"} class="cart-table__name-link">{item.name}</Link>
                             <div class="cart-table__meta">
                               {colorName(item.color, locale.value)} / {item.size}                              <button class="cart-table__remove" onClick$={() => removeFromCart(i)}>&times;</button>
                             </div>
                             </div>
                             </div>
                           </td>
-                          <td class="cart-table__qty">{item.quantity}</td>
+                          <td class="cart-table__qty">
+                            <div class="cart-table__qty-controls">
+                              <button class="cart-table__qty-btn" onClick$={() => updateQty(i, -1)}>-</button>
+                              <span>{item.quantity}</span>
+                              <button class="cart-table__qty-btn" onClick$={() => updateQty(i, 1)}>+</button>
+                            </div>
+                          </td>
                           <td class="cart-table__total">${(Number(item.price) || 0) * item.quantity}</td>
                         </tr>
                       ))}

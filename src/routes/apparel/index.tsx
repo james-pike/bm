@@ -1,5 +1,5 @@
 import { component$, useSignal, useComputed$, useVisibleTask$, useContext, type QRL } from "@builder.io/qwik";
-import { useLocation, useNavigate } from "@builder.io/qwik-city";
+import { Link, useLocation, useNavigate } from "@builder.io/qwik-city";
 import type { DocumentHead } from "@builder.io/qwik-city";
 import { LocaleContext, t } from "../../i18n";
 import { allProducts, categories, badgeMap, badgeClass, colorName, categoryLabel } from "./products";
@@ -115,33 +115,11 @@ export default component$(() => {
 
   return (
     <div class="apparel-catalog" id="products">
-      <div class="apparel-catalog__header">
-        <div class="apparel-catalog__controls">
-          <div class="apparel-catalog__chips">
-            {categories.map((cat) => (
-              <button
-                key={cat}
-                class={`apparel-catalog__chip ${activeCategory.value === cat ? "active" : ""}`}
-                onClick$={() => nav(`/apparel/?category=${cat}`)}
-              >
-                {categoryLabel(cat, locale.value)}
-              </button>
-            ))}
-          </div>
-          <select
-            class="apparel-catalog__sort"
-            value={sortBy.value}
-            onChange$={(_, el) => (sortBy.value = el.value as SortKey)}
-          >
-            <option value="popular">{t("apparel.sort.popular", locale.value)}</option>
-            <option value="newest">{t("apparel.sort.newest", locale.value)}</option>
-            <option value="name">{t("apparel.sort.name", locale.value)}</option>
-          </select>
-        </div>
-      </div>
       <div class="apparel-grid">
         {filtered.value.map((item) => (
-          <ProductCard key={item.name} item={item} onSelect$={() => nav(`/apparel/${item.sku}/`)} />
+          <Link key={item.name} href={`/apparel/${item.sku}/`} class="product-card-link">
+            <ProductCard item={item} onSelect$={() => {}} />
+          </Link>
         ))}
       </div>
     </div>
