@@ -170,27 +170,28 @@ export default component$(() => {
                 ))}
               </div>
             </div>
-            <div class="product-modal__field">
-              <label class="product-modal__label">{t("modal.color", locale.value)}</label>
-              <div class="product-modal__options">
-                {p.colors.map((color) => (
-                  <button
-                    key={color}
-                    class={`product-modal__color ${selectedColor.value === color ? "active" : ""}`}
-                    style={{ background: color }}
-                    onClick$={() => (selectedColor.value = color)}
-                    title={colorName(color, locale.value)}
-                  />
-                ))}
+            <div class="product-modal__field product-modal__color-qty-row">
+              <div class="product-modal__color-group">
+                <label class="product-modal__label">{t("modal.color", locale.value)}{selectedColor.value && <span class="product-modal__color-inline"> — {colorName(selectedColor.value, locale.value)}</span>}</label>
+                <div class="product-modal__options">
+                  {p.colors.map((color) => (
+                    <button
+                      key={color}
+                      class={`product-modal__color ${selectedColor.value === color ? "active" : ""}`}
+                      style={{ background: color }}
+                      onClick$={() => (selectedColor.value = color)}
+                      title={colorName(color, locale.value)}
+                    />
+                  ))}
+                </div>
               </div>
-              {selectedColor.value && <span class="product-modal__color-label">{colorName(selectedColor.value, locale.value)}</span>}
-            </div>
-            <div class="product-modal__field">
-              <label class="product-modal__label">{t("modal.quantity", locale.value)}</label>
-              <div class="product-modal__qty">
-                <button class="product-modal__qty-btn" onClick$={() => { if (selectedQty.value > 1) selectedQty.value--; }}>-</button>
-                <span class="product-modal__qty-val">{selectedQty.value}</span>
-                <button class="product-modal__qty-btn" onClick$={() => (selectedQty.value++)}>+</button>
+              <div class="product-modal__qty-group">
+                <label class="product-modal__label">{t("modal.quantity", locale.value)}</label>
+                <div class="product-modal__qty">
+                  <button class="product-modal__qty-btn" onClick$={() => { if (selectedQty.value > 1) selectedQty.value--; }}>-</button>
+                  <span class="product-modal__qty-val">{selectedQty.value}</span>
+                  <button class="product-modal__qty-btn" onClick$={() => (selectedQty.value++)}>+</button>
+                </div>
               </div>
             </div>
             <button
