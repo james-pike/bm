@@ -36,6 +36,8 @@ const translations = {
     fr: "Vêtements de qualité pour tous les rôles, du chantier au bureau.",
   },
 
+  "hero.explore": { en: "Explore Collections", fr: "Explorer les collections" },
+
   // Hero photo labels
   "hero.label.onthejob": { en: "On the Job", fr: "Au travail" },
   "hero.label.polos": { en: "Polos", fr: "Polos" },

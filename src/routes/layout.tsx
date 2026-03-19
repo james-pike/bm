@@ -25,7 +25,7 @@ export const useAuthCheck = routeLoader$(({ cookie }) => {
 
 export const useLogin = routeAction$(
   ({ username, password }, { cookie, fail }) => {
-    if (username === "admin" && password === "Carmichael") {
+    if (username === "admin" && password === "CARMICHAEL") {
       cookie.set(AUTH_COOKIE, "authenticated", {
         path: "/",
         httpOnly: true,
@@ -260,6 +260,13 @@ export default component$(() => {
     cleanup(() => window.removeEventListener("open-cart", handler));
   });
 
+  // Close cart on navigation
+  // eslint-disable-next-line qwik/no-use-visible-task
+  useVisibleTask$(({ track }) => {
+    track(() => loc.url.pathname);
+    cartOpen.value = false;
+  });
+
   // Lock scroll when cart is open
   // eslint-disable-next-line qwik/no-use-visible-task
   useVisibleTask$(({ track }) => {
@@ -294,7 +301,7 @@ export default component$(() => {
 
   return (
     <>
-      <header class="site-header">
+      <header class={`site-header ${loc.url.pathname === "/" ? "site-header--transparent" : ""}`}>
         <div class="site-header__inner">
           <Link href="/" class="site-header__logo">
             <img
@@ -307,7 +314,7 @@ export default component$(() => {
             <Link href="/" class={loc.url.pathname === "/" ? "active" : ""}>{t("nav.home", locale.value)}</Link>
             <Link href="/apparel/?category=Polos">{t("nav.polos", locale.value)}</Link>
             <Link href="/apparel/?category=Jackets">{t("nav.jackets", locale.value)}</Link>
-            <Link href="/apparel/?category=Caps">{t("nav.caps", locale.value)}</Link>
+            <Link href="/apparel/?category=Hats">{t("nav.hats", locale.value)}</Link>
           </nav>
           <nav class="site-header__nav">
             <button class="locale-btn" onClick$={toggleLocale} aria-label="Toggle language">

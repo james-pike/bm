@@ -1,5 +1,5 @@
-import { component$, useSignal, useComputed$, useVisibleTask$, useContext, type QRL } from "@builder.io/qwik";
-import { Link, useLocation } from "@builder.io/qwik-city";
+import { component$, useSignal, useComputed$, useContext } from "@builder.io/qwik";
+import { useLocation } from "@builder.io/qwik-city";
 import type { DocumentHead } from "@builder.io/qwik-city";
 import { LocaleContext, t } from "../../i18n";
 import { allProducts, categories, badgeMap, badgeClass, colorName } from "./products";
@@ -7,59 +7,14 @@ import type { Product } from "./products";
 
 type SortKey = "popular" | "newest" | "name";
 
-const ProductCard = component$<{ item: Product; onSelect$: QRL<() => void> }>(({ item, onSelect$ }) => {
+const ProductCard = component$<{ item: Product; sku: string }>(({ item, sku }) => {
   const locale = useContext(LocaleContext);
-  const imgIndex = useSignal(0);
-  const hovering = useSignal(false);
-  const imgs = (item as any).imgs as string[] | undefined;
   const pdf = (item as any).pdf as string | undefined;
 
-  // eslint-disable-next-line qwik/no-use-visible-task
-  useVisibleTask$(({ track, cleanup }) => {
-    track(() => hovering.value);
-    if (!hovering.value || !imgs || imgs.length < 2) {
-      imgIndex.value = 0;
-      return;
-    }
-    const interval = setInterval(() => {
-      imgIndex.value = (imgIndex.value + 1) % imgs.length;
-    }, 2000);
-    cleanup(() => clearInterval(interval));
-  });
-
   return (
-    <div
-      class="product-card"
-      onMouseEnter$={() => (hovering.value = true)}
-      onMouseLeave$={() => (hovering.value = false)}
-      onClick$={(e) => {
-        if ((e.target as HTMLElement).closest(".product-card__pdf")) return;
-        onSelect$();
-      }}
-    >
+    <a href={`/apparel/${sku}/`} class="product-card product-card-link">
       <div class="product-card__image">
-        {imgs && imgs.length > 1 ? (
-          imgs.map((src, i) => (
-            <img
-              key={i}
-              src={src}
-              alt={item.name}
-              width="440"
-              height="440"
-              class={`product-card__img-slide ${imgIndex.value === i ? "active" : ""}`}
-            />
-          ))
-        ) : (
-          <img src={item.img} alt={item.name} width="440" height="440" />
-        )}
-        <div class="product-card__image-overlay" />
-        {imgs && imgs.length > 1 && (
-          <div class="product-card__img-dots">
-            {imgs.map((_, i) => (
-              <span key={i} class={`product-card__img-dot ${imgIndex.value === i ? "active" : ""}`} />
-            ))}
-          </div>
-        )}
+        <img src={item.img} alt={item.name} width="440" height="440" />
       </div>
       <div class="product-card__info">
         <div class="product-card__name-row">
@@ -82,12 +37,12 @@ const ProductCard = component$<{ item: Product; onSelect$: QRL<() => void> }>(({
           {item.badge && <span class={badgeClass(item.badge)}>{t(badgeMap[item.badge] as any, locale.value)}</span>}
         </div>
         {pdf && (
-          <a href={pdf} target="_blank" class="product-card__pdf" onClick$={(e) => e.stopPropagation()}>
+          <span class="product-card__pdf" onClick$={(e) => { e.preventDefault(); e.stopPropagation(); window.open(pdf, '_blank'); }}>
             {t("product.specsheet", locale.value)}
-          </a>
+          </span>
         )}
       </div>
-    </div>
+    </a>
   );
 });
 
@@ -115,9 +70,7 @@ export default component$(() => {
     <div class="apparel-catalog" id="products">
       <div class="apparel-grid">
         {filtered.value.map((item) => (
-          <Link key={item.name} href={`/apparel/${item.sku}/`} class="product-card-link">
-            <ProductCard item={item} onSelect$={() => {}} />
-          </Link>
+          <ProductCard key={item.name} item={item} sku={item.sku} />
         ))}
       </div>
     </div>

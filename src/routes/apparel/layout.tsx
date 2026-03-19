@@ -1,7 +1,7 @@
 import { component$, Slot, useContext, useComputed$, useSignal, useVisibleTask$ } from "@builder.io/qwik";
 import { routeLoader$, useLocation, useNavigate } from "@builder.io/qwik-city";
 import { LocaleContext, t } from "../../i18n";
-import { allProducts, categories, categoryLabel } from "./products";
+import { categories, categoryLabel } from "./products";
 
 const heroBanners = [
   { src: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1280&h=720&fit=crop", alt: "On the job" },
@@ -20,22 +20,6 @@ export default component$(() => {
   const loc = useLocation();
   const nav = useNavigate();
 
-  const subtitle = useComputed$(() => {
-    // Extract SKU from path: /apparel/CM-1/ -> CM-1
-    const path = loc.url.pathname;
-    const match = path.match(/^\/apparel\/([^/]+)\/?$/);
-    if (match) {
-      const sku = match[1];
-      const product = allProducts.find((p) => p.sku === sku);
-      if (product) return product.name;
-    }
-    const cat = loc.url.searchParams.get("category") || "All";
-    if (cat !== "All" && categories.includes(cat)) {
-      return categoryLabel(cat, locale.value);
-    }
-    return "";
-  });
-
   const isCatalog = useComputed$(() => /^\/apparel\/?$/.test(loc.url.pathname));
 
   const heroIndex = useSignal(0);
@@ -49,7 +33,7 @@ export default component$(() => {
   });
 
   return (
-    <div class="apparel-page dot-pattern dot-pattern--light">
+    <div class="apparel-page">
       {isCatalog.value && (
         <div class="collection-hero">
           <div class="collection-hero__viewport">
@@ -75,24 +59,21 @@ export default component$(() => {
           <div class="apparel-titlebar__row">
             <h1 class="apparel-catalog__title">
               {t("apparel.title", locale.value)}
-              {subtitle.value && (
-                <span class="apparel-catalog__title-cat"> — {subtitle.value}</span>
-              )}
             </h1>
-          </div>
-          <div class="apparel-titlebar__tabs">
-            {categories.map((cat) => {
-              const active = (loc.url.searchParams.get("category") || "All") === cat;
-              return (
-                <button
-                  key={cat}
-                  class={`apparel-titlebar__tab ${active ? "active" : ""}`}
-                  onClick$={() => nav(`/apparel/?category=${cat}`)}
-                >
+            <div class="apparel-titlebar__tabs">
+              {categories.map((cat) => {
+                const active = (loc.url.searchParams.get("category") || "All") === cat;
+                return (
+                  <button
+                    key={cat}
+                    class={`apparel-titlebar__tab ${active ? "active" : ""}`}
+                    onClick$={() => nav(`/apparel/?category=${cat}`)}
+                  >
                   {categoryLabel(cat, locale.value)}
                 </button>
               );
-            })}
+              })}
+            </div>
           </div>
         </div>
       )}

@@ -145,6 +145,9 @@ export default component$(() => {
             <div class="hero__apparel-row">
               <p class="hero__subtitle-inline">{t("hero.subtitle", locale.value)}</p>
             </div>
+            <div class="hero__actions">
+              <a href="/apparel/" class="btn btn--primary">{t("hero.explore", locale.value)}</a>
+            </div>
 
             {/* Mobile carousel */}
             <div
