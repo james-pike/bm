@@ -14,24 +14,29 @@ export default component$(() => {
   const loc = useLocation();
   const nav = useNavigate();
 
-  const sku = loc.params.sku;
-  const product = useComputed$(() => sku ? allProducts.find((p) => p.sku === sku) || null : null);
-  const activeCategory = useComputed$(() => {
-    const cat = loc.url.searchParams.get("category") || "All";
-    return categories.includes(cat) ? cat : "All";
-  });
-
   const subtitle = useComputed$(() => {
-    if (product.value) return product.value.name;
-    if (activeCategory.value !== "All") return categoryLabel(activeCategory.value, locale.value);
+    // Extract SKU from path: /apparel/CM-1/ -> CM-1
+    const path = loc.url.pathname;
+    const match = path.match(/^\/apparel\/([^/]+)\/?$/);
+    if (match) {
+      const sku = match[1];
+      const product = allProducts.find((p) => p.sku === sku);
+      if (product) return product.name;
+    }
+    const cat = loc.url.searchParams.get("category") || "All";
+    if (cat !== "All" && categories.includes(cat)) {
+      return categoryLabel(cat, locale.value);
+    }
     return "";
   });
+
+  const isProduct = useComputed$(() => /^\/apparel\/[^/]+\/?$/.test(loc.url.pathname));
 
   return (
     <div class="apparel-page dot-pattern dot-pattern--light">
       <div class="apparel-catalog__title-row">
         <h1 class="apparel-catalog__title">
-          {sku ? (
+          {isProduct.value ? (
             <span class="apparel-catalog__title-back" onClick$={() => nav("/apparel/")}>
               {t("apparel.title", locale.value)}
             </span>

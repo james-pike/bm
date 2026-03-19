@@ -64,7 +64,7 @@ const ProductCard = component$<{ item: Product; onSelect$: QRL<() => void> }>(({
       <div class="product-card__info">
         <div class="product-card__name-row">
           <div class="product-card__name">{item.name}</div>
-          <div class="product-card__price"><span class="product-card__sku">{item.sku}</span> ${item.price}</div>
+          <div class="product-card__price">${item.price}</div>
         </div>
         <div class="product-card__colors">
           {item.colors.map((color) => (
@@ -78,6 +78,7 @@ const ProductCard = component$<{ item: Product; onSelect$: QRL<() => void> }>(({
         </div>
         <div class="product-card__meta">
           <span class="product-card__sizes">{item.sizes === "One Size" ? t("modal.onesize", locale.value) : item.sizes}</span>
+          <span class="product-card__sku">{item.sku}</span>
           {item.badge && <span class={badgeClass(item.badge)}>{t(badgeMap[item.badge] as any, locale.value)}</span>}
         </div>
         {pdf && (

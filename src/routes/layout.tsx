@@ -255,7 +255,9 @@ export default component$(() => {
   // eslint-disable-next-line qwik/no-use-visible-task
   useVisibleTask$(({ track }) => {
     track(() => cartOpen.value);
-    document.documentElement.style.overflow = cartOpen.value ? "hidden" : "";
+    const v = cartOpen.value ? "hidden" : "";
+    document.documentElement.style.overflow = v;
+    document.body.style.overflow = v;
   });
 
   // Auto-open login modal and lock scroll for unauthenticated users
@@ -308,6 +310,7 @@ export default component$(() => {
               ) : (
                 <>
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/></svg>
+                  <span class="cart-btn__label">{t("cart.mycart", locale.value)}</span>
                   {cartCount.value > 0 && <span class="cart-btn__dot" />}
                 </>
               )}
