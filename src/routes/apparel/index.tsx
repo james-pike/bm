@@ -45,12 +45,12 @@ const ProductCard = component$<{ item: Product; onSelect$: QRL<() => void> }>(({
               src={src}
               alt={item.name}
               width="440"
-              height="330"
+              height="440"
               class={`product-card__img-slide ${imgIndex.value === i ? "active" : ""}`}
             />
           ))
         ) : (
-          <img src={item.img} alt={item.name} width="440" height="330" />
+          <img src={item.img} alt={item.name} width="440" height="440" />
         )}
         <div class="product-card__image-overlay" />
         {imgs && imgs.length > 1 && (

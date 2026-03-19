@@ -18,8 +18,9 @@ const teasers = [
     textKey: "teaser.jackets.text" as const,
     ctaKey: "teaser.jackets.cta" as const,
     imgs: [
-      "https://images.unsplash.com/photo-1551488831-00ddcb6c6bd3?w=600&h=400&fit=crop",
-      "https://images.unsplash.com/photo-1586363104862-3a5e2ab60d99?w=600&h=400&fit=crop",
+      "/softshell/j7603 soft shell.png",
+      "/softshell/l7603 ladies soft shell.png",
+      "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=600&h=400&fit=crop",
     ],
   },
   {
@@ -30,6 +31,7 @@ const teasers = [
     textKey: "teaser.polos.text" as const,
     ctaKey: "teaser.polos.cta" as const,
     imgs: [
+      "/golf/green.png",
       "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=600&h=400&fit=crop",
       "https://images.unsplash.com/photo-1618354691373-d851c5c3a990?w=600&h=400&fit=crop",
     ],

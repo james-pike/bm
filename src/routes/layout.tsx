@@ -302,15 +302,16 @@ export default component$(() => {
           </nav>
           <nav class="site-header__nav">
             <button class="locale-btn" onClick$={toggleLocale} aria-label="Toggle language">
-              {locale.value === "en" ? "FR" : "EN"}
+              <span class="locale-btn__full">{locale.value === "en" ? "Français" : "English"}</span>
+              <span class="locale-btn__short">{locale.value === "en" ? "FR" : "EN"}</span>
             </button>
             <button class="cart-btn" onClick$={() => { cartOpen.value = !cartOpen.value; }}>
               {cartOpen.value ? (
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg>
               ) : (
                 <>
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/></svg>
                   <span class="cart-btn__label">{t("cart.mycart", locale.value)}</span>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/></svg>
                   {cartCount.value > 0 && <span class="cart-btn__dot" />}
                 </>
               )}
