@@ -59,30 +59,6 @@ const teasers = [
     ],
     imgClass: "teaser-card__img--zoomed",
   },
-  {
-    slug: "tees",
-    category: "T-Shirts",
-    tagKey: "teaser.tees.tag" as const,
-    titleKey: "teaser.tees.title" as const,
-    textKey: "teaser.tees.text" as const,
-    ctaKey: "teaser.tees.cta" as const,
-    imgs: [
-      "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=600&h=400&fit=crop",
-      "https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=600&h=400&fit=crop",
-    ],
-  },
-  {
-    slug: "safety",
-    category: "Safety",
-    tagKey: "teaser.safety.tag" as const,
-    titleKey: "teaser.safety.title" as const,
-    textKey: "teaser.safety.text" as const,
-    ctaKey: "teaser.safety.cta" as const,
-    imgs: [
-      "https://images.unsplash.com/photo-1545594861-3bef43ff2fc8?w=600&h=400&fit=crop",
-      "https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=600&h=400&fit=crop",
-    ],
-  },
 ];
 
 

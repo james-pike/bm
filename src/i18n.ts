@@ -111,6 +111,7 @@ const translations = {
   "modal.color": { en: "Color", fr: "Couleur" },
   "modal.quantity": { en: "Quantity", fr: "Quantité" },
   "modal.addtocart": { en: "Add to Cart", fr: "Ajouter au panier" },
+  "modal.added": { en: "Added!", fr: "Ajouté!" },
   "modal.selectsize": { en: "Select a Size", fr: "Choisir une taille" },
   "modal.onesize": { en: "One Size", fr: "Taille unique" },
 
@@ -133,7 +134,7 @@ const translations = {
   "cart.empnumber.placeholder": { en: "e.g. CE-1234", fr: "ex. CE-1234" },
   "cart.fullname": { en: "Full Name *", fr: "Nom complet *" },
   "cart.fullname.placeholder": { en: "John Smith", fr: "Jean Tremblay" },
-  "cart.department": { en: "Department / Site", fr: "Département / Site" },
+  "cart.department": { en: "Department / Site *", fr: "Département / Site *" },
   "cart.department.placeholder": { en: "e.g. Operations - Site 3", fr: "ex. Opérations - Site 3" },
   "cart.createorder": { en: "Create Order", fr: "Commander" },
 
@@ -141,6 +142,7 @@ const translations = {
   "cart.error.both": { en: "Employee number and name are required", fr: "Le numéro d'employé et le nom sont requis" },
   "cart.error.number": { en: "Employee number is required", fr: "Le numéro d'employé est requis" },
   "cart.error.name": { en: "Full name is required", fr: "Le nom complet est requis" },
+  "cart.error.required": { en: "All fields are required", fr: "Tous les champs sont requis" },
 
   // Order confirmation
   "order.title": { en: "Order Submitted", fr: "Commande soumise" },

@@ -211,10 +211,8 @@ export default component$(() => {
 
   const submitOrder = $(async () => {
     formTouched.value = true;
-    if (!empNumber.value || !empName.value) {
-      formError.value = !empNumber.value && !empName.value
-        ? t("cart.error.both", locale.value)
-        : !empNumber.value ? t("cart.error.number", locale.value) : t("cart.error.name", locale.value);
+    if (!empNumber.value || !empName.value || !empDept.value) {
+      formError.value = t("cart.error.required", locale.value);
       return;
     }
     formError.value = "";
@@ -249,6 +247,13 @@ export default component$(() => {
     const handler = () => { cartOpen.value = true; };
     window.addEventListener("open-cart", handler);
     cleanup(() => window.removeEventListener("open-cart", handler));
+  });
+
+  // Lock scroll when cart is open
+  // eslint-disable-next-line qwik/no-use-visible-task
+  useVisibleTask$(({ track }) => {
+    track(() => cartOpen.value);
+    document.documentElement.style.overflow = cartOpen.value ? "hidden" : "";
   });
 
   // Auto-open login modal and lock scroll for unauthenticated users
@@ -301,7 +306,7 @@ export default component$(() => {
               ) : (
                 <>
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/></svg>
-                  {cartCount.value > 0 && <span class="cart-btn__badge">{cartCount.value}</span>}
+                  {cartCount.value > 0 && <span class="cart-btn__dot" />}
                 </>
               )}
             </button>
@@ -380,7 +385,7 @@ export default component$(() => {
         <div class="modal-overlay" onClick$={() => (cartOpen.value = false)}>
           <div class="drawer cart-drawer" onClick$={(e) => e.stopPropagation()}>
             <div class="cart-drawer__header">
-              <h2 class="cart-drawer__title"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style={{ marginRight: '0.4rem', verticalAlign: '-2px' }}><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/></svg>{t("cart.title", locale.value)}</h2>
+              <h2 class="cart-drawer__title">{t("cart.title", locale.value)}</h2>
               <button class="modal__close cart-drawer__close-desktop" onClick$={() => (cartOpen.value = false)}>x</button>
             </div>
             {cart.items.length === 0 ? (
@@ -446,7 +451,7 @@ export default component$(() => {
                       />
                     </div>
                   </div>
-                  <div class="checkout-modal__field">
+                  <div class={`checkout-modal__field ${formTouched.value && !empDept.value ? "checkout-modal__field--error" : ""}`}>
                     <label>{t("cart.department", locale.value)}</label>
                     <input
                       type="text"
