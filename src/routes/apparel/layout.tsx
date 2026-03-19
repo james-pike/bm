@@ -36,7 +36,6 @@ export default component$(() => {
     return "";
   });
 
-  const isProduct = useComputed$(() => /^\/apparel\/[^/]+\/?$/.test(loc.url.pathname));
   const isCatalog = useComputed$(() => /^\/apparel\/?$/.test(loc.url.pathname));
 
   const heroIndex = useSignal(0);

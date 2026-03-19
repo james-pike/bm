@@ -1,8 +1,8 @@
 import { component$, useSignal, useComputed$, useVisibleTask$, useContext, type QRL } from "@builder.io/qwik";
-import { Link, useLocation, useNavigate } from "@builder.io/qwik-city";
+import { Link, useLocation } from "@builder.io/qwik-city";
 import type { DocumentHead } from "@builder.io/qwik-city";
 import { LocaleContext, t } from "../../i18n";
-import { allProducts, categories, badgeMap, badgeClass, colorName, categoryLabel } from "./products";
+import { allProducts, categories, badgeMap, badgeClass, colorName } from "./products";
 import type { Product } from "./products";
 
 type SortKey = "popular" | "newest" | "name";
@@ -92,9 +92,7 @@ const ProductCard = component$<{ item: Product; onSelect$: QRL<() => void> }>(({
 });
 
 export default component$(() => {
-  const locale = useContext(LocaleContext);
   const loc = useLocation();
-  const nav = useNavigate();
 
   const activeCategory = useComputed$(() => {
     const cat = loc.url.searchParams.get("category") || "All";
