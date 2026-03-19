@@ -73,11 +73,6 @@ export default component$(() => {
   if (!product.value) {
     return (
       <div class="apparel-catalog" id="products">
-        <div class="apparel-catalog__header">
-          <div class="apparel-catalog__title-row">
-            <h1 class="apparel-catalog__title">{t("apparel.title", locale.value)}</h1>
-          </div>
-        </div>
         <div class="product-detail">
           <p style={{ padding: "2rem", textAlign: "center" }}>Product not found.</p>
           <button class="btn btn--primary" onClick$={() => nav("/apparel/")} style={{ margin: "0 auto", display: "block" }}>
@@ -93,16 +88,6 @@ export default component$(() => {
 
   return (
     <div class="apparel-catalog" id="products">
-      <div class="apparel-catalog__header">
-        <div class="apparel-catalog__title-row">
-          <h1 class="apparel-catalog__title">
-            <span class="apparel-catalog__title-back" onClick$={() => nav("/apparel/")}>
-              {t("apparel.title", locale.value)}
-            </span>
-            <span class="apparel-catalog__title-cat"> — {p.name}</span>
-          </h1>
-        </div>
-      </div>
       <div class="product-detail">
         <div class="product-modal__layout">
           <div
@@ -210,6 +195,9 @@ export default component$(() => {
           </div>
         </div>
       </div>
+      {added.value && (
+        <div class="toast">{t("modal.added", locale.value)}</div>
+      )}
     </div>
   );
 });

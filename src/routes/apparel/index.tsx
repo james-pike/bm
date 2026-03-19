@@ -115,14 +115,6 @@ export default component$(() => {
   return (
     <div class="apparel-catalog" id="products">
       <div class="apparel-catalog__header">
-        <div class="apparel-catalog__title-row">
-          <h1 class="apparel-catalog__title">
-            {t("apparel.title", locale.value)}
-            {activeCategory.value !== "All" && (
-              <span class="apparel-catalog__title-cat"> — {categoryLabel(activeCategory.value, locale.value)}</span>
-            )}
-          </h1>
-        </div>
         <div class="apparel-catalog__controls">
           <div class="apparel-catalog__chips">
             {categories.map((cat) => (

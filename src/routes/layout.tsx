@@ -213,6 +213,8 @@ export default component$(() => {
     formTouched.value = true;
     if (!empNumber.value || !empName.value || !empDept.value) {
       formError.value = t("cart.error.required", locale.value);
+      const details = document.querySelector('.cart-drawer__checkout') as HTMLDetailsElement;
+      if (details && !details.open) details.open = true;
       return;
     }
     formError.value = "";
