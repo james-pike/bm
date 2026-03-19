@@ -2039,7 +2039,7 @@ img { max-width: 100%; display: block; }
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 1.25rem 1.5rem;
+  padding: 1.4rem 1.5rem;
   border-bottom: 1px solid var(--ce-gray-200);
 }
 .cart-drawer__header .modal__close { position: static; }
@@ -2047,6 +2047,12 @@ img { max-width: 100%; display: block; }
   font-size: 1.3rem;
   font-weight: 700;
   color: var(--ce-gray-900);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.cart-drawer__title svg {
+  stroke: var(--ce-gray-900);
 }
 .cart-drawer__empty {
   padding: 3rem 1.5rem;
@@ -2522,11 +2528,11 @@ details[open] > .cart-drawer__checkout-title::after {
   .stats-row__card:last-child { border-radius: 0 0 var(--radius-lg) 0; }
 
   .site-header__categories { display: none; }
-  .site-header { height: 48px; }
-  .site-header__inner { padding: 0 0.5rem; height: 48px; }
+  .site-header { height: 54px; }
+  .site-header__inner { padding: 0 0.5rem; height: 54px; }
   .site-header__logo-img { height: 42px; transform: scale(1.15); transform-origin: left center; }
-  .apparel-page { margin-top: -48px; padding-top: 48px; }
-  .hero { margin-top: -48px; padding-top: 48px; }
+  .apparel-page { margin-top: -54px; padding-top: 54px; }
+  .hero { margin-top: -54px; padding-top: 54px; }
   .site-header__nav { gap: 6px; margin-right: -0.25rem; }
   .site-header__apparel-link { display: inline-flex; order: -1; }
   .site-header__nav a, .site-header__nav button, .cart-btn, .locale-btn { transform: scale(1.1); }
@@ -2594,7 +2600,7 @@ details[open] > .cart-drawer__checkout-title::after {
   .cart-drawer__footer { padding: 0.75rem 0.75rem; }
   .modal { padding: 0.5rem 1rem 1rem; margin: 0 0.5rem; }
   .modal .modal__close { top: 0.35rem; right: 0.5rem; width: 28px; height: 28px; font-size: 0.85rem; }
-  .modal-overlay { padding: 0; align-items: flex-start; top: 48px; }
+  .modal-overlay { padding: 0; align-items: flex-start; top: 54px; }
   .modal-overlay:has(.cart-drawer) { background: transparent; backdrop-filter: none; }
-  .drawer.cart-drawer { width: 100%; top: 48px; bottom: 0; }
+  .drawer.cart-drawer { width: 100%; top: 54px; bottom: 0; }
 }
