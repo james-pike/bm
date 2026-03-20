@@ -148,5 +148,5 @@ export default component$(() => {
 });
 
 export const head: DocumentHead = {
-  title: "Carmichael Engineering - Employee Apparel",
+  title: "Carmichael Apparel - Employee Apparel",
 };

@@ -19,18 +19,21 @@ export default component$(() => {
   const selectedQty = useSignal(1);
   const added = useSignal(false);
   const imgFullscreen = useSignal(false);
+  const userSelectedImg = useSignal(false);
 
   // Set initial color once product is known
   const colorInitialized = useSignal(false);
 
-  // Auto-advance carousel
+  // Auto-advance carousel (stops when user selects an image)
   // eslint-disable-next-line qwik/no-use-visible-task
-  useVisibleTask$(({ cleanup }) => {
+  useVisibleTask$(({ track, cleanup }) => {
+    track(() => userSelectedImg.value);
+    if (userSelectedImg.value) return;
     const p = product.value;
     if (!p?.imgs || p.imgs.length < 2) return;
     const interval = setInterval(() => {
       imgIndex.value = (imgIndex.value + 1) % p.imgs.length;
-    }, 4000);
+    }, 6000);
     cleanup(() => clearInterval(interval));
   });
 
@@ -100,6 +103,7 @@ export default component$(() => {
                 const diff = touchStartX.value - e.changedTouches[0].clientX;
                 const imgs = p.imgs || [p.img];
                 if (Math.abs(diff) > 40) {
+                  userSelectedImg.value = true;
                   if (diff > 0) {
                     imgIndex.value = (imgIndex.value + 1) % imgs.length;
                   } else {
@@ -131,7 +135,7 @@ export default component$(() => {
                   <button
                     key={i}
                     class={`product-thumbs__item ${imgIndex.value === i ? "active" : ""}`}
-                    onClick$={() => { imgIndex.value = i; }}
+                    onClick$={() => { imgIndex.value = i; userSelectedImg.value = true; }}
                   >
                     <img src={src} alt={`${p.name} ${i + 1}`} width="80" height="80" />
                   </button>
@@ -238,6 +242,6 @@ export default component$(() => {
 export const head: DocumentHead = ({ params }) => {
   const product = allProducts.find((p) => p.sku === params.sku);
   return {
-    title: product ? `${product.name} - Carmichael Engineering` : "Product - Carmichael Engineering",
+    title: product ? `${product.name} - Carmichael Apparel` : "Product - Carmichael Apparel",
   };
 };

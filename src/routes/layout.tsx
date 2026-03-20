@@ -79,7 +79,7 @@ export const useSubmitOrder = routeAction$(async (data, { fail, env }) => {
   const html = `
     <div style="font-family:sans-serif;max-width:600px;margin:0 auto">
       <div style="background:#1a3a28;padding:20px 24px;border-radius:8px 8px 0 0">
-        <h1 style="color:#fff;margin:0;font-size:20px">Carmichael Engineering — Apparel Order</h1>
+        <h1 style="color:#fff;margin:0;font-size:20px">Carmichael Apparel — Apparel Order</h1>
       </div>
       <div style="padding:24px;border:1px solid #e5e7eb;border-top:none;border-radius:0 0 8px 8px">
         <p style="margin:0 0 4px"><strong>Date:</strong> ${date}</p>
@@ -306,12 +306,12 @@ export default component$(() => {
           <Link href="/" class="site-header__logo">
             <img
               src="/logo-carmichael.jpg"
-              alt="Carmichael Engineering"
+              alt="Carmichael Apparel"
               class="site-header__logo-text"
             />
             <img
               src="/carmichael_logo-removebg-preview (1).png"
-              alt="Carmichael Engineering"
+              alt="Carmichael Apparel"
               class="site-header__logo-img"
             />
           </Link>
@@ -357,7 +357,7 @@ export default component$(() => {
             <div class="login-modal__header">
               <img
                 src="/carmichael_logo-removebg-preview (1).png"
-                alt="Carmichael Engineering"
+                alt="Carmichael Apparel"
                 class="login-modal__logo"
               />
               <h2 class="login-modal__title">{t("login.title", locale.value)}</h2>
@@ -411,6 +411,15 @@ export default component$(() => {
       {cartOpen.value && (
         <div class="modal-overlay" onClick$={() => (cartOpen.value = false)}>
           <div class="drawer cart-drawer" onClick$={(e) => e.stopPropagation()}>
+            <div class="cart-drawer__site-header">
+              <Link href="/" class="site-header__logo">
+                <img src="/logo-carmichael.jpg" alt="Carmichael Apparel" class="site-header__logo-text" />
+                <img src="/carmichael_logo-removebg-preview (1).png" alt="Carmichael Apparel" class="site-header__logo-img" />
+              </Link>
+              <button class="cart-drawer__close-btn" onClick$={() => (cartOpen.value = false)}>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg>
+              </button>
+            </div>
             <div class="cart-drawer__header">
               <h2 class="cart-drawer__title">{t("cart.title", locale.value)} <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/></svg></h2>
               <button class="modal__close cart-drawer__close-desktop" onClick$={() => (cartOpen.value = false)}>x</button>
