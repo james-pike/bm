@@ -152,9 +152,11 @@ export default component$(() => {
               </div>
             )}
             {p.details && (
-              <div class="product-modal__material">
-                {p.details}
-              </div>
+              <ul class="product-modal__details-list">
+                {p.details.split(",").map((detail, i) => (
+                  <li key={i}>{detail.trim()}</li>
+                ))}
+              </ul>
             )}
             <div class="product-modal__field">
               <label class="product-modal__label">{t("modal.size", locale.value)}</label>
