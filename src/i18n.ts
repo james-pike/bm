@@ -28,6 +28,7 @@ const translations = {
   "login.error": { en: "Invalid username or password", fr: "Nom d'utilisateur ou mot de passe invalide" },
 
   // Hero
+  "hero.badge": { en: "Employee Exclusive", fr: "Exclusif aux employés" },
   "hero.accent": { en: "Wear", fr: "Portez" },
   "hero.title.your": { en: "Your", fr: "Votre" },
   "hero.title.brand": { en: "Brand", fr: "Marque" },

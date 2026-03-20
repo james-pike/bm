@@ -22,6 +22,7 @@ const teasers = [
       "/softshell/l7603 ladies soft shell.png",
       "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=600&h=400&fit=crop",
     ],
+    bannerImg: "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=800&h=450&fit=crop",
   },
   {
     slug: "polos",
@@ -35,6 +36,7 @@ const teasers = [
       "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=600&h=400&fit=crop",
       "https://images.unsplash.com/photo-1618354691373-d851c5c3a990?w=600&h=400&fit=crop",
     ],
+    bannerImg: "https://images.unsplash.com/photo-1523381210434-271e8be1f52b?w=800&h=450&fit=crop",
   },
   {
     slug: "hoodies",
@@ -47,6 +49,7 @@ const teasers = [
       "https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=600&h=400&fit=crop",
       "https://images.unsplash.com/photo-1620799140188-3b2a02fd9a77?w=600&h=400&fit=crop",
     ],
+    bannerImg: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=800&h=450&fit=crop",
   },
   {
     slug: "hats",
@@ -60,6 +63,7 @@ const teasers = [
       "/hat/30109107PS2_BACK.JPG",
     ],
     imgClass: "teaser-card__img--zoomed",
+    bannerImg: "https://images.unsplash.com/photo-1521369909029-2afed882baee?w=800&h=450&fit=crop",
   },
 ];
 
@@ -117,6 +121,8 @@ export default component$(() => {
   const activeSlide = useSignal(0);
   const touchStart = useSignal(0);
   const activeTeaser = useSignal(0);
+  const teaserTouchStart = useSignal(0);
+
   const onTouchStart = $((e: TouchEvent) => {
     touchStart.value = e.touches[0].clientX;
   });
@@ -132,6 +138,30 @@ export default component$(() => {
     }
   });
 
+  const onTeaserTouchStart = $((e: TouchEvent) => {
+    teaserTouchStart.value = e.touches[0].clientX;
+  });
+
+  const onTeaserTouchEnd = $((e: TouchEvent) => {
+    const diff = teaserTouchStart.value - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 50) {
+      if (diff > 0) {
+        activeTeaser.value = (activeTeaser.value + 1) % teasers.length;
+      } else {
+        activeTeaser.value = (activeTeaser.value - 1 + teasers.length) % teasers.length;
+      }
+    }
+  });
+
+  // Auto-advance teaser carousel
+  // eslint-disable-next-line qwik/no-use-visible-task
+  useVisibleTask$(({ cleanup }) => {
+    const interval = setInterval(() => {
+      activeTeaser.value = (activeTeaser.value + 1) % teasers.length;
+    }, 6000);
+    cleanup(() => clearInterval(interval));
+  });
+
   return (
     <>
       {/* Hero */}
@@ -139,6 +169,10 @@ export default component$(() => {
         <div class="hero__bg" />
         <div class="hero__content">
           <div class="hero__text">
+            <div class="hero__badge">
+              <span class="hero__badge-dot" />
+              {t("hero.badge", locale.value)}
+            </div>
             <h1 class="hero__title">
               <span class="hero__title--accent">{t("hero.accent", locale.value)}</span> {t("hero.title.your", locale.value)}<br /><em>Carmichael</em> {t("hero.title.brand", locale.value)}
             </h1>
@@ -189,7 +223,11 @@ export default component$(() => {
           </div>
 
           {/* Mobile: fade carousel */}
-          <div class="teaser-carousel">
+          <div
+            class="teaser-carousel"
+            onTouchStart$={onTeaserTouchStart}
+            onTouchEnd$={onTeaserTouchEnd}
+          >
             <div class="teaser-carousel__viewport">
               {teasers.map((teaser, i) => (
                 <div
@@ -197,6 +235,9 @@ export default component$(() => {
                   class={`teaser-carousel__slide ${activeTeaser.value === i ? "active" : ""}`}
                 >
                   <div class="featured-banner">
+                    <div class="featured-banner__image">
+                      <img src={(teaser as any).bannerImg || teaser.imgs[0]} alt={t(teaser.titleKey, locale.value)} width="800" height="450" />
+                    </div>
                     <div class="featured-banner__content">
                       <div class="featured-banner__tag">{t(teaser.tagKey, locale.value)}</div>
                       <h2 class="featured-banner__title">{t(teaser.titleKey, locale.value)}</h2>
@@ -204,9 +245,6 @@ export default component$(() => {
                       <div>
                         <a href={`/apparel/?category=${teaser.category}`} class="btn btn--primary">{t(teaser.ctaKey, locale.value)}</a>
                       </div>
-                    </div>
-                    <div class="featured-banner__image">
-                      <img src={teaser.imgs[0]} alt={t(teaser.titleKey, locale.value)} width="700" height="500" />
                     </div>
                   </div>
                 </div>

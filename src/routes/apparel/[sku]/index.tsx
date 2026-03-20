@@ -18,6 +18,7 @@ export default component$(() => {
   const selectedColor = useSignal("");
   const selectedQty = useSignal(1);
   const added = useSignal(false);
+  const imgFullscreen = useSignal(false);
 
   // Set initial color once product is known
   const colorInitialized = useSignal(false);
@@ -91,46 +92,51 @@ export default component$(() => {
     <div class="apparel-catalog" id="products">
       <div class="product-detail">
         <div class="product-modal__layout">
-          <div
-            class="product-carousel"
-            onTouchStart$={(e) => { touchStartX.value = e.touches[0].clientX; }}
-            onTouchEnd$={(e) => {
-              const diff = touchStartX.value - e.changedTouches[0].clientX;
-              const imgs = p.imgs || [p.img];
-              if (Math.abs(diff) > 40) {
-                if (diff > 0) {
-                  imgIndex.value = (imgIndex.value + 1) % imgs.length;
-                } else {
-                  imgIndex.value = (imgIndex.value - 1 + imgs.length) % imgs.length;
+          <div class="product-image-row">
+            <div
+              class="product-carousel"
+              onTouchStart$={(e) => { touchStartX.value = e.touches[0].clientX; }}
+              onTouchEnd$={(e) => {
+                const diff = touchStartX.value - e.changedTouches[0].clientX;
+                const imgs = p.imgs || [p.img];
+                if (Math.abs(diff) > 40) {
+                  if (diff > 0) {
+                    imgIndex.value = (imgIndex.value + 1) % imgs.length;
+                  } else {
+                    imgIndex.value = (imgIndex.value - 1 + imgs.length) % imgs.length;
+                  }
                 }
-              }
-            }}
-          >
-            {(p.imgs || [p.img]).map((src, i) => (
-              <img
-                key={i}
-                src={src}
-                alt={p.name}
-                width="600"
-                height="400"
-                class={`product-carousel__slide ${imgIndex.value === i ? "active" : ""}`}
-              />
-            ))}
+              }}
+              onClick$={() => { imgFullscreen.value = true; }}
+            >
+              {(p.imgs || [p.img]).map((src, i) => (
+                <img
+                  key={i}
+                  src={src}
+                  alt={p.name}
+                  width="600"
+                  height="400"
+                  class={`product-carousel__slide ${imgIndex.value === i ? "active" : ""}`}
+                />
+              ))}
+              {pdf && (
+                <a href={pdf} target="_blank" class="product-modal__pdf" onClick$={(e) => e.stopPropagation()}>
+                  {t("product.specsheet.pdf", locale.value)}
+                </a>
+              )}
+            </div>
             {(p.imgs || [p.img]).length > 1 && (
-              <div class="product-carousel__indicators">
-                {(p.imgs || [p.img]).map((_, i) => (
+              <div class="product-thumbs product-thumbs--column">
+                {(p.imgs || [p.img]).map((src, i) => (
                   <button
                     key={i}
-                    class={`product-carousel__dot ${imgIndex.value === i ? "active" : ""}`}
-                    onClick$={() => (imgIndex.value = i)}
-                  />
+                    class={`product-thumbs__item ${imgIndex.value === i ? "active" : ""}`}
+                    onClick$={() => { imgIndex.value = i; }}
+                  >
+                    <img src={src} alt={`${p.name} ${i + 1}`} width="80" height="80" />
+                  </button>
                 ))}
               </div>
-            )}
-            {pdf && (
-              <a href={pdf} target="_blank" class="product-modal__pdf">
-                {t("product.specsheet.pdf", locale.value)}
-              </a>
             )}
           </div>
           <div class="product-modal__breadcrumb">
@@ -208,6 +214,22 @@ export default component$(() => {
       </div>
       {added.value && (
         <div class="toast">{t("modal.added", locale.value)}</div>
+      )}
+      {imgFullscreen.value && (
+        <div class="product-fullscreen" onClick$={() => { imgFullscreen.value = false; }}>
+          <button class="product-fullscreen__close" onClick$={() => { imgFullscreen.value = false; }}>&times;</button>
+          <img
+            src={(p.imgs || [p.img])[imgIndex.value]}
+            alt={p.name}
+            class="product-fullscreen__img"
+          />
+          {(p.imgs || [p.img]).length > 1 && (
+            <div class="product-fullscreen__nav">
+              <button onClick$={(e) => { e.stopPropagation(); imgIndex.value = (imgIndex.value - 1 + (p.imgs || [p.img]).length) % (p.imgs || [p.img]).length; }}>&lsaquo;</button>
+              <button onClick$={(e) => { e.stopPropagation(); imgIndex.value = (imgIndex.value + 1) % (p.imgs || [p.img]).length; }}>&rsaquo;</button>
+            </div>
+          )}
+        </div>
       )}
     </div>
   );
