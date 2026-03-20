@@ -2,14 +2,13 @@ import { component$, useSignal, useComputed$, useContext } from "@builder.io/qwi
 import { useLocation } from "@builder.io/qwik-city";
 import type { DocumentHead } from "@builder.io/qwik-city";
 import { LocaleContext, t } from "../../i18n";
-import { allProducts, categories, badgeMap, badgeClass, colorName } from "./products";
+import { allProducts, categories, colorName } from "./products";
 import type { Product } from "./products";
 
 type SortKey = "popular" | "newest" | "name";
 
 const ProductCard = component$<{ item: Product; sku: string }>(({ item, sku }) => {
   const locale = useContext(LocaleContext);
-  const pdf = (item as any).pdf as string | undefined;
 
   return (
     <a href={`/apparel/${sku}/`} class="product-card product-card-link">
@@ -21,26 +20,19 @@ const ProductCard = component$<{ item: Product; sku: string }>(({ item, sku }) =
           <div class="product-card__name">{item.name}</div>
           <div class="product-card__price">${item.price}</div>
         </div>
-        <div class="product-card__colors">
-          {item.colors.map((color) => (
-            <span
-              key={color}
-              class={`product-card__color-dot ${color === "#ffffff" ? "product-card__color-dot--light" : ""}`}
-              style={{ background: color }}
-              title={colorName(color, locale.value)}
-            />
-          ))}
-        </div>
-        <div class="product-card__meta">
+        <div class="product-card__color-size-row">
+          <div class="product-card__colors">
+            {item.colors.map((color) => (
+              <span
+                key={color}
+                class={`product-card__color-dot ${color === "#ffffff" ? "product-card__color-dot--light" : ""}`}
+                style={{ background: color }}
+                title={colorName(color, locale.value)}
+              />
+            ))}
+          </div>
           <span class="product-card__sizes">{item.sizes === "One Size" ? t("modal.onesize", locale.value) : item.sizes}</span>
-          <span class="product-card__sku">{item.sku}</span>
-          {item.badge && <span class={badgeClass(item.badge)}>{t(badgeMap[item.badge] as any, locale.value)}</span>}
         </div>
-        {pdf && (
-          <span class="product-card__pdf" onClick$={(e) => { e.preventDefault(); e.stopPropagation(); window.open(pdf, '_blank'); }}>
-            {t("product.specsheet", locale.value)}
-          </span>
-        )}
       </div>
     </a>
   );

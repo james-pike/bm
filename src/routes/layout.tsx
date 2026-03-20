@@ -180,17 +180,6 @@ export default component$(() => {
     document.cookie = `${LOCALE_COOKIE}=${locale.value};path=/;max-age=31536000`;
   });
 
-  const darkHeader = useSignal(false);
-  // eslint-disable-next-line qwik/no-use-visible-task
-  useVisibleTask$(() => {
-    const saved = localStorage.getItem("ce_dark_header");
-    if (saved === "1") darkHeader.value = true;
-  });
-  const toggleDarkHeader = $(() => {
-    darkHeader.value = !darkHeader.value;
-    localStorage.setItem("ce_dark_header", darkHeader.value ? "1" : "0");
-  });
-
   // Load cart from localStorage
   // eslint-disable-next-line qwik/no-use-visible-task
   useVisibleTask$(({ cleanup }) => {
@@ -312,9 +301,14 @@ export default component$(() => {
 
   return (
     <>
-      <header class={`site-header ${loc.url.pathname === "/" ? "site-header--transparent" : ""} ${darkHeader.value && loc.url.pathname !== "/" ? "site-header--dark" : ""}`}>
+      <header class={`site-header ${loc.url.pathname === "/" ? "site-header--transparent" : ""}`}>
         <div class="site-header__inner">
           <Link href="/" class="site-header__logo">
+            <img
+              src="/logo-carmichael.jpg"
+              alt="Carmichael Engineering"
+              class="site-header__logo-text"
+            />
             <img
               src="/carmichael_logo-removebg-preview (1).png"
               alt="Carmichael Engineering"
@@ -331,13 +325,6 @@ export default component$(() => {
             <button class="locale-btn" onClick$={toggleLocale} aria-label="Toggle language">
               <span class="locale-btn__full">{locale.value === "en" ? "Français" : "English"}</span>
               <span class="locale-btn__short">{locale.value === "en" ? "FR" : "EN"}</span>
-            </button>
-            <button class="theme-toggle" onClick$={toggleDarkHeader} aria-label="Toggle header theme">
-              {darkHeader.value ? (
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
-              ) : (
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
-              )}
             </button>
             <button class={`cart-btn ${cartCount.value > 0 ? "cart-btn--active" : ""}`} onClick$={() => { cartOpen.value = !cartOpen.value; }}>
               {cartOpen.value ? (
