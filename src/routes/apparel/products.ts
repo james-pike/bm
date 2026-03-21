@@ -15,11 +15,11 @@ export const allProducts = [
       "#2c3e50"
     ],
     "price": 68,
-    "img": "/softshell/j7603 soft shell.png",
+    "img": "/softshell/j7603-soft-shell.png",
     "imgs": [
-      "/softshell/j7603 soft shell.png",
-      "/softshell/l7603 ladies soft shell.png",
-      "/uapolo/car 1.png",
+      "/softshell/j7603-soft-shell.png",
+      "/softshell/l7603-ladies-soft-shell.png",
+      "/uapolo/car1.png",
       "/golf/green.png",
       "/hat/30109107PS2_FRONT.JPG"
     ],
@@ -38,10 +38,10 @@ export const allProducts = [
       "#2c3e50"
     ],
     "price": 68,
-    "img": "/softshell/l7603 ladies soft shell.png",
+    "img": "/softshell/l7603-ladies-soft-shell.png",
     "imgs": [
-      "/softshell/l7603 ladies soft shell.png",
-      "/softshell/j7603 soft shell.png",
+      "/softshell/l7603-ladies-soft-shell.png",
+      "/softshell/j7603-soft-shell.png",
       "/uapolo/womens-white.png",
       "/golf/green.png",
       "/beanie/1.png"
@@ -60,12 +60,12 @@ export const allProducts = [
       "#94a3b8"
     ],
     "price": 11,
-    "img": "/uapolo/car 1.png",
+    "img": "/uapolo/car1.png",
     "imgs": [
-      "/uapolo/car 1.png",
+      "/uapolo/car1.png",
       "/uapolo/womens-white.png",
       "/golf/green.png",
-      "/softshell/j7603 soft shell.png",
+      "/softshell/j7603-soft-shell.png",
       "/hat/30109107PS2_FRONT.JPG"
     ],
     "material": "100% polyester",
@@ -86,9 +86,9 @@ export const allProducts = [
     "img": "/golf/green.png",
     "imgs": [
       "/golf/green.png",
-      "/uapolo/car 1.png",
+      "/uapolo/car1.png",
       "/uapolo/womens-white.png",
-      "/softshell/l7603 ladies soft shell.png",
+      "/softshell/l7603-ladies-soft-shell.png",
       "/beanie/1.png"
     ],
     "material": "100% performance polyester flat tricot micropique",
@@ -108,9 +108,9 @@ export const allProducts = [
     "img": "/uapolo/womens-white.png",
     "imgs": [
       "/uapolo/womens-white.png",
-      "/uapolo/car 1.png",
+      "/uapolo/car1.png",
       "/golf/green.png",
-      "/softshell/j7603 soft shell.png",
+      "/softshell/j7603-soft-shell.png",
       "/hat/30109107PS2_BACK.JPG"
     ],
     "material": "100% polyester",
@@ -151,12 +151,12 @@ export const allProducts = [
       "#94a3b8"
     ],
     "price": 40,
-    "img": "/uapolo/car 1.png",
+    "img": "/uapolo/car1.png",
     "imgs": [
-      "/uapolo/car 1.png",
+      "/uapolo/car1.png",
       "/golf/green.png",
       "/uapolo/womens-white.png",
-      "/softshell/l7603 ladies soft shell.png",
+      "/softshell/l7603-ladies-soft-shell.png",
       "/hat/30109107PS2_FRONT.JPG"
     ],
     "material": "100% performance polyester micropique",
@@ -174,11 +174,11 @@ export const allProducts = [
       "#4a4a4a"
     ],
     "price": 120,
-    "img": "/softshell/j7603 soft shell.png",
+    "img": "/softshell/j7603-soft-shell.png",
     "imgs": [
-      "/softshell/j7603 soft shell.png",
-      "/softshell/l7603 ladies soft shell.png",
-      "/uapolo/car 1.png",
+      "/softshell/j7603-soft-shell.png",
+      "/softshell/l7603-ladies-soft-shell.png",
+      "/uapolo/car1.png",
       "/golf/green.png",
       "/beanie/1.png"
     ],
@@ -197,10 +197,10 @@ export const allProducts = [
       "#4a4a4a"
     ],
     "price": 120,
-    "img": "/softshell/l7603 ladies soft shell.png",
+    "img": "/softshell/l7603-ladies-soft-shell.png",
     "imgs": [
-      "/softshell/l7603 ladies soft shell.png",
-      "/softshell/j7603 soft shell.png",
+      "/softshell/l7603-ladies-soft-shell.png",
+      "/softshell/j7603-soft-shell.png",
       "/uapolo/womens-white.png",
       "/golf/green.png",
       "/hat/30109107PS2_FRONT.JPG"
@@ -225,8 +225,8 @@ export const allProducts = [
       "/beanie/1.png",
       "/hat/30109107PS2_FRONT.JPG",
       "/hat/30109107PS2_BACK.JPG",
-      "/softshell/j7603 soft shell.png",
-      "/uapolo/car 1.png"
+      "/softshell/j7603-soft-shell.png",
+      "/uapolo/car1.png"
     ],
     "material": "100% Acrylic",
     "details": "Traditional knit hat with cuff, one size fits most"

@@ -18,8 +18,8 @@ const teasers = [
     textKey: "teaser.jackets.text" as const,
     ctaKey: "teaser.jackets.cta" as const,
     imgs: [
-      "/softshell/j7603 soft shell.png",
-      "/softshell/l7603 ladies soft shell.png",
+      "/softshell/j7603-soft-shell.png",
+      "/softshell/l7603-ladies-soft-shell.png",
       "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=600&h=400&fit=crop",
     ],
     bannerImg: "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=800&h=450&fit=crop",

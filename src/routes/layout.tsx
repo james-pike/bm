@@ -310,7 +310,7 @@ export default component$(() => {
               class="site-header__logo-text"
             />
             <img
-              src="/carmichael_logo-removebg-preview (1).png"
+              src="/carmichael-logo.png"
               alt="Carmichael Apparel"
               class="site-header__logo-img"
             />
@@ -356,7 +356,7 @@ export default component$(() => {
             )}
             <div class="login-modal__header">
               <img
-                src="/carmichael_logo-removebg-preview (1).png"
+                src="/carmichael-logo.png"
                 alt="Carmichael Apparel"
                 class="login-modal__logo"
               />
@@ -414,7 +414,7 @@ export default component$(() => {
             <div class="cart-drawer__site-header">
               <Link href="/" class="site-header__logo">
                 <img src="/logo-carmichael.jpg" alt="Carmichael Apparel" class="site-header__logo-text" />
-                <img src="/carmichael_logo-removebg-preview (1).png" alt="Carmichael Apparel" class="site-header__logo-img" />
+                <img src="/carmichael-logo.png" alt="Carmichael Apparel" class="site-header__logo-img" />
               </Link>
               <button class="cart-drawer__close-btn" onClick$={() => (cartOpen.value = false)}>
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg>
