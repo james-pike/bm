@@ -114,6 +114,7 @@ const translations = {
   "modal.color": { en: "Color", fr: "Couleur" },
   "modal.quantity": { en: "Quantity", fr: "Quantité" },
   "modal.addtocart": { en: "Add to Cart", fr: "Ajouter au panier" },
+  "modal.ordernow": { en: "Order Now", fr: "Commander" },
   "modal.added": { en: "Added!", fr: "Ajouté!" },
   "modal.selectsize": { en: "Select a Size", fr: "Choisir une taille" },
   "modal.onesize": { en: "One Size", fr: "Taille unique" },

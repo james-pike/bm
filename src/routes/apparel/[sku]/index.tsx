@@ -69,9 +69,35 @@ export default component$(() => {
     setTimeout(() => { added.value = false; }, 2000);
   });
 
-  // Initialize color
+  const orderNow = $(() => {
+    const p = product.value;
+    if (!p || !selectedSize.value || !selectedColor.value) return;
+    try {
+      const saved = localStorage.getItem("ce_cart");
+      const items = saved ? JSON.parse(saved) : [];
+      items.push({
+        name: p.name,
+        sku: p.sku,
+        category: p.category,
+        size: selectedSize.value,
+        color: selectedColor.value,
+        quantity: selectedQty.value,
+        price: p.price,
+        img: p.img,
+      });
+      localStorage.setItem("ce_cart", JSON.stringify(items));
+      window.dispatchEvent(new CustomEvent("cart-updated"));
+      window.dispatchEvent(new CustomEvent("open-cart"));
+    } catch { /* ignore */ }
+  });
+
+  // Initialize color and auto-select single size
   if (!colorInitialized.value && product.value) {
     selectedColor.value = product.value.colors[0];
+    const sizes = expandSizes(product.value.sizes);
+    if (sizes.length === 1) {
+      selectedSize.value = sizes[0];
+    }
     colorInitialized.value = true;
   }
 
@@ -120,7 +146,8 @@ export default component$(() => {
                   alt={p.name}
                   width="600"
                   height="400"
-                  class={`product-carousel__slide ${imgIndex.value === i ? "active" : ""}`}
+                  class={`product-carousel__slide ${imgIndex.value === i ? "active" : ""} ${src.includes("spec") ? "product-carousel__slide--contain" : ""}`}
+                  style={src.includes("BACK") ? { objectPosition: "center 65%" } : {}}
                 />
               ))}
               {pdf && (
@@ -206,13 +233,22 @@ export default component$(() => {
                 </div>
               </div>
             </div>
-            <button
-              class="btn btn--primary product-modal__add"
-              disabled={!selectedSize.value}
-              onClick$={addToCart}
-            >
-              {added.value ? t("modal.added", locale.value) : selectedSize.value ? t("modal.addtocart", locale.value) : t("modal.selectsize", locale.value)}
-            </button>
+            <div class="product-modal__actions">
+              <button
+                class="btn btn--primary product-modal__add"
+                disabled={!selectedSize.value}
+                onClick$={addToCart}
+              >
+                {added.value ? t("modal.added", locale.value) : selectedSize.value ? t("modal.addtocart", locale.value) : t("modal.selectsize", locale.value)}
+              </button>
+              <button
+                class="btn btn--secondary product-modal__add"
+                disabled={!selectedSize.value}
+                onClick$={orderNow}
+              >
+                {t("modal.ordernow", locale.value)}
+              </button>
+            </div>
           </div>
         </div>
       </div>
