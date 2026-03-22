@@ -64,7 +64,6 @@ export default component$(() => {
       window.dispatchEvent(new CustomEvent("cart-updated"));
     } catch { /* ignore */ }
     added.value = true;
-    selectedSize.value = "";
     selectedQty.value = 1;
     setTimeout(() => { added.value = false; }, 2000);
   });
@@ -91,13 +90,12 @@ export default component$(() => {
     } catch { /* ignore */ }
   });
 
-  // Initialize color and auto-select single size
+  // Initialize color and auto-select default size (prefer M)
   if (!colorInitialized.value && product.value) {
     selectedColor.value = product.value.colors[0];
     const sizes = expandSizes(product.value.sizes);
-    if (sizes.length === 1) {
-      selectedSize.value = sizes[0];
-    }
+    const lIdx = sizes.indexOf("L");
+    selectedSize.value = lIdx !== -1 ? sizes[lIdx] : sizes[0];
     colorInitialized.value = true;
   }
 
@@ -189,7 +187,7 @@ export default component$(() => {
               </div>
             )}
             {p.details && (
-              <ul class="product-modal__details-list">
+              <ul class={`product-modal__details-list ${p.details.split(",").length <= 2 ? "product-modal__details-list--single" : ""}`}>
                 {p.details.split(",").map((detail, i) => (
                   <li key={i}>{detail.trim()}</li>
                 ))}

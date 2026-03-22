@@ -10,10 +10,11 @@ import {
 } from "@builder.io/qwik-city";
 import type { Cookie } from "@builder.io/qwik-city";
 import { Resend } from "resend";
+import { createClient } from "@libsql/client";
 import { LocaleContext, t } from "../i18n";
 import type { Locale, TranslationKey } from "../i18n";
 
-const AUTH_COOKIE = "ce_auth";
+const AUTH_COOKIE = "ce_auth"; // v2: orders persist to db
 const LOCALE_COOKIE = "ce_locale";
 
 export const useLocaleLoader = routeLoader$(({ cookie }) => {
@@ -59,6 +60,9 @@ export const useSubmitOrder = routeAction$(async (data, { fail, env }) => {
     return fail(500, { message: "Email service not configured" });
   }
 
+  const tursoUrl = env.get("VITE_TURSO_URL");
+  const tursoToken = env.get("VITE_TURSO_AUTH_TOKEN");
+
   const { employee, items, date } = data as {
     employee: { number: string; name: string; department: string };
     items: { name: string; color: string; size: string; quantity: number; price: number }[];
@@ -66,6 +70,28 @@ export const useSubmitOrder = routeAction$(async (data, { fail, env }) => {
   };
 
   const total = items.reduce((sum, i) => sum + (Number(i.price) || 0) * i.quantity, 0);
+
+  // Insert order into Turso database
+  if (tursoUrl && tursoToken) {
+    try {
+      const db = createClient({ url: tursoUrl, authToken: tursoToken });
+      await db.execute({
+        sql: `INSERT INTO orders (vendor, emp_number, emp_name, emp_dept, items, total, status, created_at, updated_at)
+              VALUES (?, ?, ?, ?, ?, ?, 'pending', datetime('now'), datetime('now'))`,
+        args: [
+          "carmichael",
+          employee.number,
+          employee.name,
+          employee.department,
+          JSON.stringify(items),
+          total,
+        ],
+      });
+    } catch (err) {
+      console.error("Failed to save order to database:", err);
+      // Continue to send email even if DB insert fails
+    }
+  }
 
   const itemRows = items.map((i) =>
     `<tr>
