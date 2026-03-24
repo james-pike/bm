@@ -290,7 +290,13 @@ export default component$(() => {
   // Listen for open-cart events from child pages
   // eslint-disable-next-line qwik/no-use-visible-task
   useVisibleTask$(({ cleanup }) => {
-    const handler = () => { cartOpen.value = true; };
+    const handler = () => {
+      cartOpen.value = true;
+      setTimeout(() => {
+        const details = document.querySelector('.cart-drawer__checkout') as HTMLDetailsElement;
+        if (details) details.open = true;
+      }, 100);
+    };
     window.addEventListener("open-cart", handler);
     cleanup(() => window.removeEventListener("open-cart", handler));
   });
@@ -355,7 +361,9 @@ export default component$(() => {
             <Link href="/apparel/" class={loc.url.pathname.startsWith("/apparel") ? "active" : ""}>{t("nav.apparel", locale.value)}</Link>
           </nav>
           <nav class="site-header__nav">
-            <Link href="/apparel/" class={`site-header__mobile-link ${loc.url.pathname.startsWith("/apparel") ? "active" : ""}`}>{t("nav.apparel", locale.value)}</Link>
+            {!loc.url.pathname.startsWith("/apparel") && (
+              <Link href="/apparel/" class="site-header__mobile-link">{t("nav.apparel", locale.value)}</Link>
+            )}
             <button class="locale-btn" onClick$={toggleLocale} aria-label="Toggle language">
               <span class="locale-btn__full">{locale.value === "en" ? "Français" : "English"}</span>
               <span class="locale-btn__short">{locale.value === "en" ? "FR" : "EN"}</span>

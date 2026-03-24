@@ -101,6 +101,8 @@ const TeaserCard = component$<{ t: typeof teasers[0] }>(({ t: teaser }) => {
             alt={t(teaser.titleKey, locale.value)}
             width="600"
             height="400"
+            loading="eager"
+            decoding="async"
             class={`teaser-card__img ${imgIndex.value === i ? "active" : ""} ${(teaser as any).imgClass || ""}`}
           />
         ))}
@@ -236,7 +238,7 @@ export default component$(() => {
                 >
                   <div class="featured-banner">
                     <div class="featured-banner__image">
-                      <img src={(teaser as any).bannerImg || teaser.imgs[0]} alt={t(teaser.titleKey, locale.value)} width="800" height="450" />
+                      <img src={(teaser as any).bannerImg || teaser.imgs[0]} alt={t(teaser.titleKey, locale.value)} width="800" height="450" loading="eager" decoding="async" />
                     </div>
                     <div class="featured-banner__content">
                       <div class="featured-banner__tag">{t(teaser.tagKey, locale.value)}</div>
