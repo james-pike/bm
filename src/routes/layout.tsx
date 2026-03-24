@@ -364,9 +364,6 @@ export default component$(() => {
             <Link href="/apparel/" class={loc.url.pathname.startsWith("/apparel") ? "active" : ""}>{t("nav.apparel", locale.value)}</Link>
           </nav>
           <nav class="site-header__nav">
-            {!loc.url.pathname.startsWith("/apparel") && (
-              <Link href="/apparel/" class="site-header__mobile-link">{t("nav.apparel", locale.value)}</Link>
-            )}
             <button class={`locale-btn ${cartOpen.value ? "locale-btn--cart-open" : ""}`} onClick$={toggleLocale} aria-label="Toggle language">
               <span class="locale-btn__full">{locale.value === "en" ? "Français" : "English"}</span>
               <span class="locale-btn__short">{locale.value === "en" ? "FR" : "EN"}</span>
@@ -487,7 +484,7 @@ export default component$(() => {
                     </thead>
                     <tbody>
                       {cart.items.map((item, i) => (
-                        <tr key={`${item.name}-${item.size}-${item.color}-${i}`}>
+                        <tr key={`${item.name}-${item.size}-${item.color}-${item.quantity}`}>
                           <td class="cart-table__product">
                             <div class="cart-table__product-row">
                             <img src={item.img} alt={item.name} width="40" height="30" class="cart-table__img" />
