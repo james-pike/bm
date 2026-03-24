@@ -128,6 +128,12 @@ export default component$(() => {
             <div class="hero__apparel-row">
               <p class="hero__subtitle-inline">{t("hero.subtitle", locale.value)}</p>
             </div>
+            <div class="hero__actions hero__actions--mobile">
+              <a href="/apparel/" class="btn btn--primary">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+                {t("hero.browse", locale.value)}
+              </a>
+            </div>
           </div>
         </div>
 

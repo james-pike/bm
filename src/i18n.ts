@@ -39,6 +39,7 @@ const translations = {
   },
 
   "hero.explore": { en: "Explore Collections", fr: "Explorer les collections" },
+  "hero.browse": { en: "Browse Apparel", fr: "Parcourir les vêtements" },
 
   // Hero photo labels
   "hero.label.onthejob": { en: "On the Job", fr: "Au travail" },

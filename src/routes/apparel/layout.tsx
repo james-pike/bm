@@ -37,21 +37,22 @@ export default component$(() => {
   const isCatalog = useComputed$(() => /^\/apparel\/?$/.test(loc.url.pathname));
 
   const activeCategory = useComputed$(() => loc.url.searchParams.get("category") || "All");
-  const activeBanner = useComputed$(() => heroBanners[activeCategory.value] || heroBanners.All);
 
   return (
     <div class="apparel-page">
       {isCatalog.value && (
         <div class="collection-hero">
           <div class="collection-hero__viewport">
-            <div class="collection-hero__slide active">
-              <div class="collection-hero__panel">
-                <img src={activeBanner.value[0].src} alt={activeBanner.value[0].alt} width="640" height="360" />
+            {Object.entries(heroBanners).map(([cat, imgs]) => (
+              <div key={cat} class={`collection-hero__slide ${activeCategory.value === cat ? "active" : ""}`}>
+                <div class="collection-hero__panel">
+                  <img src={imgs[0].src} alt={imgs[0].alt} width="640" height="360" loading="eager" />
+                </div>
+                <div class="collection-hero__panel">
+                  <img src={imgs[1].src} alt={imgs[1].alt} width="640" height="360" loading="eager" />
+                </div>
               </div>
-              <div class="collection-hero__panel">
-                <img src={activeBanner.value[1].src} alt={activeBanner.value[1].alt} width="640" height="360" />
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       )}
