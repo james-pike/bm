@@ -55,13 +55,9 @@ export const useLogout = routeAction$(async (_, { cookie }) => {
 });
 
 export const useSubmitOrder = routeAction$(async (data, { fail, env }) => {
-  const apiKey = env.get("RESEND_API_KEY");
-  if (!apiKey) {
-    return fail(500, { message: "Email service not configured" });
-  }
-
-  const tursoUrl = env.get("VITE_TURSO_URL");
-  const tursoToken = env.get("VITE_TURSO_AUTH_TOKEN");
+  const tursoUrl = env.get("TURSO_URL") || env.get("VITE_TURSO_URL") || import.meta.env.VITE_TURSO_URL;
+  const tursoToken = env.get("TURSO_AUTH_TOKEN") || env.get("VITE_TURSO_AUTH_TOKEN") || import.meta.env.VITE_TURSO_AUTH_TOKEN;
+  const apiKey = env.get("RESEND_API_KEY") || env.get("VITE_RESEND_API_KEY") || import.meta.env.VITE_RESEND_API_KEY;
 
   const { employee, items, date } = data as {
     employee: { number: string; name: string; department: string };
@@ -72,25 +68,32 @@ export const useSubmitOrder = routeAction$(async (data, { fail, env }) => {
   const total = items.reduce((sum, i) => sum + (Number(i.price) || 0) * i.quantity, 0);
 
   // Insert order into Turso database
-  if (tursoUrl && tursoToken) {
-    try {
-      const db = createClient({ url: tursoUrl, authToken: tursoToken });
-      await db.execute({
-        sql: `INSERT INTO orders (vendor, emp_number, emp_name, emp_dept, items, total, status, created_at, updated_at)
-              VALUES (?, ?, ?, ?, ?, ?, 'pending', datetime('now'), datetime('now'))`,
-        args: [
-          "carmichael",
-          employee.number,
-          employee.name,
-          employee.department,
-          JSON.stringify(items),
-          total,
-        ],
-      });
-    } catch (err) {
-      console.error("Failed to save order to database:", err);
-      // Continue to send email even if DB insert fails
-    }
+  if (!tursoUrl || !tursoToken) {
+    return fail(500, { message: "Order database not configured" });
+  }
+  try {
+    const db = createClient({ url: tursoUrl, authToken: tursoToken });
+    await db.execute({
+      sql: `INSERT INTO orders (vendor, emp_number, emp_name, emp_dept, items, total, status, created_at, updated_at)
+            VALUES (?, ?, ?, ?, ?, ?, 'pending', datetime('now'), datetime('now'))`,
+      args: [
+        "carmichael",
+        employee.number,
+        employee.name,
+        employee.department,
+        JSON.stringify(items),
+        total,
+      ],
+    });
+  } catch (err) {
+    console.error("Failed to save order to database:", err);
+    return fail(500, { message: "Failed to save order. Please try again." });
+  }
+
+  // Send order confirmation email
+  if (!apiKey) {
+    console.warn("RESEND_API_KEY not configured — order saved but email not sent");
+    return { success: true };
   }
 
   const itemRows = items.map((i) =>
@@ -137,16 +140,17 @@ export const useSubmitOrder = routeAction$(async (data, { fail, env }) => {
   try {
     const resend = new Resend(apiKey);
     await resend.emails.send({
-      from: "Carmichael Apparel <orders@carmichaelengineering.com>",
+      from: "Carmichael Apparel <onboarding@resend.dev>", // TODO: change to orders@carmichaelengineering.com after domain verification
       to: ["jamesandrewpike@gmail.com"],
       subject: `Apparel Order — ${employee.name} (${employee.number}) — ${date}`,
       html,
     });
-    return { success: true };
   } catch (err) {
     console.error("Failed to send order email:", err);
-    return fail(500, { message: "Failed to send order email" });
+    // Order was already saved — don't fail the whole action
   }
+
+  return { success: true };
 });
 
 interface CartItem {
@@ -263,8 +267,13 @@ export default component$(() => {
       date: new Date().toLocaleDateString("en-CA"),
     };
 
-    // Send email via server action
-    await orderAction.submit(orderData);
+    // Send order via server action
+    const result = await orderAction.submit(orderData);
+
+    if (result.value?.failed) {
+      formError.value = (result.value as any).message || "Failed to place order. Please try again.";
+      return;
+    }
 
     cart.items = [];
     await saveCart();
