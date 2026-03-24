@@ -371,7 +371,7 @@ export default component$(() => {
               <span class="locale-btn__full">{locale.value === "en" ? "Français" : "English"}</span>
               <span class="locale-btn__short">{locale.value === "en" ? "FR" : "EN"}</span>
             </button>
-            <button class={`cart-btn ${cartCount.value > 0 ? "cart-btn--active" : ""}`} onClick$={() => { cartOpen.value = !cartOpen.value; }}>
+            <button class={`cart-btn ${cartCount.value > 0 && !cartOpen.value ? "cart-btn--active" : ""}`} onClick$={() => { cartOpen.value = !cartOpen.value; }}>
               {cartOpen.value && <span class="cart-btn__label">{t("cart.mycart", locale.value)}</span>}
               {cartOpen.value ? (
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg>
