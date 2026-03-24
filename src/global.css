@@ -2847,8 +2847,8 @@ details[open] > .cart-drawer__checkout-title::after {
   .stats-row__card:nth-child(3) { border-radius: 0 0 0 var(--radius-lg); border-left: 1px solid var(--ce-gray-200); }
   .stats-row__card:last-child { border-radius: 0 0 var(--radius-lg) 0; }
 
-  .site-header--transparent { position: absolute; width: 100%; z-index: 100; }
-  .site-header--transparent.site-header--scrolled { position: sticky; width: auto; }
+  .site-header--transparent { position: fixed; width: 100%; z-index: 100; }
+  .site-header--transparent.site-header--scrolled { position: fixed; }
   .site-header__categories { display: none; }
   .site-header__mobile-link { display: block; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.03em; text-decoration: none; color: var(--ce-gray-600); padding: 4px 8px; }
   .site-header__mobile-link.active { color: var(--ce-green); }
