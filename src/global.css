@@ -294,7 +294,7 @@ img { max-width: 100%; display: block; }
   font-weight: 800;
   line-height: 1.06;
   margin-bottom: 0;
-  letter-spacing: -0.035em;
+  letter-spacing: -0.045em;
 }
 
 .hero__title--accent {
@@ -2767,7 +2767,7 @@ details[open] > .cart-drawer__checkout-title::after {
   .featured-banner { grid-template-columns: 1fr; min-height: auto; }
   .featured-banner__image { min-height: auto; aspect-ratio: 16/9; }
   .featured-banner__content { justify-content: flex-start; padding: 1rem 1.25rem; }
-  .teaser-grid { grid-template-columns: 1fr; gap: 0.75rem; padding: 0; margin: 0 0.75rem; background: transparent; border-radius: 0; }
+  .teaser-grid { grid-template-columns: 1fr; gap: 1rem; padding: 0; margin: 0 0.75rem; background: transparent; border-radius: 0; }
   .hero__browse { display: none; }
   .teaser-card { border: 1px solid rgba(255,255,255,0.25); border-radius: 10px; grid-template-columns: 1fr; min-height: auto; cursor: default; }
   .teaser-card:hover { filter: saturate(0.88) brightness(1.03); transform: none; }
@@ -2777,9 +2777,9 @@ details[open] > .cart-drawer__checkout-title::after {
   .teaser-card:hover .btn--sm { transform: none; box-shadow: none; }
   .teaser-card:hover .teaser-card__body::after { background: linear-gradient(90deg, var(--tc-glow, #F5A623), var(--tc-btn-bg, var(--ce-orange)), var(--tc-glow, #F5A623)); }
   .teaser-card__image { aspect-ratio: 16/9; }
-  .teaser-card__body { padding: 0.75rem 1rem; justify-content: flex-start; }
-  .teaser-card__title { font-size: 1rem; margin-bottom: 0.25rem; }
-  .teaser-card__text { font-size: 0.8rem; margin-bottom: 0.5rem; }
+  .teaser-card__body { padding: 1rem 1rem; justify-content: flex-start; }
+  .teaser-card__title { font-size: 1rem; margin-bottom: 0.35rem; }
+  .teaser-card__text { font-size: 0.8rem; margin-bottom: 0.65rem; }
   .teaser-card .btn--primary { padding: 6px 16px; font-size: 0.78rem; }
   .teaser-grid { display: grid; }
   .apparel-catalog { padding: 0 0.35rem 0.35rem; }
@@ -2904,9 +2904,10 @@ details[open] > .cart-drawer__checkout-title::after {
   .product-modal__name-row { display: flex; align-items: baseline; justify-content: space-between; gap: 0.5rem; }
   .product-modal__name { font-size: 1.1rem; margin: 0 0 0.1rem; }
   .product-modal__price { margin-bottom: 0.35rem; }
-  .product-modal__material { margin-bottom: 0.2rem; }
-  .product-modal__material:last-of-type { margin-bottom: 0.6rem; }
-  .product-modal__field { margin-bottom: 0.75rem; }
+  .product-modal__material { margin-bottom: 0.35rem; }
+  .product-modal__material:last-of-type { margin-bottom: 0.85rem; }
+  .product-modal__details-list { margin-bottom: 1rem; }
+  .product-modal__field { margin-bottom: 1rem; }
   .product-modal__color-qty-row { gap: 1rem; }
   .product-modal__actions { flex-direction: row; }
   .product-modal__add { width: 100%; }

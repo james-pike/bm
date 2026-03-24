@@ -61,9 +61,16 @@ export const useSubmitOrder = routeAction$(async (data, { fail, env }) => {
 
   const { employee, items, date } = data as {
     employee: { number: string; name: string; department: string };
-    items: { name: string; color: string; size: string; quantity: number; price: number }[];
+    items: { name: string; sku?: string; color: string; size: string; quantity: number; price: number }[];
     date: string;
   };
+
+  const colorMap: Record<string, string> = {
+    "#00703c": "Green", "#1a1a18": "Black", "#ffffff": "White",
+    "#2c3e50": "Navy", "#94a3b8": "Silver", "#4a4a4a": "Charcoal",
+    "#8d5f18": "Bronze",
+  };
+  const cName = (hex: string) => colorMap[hex] || hex;
 
   const total = items.reduce((sum, i) => sum + (Number(i.price) || 0) * i.quantity, 0);
 
@@ -98,8 +105,8 @@ export const useSubmitOrder = routeAction$(async (data, { fail, env }) => {
 
   const itemRows = items.map((i) =>
     `<tr>
-      <td style="padding:6px 12px;border-bottom:1px solid #eee">${i.name}</td>
-      <td style="padding:6px 12px;border-bottom:1px solid #eee">${i.color} / ${i.size}</td>
+      <td style="padding:6px 12px;border-bottom:1px solid #eee">${i.name}${i.sku ? ` <span style="color:#999;font-size:12px">(${i.sku})</span>` : ""}</td>
+      <td style="padding:6px 12px;border-bottom:1px solid #eee">${cName(i.color)} / ${i.size}</td>
       <td style="padding:6px 12px;border-bottom:1px solid #eee;text-align:center">${i.quantity}</td>
       <td style="padding:6px 12px;border-bottom:1px solid #eee;text-align:right">$${(Number(i.price) || 0) * i.quantity}</td>
     </tr>`
@@ -141,7 +148,7 @@ export const useSubmitOrder = routeAction$(async (data, { fail, env }) => {
     const resend = new Resend(apiKey);
     await resend.emails.send({
       from: "Carmichael Apparel <onboarding@resend.dev>", // TODO: change to orders@carmichaelengineering.com after domain verification
-      to: ["jamesandrewpike@gmail.com"],
+      to: ["cs@safetyhouse.ca"],
       subject: `Apparel Order — ${employee.name} (${employee.number}) — ${date}`,
       html,
     });
@@ -264,7 +271,7 @@ export default component$(() => {
     const orderData = {
       employee: { number: empNumber.value, name: empName.value, department: empDept.value },
       items: cart.items.map((i) => ({
-        name: i.name, color: i.color, size: i.size,
+        name: i.name, sku: i.sku, color: i.color, size: i.size,
         quantity: i.quantity, price: i.price,
       })),
       date: new Date().toLocaleDateString("en-CA"),
@@ -345,7 +352,7 @@ export default component$(() => {
 
   return (
     <>
-      <header class={`site-header ${loc.url.pathname === "/" ? "site-header--transparent" : ""}`}>
+      <header class={`site-header ${loc.url.pathname === "/" && !cartOpen.value ? "site-header--transparent" : ""}`}>
         <div class="site-header__inner">
           <Link href="/" class="site-header__logo">
             <img
@@ -369,7 +376,7 @@ export default component$(() => {
               <span class="locale-btn__short">{locale.value === "en" ? "FR" : "EN"}</span>
             </button>
             <button class={`cart-btn ${cartCount.value > 0 && !cartOpen.value ? "cart-btn--active" : ""}`} onClick$={() => { cartOpen.value = !cartOpen.value; }}>
-              {cartOpen.value && <span class="cart-btn__label">{t("cart.mycart", locale.value)}</span>}
+              {(cartOpen.value || cartCount.value > 0) && <span class="cart-btn__label">{t("cart.mycart", locale.value)}</span>}
               {cartOpen.value ? (
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg>
               ) : (
