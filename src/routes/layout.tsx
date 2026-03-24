@@ -242,8 +242,11 @@ export default component$(() => {
 
   const updateQty = $(async (index: number, delta: number) => {
     const newQty = cart.items[index].quantity + delta;
-    if (newQty < 1) return;
-    cart.items = cart.items.map((item, i) => i === index ? { ...item, quantity: newQty } : item);
+    if (newQty < 1) {
+      cart.items = cart.items.filter((_, i) => i !== index);
+    } else {
+      cart.items = cart.items.map((item, i) => i === index ? { ...item, quantity: newQty } : item);
+    }
     await saveCart();
     window.dispatchEvent(new CustomEvent("cart-updated"));
   });
@@ -364,16 +367,16 @@ export default component$(() => {
             {!loc.url.pathname.startsWith("/apparel") && (
               <Link href="/apparel/" class="site-header__mobile-link">{t("nav.apparel", locale.value)}</Link>
             )}
-            <button class="locale-btn" onClick$={toggleLocale} aria-label="Toggle language">
+            <button class={`locale-btn ${cartOpen.value ? "locale-btn--cart-open" : ""}`} onClick$={toggleLocale} aria-label="Toggle language">
               <span class="locale-btn__full">{locale.value === "en" ? "Français" : "English"}</span>
               <span class="locale-btn__short">{locale.value === "en" ? "FR" : "EN"}</span>
             </button>
             <button class={`cart-btn ${cartCount.value > 0 ? "cart-btn--active" : ""}`} onClick$={() => { cartOpen.value = !cartOpen.value; }}>
+              {cartOpen.value && <span class="cart-btn__label">{t("cart.mycart", locale.value)}</span>}
               {cartOpen.value ? (
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg>
               ) : (
                 <>
-                  <span class="cart-btn__label">{t("cart.mycart", locale.value)}</span>
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/></svg>
                   {cartCount.value > 0 && <span class="cart-btn__dot" />}
                 </>
@@ -467,7 +470,10 @@ export default component$(() => {
               <button class="modal__close cart-drawer__close-desktop" onClick$={() => (cartOpen.value = false)}>x</button>
             </div>
             {cart.items.length === 0 ? (
-              <p class="cart-drawer__empty">{t("cart.empty", locale.value)}</p>
+              <div class="cart-drawer__empty">
+                <p>{t("cart.empty", locale.value)}</p>
+                <a href="/apparel/" class="cart-drawer__back-link" onClick$={() => (cartOpen.value = false)}>{t("cart.backtoapparel", locale.value)}</a>
+              </div>
             ) : (
               <>
                 <div class="cart-drawer__items">
