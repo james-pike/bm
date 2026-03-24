@@ -345,9 +345,22 @@ export default component$(() => {
   // eslint-disable-next-line qwik/no-use-visible-task
   useVisibleTask$(({ track }) => {
     track(() => cartOpen.value);
-    const v = cartOpen.value ? "hidden" : "";
-    document.documentElement.style.overflow = v;
-    document.body.style.overflow = v;
+    if (cartOpen.value) {
+      const scrollY = window.scrollY;
+      document.body.style.position = "fixed";
+      document.body.style.top = `-${scrollY}px`;
+      document.body.style.left = "0";
+      document.body.style.right = "0";
+      document.body.style.overflow = "hidden";
+    } else {
+      const scrollY = Math.abs(parseInt(document.body.style.top || "0", 10));
+      document.body.style.position = "";
+      document.body.style.top = "";
+      document.body.style.left = "";
+      document.body.style.right = "";
+      document.body.style.overflow = "";
+      window.scrollTo(0, scrollY);
+    }
   });
 
   // Auto-open login modal and lock scroll for unauthenticated users
@@ -548,8 +561,11 @@ export default component$(() => {
                 <details class="cart-drawer__checkout">
                   <summary class="cart-drawer__checkout-title">
                     {t("cart.orderdetails", locale.value)}
-                    {(!empNumber.value || !empName.value || !empDept.value) && <span class="cart-drawer__required-dot" />}
-                    {formError.value && <span class="cart-drawer__error-inline">{formError.value}</span>}
+                    {(!empNumber.value || !empName.value || !empDept.value) && (
+                      <span class={`cart-drawer__required-label ${formError.value ? "cart-drawer__required-label--error" : ""}`}>
+                        {t("cart.requiredfields", locale.value)}
+                      </span>
+                    )}
                   </summary>
                   <div class="checkout-modal__row">
                     <div class={`checkout-modal__field ${formTouched.value && !empNumber.value ? "checkout-modal__field--error" : ""}`}>

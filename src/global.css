@@ -2530,20 +2530,15 @@ img { max-width: 100%; display: block; }
   font-size: 0.78rem;
   font-weight: 500;
 }
-.cart-drawer__required-dot {
-  display: inline-block;
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: #b91c1c;
-  margin-left: 0.35rem;
-  vertical-align: middle;
-}
-.cart-drawer__error-inline {
-  color: #b91c1c;
+.cart-drawer__required-label {
+  color: var(--ce-gray-400);
   font-size: 0.7rem;
   font-weight: 400;
   margin-left: 0.5rem;
+  transition: color 0.3s ease;
+}
+.cart-drawer__required-label--error {
+  color: #b91c1c;
 }
 .cart-drawer__order-btn {
   display: inline-flex;
@@ -2556,11 +2551,11 @@ img { max-width: 100%; display: block; }
   flex-shrink: 0;
 }
 .checkout-modal__field--error input {
-  border-color: var(--ce-gold) !important;
-  background: #fdf8e8;
+  border-color: var(--ce-green) !important;
+  background: rgba(0, 112, 60, 0.06);
 }
 .checkout-modal__field--error label {
-  color: #92750a !important;
+  color: var(--ce-green) !important;
 }
 /* ===== Cart Invoice ===== */
 .cart-drawer__invoice {
@@ -2978,8 +2973,25 @@ details[open] > .cart-drawer__checkout-title::after {
   .modal { padding: 0.5rem 1rem 1rem; margin: 0 0.5rem; }
   .modal .modal__close { top: 0.35rem; right: 0.5rem; width: 28px; height: 28px; font-size: 0.85rem; }
   .modal-overlay { padding: 0; align-items: flex-start; top: 48px; }
-  .modal-overlay:has(.cart-drawer) { background: transparent; backdrop-filter: none; top: 48px; z-index: 99; }
-  .drawer.cart-drawer { width: 100%; top: 0; bottom: 0; }
+  .modal-overlay:has(.cart-drawer) {
+    position: fixed;
+    inset: 0;
+    top: 48px;
+    background: var(--ce-gray-200);
+    backdrop-filter: none;
+    z-index: 99;
+    overflow: hidden;
+    touch-action: none;
+  }
+  .drawer.cart-drawer {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    box-shadow: none;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+  }
   .cart-drawer__site-header {
     display: flex;
     align-items: center;
