@@ -30,6 +30,10 @@ export const useAuthCheck = routeLoader$(({ cookie }) => {
   return { loggedIn: isAuthenticated(cookie) };
 });
 
+export const useCartCountLoader = routeLoader$(({ cookie }) => {
+  return parseInt(cookie.get("ce_cart_count")?.value || "0", 10);
+});
+
 export const useLogin = routeAction$(
   ({ username, password }, { cookie, fail }) => {
     if (username === "admin" && password === "CARMICHAEL") {
@@ -201,7 +205,9 @@ export default component$(() => {
   useContextProvider(LocaleContext, locale);
 
   // Cart state
+  const initialCartCount = useCartCountLoader();
   const cart = useStore<{ items: CartItem[] }>({ items: [] });
+  const ssrCartCount = useSignal(initialCartCount.value);
   const cartOpen = useSignal(false);
   const orderSubmitted = useSignal(false);
   const formError = useSignal("");
@@ -210,7 +216,10 @@ export default component$(() => {
   const empName = useSignal("");
   const empDept = useSignal("");
 
-  const cartCount = useComputed$(() => cart.items.reduce((sum, i) => sum + i.quantity, 0));
+  const cartCount = useComputed$(() => {
+    const count = cart.items.reduce((sum, i) => sum + i.quantity, 0);
+    return count > 0 ? count : ssrCartCount.value;
+  });
   const headerScrolled = useSignal(false);
 
   const toggleLocale = $(() => {
@@ -229,6 +238,9 @@ export default component$(() => {
         } else {
           cart.items = [];
         }
+        const count = cart.items.reduce((sum, i: any) => sum + i.quantity, 0);
+        document.cookie = `ce_cart_count=${count};path=/;max-age=31536000`;
+        ssrCartCount.value = 0; // clear SSR fallback once real data loaded
       } catch { cart.items = []; }
     };
     loadCart();
@@ -239,6 +251,8 @@ export default component$(() => {
   const saveCart = $(() => {
     try {
       localStorage.setItem("ce_cart", JSON.stringify(cart.items));
+      const count = cart.items.reduce((sum, i) => sum + i.quantity, 0);
+      document.cookie = `ce_cart_count=${count};path=/;max-age=31536000`;
     } catch { /* ignore */ }
   });
 
@@ -384,7 +398,7 @@ export default component$(() => {
               <span class="locale-btn__full">{locale.value === "en" ? "Français" : "English"}</span>
               <span class="locale-btn__short">{locale.value === "en" ? "FR" : "EN"}</span>
             </button>
-            <button class={`cart-btn ${cartCount.value > 0 && !cartOpen.value ? "cart-btn--active" : ""}`} onClick$={() => { cartOpen.value = !cartOpen.value; }}>
+            <button class={`cart-btn ${cartCount.value > 0 ? "cart-btn--active" : ""}`} onClick$={() => { cartOpen.value = !cartOpen.value; }}>
               <span class="cart-btn__label">{t("cart.mycart", locale.value)}</span>
               {cartOpen.value ? (
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg>
