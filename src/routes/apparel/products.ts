@@ -4,7 +4,7 @@ import type { Locale } from "../../i18n";
 
 export const allProducts = [
   {
-    "sku": "CM-5",
+    "sku": "CAR-3",
     "name": "Men's Soft Shell Jacket",
     "category": "Jackets",
     "sizes": "XS - 4XL",
@@ -27,7 +27,7 @@ export const allProducts = [
     "details": "Water repellent, wind resistant, anti-pill, YKK zippers, 1000mm waterproof rating, classic fit"
   },
   {
-    "sku": "CM-6",
+    "sku": "CAR-4",
     "name": "Women's Soft Shell Jacket",
     "category": "Jackets",
     "sizes": "XS - 4XL",
@@ -50,8 +50,8 @@ export const allProducts = [
     "details": "Water repellent, wind resistant, anti-pill, YKK zippers, 1000mm waterproof rating, classic fit"
   },
   {
-    "sku": "CM-1",
-    "name": "UA Men's Tech Polo",
+    "sku": "CAR-7",
+    "name": "Men's UA Tech Polo",
     "category": "Polos",
     "sizes": "S - 4XL",
     "badge": "",
@@ -72,7 +72,7 @@ export const allProducts = [
     "details": "Moisture-wicking, anti-odor technology, textured soft & breathable fabric, self-fabric collar, 3-button placket"
   },
   {
-    "sku": "CM-7",
+    "sku": "CAR-6",
     "name": "Women's Golf Polo",
     "category": "Polos",
     "sizes": "XS - 4XL",
@@ -95,8 +95,8 @@ export const allProducts = [
     "details": "Self-fabric collar, moisture-wicking, snag resistant, breathable, tagless, relaxed fit, ANSI/ISEA 107 high visibility compliant (select colors)"
   },
   {
-    "sku": "CM-14",
-    "name": "UA Women's Tech Polo",
+    "sku": "CAR-8",
+    "name": "Women's UA Tech Polo",
     "category": "Polos",
     "sizes": "S - 4XL",
     "badge": "",
@@ -108,7 +108,6 @@ export const allProducts = [
     "img": "/uapolo/womens-white.png",
     "imgs": [
       "/uapolo/womens-white.png",
-      "/uapolo/car1.png",
       "/golf/green.png",
       "/softshell/j7603-soft-shell.png",
       "/hat/30109107PS2_BACK.JPG"
@@ -117,7 +116,7 @@ export const allProducts = [
     "details": "Moisture-wicking, anti-odor technology, textured soft & breathable fabric, self-fabric collar, 3-button placket"
   },
   {
-    "sku": "CM-13",
+    "sku": "CAR-9",
     "name": "Embroidered Cap",
     "category": "Hats",
     "sizes": "One Size",
@@ -137,33 +136,10 @@ export const allProducts = [
       "/spec.jpg"
     ],
     "material": "Poly/Spandex with Performance Mesh",
-    "details": "Structured mid profile 6 panel Flexfit 110®, Shapeable pre-curved visor, Plastic snap back closure, UV protection, Moisture wicking, Contrasting grey undervisor, Flat embroidery with embroidered patch",
-    "pdf": "/hat/30131741.pdf"
+    "details": "Structured mid profile 6 panel Flexfit 110®, Shapeable pre-curved visor, Plastic snap back closure, UV protection, Moisture wicking, Contrasting grey undervisor, Flat embroidery with embroidered patch"
   },
   {
-    "sku": "CM-2",
-    "name": "Men's Snag Resistant Polo",
-    "category": "Polos",
-    "sizes": "XS - 4XL",
-    "badge": "",
-    "colors": [
-      "#1a1a18",
-      "#94a3b8"
-    ],
-    "price": 40,
-    "img": "/uapolo/car1.png",
-    "imgs": [
-      "/uapolo/car1.png",
-      "/golf/green.png",
-      "/uapolo/womens-white.png",
-      "/softshell/l7603-ladies-soft-shell.png",
-      "/hat/30109107PS2_FRONT.JPG"
-    ],
-    "material": "100% performance polyester micropique",
-    "details": "Snag resistant, moisture-wicking, breathable, tagless, rib knit collar, classic fit"
-  },
-  {
-    "sku": "CM-10",
+    "sku": "CAR-1",
     "name": "Men's Alpine Fleece",
     "category": "Jackets",
     "sizes": "XS - 4XL",
@@ -186,7 +162,7 @@ export const allProducts = [
     "details": "Full zip, heavyweight cuffs & hem, stand-up collar, long sleeves, FW branded zipper pull"
   },
   {
-    "sku": "CM-11",
+    "sku": "CAR-2",
     "name": "Women's Alpine Fleece",
     "category": "Jackets",
     "sizes": "XS - 3XL",
@@ -209,7 +185,7 @@ export const allProducts = [
     "details": "Full zip, heavyweight cuffs & hem, stand-up collar, long sleeves, FW branded zipper pull"
   },
   {
-    "sku": "CM-12",
+    "sku": "CAR-10",
     "name": "Flip Toque",
     "category": "Hats",
     "sizes": "One Size",
@@ -219,7 +195,7 @@ export const allProducts = [
       "#2c3e50",
       "#4a4a4a"
     ],
-    "price": 7,
+    "price": 20,
     "img": "/beanie/1.png",
     "imgs": [
       "/beanie/1.png",
@@ -230,6 +206,19 @@ export const allProducts = [
     ],
     "material": "100% Acrylic",
     "details": "Traditional knit hat with cuff, one size fits most"
+  },
+  {
+    "sku": "CAR-5",
+    "name": "Men's Golf Polo",
+    "category": "Polos",
+    "sizes": "S - 4XL",
+    "badge": "",
+    "colors": [],
+    "price": 0,
+    "img": "",
+    "imgs": [],
+    "material": "",
+    "details": ""
   }
 ];
 

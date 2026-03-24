@@ -174,13 +174,13 @@ export default component$(() => {
               {t("hero.badge", locale.value)}
             </div>
             <h1 class="hero__title">
-              <span class="hero__title--accent">{t("hero.accent", locale.value)}</span> {t("hero.title.your", locale.value)}<br /><em>Carmichael</em> {t("hero.title.brand", locale.value)}
+              <span class="hero__title--accent">{t("hero.accent", locale.value)}</span> <span class="hero__title--muted">{t("hero.title.your", locale.value)}</span><br /><em>Carmichael</em> {t("hero.title.brand", locale.value)}
             </h1>
             <div class="hero__apparel-row">
               <p class="hero__subtitle-inline">{t("hero.subtitle", locale.value)}</p>
             </div>
             <div class="hero__actions">
-              <a href="/apparel/" class="btn btn--primary">{t("hero.explore", locale.value)}</a>
+              {/* <a href="/apparel/" class="btn btn--primary">{t("hero.explore", locale.value)}</a> */}
             </div>
 
             {/* Mobile carousel */}

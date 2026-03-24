@@ -8,6 +8,7 @@ export const LocaleContext = createContextId<Signal<Locale>>("locale");
 const translations = {
   // Header nav
   "nav.home": { en: "Home", fr: "Accueil" },
+  "nav.apparel": { en: "Apparel", fr: "Vêtements" },
   "nav.shirts": { en: "Shirts", fr: "Chandails" },
   "nav.polos": { en: "Polos", fr: "Polos" },
   "nav.hoodies": { en: "Hoodies", fr: "Kangourous" },
@@ -165,6 +166,9 @@ const translations = {
   "cat.Safety": { en: "Safety", fr: "Sécurité" },
   "cat.Caps": { en: "Caps & Beanies", fr: "Casquettes et tuques" },
   "cat.Jackets": { en: "Jackets", fr: "Manteaux" },
+
+  // Product detail
+  "product.related": { en: "Related Items", fr: "Articles connexes" },
 } as const;
 
 export type TranslationKey = keyof typeof translations;

@@ -352,11 +352,10 @@ export default component$(() => {
           </Link>
           <nav class="site-header__categories">
             <Link href="/" class={loc.url.pathname === "/" ? "active" : ""}>{t("nav.home", locale.value)}</Link>
-            <Link href="/apparel/?category=Polos">{t("nav.polos", locale.value)}</Link>
-            <Link href="/apparel/?category=Jackets">{t("nav.jackets", locale.value)}</Link>
-            <Link href="/apparel/?category=Hats">{t("nav.hats", locale.value)}</Link>
+            <Link href="/apparel/" class={loc.url.pathname.startsWith("/apparel") ? "active" : ""}>{t("nav.apparel", locale.value)}</Link>
           </nav>
           <nav class="site-header__nav">
+            <Link href="/apparel/" class={`site-header__mobile-link ${loc.url.pathname.startsWith("/apparel") ? "active" : ""}`}>{t("nav.apparel", locale.value)}</Link>
             <button class="locale-btn" onClick$={toggleLocale} aria-label="Toggle language">
               <span class="locale-btn__full">{locale.value === "en" ? "Français" : "English"}</span>
               <span class="locale-btn__short">{locale.value === "en" ? "FR" : "EN"}</span>

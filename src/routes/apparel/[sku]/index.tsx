@@ -237,6 +237,11 @@ export default component$(() => {
                 disabled={!selectedSize.value}
                 onClick$={addToCart}
               >
+                {added.value ? (
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+                ) : (
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/></svg>
+                )}
                 {added.value ? t("modal.added", locale.value) : selectedSize.value ? t("modal.addtocart", locale.value) : t("modal.selectsize", locale.value)}
               </button>
               <button
@@ -244,12 +249,49 @@ export default component$(() => {
                 disabled={!selectedSize.value}
                 onClick$={orderNow}
               >
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 11-7.778 7.778 5.5 5.5 0 017.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg>
                 {t("modal.ordernow", locale.value)}
               </button>
             </div>
           </div>
         </div>
       </div>
+      {(() => {
+        const related = allProducts.filter((r) => r.sku !== p.sku).slice(0, 4);
+        return (
+          <div class="related-items">
+            <h3 class="related-items__title">{t("product.related", locale.value)}</h3>
+            <div class="related-items__grid">
+              {related.map((item) => (
+                <a key={item.sku} href={`/apparel/${item.sku}/`} class="product-card product-card-link">
+                  <div class="product-card__image">
+                    <img src={item.img} alt={item.name} width="440" height="440" loading="eager" decoding="async" />
+                  </div>
+                  <div class="product-card__info">
+                    <div class="product-card__name-row">
+                      <div class="product-card__name">{item.name}</div>
+                      <div class="product-card__price">${item.price}</div>
+                    </div>
+                    <div class="product-card__color-size-row">
+                      <div class="product-card__colors">
+                        {item.colors.map((color) => (
+                          <span
+                            key={color}
+                            class={`product-card__color-dot ${color === "#ffffff" ? "product-card__color-dot--light" : ""}`}
+                            style={{ background: color }}
+                            title={colorName(color, locale.value)}
+                          />
+                        ))}
+                      </div>
+                      <span class="product-card__sizes">{item.sizes === "One Size" ? t("modal.onesize", locale.value) : item.sizes}</span>
+                    </div>
+                  </div>
+                </a>
+              ))}
+            </div>
+          </div>
+        );
+      })()}
       {added.value && (
         <div class="toast">{t("modal.added", locale.value)}</div>
       )}
