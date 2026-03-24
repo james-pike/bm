@@ -18,6 +18,7 @@ export default component$(() => {
   const selectedColor = useSignal("");
   const selectedQty = useSignal(1);
   const added = useSignal(false);
+  const addedInfo = useSignal("");
   const imgFullscreen = useSignal(false);
   const userSelectedImg = useSignal(false);
 
@@ -63,9 +64,10 @@ export default component$(() => {
       localStorage.setItem("ce_cart", JSON.stringify(items));
       window.dispatchEvent(new CustomEvent("cart-updated"));
     } catch { /* ignore */ }
+    addedInfo.value = `${p.name} — ${colorName(selectedColor.value, "en")} / ${selectedSize.value}`;
     added.value = true;
     selectedQty.value = 1;
-    setTimeout(() => { added.value = false; }, 2000);
+    setTimeout(() => { added.value = false; }, 3800);
   });
 
   const orderNow = $(() => {
@@ -293,7 +295,7 @@ export default component$(() => {
         );
       })()}
       {added.value && (
-        <div class="toast">{t("modal.added", locale.value)}</div>
+        <div class="toast">{t("modal.added", locale.value)} — {addedInfo.value}</div>
       )}
       {imgFullscreen.value && (
         <div class="product-fullscreen" onClick$={() => { imgFullscreen.value = false; }}>

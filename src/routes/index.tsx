@@ -1,12 +1,6 @@
-import { component$, useSignal, useVisibleTask$, $, useContext } from "@builder.io/qwik";
+import { component$, useSignal, useVisibleTask$, useContext } from "@builder.io/qwik";
 import type { DocumentHead } from "@builder.io/qwik-city";
 import { LocaleContext, t } from "../i18n";
-
-const heroSlides = [
-  { src: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=600&h=400&fit=crop", labelKey: "hero.label.onthejob" as const },
-  { src: "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=600&h=400&fit=crop", labelKey: "hero.label.polos" as const },
-  { src: "https://images.unsplash.com/photo-1556306535-0f09a537f0a3?w=600&h=400&fit=crop", labelKey: "hero.label.hats" as const },
-];
 
 
 const teasers = [
@@ -22,7 +16,6 @@ const teasers = [
       "/softshell/l7603-ladies-soft-shell.png",
       "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=600&h=400&fit=crop",
     ],
-    bannerImg: "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=800&h=450&fit=crop",
   },
   {
     slug: "polos",
@@ -36,7 +29,6 @@ const teasers = [
       "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=600&h=400&fit=crop",
       "https://images.unsplash.com/photo-1618354691373-d851c5c3a990?w=600&h=400&fit=crop",
     ],
-    bannerImg: "https://images.unsplash.com/photo-1523381210434-271e8be1f52b?w=800&h=450&fit=crop",
   },
   {
     slug: "hoodies",
@@ -49,7 +41,6 @@ const teasers = [
       "https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=600&h=400&fit=crop",
       "https://images.unsplash.com/photo-1620799140188-3b2a02fd9a77?w=600&h=400&fit=crop",
     ],
-    bannerImg: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=800&h=450&fit=crop",
   },
   {
     slug: "hats",
@@ -63,7 +54,6 @@ const teasers = [
       "/hat/30109107PS2_BACK.JPG",
     ],
     imgClass: "teaser-card__img--zoomed",
-    bannerImg: "https://images.unsplash.com/photo-1521369909029-2afed882baee?w=800&h=450&fit=crop",
   },
 ];
 
@@ -120,49 +110,6 @@ const TeaserCard = component$<{ t: typeof teasers[0] }>(({ t: teaser }) => {
 
 export default component$(() => {
   const locale = useContext(LocaleContext);
-  const activeSlide = useSignal(0);
-  const touchStart = useSignal(0);
-  const activeTeaser = useSignal(0);
-  const teaserTouchStart = useSignal(0);
-
-  const onTouchStart = $((e: TouchEvent) => {
-    touchStart.value = e.touches[0].clientX;
-  });
-
-  const onTouchEnd = $((e: TouchEvent) => {
-    const diff = touchStart.value - e.changedTouches[0].clientX;
-    if (Math.abs(diff) > 50) {
-      if (diff > 0 && activeSlide.value < heroSlides.length - 1) {
-        activeSlide.value++;
-      } else if (diff < 0 && activeSlide.value > 0) {
-        activeSlide.value--;
-      }
-    }
-  });
-
-  const onTeaserTouchStart = $((e: TouchEvent) => {
-    teaserTouchStart.value = e.touches[0].clientX;
-  });
-
-  const onTeaserTouchEnd = $((e: TouchEvent) => {
-    const diff = teaserTouchStart.value - e.changedTouches[0].clientX;
-    if (Math.abs(diff) > 50) {
-      if (diff > 0) {
-        activeTeaser.value = (activeTeaser.value + 1) % teasers.length;
-      } else {
-        activeTeaser.value = (activeTeaser.value - 1 + teasers.length) % teasers.length;
-      }
-    }
-  });
-
-  // Auto-advance teaser carousel
-  // eslint-disable-next-line qwik/no-use-visible-task
-  useVisibleTask$(({ cleanup }) => {
-    const interval = setInterval(() => {
-      activeTeaser.value = (activeTeaser.value + 1) % teasers.length;
-    }, 6000);
-    cleanup(() => clearInterval(interval));
-  });
 
   return (
     <>
@@ -181,38 +128,6 @@ export default component$(() => {
             <div class="hero__apparel-row">
               <p class="hero__subtitle-inline">{t("hero.subtitle", locale.value)}</p>
             </div>
-            <div class="hero__actions">
-              {/* <a href="/apparel/" class="btn btn--primary">{t("hero.explore", locale.value)}</a> */}
-            </div>
-
-            {/* Mobile carousel */}
-            <div
-              class="hero__carousel"
-              onTouchStart$={onTouchStart}
-              onTouchEnd$={onTouchEnd}
-            >
-              <div class="hero__carousel-viewport">
-                {heroSlides.map((slide, i) => (
-                  <div
-                    key={slide.labelKey}
-                    class={`hero__carousel-slide ${activeSlide.value === i ? "active" : ""}`}
-                  >
-                    <img src={slide.src} alt={t(slide.labelKey, locale.value)} width="600" height="400" />
-                    <span class="hero__photo-label">{t(slide.labelKey, locale.value)}</span>
-                  </div>
-                ))}
-              </div>
-              <div class="hero__carousel-dots">
-                {heroSlides.map((slide, i) => (
-                  <button
-                    key={slide.labelKey}
-                    class={`hero__carousel-dot ${activeSlide.value === i ? "active" : ""}`}
-                    onClick$={() => (activeSlide.value = i)}
-                    aria-label={`Slide ${i + 1}`}
-                  />
-                ))}
-              </div>
-            </div>
           </div>
         </div>
 
@@ -224,45 +139,6 @@ export default component$(() => {
             ))}
           </div>
 
-          {/* Mobile: fade carousel */}
-          <div
-            class="teaser-carousel"
-            onTouchStart$={onTeaserTouchStart}
-            onTouchEnd$={onTeaserTouchEnd}
-          >
-            <div class="teaser-carousel__viewport">
-              {teasers.map((teaser, i) => (
-                <div
-                  key={teaser.slug}
-                  class={`teaser-carousel__slide ${activeTeaser.value === i ? "active" : ""}`}
-                >
-                  <div class="featured-banner">
-                    <div class="featured-banner__image">
-                      <img src={(teaser as any).bannerImg || teaser.imgs[0]} alt={t(teaser.titleKey, locale.value)} width="800" height="450" loading="eager" decoding="async" />
-                    </div>
-                    <div class="featured-banner__content">
-                      <div class="featured-banner__tag">{t(teaser.tagKey, locale.value)}</div>
-                      <h2 class="featured-banner__title">{t(teaser.titleKey, locale.value)}</h2>
-                      <p class="featured-banner__text">{t(teaser.textKey, locale.value)}</p>
-                      <div>
-                        <a href={`/apparel/?category=${teaser.category}`} class="btn btn--primary">{t(teaser.ctaKey, locale.value)}</a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-            <div class="teaser-carousel__dots">
-              {teasers.map((teaser, i) => (
-                <button
-                  key={teaser.slug}
-                  class={`teaser-carousel__dot ${activeTeaser.value === i ? "active" : ""}`}
-                  onClick$={() => (activeTeaser.value = i)}
-                  aria-label={`Teaser ${i + 1}`}
-                />
-              ))}
-            </div>
-          </div>
         </div>
       </section>
     </>

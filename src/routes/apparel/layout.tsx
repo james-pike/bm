@@ -59,7 +59,7 @@ export default component$(() => {
         <div class="apparel-titlebar apparel-titlebar--overlap">
           <div class="apparel-titlebar__row">
             <div class="apparel-titlebar__left">
-              <h1 class="apparel-catalog__title">
+              <h1 class="apparel-catalog__title" onClick$={() => nav("/apparel/?category=All")} style={{ cursor: "pointer" }}>
                 {t("apparel.title", locale.value)}
               </h1>
               <div class="apparel-titlebar__tabs">
