@@ -251,7 +251,7 @@ export default component$(() => {
                 disabled={!selectedSize.value}
                 onClick$={orderNow}
               >
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 11-7.778 7.778 5.5 5.5 0 017.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
                 {t("modal.ordernow", locale.value)}
               </button>
             </div>
@@ -305,6 +305,7 @@ export default component$(() => {
             alt={p.name}
             class="product-fullscreen__img"
           />
+          <span class="product-fullscreen__hint">{t("product.taptoclose", locale.value)}</span>
           {(p.imgs || [p.img]).length > 1 && (
             <div class="product-fullscreen__nav">
               <button onClick$={(e) => { e.stopPropagation(); imgIndex.value = (imgIndex.value - 1 + (p.imgs || [p.img]).length) % (p.imgs || [p.img]).length; }}>&lsaquo;</button>

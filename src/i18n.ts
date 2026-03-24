@@ -122,7 +122,7 @@ const translations = {
   "modal.onesize": { en: "One Size", fr: "Taille unique" },
 
   // Cart drawer
-  "cart.mycart": { en: "My Cart", fr: "Panier" },
+  "cart.mycart": { en: "Cart", fr: "Panier" },
   "cart.title": { en: "MY CART", fr: "PANIER" },
   "cart.empty": { en: "Your cart is empty", fr: "Votre panier est vide" },
   "cart.backtoapparel": { en: "Back to Apparel", fr: "Retour aux vêtements" },
@@ -150,7 +150,7 @@ const translations = {
   "cart.error.both": { en: "Employee number and name are required", fr: "Le numéro d'employé et le nom sont requis" },
   "cart.error.number": { en: "Employee number is required", fr: "Le numéro d'employé est requis" },
   "cart.error.name": { en: "Full name is required", fr: "Le nom complet est requis" },
-  "cart.error.required": { en: "All fields are required", fr: "Tous les champs sont requis" },
+  "cart.error.required": { en: "Please complete required fields", fr: "Veuillez remplir les champs requis" },
 
   // Order confirmation
   "order.title": { en: "Order Submitted", fr: "Commande soumise" },
@@ -170,6 +170,7 @@ const translations = {
   "cat.Jackets": { en: "Jackets", fr: "Manteaux" },
 
   // Product detail
+  "product.taptoclose": { en: "Tap anywhere to close", fr: "Appuyez pour fermer" },
   "product.related": { en: "Related Items", fr: "Articles connexes" },
 } as const;
 

@@ -211,6 +211,7 @@ export default component$(() => {
   const empDept = useSignal("");
 
   const cartCount = useComputed$(() => cart.items.reduce((sum, i) => sum + i.quantity, 0));
+  const headerScrolled = useSignal(false);
 
   const toggleLocale = $(() => {
     locale.value = locale.value === "en" ? "fr" : "en";
@@ -311,6 +312,14 @@ export default component$(() => {
     cleanup(() => window.removeEventListener("open-cart", handler));
   });
 
+  // Sticky header on scroll (mobile landing page)
+  // eslint-disable-next-line qwik/no-use-visible-task
+  useVisibleTask$(({ cleanup }) => {
+    const onScroll = () => { headerScrolled.value = window.scrollY > 60; };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    cleanup(() => window.removeEventListener("scroll", onScroll));
+  });
+
   // Close cart on navigation
   // eslint-disable-next-line qwik/no-use-visible-task
   useVisibleTask$(({ track }) => {
@@ -352,7 +361,7 @@ export default component$(() => {
 
   return (
     <>
-      <header class={`site-header ${loc.url.pathname === "/" && !cartOpen.value ? "site-header--transparent" : ""}`}>
+      <header class={`site-header ${loc.url.pathname === "/" && !cartOpen.value ? `site-header--transparent ${headerScrolled.value ? "site-header--scrolled" : ""}` : ""}`}>
         <div class="site-header__inner">
           <Link href="/" class="site-header__logo">
             <img
@@ -376,7 +385,7 @@ export default component$(() => {
               <span class="locale-btn__short">{locale.value === "en" ? "FR" : "EN"}</span>
             </button>
             <button class={`cart-btn ${cartCount.value > 0 && !cartOpen.value ? "cart-btn--active" : ""}`} onClick$={() => { cartOpen.value = !cartOpen.value; }}>
-              {(cartOpen.value || cartCount.value > 0) && <span class="cart-btn__label">{t("cart.mycart", locale.value)}</span>}
+              <span class="cart-btn__label">{t("cart.mycart", locale.value)}</span>
               {cartOpen.value ? (
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg>
               ) : (
@@ -523,10 +532,11 @@ export default component$(() => {
                   </table>
                 </div>
                 <details class="cart-drawer__checkout">
-                  <summary class="cart-drawer__checkout-title">{t("cart.orderdetails", locale.value)}</summary>
-                  {formError.value && (
-                    <div class="cart-drawer__error">{formError.value}</div>
-                  )}
+                  <summary class="cart-drawer__checkout-title">
+                    {t("cart.orderdetails", locale.value)}
+                    {(!empNumber.value || !empName.value || !empDept.value) && <span class="cart-drawer__required-dot" />}
+                    {formError.value && <span class="cart-drawer__error-inline">{formError.value}</span>}
+                  </summary>
                   <div class="checkout-modal__row">
                     <div class={`checkout-modal__field ${formTouched.value && !empNumber.value ? "checkout-modal__field--error" : ""}`}>
                       <label>{t("cart.empnumber", locale.value)}</label>
