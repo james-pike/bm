@@ -40,6 +40,7 @@ export default component$(() => {
 
   const addToCart = $(() => {
     const p = product.value;
+    console.log("addToCart called", { p: p?.name, size: selectedSize.value, color: selectedColor.value });
     if (!p || !selectedSize.value || !selectedColor.value) return;
     try {
       const saved = localStorage.getItem("ce_cart");
@@ -62,8 +63,9 @@ export default component$(() => {
         });
       }
       localStorage.setItem("ce_cart", JSON.stringify(items));
+      console.log("cart saved, dispatching event", items.length, "items");
       window.dispatchEvent(new CustomEvent("cart-updated"));
-    } catch { /* ignore */ }
+    } catch (err) { console.error("addToCart error:", err); }
     addedInfo.value = `${p.name} — ${colorName(selectedColor.value, "en")} / ${selectedSize.value}`;
     added.value = true;
     selectedQty.value = 1;

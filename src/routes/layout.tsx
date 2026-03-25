@@ -227,14 +227,18 @@ export default component$(() => {
     document.cookie = `${LOCALE_COOKIE}=${locale.value};path=/;max-age=31536000`;
   });
 
-  // Load cart from localStorage
+  // Load cart from localStorage — eager strategy to ensure it runs immediately
   // eslint-disable-next-line qwik/no-use-visible-task
-  useVisibleTask$(({ cleanup }) => {
+  useVisibleTask$(
+    ({ cleanup }) => {
     const loadCart = () => {
+      console.log("loadCart called");
       try {
         const saved = localStorage.getItem("ce_cart");
+        console.log("ce_cart from localStorage:", saved?.length, "chars");
         if (saved) {
           cart.items = JSON.parse(saved) as CartItem[];
+          console.log("cart.items set to", cart.items.length, "items");
         } else {
           cart.items = [];
         }
@@ -246,7 +250,7 @@ export default component$(() => {
     loadCart();
     window.addEventListener("cart-updated", loadCart);
     cleanup(() => window.removeEventListener("cart-updated", loadCart));
-  });
+  }, { strategy: 'document-ready' });
 
   const saveCart = $(() => {
     try {

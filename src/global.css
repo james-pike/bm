@@ -116,7 +116,6 @@ img { max-width: 100%; display: block; }
   background: var(--ce-white);
   border-bottom: 1px solid var(--ce-gray-200);
   height: 58px;
-  contain: layout style;
 }
 
 .site-header--solid {
