@@ -298,14 +298,29 @@ export default component$(() => {
         <div class="toast">{t("modal.added", locale.value)} — {addedInfo.value}</div>
       )}
       {imgFullscreen.value && (
-        <div class="product-fullscreen" onClick$={() => { imgFullscreen.value = false; }}>
+        <div
+          class="product-fullscreen"
+          onClick$={() => { imgFullscreen.value = false; }}
+          onTouchStart$={(e) => { touchStartX.value = e.touches[0].clientX; }}
+          onTouchEnd$={(e) => {
+            const diff = touchStartX.value - e.changedTouches[0].clientX;
+            const imgs = p.imgs || [p.img];
+            if (Math.abs(diff) > 40 && imgs.length > 1) {
+              e.stopPropagation();
+              if (diff > 0) {
+                imgIndex.value = (imgIndex.value + 1) % imgs.length;
+              } else {
+                imgIndex.value = (imgIndex.value - 1 + imgs.length) % imgs.length;
+              }
+            }
+          }}
+        >
           <button class="product-fullscreen__close" onClick$={() => { imgFullscreen.value = false; }}>&times;</button>
           <img
             src={(p.imgs || [p.img])[imgIndex.value]}
             alt={p.name}
             class="product-fullscreen__img"
           />
-          <span class="product-fullscreen__hint">{t("product.taptoclose", locale.value)}</span>
           {(p.imgs || [p.img]).length > 1 && (
             <div class="product-fullscreen__nav">
               <button onClick$={(e) => { e.stopPropagation(); imgIndex.value = (imgIndex.value - 1 + (p.imgs || [p.img]).length) % (p.imgs || [p.img]).length; }}>&lsaquo;</button>
