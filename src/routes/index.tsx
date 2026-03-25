@@ -116,13 +116,7 @@ const TeaserCard = component$<{ t: typeof teasers[0] }>(({ t: teaser }) => {
       <div class="teaser-card__dots" />
       <div class="teaser-card__body">
         <div class="featured-banner__tag">{t(teaser.tagKey, locale.value)}</div>
-        <h3 class="teaser-card__title">
-          {teaser.category === "All" && <svg class="teaser-card__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>}
-          {teaser.category === "Jackets" && <svg class="teaser-card__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 2l-2 6 4 2v12h12V10l4-2-2-6"/><path d="M12 2v8"/></svg>}
-          {teaser.category === "Polos" && <svg class="teaser-card__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.38 3.46L16 2 12 5 8 2 3.62 3.46a2 2 0 00-1.34 2.23l.58 3.47a1 1 0 00.99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 002-2V10h2.15a1 1 0 00.99-.84l.58-3.47a2 2 0 00-1.34-2.23z"/></svg>}
-          {teaser.category === "Hats" && <svg class="teaser-card__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 18h20M4 18c0-3 2-5 8-5s8 2 8 5M6 13c0-3.5 2.5-7 6-7s6 3.5 6 7M4 18h-1M21 18h-1"/></svg>}
-          {t(teaser.titleKey, locale.value)}
-        </h3>
+        <h3 class="teaser-card__title">{t(teaser.titleKey, locale.value)}</h3>
         <p class="teaser-card__text">{t(teaser.textKey, locale.value)}</p>
         <span class="btn btn--primary btn--sm">{t(teaser.ctaKey, locale.value)}</span>
       </div>
