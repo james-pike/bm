@@ -13,7 +13,6 @@ const teasers = [
     ctaKey: "teaser.all.cta" as const,
     imgs: [
       "/hat/30109107PS2_FRONT.JPG",
-      "/golf/green.png",
       "/softshell/j7603-soft-shell.png",
     ],
     skewed: true,
@@ -27,9 +26,9 @@ const teasers = [
     ctaKey: "teaser.jackets.cta" as const,
     imgs: [
       "/softshell/j7603-soft-shell.png",
-      "/softshell/l7603-ladies-soft-shell.png",
       "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=600&h=400&fit=crop",
     ],
+    skewed: true,
   },
   {
     slug: "polos",
@@ -40,9 +39,9 @@ const teasers = [
     ctaKey: "teaser.polos.cta" as const,
     imgs: [
       "/golf/green.png",
-      "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=600&h=400&fit=crop",
-      "https://images.unsplash.com/photo-1618354691373-d851c5c3a990?w=600&h=400&fit=crop",
+      "/uapolo/womens-white.png",
     ],
+    skewed: true,
   },
   {
     slug: "hats",
@@ -53,9 +52,9 @@ const teasers = [
     ctaKey: "teaser.hats.cta" as const,
     imgs: [
       "/hat/30109107PS2_FRONT.JPG",
-      "/hat/30109107PS2_BACK.JPG",
+      "/beanie/1.png",
     ],
-    imgClass: "teaser-card__img--zoomed",
+    skewed: true,
   },
 ];
 

@@ -388,6 +388,7 @@ export default component$(() => {
 
   return (
     <>
+      <div class="desktop-soon">Desktop coming soon</div>
       <header class={`site-header ${loc.url.pathname === "/" && !cartOpen.value ? `site-header--transparent ${headerScrolled.value ? "site-header--scrolled" : ""}` : ""}`}>
         <div class="site-header__inner">
           <Link href="/" class="site-header__logo">
@@ -395,11 +396,19 @@ export default component$(() => {
               src="/carmichael-logo.png"
               alt="Carmichael Apparel"
               class="site-header__logo-img"
+              width="200"
+              height="200"
+              loading="eager"
+              decoding="sync"
             />
             <img
               src="/logo-carmichael.jpg"
               alt="Carmichael Apparel"
               class="site-header__logo-text"
+              width="408"
+              height="61"
+              loading="eager"
+              decoding="sync"
             />
             <span class="site-header__logo-apparel">Apparel</span>
           </Link>
@@ -419,7 +428,7 @@ export default component$(() => {
               ) : (
                 <>
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/></svg>
-                  {cartCount.value > 0 && <span class="cart-btn__dot" />}
+                  <span class={`cart-btn__dot ${cartCount.value > 0 ? "cart-btn__dot--visible" : ""}`} />
                 </>
               )}
             </button>
@@ -499,8 +508,8 @@ export default component$(() => {
           <div class="drawer cart-drawer" onClick$={(e) => e.stopPropagation()}>
             <div class="cart-drawer__site-header">
               <Link href="/" class="site-header__logo">
-                <img src="/carmichael-logo.png" alt="Carmichael Apparel" class="site-header__logo-img" />
-                <img src="/logo-carmichael.jpg" alt="Carmichael Apparel" class="site-header__logo-text" />
+                <img src="/carmichael-logo.png" alt="Carmichael Apparel" class="site-header__logo-img" width="200" height="200" loading="eager" decoding="sync" />
+                <img src="/logo-carmichael.jpg" alt="Carmichael Apparel" class="site-header__logo-text" width="408" height="61" loading="eager" decoding="sync" />
                 <span class="site-header__logo-apparel">Apparel</span>
               </Link>
               <nav class="site-header__nav">
