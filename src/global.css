@@ -5,7 +5,7 @@
   --ce-green-light: #00A659;
   --ce-orange: #E6570C;
   --ce-orange-light: #F27D13;
-  --ce-gold: #F5A623;
+  --ce-gold: #e4ba3f;
 
   --ce-white: #ffffff;
   --ce-off-white: #f8f8f6;
@@ -38,6 +38,7 @@ body {
   background: var(--ce-white);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
+  overscroll-behavior: none;
   position: relative;
 }
 
@@ -791,7 +792,7 @@ img { max-width: 100%; display: block; }
 }
 
 /* Teaser card color rotation: green, gold, orange */
-.teaser-card { --tc-bg: #2d6e45; --tc-text: #fff; --tc-tag-bg: rgba(245,166,35,0.15); --tc-tag-border: rgba(245,166,35,0.3); --tc-tag-color: #F5A623; --tc-btn-bg: #F5A623; --tc-btn-color: #fff; --tc-dot-color: rgba(255,255,255,0.4); --tc-glow: #F5A623; }
+.teaser-card { --tc-bg: #2d6e45; --tc-text: #fff; --tc-tag-bg: rgba(228,186,63,0.15); --tc-tag-border: rgba(228,186,63,0.3); --tc-tag-color: #e4ba3f; --tc-btn-bg: #e4ba3f; --tc-btn-color: #fff; --tc-dot-color: rgba(255,255,255,0.4); --tc-glow: #e4ba3f; }
 
 .teaser-card {
   background: var(--tc-bg);

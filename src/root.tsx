@@ -16,6 +16,7 @@ export default component$(() => {
     <QwikCityProvider>
       <head>
         <meta charset="utf-8" />
+        <meta name="theme-color" content="#ffffff" />
 
         {!isDev && (
           <link
