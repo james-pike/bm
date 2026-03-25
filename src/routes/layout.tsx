@@ -328,7 +328,7 @@ export default component$(() => {
     };
     window.addEventListener("open-cart", handler);
     cleanup(() => window.removeEventListener("open-cart", handler));
-  });
+  }, { strategy: 'document-ready' });
 
   // Sticky header on scroll (mobile landing page)
   // eslint-disable-next-line qwik/no-use-visible-task
@@ -336,14 +336,14 @@ export default component$(() => {
     const onScroll = () => { headerScrolled.value = window.scrollY > 60; };
     window.addEventListener("scroll", onScroll, { passive: true });
     cleanup(() => window.removeEventListener("scroll", onScroll));
-  });
+  }, { strategy: 'document-ready' });
 
   // Close cart on navigation
   // eslint-disable-next-line qwik/no-use-visible-task
   useVisibleTask$(({ track }) => {
     track(() => loc.url.pathname);
     cartOpen.value = false;
-  });
+  }, { strategy: 'document-ready' });
 
   // Lock scroll when cart is open
   // eslint-disable-next-line qwik/no-use-visible-task
@@ -365,7 +365,7 @@ export default component$(() => {
       document.body.style.overflow = "";
       window.scrollTo(0, scrollY);
     }
-  });
+  }, { strategy: 'document-ready' });
 
   // Auto-open login modal and lock scroll for unauthenticated users
   // eslint-disable-next-line qwik/no-use-visible-task
@@ -374,7 +374,7 @@ export default component$(() => {
       showLogin.value = true;
       document.documentElement.style.overflow = "hidden";
     }
-  });
+  }, { strategy: 'document-ready' });
 
   // Close modal and unlock scroll on successful login
   // eslint-disable-next-line qwik/no-use-visible-task
@@ -388,7 +388,7 @@ export default component$(() => {
         overlayFading.value = false;
       }, 800);
     }
-  });
+  }, { strategy: 'document-ready' });
 
   return (
     <>
