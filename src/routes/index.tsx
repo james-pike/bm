@@ -168,11 +168,11 @@ export default component$(() => {
 });
 
 export const head: DocumentHead = {
-  title: "Carmichael Apparel - Employee Apparel",
+  title: "Carmichael Apparel",
   meta: [
     {
       name: "description",
-      content: "Official Carmichael Apparel employee apparel. Order branded polos, jackets, hats, and more.",
+      content: "Carmichael Employee Apparel. Order branded jackets, polos, hats, and more.",
     },
   ],
 };
