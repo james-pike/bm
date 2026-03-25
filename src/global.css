@@ -2786,7 +2786,7 @@ details[open] > .cart-drawer__checkout-title::after {
   .hero__apparel-row { flex-direction: column; gap: 0; margin-bottom: 0; align-items: flex-start; }
   .section--teasers { margin-top: -1rem; }
   .section--teasers::before { top: 2rem; }
-  .hero__subtitle-inline { margin-left: 0; font-size: 1.5rem; white-space: normal; text-align: left; margin-top: 0.5rem; line-height: 1.4; letter-spacing: -0.04em; }
+  .hero__subtitle-inline { margin-left: 0; font-size: 1.5rem; white-space: normal; text-align: left; margin-top: 0.5rem; line-height: 1.4; letter-spacing: -0.04em; text-wrap: balance; }
   .hero__bento { display: none; }
   .featured-banner { grid-template-columns: 1fr; min-height: auto; }
   .featured-banner__image { min-height: auto; aspect-ratio: 16/9; }
