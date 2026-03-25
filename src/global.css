@@ -5,7 +5,7 @@
   --ce-green-light: #00A659;
   --ce-orange: #E6570C;
   --ce-orange-light: #F27D13;
-  --ce-gold: #e4ba3f;
+  --ce-gold: #F5A623;
 
   --ce-white: #ffffff;
   --ce-off-white: #f8f8f6;
@@ -31,7 +31,7 @@
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { font-size: 16px; scroll-behavior: smooth; overflow-x: hidden; overflow-y: scroll; }
+html { font-size: 16px; scroll-behavior: smooth; overflow-x: hidden; overflow-y: scroll; background: var(--ce-white); overscroll-behavior: none; }
 body {
   font-family: var(--font-sans);
   color: var(--ce-gray-900);
@@ -2791,7 +2791,7 @@ details[open] > .cart-drawer__checkout-title::after {
   .featured-banner__content { justify-content: flex-start; padding: 1rem 1.25rem; }
   .teaser-grid { grid-template-columns: 1fr; gap: 1rem; padding: 0; margin: 0 0.5rem; background: transparent; border-radius: 0; }
   .hero__browse { display: none; }
-  .teaser-card { border: 1px solid rgba(255,255,255,0.25); border-radius: 10px; grid-template-columns: 1fr; min-height: auto; cursor: default; }
+  .teaser-card { border: 1px solid var(--ce-gray-200); border-radius: 10px; grid-template-columns: 1fr; min-height: auto; cursor: default; }
   .teaser-card:hover { filter: saturate(0.88) brightness(1.03); transform: none; }
   .teaser-card:hover .teaser-card__img { transform: none; }
   .teaser-card:hover .teaser-card__title { transform: none; letter-spacing: inherit; }
@@ -2799,7 +2799,7 @@ details[open] > .cart-drawer__checkout-title::after {
   .teaser-card:hover .btn--sm { transform: none; box-shadow: none; }
   .teaser-card:hover .teaser-card__body::after { background: linear-gradient(90deg, var(--tc-glow, #F5A623), var(--tc-btn-bg, var(--ce-orange)), var(--tc-glow, #F5A623)); }
   .teaser-card__image { aspect-ratio: 16/9; }
-  .teaser-card__body { padding: 0.75rem 1rem; flex-direction: row; align-items: center; justify-content: space-between; }
+  .teaser-card__body { padding: 0.65rem 1rem 0.85rem; flex-direction: row; align-items: center; justify-content: space-between; }
   .teaser-card__body .featured-banner__tag { display: none; }
   .teaser-card__title { font-size: 1.1rem; margin-bottom: 0; }
   .teaser-card__text { display: none; }

@@ -369,6 +369,9 @@ export default component$(() => {
     if (!auth.value.loggedIn) {
       showLogin.value = true;
       document.documentElement.style.overflow = "hidden";
+      document.body.style.position = "fixed";
+      document.body.style.inset = "0";
+      document.body.style.overflow = "hidden";
     }
   }, { strategy: 'document-ready' });
 
@@ -379,6 +382,8 @@ export default component$(() => {
     if (loginAction.value && !loginAction.value.failed) {
       overlayFading.value = true;
       document.documentElement.style.overflow = "";
+      document.body.style.cssText = "";
+      window.scrollTo({ top: 0, behavior: "instant" });
       setTimeout(() => {
         showLogin.value = false;
         overlayFading.value = false;
