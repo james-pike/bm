@@ -410,7 +410,7 @@ export default component$(() => {
               loading="eager"
               decoding="sync"
             />
-            <span class="site-header__logo-apparel">Apparel</span>
+            <span class="site-header__logo-apparel">{t("logo.apparel", locale.value)}</span>
           </Link>
           <nav class="site-header__categories">
             <Link href="/" class={loc.url.pathname === "/" ? "active" : ""}>{t("nav.home", locale.value)}</Link>
@@ -421,14 +421,14 @@ export default component$(() => {
               <span class="locale-btn__full">{locale.value === "en" ? "Français" : "English"}</span>
               <span class="locale-btn__short">{locale.value === "en" ? "FR" : "EN"}</span>
             </button>
-            <button class={`cart-btn ${cartCount.value > 0 ? "cart-btn--active" : ""}`} onClick$={() => { cartOpen.value = !cartOpen.value; }}>
+            <button class="cart-btn cart-btn--active" onClick$={() => { cartOpen.value = !cartOpen.value; }}>
               <span class="cart-btn__label">{t("cart.mycart", locale.value)}</span>
               {cartOpen.value ? (
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg>
               ) : (
                 <>
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/></svg>
-                  <span class={`cart-btn__dot ${cartCount.value > 0 ? "cart-btn__dot--visible" : ""}`} />
+                  <span class={`cart-btn__dot ${cart.items.length > 0 ? "cart-btn__dot--visible" : ""}`} />
                 </>
               )}
             </button>
@@ -510,7 +510,7 @@ export default component$(() => {
               <Link href="/" class="site-header__logo">
                 <img src="/carmichael-logo.png" alt="Carmichael Apparel" class="site-header__logo-img" width="200" height="200" loading="eager" decoding="sync" />
                 <img src="/logo-carmichael.jpg" alt="Carmichael Apparel" class="site-header__logo-text" width="408" height="61" loading="eager" decoding="sync" />
-                <span class="site-header__logo-apparel">Apparel</span>
+                <span class="site-header__logo-apparel">{t("logo.apparel", locale.value)}</span>
               </Link>
               <nav class="site-header__nav">
                 <button class="cart-btn" onClick$={() => (cartOpen.value = false)}>
