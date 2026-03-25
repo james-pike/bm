@@ -49,7 +49,7 @@ const translations = {
 
   // Teaser cards
   "teaser.all.tag": { en: "Full Collection", fr: "Collection complète" },
-  "teaser.all.title": { en: "All Apparel", fr: "Tous les vêtements" },
+  "teaser.all.title": { en: "All Apparel", fr: "Les vêtements" },
   "teaser.all.text": { en: "Browse the complete Carmichael branded collection.", fr: "Parcourez la collection complète Carmichael." },
   "teaser.all.cta": { en: "Browse Collections", fr: "Parcourir les collections" },
   "teaser.jackets.tag": { en: "Cold Weather", fr: "Temps froid" },

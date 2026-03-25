@@ -1606,7 +1606,7 @@ img { max-width: 100%; display: block; }
   gap: 0.3rem;
   padding: 7px 16px;
   border-radius: var(--radius-sm);
-  border: 1px solid var(--ce-gray-200);
+  border: 1.5px solid var(--ce-gold);
   background: transparent;
   font-size: 0.82rem;
   font-weight: 600;
@@ -2839,7 +2839,7 @@ details[open] > .cart-drawer__checkout-title::after {
   .site-header--transparent .site-header__logo-text { display: block; }
   .site-header--transparent .site-header__logo-apparel { color: var(--ce-gray-400); }
   .site-header--transparent .locale-btn { color: var(--ce-gray-700); }
-  .site-header--transparent .cart-btn { border-color: var(--ce-gray-300); background: transparent; color: var(--ce-gray-700); }
+  .site-header--transparent .cart-btn { border-color: var(--ce-gold); background: transparent; color: var(--ce-gray-700); }
   .site-header--transparent .cart-btn svg { stroke: var(--ce-gray-700); }
   .site-header--transparent .cart-btn__label { color: var(--ce-gray-700); }
   .site-header--transparent .cart-btn--active { border-color: var(--ce-gold); background: var(--ce-gold); color: var(--ce-gray-900); }
