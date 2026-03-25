@@ -203,6 +203,15 @@ img { max-width: 100%; display: block; }
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  background: transparent;
+  margin-top: -67px;
+  padding-top: 67px;
+}
+
+.hero__bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
   background:
     radial-gradient(ellipse 35% 35% at 78% 25%, rgba(255,255,255,0.16), transparent 65%),
     radial-gradient(ellipse 30% 40% at 40% 55%, rgba(255,255,255,0.2), transparent 60%),
@@ -211,12 +220,6 @@ img { max-width: 100%; display: block; }
     radial-gradient(ellipse 25% 20% at 85% 55%, rgba(255,255,255,0.14), transparent 70%),
     radial-gradient(ellipse 40% 18% at 15% 52%, rgba(255,255,255,0.12), transparent 75%),
     linear-gradient(180deg, #1a3a28 0%, #2d6e45 22%, #4a9465 34%, #8ec4a0 44%, #c4e2d0 51%, #e4f2ea 57%, #f3f9f5 62%, #fafdfb 67%, #ffffff 74%);
-  margin-top: -67px;
-  padding-top: 67px;
-}
-
-.hero__bg {
-  display: none;
 }
 
 .hero__content {
