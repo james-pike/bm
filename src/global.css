@@ -2808,6 +2808,8 @@ details[open] > .cart-drawer__checkout-title::after {
   .teaser-card:hover .teaser-card__title { transform: none; letter-spacing: inherit; }
   .teaser-card:hover .teaser-card__text { opacity: 1; transform: none; }
   .teaser-card:hover .btn--sm { transform: none; box-shadow: none; }
+  .teaser-card:hover .btn--primary,
+  .teaser-card .btn--primary:hover { background: var(--tc-btn-bg); color: var(--ce-gray-900); }
   .teaser-card:hover .teaser-card__body::after { background: linear-gradient(90deg, var(--tc-glow, #F5A623), var(--tc-btn-bg, var(--ce-orange)), var(--tc-glow, #F5A623)); }
   .teaser-card__image { aspect-ratio: 16/9; }
   .teaser-card__body { padding: 0.65rem 1rem 0.85rem; flex-direction: row; align-items: center; justify-content: space-between; }
