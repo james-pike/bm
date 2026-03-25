@@ -135,10 +135,10 @@ export default component$(() => {
         <div class="hero__bg" />
         <div class="hero__content">
           <div class="hero__text">
-            <div class="hero__badge">
+            {/* <div class="hero__badge">
               <span class="hero__badge-dot" />
               {t("hero.badge", locale.value)}
-            </div>
+            </div> */}
             <h1 class="hero__title">
               <span class="hero__title--accent">{t("hero.accent", locale.value)}</span> <span class="hero__title--muted">{t("hero.title.your", locale.value)}</span><br /><em>Carmichael</em> {t("hero.title.brand", locale.value)}
             </h1>

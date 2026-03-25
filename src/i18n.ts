@@ -155,7 +155,7 @@ const translations = {
   "cart.error.number": { en: "Employee number is required", fr: "Le numéro d'employé est requis" },
   "cart.error.name": { en: "Full name is required", fr: "Le nom complet est requis" },
   "cart.error.required": { en: "Please complete required fields", fr: "Veuillez remplir les champs requis" },
-  "cart.requiredfields": { en: "Required Fields", fr: "Champs requis" },
+  "cart.requiredfields": { en: "Required", fr: "Requis" },
 
   // Order confirmation
   "order.title": { en: "Order Submitted", fr: "Commande soumise" },

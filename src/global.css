@@ -2851,7 +2851,7 @@ details[open] > .cart-drawer__checkout-title::after {
   .site-header__logo-text { height: 21px; backface-visibility: hidden; }
   .site-header__logo-apparel { position: absolute; bottom: -5px; left: 47px; font-size: 0.62rem; letter-spacing: 0.12em; }
   .apparel-page { }
-  .hero { margin-top: 0; padding-top: 60px; }
+  .hero { margin-top: 0; padding-top: 72px; }
   .site-header__nav { gap: 6px; margin-right: -0.25rem; }
   .site-header__apparel-link { display: inline-flex; order: -1; }
   .site-header__nav a, .site-header__nav button, .cart-btn, .locale-btn { transform: scale(1.1); }
