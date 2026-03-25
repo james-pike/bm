@@ -1615,11 +1615,11 @@ img { max-width: 100%; display: block; }
   gap: 0.3rem;
   padding: 7px 16px;
   border-radius: var(--radius-sm);
-  border: 1px solid var(--ce-gray-200);
-  background: transparent;
+  border: 1px solid var(--ce-gold);
+  background: var(--ce-gold);
   font-size: 0.82rem;
   font-weight: 600;
-  color: var(--ce-gray-700);
+  color: var(--ce-gray-900);
   cursor: pointer;
   font-family: var(--font-sans);
   transition: background var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast);
@@ -1627,7 +1627,7 @@ img { max-width: 100%; display: block; }
   justify-content: center;
 }
 @media (hover: hover) { .cart-btn:hover { border-color: var(--ce-gray-500); background: var(--ce-gray-100); } }
-.cart-btn svg { stroke: var(--ce-gray-700); width: 17px; height: 17px; }
+.cart-btn svg { stroke: var(--ce-gray-900); width: 17px; height: 17px; }
 .cart-btn--active {
   border-color: var(--ce-gold);
   background: var(--ce-gold);
