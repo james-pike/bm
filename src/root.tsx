@@ -17,6 +17,7 @@ export default component$(() => {
       <head>
         <meta charset="utf-8" />
         <meta name="theme-color" content="#ffffff" />
+        <meta name="google" content="notranslate" />
 
         {!isDev && (
           <link
@@ -26,7 +27,7 @@ export default component$(() => {
         )}
         <RouterHead />
       </head>
-      <body lang="en">
+      <body lang="en" translate="no" class="notranslate">
         <RouterOutlet />
       </body>
     </QwikCityProvider>
