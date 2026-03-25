@@ -280,7 +280,7 @@ img { max-width: 100%; display: block; }
 .hero__title {
   font-size: clamp(3.5rem, 7.5vw, 5.5rem);
   font-weight: 800;
-  line-height: 1.06;
+  line-height: 0.98;
   margin-bottom: 0;
   letter-spacing: -0.045em;
 }
@@ -2778,7 +2778,7 @@ details[open] > .cart-drawer__checkout-title::after {
 @media (max-width: 900px) {
   .dot-pattern::before { opacity: 0.5; }
   .hero { min-height: auto; }
-  .hero__content { text-align: left; padding: 1.5rem 1.5rem 1.25rem; align-items: flex-start; grid-template-columns: 1fr; }
+  .hero__content { text-align: left; padding: 1rem 1.5rem 1.5rem; align-items: flex-start; grid-template-columns: 1fr; }
   .hero__subtitle { margin: 0 0 2rem; }
   .hero__actions { flex-wrap: wrap; }
   .hero__actions--mobile { display: flex; margin-top: 1.25rem; }
@@ -2786,7 +2786,7 @@ details[open] > .cart-drawer__checkout-title::after {
   .hero__apparel-row { flex-direction: column; gap: 0; margin-bottom: 0; align-items: flex-start; }
   .section--teasers { margin-top: -1rem; }
   .section--teasers::before { top: 2rem; }
-  .hero__subtitle-inline { margin-left: 0; font-size: 1.5rem; white-space: normal; text-align: left; margin-top: 0.5rem; line-height: 1.4; letter-spacing: -0.04em; text-wrap: balance; }
+  .hero__subtitle-inline { margin-left: 0; font-size: 1.5rem; white-space: normal; text-align: left; margin-top: 0.75rem; line-height: 1.4; letter-spacing: -0.04em; text-wrap: balance; }
   .hero__bento { display: none; }
   .featured-banner { grid-template-columns: 1fr; min-height: auto; }
   .featured-banner__image { min-height: auto; aspect-ratio: 16/9; }
@@ -2859,7 +2859,7 @@ details[open] > .cart-drawer__checkout-title::after {
   .site-header__logo-text { height: 21px; backface-visibility: hidden; }
   .site-header__logo-apparel { position: absolute; bottom: -5px; left: 47px; font-size: 0.62rem; letter-spacing: 0.12em; }
   .apparel-page { }
-  .hero { margin-top: 0; padding-top: 66px; }
+  .hero { margin-top: 0; padding-top: 60px; }
   .site-header__nav { gap: 6px; margin-right: -0.25rem; }
   .site-header__apparel-link { display: inline-flex; order: -1; }
   .site-header__nav a, .site-header__nav button, .cart-btn, .locale-btn { transform: scale(1.1); }
