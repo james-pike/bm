@@ -2513,7 +2513,7 @@ img { max-width: 100%; display: block; }
   transition: color 0.3s ease;
 }
 .cart-drawer__required-label--error {
-  color: #b91c1c;
+  color: var(--ce-gold);
 }
 .cart-drawer__order-btn {
   display: inline-flex;
@@ -2526,11 +2526,11 @@ img { max-width: 100%; display: block; }
   flex-shrink: 0;
 }
 .checkout-modal__field--error input {
-  border-color: var(--ce-green) !important;
-  background: rgba(0, 112, 60, 0.06);
+  border-color: inherit;
+  background: inherit;
 }
 .checkout-modal__field--error label {
-  color: var(--ce-green) !important;
+  color: var(--ce-gold) !important;
 }
 /* ===== Cart Invoice ===== */
 .cart-drawer__invoice {
@@ -2973,7 +2973,7 @@ details[open] > .cart-drawer__checkout-title::after {
   .cart-drawer__checkout { padding: 0.6rem 0.75rem; gap: 0; margin: 0 0.35rem; }
   .cart-drawer__checkout[open] { gap: 0.5rem; }
   .checkout-modal__field label { margin-bottom: 0.1rem; font-size: 0.65rem; }
-  .checkout-modal__field input { padding: 6px 10px; font-size: 0.8rem; }
+  .checkout-modal__field input { padding: 6px 10px; font-size: 16px; }
   .cart-drawer__footer { padding: 0.65rem 0.75rem; margin: 0.35rem; }
   .modal { padding: 0.5rem 1rem 1rem; margin: 0 0.5rem; }
   .modal .modal__close { top: 0.35rem; right: 0.5rem; width: 28px; height: 28px; font-size: 0.85rem; }
