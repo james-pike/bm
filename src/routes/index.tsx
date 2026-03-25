@@ -12,9 +12,9 @@ const teasers = [
     textKey: "teaser.all.text" as const,
     ctaKey: "teaser.all.cta" as const,
     imgs: [
-      "/softshell/j7603-soft-shell.png",
-      "/golf/green.png",
       "/hat/30109107PS2_FRONT.JPG",
+      "/golf/green.png",
+      "/softshell/j7603-soft-shell.png",
     ],
     skewed: true,
   },
