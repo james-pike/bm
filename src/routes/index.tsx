@@ -5,6 +5,20 @@ import { LocaleContext, t } from "../i18n";
 
 const teasers = [
   {
+    slug: "all",
+    category: "All",
+    tagKey: "teaser.all.tag" as const,
+    titleKey: "teaser.all.title" as const,
+    textKey: "teaser.all.text" as const,
+    ctaKey: "teaser.all.cta" as const,
+    imgs: [
+      "/softshell/j7603-soft-shell.png",
+      "/golf/green.png",
+      "/hat/30109107PS2_FRONT.JPG",
+    ],
+    skewed: true,
+  },
+  {
     slug: "jackets",
     category: "Jackets",
     tagKey: "teaser.jackets.tag" as const,
@@ -28,18 +42,6 @@ const teasers = [
       "/golf/green.png",
       "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=600&h=400&fit=crop",
       "https://images.unsplash.com/photo-1618354691373-d851c5c3a990?w=600&h=400&fit=crop",
-    ],
-  },
-  {
-    slug: "hoodies",
-    category: "Hoodies",
-    tagKey: "teaser.hoodies.tag" as const,
-    titleKey: "teaser.hoodies.title" as const,
-    textKey: "teaser.hoodies.text" as const,
-    ctaKey: "teaser.hoodies.cta" as const,
-    imgs: [
-      "https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=600&h=400&fit=crop",
-      "https://images.unsplash.com/photo-1620799140188-3b2a02fd9a77?w=600&h=400&fit=crop",
     ],
   },
   {
@@ -83,19 +85,34 @@ const TeaserCard = component$<{ t: typeof teasers[0] }>(({ t: teaser }) => {
       onMouseEnter$={() => (hovering.value = true)}
       onMouseLeave$={() => (hovering.value = false)}
     >
-      <div class="teaser-card__image">
-        {teaser.imgs.map((src, i) => (
-          <img
-            key={i}
-            src={src}
-            alt={t(teaser.titleKey, locale.value)}
-            width="600"
-            height="400"
-            loading="eager"
-            decoding="async"
-            class={`teaser-card__img ${imgIndex.value === i ? "active" : ""} ${(teaser as any).imgClass || ""}`}
-          />
-        ))}
+      <div class={`teaser-card__image ${(teaser as any).skewed ? "teaser-card__image--skewed" : ""}`}>
+        {(teaser as any).skewed ? (
+          teaser.imgs.map((src, i) => (
+            <img
+              key={i}
+              src={src}
+              alt={t(teaser.titleKey, locale.value)}
+              width="600"
+              height="400"
+              loading="eager"
+              decoding="async"
+              class="teaser-card__skewed-img"
+            />
+          ))
+        ) : (
+          teaser.imgs.map((src, i) => (
+            <img
+              key={i}
+              src={src}
+              alt={t(teaser.titleKey, locale.value)}
+              width="600"
+              height="400"
+              loading="eager"
+              decoding="async"
+              class={`teaser-card__img ${imgIndex.value === i ? "active" : ""} ${(teaser as any).imgClass || ""}`}
+            />
+          ))
+        )}
       </div>
       <div class="teaser-card__dots" />
       <div class="teaser-card__body">

@@ -8,7 +8,7 @@ export const LocaleContext = createContextId<Signal<Locale>>("locale");
 const translations = {
   // Header nav
   "nav.home": { en: "Home", fr: "Accueil" },
-  "nav.apparel": { en: "Apparel", fr: "Vêtements" },
+  "nav.apparel": { en: "Collections", fr: "Collections" },
   "nav.shirts": { en: "Shirts", fr: "Chandails" },
   "nav.polos": { en: "Polos", fr: "Polos" },
   "nav.hoodies": { en: "Hoodies", fr: "Kangourous" },
@@ -39,7 +39,7 @@ const translations = {
   },
 
   "hero.explore": { en: "Explore Collections", fr: "Explorer les collections" },
-  "hero.browse": { en: "Browse Apparel", fr: "Parcourir les vêtements" },
+  "hero.browse": { en: "Browse Collections", fr: "Parcourir les collections" },
 
   // Hero photo labels
   "hero.label.onthejob": { en: "On the Job", fr: "Au travail" },
@@ -47,8 +47,12 @@ const translations = {
   "hero.label.hats": { en: "Hats", fr: "Chapeaux" },
 
   // Teaser cards
-  "teaser.jackets.tag": { en: "Just Landed", fr: "Nouveautés" },
-  "teaser.jackets.title": { en: "New Season Jackets", fr: "Manteaux de saison" },
+  "teaser.all.tag": { en: "Full Collection", fr: "Collection complète" },
+  "teaser.all.title": { en: "All Apparel", fr: "Tous les vêtements" },
+  "teaser.all.text": { en: "Browse the complete Carmichael branded collection.", fr: "Parcourez la collection complète Carmichael." },
+  "teaser.all.cta": { en: "Shop All", fr: "Tout voir" },
+  "teaser.jackets.tag": { en: "Cold Weather", fr: "Temps froid" },
+  "teaser.jackets.title": { en: "Jackets & Fleeces", fr: "Manteaux et polaires" },
   "teaser.jackets.text": { en: "Softshell and insulated options built for Canadian weather.", fr: "Options softshell et isolées conçues pour le climat canadien." },
   "teaser.jackets.cta": { en: "Shop Jackets", fr: "Voir les manteaux" },
 
@@ -82,7 +86,7 @@ const translations = {
   "shop.items": { en: "items", fr: "articles" },
 
   // Apparel catalog
-  "apparel.title": { en: "Apparel", fr: "Vêtements" },
+  "apparel.title": { en: "Collections", fr: "Collections" },
   "apparel.all.title": { en: "All Apparel", fr: "Tous les vêtements" },
   "apparel.items": { en: "items", fr: "articles" },
   "apparel.all": { en: "All", fr: "Tous" },

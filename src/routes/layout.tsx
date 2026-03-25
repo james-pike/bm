@@ -392,15 +392,16 @@ export default component$(() => {
         <div class="site-header__inner">
           <Link href="/" class="site-header__logo">
             <img
-              src="/logo-carmichael.jpg"
-              alt="Carmichael Apparel"
-              class="site-header__logo-text"
-            />
-            <img
               src="/carmichael-logo.png"
               alt="Carmichael Apparel"
               class="site-header__logo-img"
             />
+            <img
+              src="/logo-carmichael.jpg"
+              alt="Carmichael Apparel"
+              class="site-header__logo-text"
+            />
+            <span class="site-header__logo-apparel">Apparel</span>
           </Link>
           <nav class="site-header__categories">
             <Link href="/" class={loc.url.pathname === "/" ? "active" : ""}>{t("nav.home", locale.value)}</Link>
@@ -498,12 +499,16 @@ export default component$(() => {
           <div class="drawer cart-drawer" onClick$={(e) => e.stopPropagation()}>
             <div class="cart-drawer__site-header">
               <Link href="/" class="site-header__logo">
-                <img src="/logo-carmichael.jpg" alt="Carmichael Apparel" class="site-header__logo-text" />
                 <img src="/carmichael-logo.png" alt="Carmichael Apparel" class="site-header__logo-img" />
+                <img src="/logo-carmichael.jpg" alt="Carmichael Apparel" class="site-header__logo-text" />
+                <span class="site-header__logo-apparel">Apparel</span>
               </Link>
-              <button class="cart-drawer__close-btn" onClick$={() => (cartOpen.value = false)}>
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg>
-              </button>
+              <nav class="site-header__nav">
+                <button class="cart-btn" onClick$={() => (cartOpen.value = false)}>
+                  <span class="cart-btn__label">{t("cart.mycart", locale.value)}</span>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg>
+                </button>
+              </nav>
             </div>
             <div class="cart-drawer__header">
               <h2 class="cart-drawer__title">{t("cart.title", locale.value)} <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/></svg></h2>
