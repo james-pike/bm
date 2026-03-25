@@ -2850,12 +2850,6 @@ details[open] > .cart-drawer__checkout-title::after {
   .site-header--transparent .site-header__logo-text { display: block; }
   .site-header--transparent .site-header__logo-apparel { color: var(--ce-gray-400); }
   .site-header--transparent .locale-btn { color: var(--ce-gray-700); }
-  .site-header--transparent .cart-btn { border-color: var(--ce-gray-300); background: transparent; color: var(--ce-gray-700); }
-  .site-header--transparent .cart-btn svg { stroke: var(--ce-gray-700); }
-  .site-header--transparent .cart-btn__label { color: var(--ce-gray-700); }
-  .site-header--transparent .cart-btn--active { border-color: var(--ce-gold); background: var(--ce-gold); color: var(--ce-gray-900); }
-  .site-header--transparent .cart-btn--active svg { stroke: var(--ce-gray-900); }
-  .site-header--transparent .cart-btn--active .cart-btn__label { color: var(--ce-gray-900); }
   .site-header--cart-open { position: fixed; top: 0; left: 0; right: 0; z-index: 100; }
   .site-header__categories { display: none; }
   .site-header__mobile-link { display: block; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.03em; text-decoration: none; color: var(--ce-gray-600); padding: 4px 8px; }
