@@ -134,22 +134,22 @@ export default component$(() => {
         <div class="hero__bg" />
         <div class="hero__content">
           <div class="hero__text">
-            {/* <div class="hero__badge">
+            <div class="hero__badge">
               <span class="hero__badge-dot" />
               {t("hero.badge", locale.value)}
-            </div> */}
+            </div>
             <h1 class="hero__title">
               <span class="hero__title--accent">{t("hero.accent", locale.value)}</span> <span class="hero__title--muted">{t("hero.title.your", locale.value)}</span><br /><em>Carmichael</em> {t("hero.title.brand", locale.value)}
             </h1>
             <div class="hero__apparel-row">
               <p class="hero__subtitle-inline">{t("hero.subtitle", locale.value)}</p>
             </div>
-            <div class="hero__actions hero__actions--mobile">
+            {/* <div class="hero__actions hero__actions--mobile">
               <a href="/apparel/" class="btn btn--primary">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
                 {t("hero.browse", locale.value)}
               </a>
-            </div>
+            </div> */}
           </div>
         </div>
 
