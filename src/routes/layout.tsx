@@ -358,12 +358,8 @@ export default component$(() => {
       document.body.style.overflow = "hidden";
     } else {
       const scrollY = Math.abs(parseInt(document.body.style.top || "0", 10));
-      document.body.style.position = "";
-      document.body.style.top = "";
-      document.body.style.left = "";
-      document.body.style.right = "";
-      document.body.style.overflow = "";
-      window.scrollTo(0, scrollY);
+      document.body.style.cssText = "";
+      window.scrollTo({ top: scrollY, behavior: "instant" });
     }
   }, { strategy: 'document-ready' });
 
@@ -393,7 +389,7 @@ export default component$(() => {
   return (
     <>
       <div class="desktop-soon">Desktop coming soon</div>
-      <header class={`site-header ${loc.url.pathname === "/" && !cartOpen.value ? `site-header--transparent ${headerScrolled.value ? "site-header--scrolled" : ""}` : ""}`}>
+      <header class={`site-header ${cartOpen.value ? "site-header--cart-open" : ""} ${loc.url.pathname === "/" && !cartOpen.value ? `site-header--transparent ${headerScrolled.value ? "site-header--scrolled" : ""}` : ""}`}>
         <div class="site-header__inner">
           <Link href="/" class="site-header__logo">
             <img
