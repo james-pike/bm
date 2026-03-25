@@ -51,7 +51,7 @@ const translations = {
   "teaser.all.tag": { en: "Full Collection", fr: "Collection complète" },
   "teaser.all.title": { en: "All Apparel", fr: "Tous les vêtements" },
   "teaser.all.text": { en: "Browse the complete Carmichael branded collection.", fr: "Parcourez la collection complète Carmichael." },
-  "teaser.all.cta": { en: "Shop All", fr: "Tout voir" },
+  "teaser.all.cta": { en: "Browse Collections", fr: "Parcourir les collections" },
   "teaser.jackets.tag": { en: "Cold Weather", fr: "Temps froid" },
   "teaser.jackets.title": { en: "Jackets & Fleeces", fr: "Manteaux et polaires" },
   "teaser.jackets.text": { en: "Softshell and insulated options built for Canadian weather.", fr: "Options softshell et isolées conçues pour le climat canadien." },
