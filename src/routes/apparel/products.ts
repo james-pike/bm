@@ -176,12 +176,10 @@ export const allProducts = [
     "category": "Work Wear",
     "sizes": "S - 5XL",
     "badge": "",
-    "colors": [
-      "#1a1a18"
-    ],
+    "colors": [],
     "price": 100,
-    "img": "",
-    "imgs": [],
+    "img": "/sku/_INSULATED VIKING frj3957frj  (1).png",
+    "imgs": ["/sku/_INSULATED VIKING frj3957frj  (1).png"],
     "material": "",
     "details": "Waterproof and windproof Fully compliant with CSA Z96-22 Class 1, Level 2 Fully compliant with ANSI/ISEA 107-2020 Type O, Class 1, ASTM D6413 (FR)"
   },
@@ -193,8 +191,8 @@ export const allProducts = [
     "badge": "",
     "colors": [],
     "price": 100,
-    "img": "",
-    "imgs": [],
+    "img": "/sku/viking 3907FRWP.png",
+    "imgs": ["/sku/viking 3907FRWP.png"],
     "material": "",
     "details": "CAN/CGSB-4.2 No.27.10 & ASTM D6413 flame resistance self-extinguishing for momentary contact with open flame Fully compliant with CSA Z96-22 Class 1, Level 2 Fully compliant with ANSI/ISEA 107-2020 Class E, ASTM D6413"
   },
@@ -206,23 +204,10 @@ export const allProducts = [
     "badge": "",
     "colors": [],
     "price": 100,
-    "img": "",
-    "imgs": [],
+    "img": "/sku/FRS 160  CARHARTT SHIRT (2).png",
+    "imgs": ["/sku/FRS 160  CARHARTT SHIRT (2).png"],
     "material": "",
     "details": "UL® classified to NFPA 2112 Meets the performance requirements of NFPA 70E 7-ounce, 88% cotton / 12% high-tenacity nylon FR twill"
-  },
-  {
-    "sku": "CAR-12",
-    "name": "Flame-Resistant Relaxed Fit Canvas Work Pant Shadow #104204",
-    "category": "Work Wear",
-    "sizes": "S - 4XL",
-    "badge": "",
-    "colors": [],
-    "price": 100,
-    "img": "",
-    "imgs": [],
-    "material": "",
-    "details": "UL® Classified to NFPA 2112 Meets the performance requirements of NFPA 70E 9-ounce, 98% cotton / 2% spandex canvas"
   },
   {
     "sku": "CAR-13",
@@ -232,8 +217,8 @@ export const allProducts = [
     "badge": "",
     "colors": [],
     "price": 100,
-    "img": "",
-    "imgs": [],
+    "img": "/sku/jacket logoed 3307J.png",
+    "imgs": ["/sku/jacket logoed 3307J.png"],
     "material": "",
     "details": "100% Waterproof and windproof Toughest fabric to resist punctures, rips, snags, and abrasions Heavy-duty 420 denier nylon with PVC backing"
   },
@@ -245,8 +230,8 @@ export const allProducts = [
     "badge": "",
     "colors": [],
     "price": 100,
-    "img": "",
-    "imgs": [],
+    "img": "/sku/Viking 3307P.png",
+    "imgs": ["/sku/Viking 3307P.png"],
     "material": "",
     "details": "Viking Journeyman® 420D Bib Pants #3307P"
   },
@@ -258,8 +243,8 @@ export const allProducts = [
     "badge": "",
     "colors": [],
     "price": 100,
-    "img": "",
-    "imgs": [],
+    "img": "/sku/carmicheal  337 logo.png",
+    "imgs": ["/sku/carmicheal  337 logo.png"],
     "material": "",
     "details": "Durable material holds up to the toughest working conditions Sewn with FR thread for flame resistance Detachable snap hood"
   },
@@ -271,8 +256,8 @@ export const allProducts = [
     "badge": "",
     "colors": [],
     "price": 100,
-    "img": "",
-    "imgs": [],
+    "img": "/sku/MENS CLASSIC LONG SLEEVE SMP2.png",
+    "imgs": ["/sku/MENS CLASSIC LONG SLEEVE SMP2.png"],
     "material": "",
     "details": "Flame resistant, 6.5 oz.(220 g/m²) Swiss Pique Category 2 Protection, NFPA 2112 - 2023 Compliant NFPA 2112, NFPA 70E"
   },
@@ -284,16 +269,29 @@ export const allProducts = [
     "badge": "",
     "colors": [],
     "price": 100,
-    "img": "",
-    "imgs": [],
+    "img": "/sku/Coverall FlaME 1072GR.png",
+    "imgs": ["/sku/Coverall FlaME 1072GR.png"],
     "material": "",
     "details": "UL Certified to NFPA 2112 NFPA 70E ASTM F1506 CAN/CGSB 155.20 CSA Z462 EN ISO 11611 Class 1"
+  },
+  {
+    "sku": "CAR-12",
+    "name": "Flame-Resistant Relaxed Fit Canvas Work Pant Shadow #104204",
+    "category": "Work Wear",
+    "sizes": "S - 4XL",
+    "badge": "",
+    "colors": [],
+    "price": 100,
+    "img": "/sku/carhartt 104204.png",
+    "imgs": ["/sku/carhartt 104204.png"],
+    "material": "",
+    "details": "UL® Classified to NFPA 2112 Meets the performance requirements of NFPA 70E 9-ounce, 98% cotton / 2% spandex canvas"
   }
 ];
 
 export type Product = typeof allProducts[0];
 
-export const categories = ["All", ...Array.from(new Set(allProducts.map((p) => p.category)))];
+export const categories = ["All", "Work Wear", "Jackets", "Polos", "Hats"];
 
 export const badgeMap: Record<string, string> = { New: "badge.new", Popular: "badge.popular" };
 export function badgeClass(badge: string) {

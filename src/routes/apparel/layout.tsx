@@ -17,6 +17,10 @@ const heroBanners: Record<string, [{ src: string; alt: string }, { src: string; 
     { src: "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=640&h=360&fit=crop", alt: "Jackets" },
     { src: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=640&h=360&fit=crop", alt: "On the job" },
   ],
+  "Work Wear": [
+    { src: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=640&h=360&fit=crop", alt: "On the job" },
+    { src: "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=640&h=360&fit=crop", alt: "Apparel collection" },
+  ],
   Hats: [
     { src: "https://images.unsplash.com/photo-1556306535-0f09a537f0a3?w=640&h=360&fit=crop", alt: "Caps & hats" },
     { src: "https://images.unsplash.com/photo-1521369909029-2afed882baee?w=640&h=360&fit=crop", alt: "Headwear" },
@@ -81,7 +85,7 @@ export default component$(() => {
             <div class="apparel-titlebar__right">
               <div class="apparel-titlebar__search">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
-                <input type="text" class="apparel-titlebar__search-input" placeholder="Search apparel..." />
+                <input type="text" class="apparel-titlebar__search-input" placeholder="" />
               </div>
               <button class="apparel-titlebar__action apparel-titlebar__action--mobile-search" aria-label="Search">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>

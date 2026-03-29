@@ -18,7 +18,10 @@ const ProductCard = component$<{ item: Product; sku: string }>(({ item, sku }) =
       <div class="product-card__info">
         <div class="product-card__name-row">
           <div class="product-card__name">{item.name}</div>
-          <div class="product-card__price">${item.price}</div>
+          <div class="product-card__price-group">
+            <div class="product-card__price">${item.price}</div>
+            <span class="product-card__sizes">{item.sizes === "One Size" ? t("modal.onesize", locale.value) : item.sizes}</span>
+          </div>
         </div>
         <div class="product-card__color-size-row">
           <div class="product-card__colors">
@@ -31,7 +34,6 @@ const ProductCard = component$<{ item: Product; sku: string }>(({ item, sku }) =
               />
             ))}
           </div>
-          <span class="product-card__sizes">{item.sizes === "One Size" ? t("modal.onesize", locale.value) : item.sizes}</span>
         </div>
       </div>
     </a>

@@ -393,6 +393,64 @@ export default component$(() => {
 
   return (
     <>
+      {/* Login Modal */}
+      {showLogin.value && (
+        <div class={`login-overlay ${overlayFading.value ? "login-overlay--fading" : ""}`} onClick$={() => { if (auth.value.loggedIn) showLogin.value = false; }}>
+          <div class="login-modal" onClick$={(e) => e.stopPropagation()}>
+            {auth.value.loggedIn && (
+              <button
+                class="login-modal__close"
+                onClick$={() => (showLogin.value = false)}
+                aria-label="Close"
+              >
+                &times;
+              </button>
+            )}
+            <div class="login-modal__header">
+              <img
+                src="/carmichael-logo.png"
+                alt="Carmichael Apparel"
+                class="login-modal__logo"
+              />
+              <h2 class="login-modal__title">{t("login.title", locale.value)}</h2>
+              <p class="login-modal__subtitle">
+                {t("login.subtitle", locale.value)}
+              </p>
+            </div>
+            <Form action={loginAction} class="login-modal__form">
+              {loginAction.value?.failed && (
+                <div class="login-modal__error">{loginAction.value.message}</div>
+              )}
+              <div class="login-modal__field">
+                <label for="username">{t("login.username", locale.value)}</label>
+                <input
+                  id="username"
+                  name="username"
+                  type="text"
+                  autoComplete="username"
+                  required
+                  placeholder={t("login.username.placeholder", locale.value)}
+                />
+              </div>
+              <div class="login-modal__field">
+                <label for="password">{t("login.password", locale.value)}</label>
+                <input
+                  id="password"
+                  name="password"
+                  type="password"
+                  autoComplete="current-password"
+                  required
+                  placeholder={t("login.password.placeholder", locale.value)}
+                />
+              </div>
+              <button type="submit" class="btn btn--green login-modal__submit">
+                {loginAction.isRunning ? t("login.submitting", locale.value) : t("login.submit", locale.value)}
+              </button>
+            </Form>
+          </div>
+        </div>
+      )}
+
       {(auth.value.loggedIn || (loginAction.value && !loginAction.value.failed)) && <>
       <div class="desktop-soon">Desktop coming soon</div>
       <header class={`site-header ${cartOpen.value ? "site-header--cart-open" : ""} ${loc.url.pathname === "/" && !cartOpen.value ? `site-header--transparent ${headerScrolled.value ? "site-header--scrolled" : ""}` : ""}`}>
@@ -441,68 +499,6 @@ export default component$(() => {
           </nav>
         </div>
       </header>
-
-      {/* Login Modal */}
-      {showLogin.value && (
-        <div class={`login-overlay ${overlayFading.value ? "login-overlay--fading" : ""}`} onClick$={() => { if (auth.value.loggedIn) showLogin.value = false; }}>
-          <div class="login-modal" onClick$={(e) => e.stopPropagation()}>
-            {auth.value.loggedIn && (
-              <button
-                class="login-modal__close"
-                onClick$={() => (showLogin.value = false)}
-                aria-label="Close"
-              >
-                &times;
-              </button>
-            )}
-            <div class="login-modal__header">
-              <img
-                src="/carmichael-logo.png"
-                alt="Carmichael Apparel"
-                class="login-modal__logo"
-              />
-              <h2 class="login-modal__title">{t("login.title", locale.value)}</h2>
-              <p class="login-modal__subtitle">
-                {t("login.subtitle", locale.value)}
-              </p>
-            </div>
-            <Form action={loginAction} class="login-modal__form">
-              {loginAction.value?.failed && (
-                <div class="login-modal__error">
-                  {loginAction.value.fieldErrors?.username ||
-                    loginAction.value.fieldErrors?.password ||
-                    t("login.error", locale.value)}
-                </div>
-              )}
-              <div class="login-modal__field">
-                <label for="username">{t("login.username", locale.value)}</label>
-                <input
-                  id="username"
-                  name="username"
-                  type="text"
-                  autoComplete="username"
-                  required
-                  placeholder={t("login.username.placeholder", locale.value)}
-                />
-              </div>
-              <div class="login-modal__field">
-                <label for="password">{t("login.password", locale.value)}</label>
-                <input
-                  id="password"
-                  name="password"
-                  type="password"
-                  autoComplete="current-password"
-                  required
-                  placeholder={t("login.password.placeholder", locale.value)}
-                />
-              </div>
-              <button type="submit" class="btn btn--green login-modal__submit">
-                {loginAction.isRunning ? t("login.submitting", locale.value) : t("login.submit", locale.value)}
-              </button>
-            </Form>
-          </div>
-        </div>
-      )}
 
       <main>
         <Slot />
