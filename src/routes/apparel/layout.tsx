@@ -79,11 +79,12 @@ export default component$(() => {
               </div>
             </div>
             <div class="apparel-titlebar__right">
-              <button class="apparel-titlebar__action" aria-label="Search">
+              <div class="apparel-titlebar__search">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+                <input type="text" class="apparel-titlebar__search-input" placeholder="Search apparel..." />
+              </div>
+              <button class="apparel-titlebar__action apparel-titlebar__action--mobile-search" aria-label="Search">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
-              </button>
-              <button class="apparel-titlebar__action" aria-label="Filter">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
               </button>
             </div>
           </div>

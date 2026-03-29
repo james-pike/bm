@@ -5,6 +5,19 @@ import { LocaleContext, t } from "../i18n";
 
 const teasers = [
   {
+    slug: "work-wear",
+    category: "Work Wear",
+    tagKey: "teaser.workwear.tag" as const,
+    titleKey: "teaser.workwear.title" as const,
+    textKey: "teaser.workwear.text" as const,
+    ctaKey: "teaser.workwear.cta" as const,
+    imgs: [
+      "/sku/_INSULATED_VIKING_frj3957frj_-removebg-preview.png",
+      "/sku/ww2-removebg-preview.png",
+    ],
+    skewed: true,
+  },
+  {
     slug: "all",
     category: "All",
     tagKey: "teaser.all.tag" as const,
@@ -25,8 +38,8 @@ const teasers = [
     textKey: "teaser.jackets.text" as const,
     ctaKey: "teaser.jackets.cta" as const,
     imgs: [
-      "/softshell/j7603-soft-shell.png",
-      "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=600&h=400&fit=crop",
+      "/sku/j7603-soft-shell-removebg-preview.png",
+      "/sku/l7603-ladies-soft-shell-removebg-preview.png",
     ],
     skewed: true,
   },
@@ -38,8 +51,8 @@ const teasers = [
     textKey: "teaser.polos.text" as const,
     ctaKey: "teaser.polos.cta" as const,
     imgs: [
-      "/golf/green.png",
-      "/uapolo/womens-white.png",
+      "/sku/green-removebg-preview.png",
+      "/sku/womens-white-removebg-preview.png",
     ],
     skewed: true,
   },
@@ -63,19 +76,6 @@ const TeaserCard = component$<{ t: typeof teasers[0] }>(({ t: teaser }) => {
   const locale = useContext(LocaleContext);
   const imgIndex = useSignal(0);
   const hovering = useSignal(false);
-
-  // eslint-disable-next-line qwik/no-use-visible-task
-  useVisibleTask$(({ track, cleanup }) => {
-    track(() => hovering.value);
-    if (!hovering.value) {
-      imgIndex.value = 0;
-      return;
-    }
-    const interval = setInterval(() => {
-      imgIndex.value = (imgIndex.value + 1) % teaser.imgs.length;
-    }, 2000);
-    cleanup(() => clearInterval(interval));
-  });
 
   return (
     <a
@@ -139,11 +139,14 @@ export default component$(() => {
               {t("hero.badge", locale.value)}
             </div>
             <h1 class="hero__title">
-              <span class="hero__title--accent">{t("hero.accent", locale.value)}</span> <span class="hero__title--muted">{t("hero.title.your", locale.value)}</span><br /><em>Carmichael</em> {t("hero.title.brand", locale.value)}
+              <span class="hero__title--accent">{t("hero.accent", locale.value)}</span> <span class="hero__title--muted">{t("hero.title.your", locale.value)}</span><img src="/carmichael-logo.png" alt="" class="hero__title-logo" /><br /><em>Carmichael</em> {t("hero.title.brand", locale.value)}
             </h1>
             <div class="hero__apparel-row">
               <p class="hero__subtitle-inline">{t("hero.subtitle", locale.value)}</p>
             </div>
+          </div>
+          <div class="hero__logo-slot">
+            <img src="/carmichael-logo.png" alt="Carmichael" class="hero__logo-img" />
           </div>
         </div>
 

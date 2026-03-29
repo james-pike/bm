@@ -393,6 +393,7 @@ export default component$(() => {
 
   return (
     <>
+      {(auth.value.loggedIn || (loginAction.value && !loginAction.value.failed)) && <>
       <div class="desktop-soon">Desktop coming soon</div>
       <header class={`site-header ${cartOpen.value ? "site-header--cart-open" : ""} ${loc.url.pathname === "/" && !cartOpen.value ? `site-header--transparent ${headerScrolled.value ? "site-header--scrolled" : ""}` : ""}`}>
         <div class="site-header__inner">
@@ -641,6 +642,7 @@ export default component$(() => {
           </div>
         </div>
       )}
+      </>}
     </>
   );
 });

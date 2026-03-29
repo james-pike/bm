@@ -224,7 +224,7 @@ export const allProducts = [
 
 export type Product = typeof allProducts[0];
 
-export const categories = ["All", ...Array.from(new Set(allProducts.map((p) => p.category)))];
+export const categories = ["All", "Jackets", "Polos", "Work Wear", "Hats"];
 
 export const badgeMap: Record<string, string> = { New: "badge.new", Popular: "badge.popular" };
 export function badgeClass(badge: string) {

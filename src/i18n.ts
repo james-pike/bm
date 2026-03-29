@@ -9,7 +9,7 @@ const translations = {
   // Header nav
   "logo.apparel": { en: "Apparel", fr: "Vêtements" },
   "nav.home": { en: "Home", fr: "Accueil" },
-  "nav.apparel": { en: "Collections", fr: "Collections" },
+  "nav.apparel": { en: "Apparel", fr: "Vêtements" },
   "nav.shirts": { en: "Shirts", fr: "Chandails" },
   "nav.polos": { en: "Polos", fr: "Polos" },
   "nav.hoodies": { en: "Hoodies", fr: "Kangourous" },
@@ -39,8 +39,8 @@ const translations = {
     fr: "Vêtements de qualité pour tous les rôles, du chantier au bureau.",
   },
 
-  "hero.explore": { en: "Explore Collections", fr: "Explorer les collections" },
-  "hero.browse": { en: "Browse Collections", fr: "Parcourir les collections" },
+  "hero.explore": { en: "Explore Apparel", fr: "Explorer les vêtements" },
+  "hero.browse": { en: "Browse Apparel", fr: "Parcourir les vêtements" },
 
   // Hero photo labels
   "hero.label.onthejob": { en: "On the Job", fr: "Au travail" },
@@ -51,9 +51,9 @@ const translations = {
   "teaser.all.tag": { en: "Full Collection", fr: "Collection complète" },
   "teaser.all.title": { en: "All Apparel", fr: "Les vêtements" },
   "teaser.all.text": { en: "Browse the complete Carmichael branded collection.", fr: "Parcourez la collection complète Carmichael." },
-  "teaser.all.cta": { en: "Browse Collections", fr: "Parcourir les collections" },
+  "teaser.all.cta": { en: "Browse Apparel", fr: "Parcourir les vêtements" },
   "teaser.jackets.tag": { en: "Cold Weather", fr: "Temps froid" },
-  "teaser.jackets.title": { en: "Jackets & Fleeces", fr: "Manteaux et polaires" },
+  "teaser.jackets.title": { en: "Jackets", fr: "Manteaux" },
   "teaser.jackets.text": { en: "Softshell and insulated options built for Canadian weather.", fr: "Options softshell et isolées conçues pour le climat canadien." },
   "teaser.jackets.cta": { en: "Shop Jackets", fr: "Voir les manteaux" },
 
@@ -72,6 +72,11 @@ const translations = {
   "teaser.hats.text": { en: "Embroidered caps and knit beanies for every season.", fr: "Casquettes brodées et tuques tricotées pour toutes les saisons." },
   "teaser.hats.cta": { en: "Shop Hats", fr: "Voir les chapeaux" },
 
+  "teaser.workwear.tag": { en: "On the Job", fr: "Au travail" },
+  "teaser.workwear.title": { en: "Work Wear", fr: "Vêtements de travail" },
+  "teaser.workwear.text": { en: "Durable gear built for the jobsite.", fr: "Équipement durable conçu pour le chantier." },
+  "teaser.workwear.cta": { en: "Shop Work Wear", fr: "Voir les vêtements de travail" },
+
   "teaser.tees.tag": { en: "Essentials", fr: "Essentiels" },
   "teaser.tees.title": { en: "Crew Neck Tees", fr: "T-shirts col rond" },
   "teaser.tees.text": { en: "Lightweight branded tees for everyday wear.", fr: "T-shirts légers à l'effigie de la marque pour tous les jours." },
@@ -87,7 +92,7 @@ const translations = {
   "shop.items": { en: "items", fr: "articles" },
 
   // Apparel catalog
-  "apparel.title": { en: "Collections", fr: "Collections" },
+  "apparel.title": { en: "Apparel", fr: "Vêtements" },
   "apparel.all.title": { en: "All Apparel", fr: "Tous les vêtements" },
   "apparel.items": { en: "items", fr: "articles" },
   "apparel.all": { en: "All", fr: "Tous" },
@@ -174,6 +179,7 @@ const translations = {
   "cat.Safety": { en: "Safety", fr: "Sécurité" },
   "cat.Caps": { en: "Caps & Beanies", fr: "Casquettes et tuques" },
   "cat.Jackets": { en: "Jackets", fr: "Manteaux" },
+  "cat.Work Wear": { en: "Work Wear", fr: "Vêtements de travail" },
 
   // Product detail
   "product.taptoclose": { en: "Tap anywhere to close", fr: "Appuyez pour fermer" },
