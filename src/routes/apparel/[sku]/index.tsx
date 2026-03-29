@@ -174,6 +174,13 @@ export default component$(() => {
               </div>
             )}
           </div>
+          <div class="product-modal__breadcrumb">
+            <span class="breadcrumb__link" onClick$={() => nav(`/apparel/?category=${p.category}`)}>
+              {categoryLabel(p.category, locale.value)}
+            </span>
+            <span class="breadcrumb__sep">/</span>
+            <span class="breadcrumb__sku">{p.sku}</span>
+          </div>
           <div class="product-modal__details">
             <div class="product-card__category product-modal__category">{categoryLabel(p.category, locale.value)}</div>
             <h2 class="product-modal__name">{p.name}</h2>

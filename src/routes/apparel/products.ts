@@ -4,7 +4,7 @@ import type { Locale } from "../../i18n";
 
 export const allProducts = [
   {
-    "sku": "CAR-8",
+    "sku": "CAR-1",
     "name": "Men's Soft Shell Jacket",
     "category": "Jackets",
     "sizes": "XS - 4XL",
@@ -13,7 +13,7 @@ export const allProducts = [
       "#1a1a18",
       "#4a4a4a"
     ],
-    "price": 75,
+    "price": 100,
     "img": "/softshell/j7603-soft-shell.png",
     "imgs": [
       "/softshell/j7603-soft-shell.png",
@@ -26,7 +26,7 @@ export const allProducts = [
     "details": "Water repellent, wind resistant, anti-pill, YKK zippers, 1000mm waterproof rating, classic fit"
   },
   {
-    "sku": "CAR-7",
+    "sku": "CAR-2",
     "name": "Women's Soft Shell Jacket",
     "category": "Jackets",
     "sizes": "XS - 4XL",
@@ -35,7 +35,7 @@ export const allProducts = [
       "#1a1a18",
       "#4a4a4a"
     ],
-    "price": 68,
+    "price": 100,
     "img": "/softshell/l7603-ladies-soft-shell.png",
     "imgs": [
       "/softshell/l7603-ladies-soft-shell.png",
@@ -48,7 +48,7 @@ export const allProducts = [
     "details": "Water repellent, wind resistant, anti-pill, YKK zippers, 1000mm waterproof rating, classic fit"
   },
   {
-    "sku": "CAR-1",
+    "sku": "CAR-3",
     "name": "Men's UA Tech Polo",
     "category": "Polos",
     "sizes": "S - 4XL",
@@ -56,7 +56,7 @@ export const allProducts = [
     "colors": [
       "#94a3b8"
     ],
-    "price": 55,
+    "price": 100,
     "img": "/uapolo/car1.png",
     "imgs": [
       "/uapolo/car1.png",
@@ -79,7 +79,7 @@ export const allProducts = [
       "#00703c",
       "#94a3b8"
     ],
-    "price": 40,
+    "price": 100,
     "img": "/golf/green.png",
     "imgs": [
       "/golf/green.png",
@@ -92,7 +92,7 @@ export const allProducts = [
     "details": "Self-fabric collar, moisture-wicking, snag resistant, breathable, tagless, relaxed fit, ANSI/ISEA 107 high visibility compliant (select colors)"
   },
   {
-    "sku": "CAR-2",
+    "sku": "CAR-4",
     "name": "Women's UA Tech Polo",
     "category": "Polos",
     "sizes": "S - 4XL",
@@ -101,7 +101,7 @@ export const allProducts = [
       "#1a1a18",
       "#94a3b8"
     ],
-    "price": 55,
+    "price": 100,
     "img": "/uapolo/womens-white.png",
     "imgs": [
       "/uapolo/womens-white.png",
@@ -113,7 +113,7 @@ export const allProducts = [
     "details": "Moisture-wicking, anti-odor technology, textured soft & breathable fabric, self-fabric collar, 3-button placket"
   },
   {
-    "sku": "CAR-4",
+    "sku": "CAR-7",
     "name": "Embroidered Cap",
     "category": "Hats",
     "sizes": "One Size",
@@ -122,7 +122,7 @@ export const allProducts = [
       "#1a1a18",
       "#2c3e50"
     ],
-    "price": 24,
+    "price": 100,
     "img": "/hat/30109107PS2_FRONT.JPG",
     "imgs": [
       "/hat/30109107PS2_FRONT.JPG",
@@ -135,7 +135,7 @@ export const allProducts = [
     "details": "Structured mid profile 6 panel Flexfit 110®, Shapeable pre-curved visor, Plastic snap back closure, UV protection, Moisture wicking, Contrasting grey undervisor, Flat embroidery with embroidered patch"
   },
   {
-    "sku": "CAR-3",
+    "sku": "CAR-8",
     "name": "Flip Toque",
     "category": "Hats",
     "sizes": "One Size",
@@ -145,7 +145,7 @@ export const allProducts = [
       "#2c3e50",
       "#4a4a4a"
     ],
-    "price": 20,
+    "price": 100,
     "img": "/beanie/1.png",
     "imgs": [
       "/beanie/1.png",
@@ -164,7 +164,7 @@ export const allProducts = [
     "sizes": "M - 4XL",
     "badge": "",
     "colors": [],
-    "price": 0,
+    "price": 100,
     "img": "",
     "imgs": [],
     "material": "",
@@ -179,7 +179,9 @@ export const allProducts = [
     "colors": [],
     "price": 100,
     "img": "/sku/_INSULATED-VIKING-frj3957frj-_1_.png",
-    "imgs": ["/sku/_INSULATED-VIKING-frj3957frj-_1_.png"],
+    "imgs": [
+      "/sku/_INSULATED-VIKING-frj3957frj-_1_.png"
+    ],
     "material": "",
     "details": "Waterproof and windproof Fully compliant with CSA Z96-22 Class 1, Level 2 Fully compliant with ANSI/ISEA 107-2020 Type O, Class 1, ASTM D6413 (FR)"
   },
@@ -192,7 +194,9 @@ export const allProducts = [
     "colors": [],
     "price": 100,
     "img": "/sku/viking-3907FRWP.png",
-    "imgs": ["/sku/viking-3907FRWP.png"],
+    "imgs": [
+      "/sku/viking-3907FRWP.png"
+    ],
     "material": "",
     "details": "CAN/CGSB-4.2 No.27.10 & ASTM D6413 flame resistance self-extinguishing for momentary contact with open flame Fully compliant with CSA Z96-22 Class 1, Level 2 Fully compliant with ANSI/ISEA 107-2020 Class E, ASTM D6413"
   },
@@ -205,9 +209,26 @@ export const allProducts = [
     "colors": [],
     "price": 100,
     "img": "/sku/FRS-160-CARHARTT-SHIRT-_2_.png",
-    "imgs": ["/sku/FRS-160-CARHARTT-SHIRT-_2_.png"],
+    "imgs": [
+      "/sku/FRS-160-CARHARTT-SHIRT-_2_.png"
+    ],
     "material": "",
-    "details": "UL® classified to NFPA 2112 Meets the performance requirements of NFPA 70E 7-ounce, 88% cotton / 12% high-tenacity nylon FR twill"
+    "details": "UL® classified to NFPA 2112, Meets the performance requirements of NFPA 70E, 7-ounces, 88% cotton / 12% high-tenacity nylon, FR twill"
+  },
+  {
+    "sku": "CAR-12",
+    "name": "Flame-Resistant Relaxed Fit Canvas Work Pant Shadow #104204",
+    "category": "Work Wear",
+    "sizes": "S - 4XL",
+    "badge": "",
+    "colors": [],
+    "price": 100,
+    "img": "/sku/carhartt-104204.png",
+    "imgs": [
+      "/sku/carhartt-104204.png"
+    ],
+    "material": "",
+    "details": "UL® Classified to NFPA 2112 Meets the performance requirements of NFPA 70E 9-ounce, 98% cotton / 2% spandex canvas"
   },
   {
     "sku": "CAR-13",
@@ -218,7 +239,9 @@ export const allProducts = [
     "colors": [],
     "price": 100,
     "img": "/sku/jacket-logoed-3307J.png",
-    "imgs": ["/sku/jacket-logoed-3307J.png"],
+    "imgs": [
+      "/sku/jacket-logoed-3307J.png"
+    ],
     "material": "",
     "details": "100% Waterproof and windproof Toughest fabric to resist punctures, rips, snags, and abrasions Heavy-duty 420 denier nylon with PVC backing"
   },
@@ -231,7 +254,9 @@ export const allProducts = [
     "colors": [],
     "price": 100,
     "img": "/sku/Viking-3307P.png",
-    "imgs": ["/sku/Viking-3307P.png"],
+    "imgs": [
+      "/sku/Viking-3307P.png"
+    ],
     "material": "",
     "details": "Viking Journeyman® 420D Bib Pants #3307P"
   },
@@ -244,7 +269,9 @@ export const allProducts = [
     "colors": [],
     "price": 100,
     "img": "/sku/carmicheal-337-logo.png",
-    "imgs": ["/sku/carmicheal-337-logo.png"],
+    "imgs": [
+      "/sku/carmicheal-337-logo.png"
+    ],
     "material": "",
     "details": "Durable material holds up to the toughest working conditions Sewn with FR thread for flame resistance Detachable snap hood"
   },
@@ -257,7 +284,9 @@ export const allProducts = [
     "colors": [],
     "price": 100,
     "img": "/sku/MENS-CLASSIC-LONG-SLEEVE-SMP2.png",
-    "imgs": ["/sku/MENS-CLASSIC-LONG-SLEEVE-SMP2.png"],
+    "imgs": [
+      "/sku/MENS-CLASSIC-LONG-SLEEVE-SMP2.png"
+    ],
     "material": "",
     "details": "Flame resistant, 6.5 oz.(220 g/m²) Swiss Pique Category 2 Protection, NFPA 2112 - 2023 Compliant NFPA 2112, NFPA 70E"
   },
@@ -270,28 +299,17 @@ export const allProducts = [
     "colors": [],
     "price": 100,
     "img": "/sku/Coverall-FlaME-1072GR.png",
-    "imgs": ["/sku/Coverall-FlaME-1072GR.png"],
+    "imgs": [
+      "/sku/Coverall-FlaME-1072GR.png"
+    ],
     "material": "",
     "details": "UL Certified to NFPA 2112 NFPA 70E ASTM F1506 CAN/CGSB 155.20 CSA Z462 EN ISO 11611 Class 1"
-  },
-  {
-    "sku": "CAR-12",
-    "name": "Flame-Resistant Relaxed Fit Canvas Work Pant Shadow #104204",
-    "category": "Work Wear",
-    "sizes": "S - 4XL",
-    "badge": "",
-    "colors": [],
-    "price": 100,
-    "img": "/sku/carhartt-104204.png",
-    "imgs": ["/sku/carhartt-104204.png"],
-    "material": "",
-    "details": "UL® Classified to NFPA 2112 Meets the performance requirements of NFPA 70E 9-ounce, 98% cotton / 2% spandex canvas"
   }
 ];
 
 export type Product = typeof allProducts[0];
 
-export const categories = ["All", "Work Wear", "Jackets", "Polos", "Hats"];
+export const categories = ["All", ...Array.from(new Set(allProducts.map((p) => p.category)))];
 
 export const badgeMap: Record<string, string> = { New: "badge.new", Popular: "badge.popular" };
 export function badgeClass(badge: string) {

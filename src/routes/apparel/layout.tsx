@@ -1,4 +1,4 @@
-import { component$, Slot, useContext, useComputed$ } from "@builder.io/qwik";
+import { component$, Slot, useContext, useComputed$, useSignal, $ } from "@builder.io/qwik";
 import { routeLoader$, useLocation, useNavigate } from "@builder.io/qwik-city";
 import { LocaleContext, t } from "../../i18n";
 import { categories, categoryLabel } from "./products";
@@ -39,6 +39,17 @@ export default component$(() => {
   const nav = useNavigate();
 
   const isCatalog = useComputed$(() => /^\/apparel\/?$/.test(loc.url.pathname));
+  const searchOpen = useSignal(false);
+  const searchQuery = useSignal(loc.url.searchParams.get("q") || "");
+
+  const doSearch = $((query: string) => {
+    const cat = loc.url.searchParams.get("category") || "All";
+    if (query.trim()) {
+      nav(`/apparel/?category=All&q=${encodeURIComponent(query.trim())}`);
+    } else {
+      nav(`/apparel/?category=${cat}`);
+    }
+  });
 
   const activeCategory = useComputed$(() => loc.url.searchParams.get("category") || "All");
 
@@ -85,11 +96,35 @@ export default component$(() => {
             <div class="apparel-titlebar__right">
               <div class="apparel-titlebar__search">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
-                <input type="text" class="apparel-titlebar__search-input" placeholder="" />
+                <input
+                  type="text"
+                  class="apparel-titlebar__search-input"
+                  placeholder=""
+                  value={searchQuery.value}
+                  onInput$={(_, el) => { searchQuery.value = el.value; }}
+                  onKeyDown$={(e) => { if (e.key === "Enter") doSearch(searchQuery.value); }}
+                  onBlur$={() => doSearch(searchQuery.value)}
+                />
               </div>
-              <button class="apparel-titlebar__action apparel-titlebar__action--mobile-search" aria-label="Search">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
-              </button>
+              {searchOpen.value ? (
+                <div class="apparel-titlebar__search apparel-titlebar__search--mobile">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+                  <input
+                    type="text"
+                    class="apparel-titlebar__search-input"
+                    placeholder=""
+                    autoFocus
+                    value={searchQuery.value}
+                    onInput$={(_, el) => { searchQuery.value = el.value; }}
+                    onKeyDown$={(e) => { if (e.key === "Enter") { doSearch(searchQuery.value); searchOpen.value = false; } if (e.key === "Escape") { searchOpen.value = false; } }}
+                    onBlur$={() => { doSearch(searchQuery.value); searchOpen.value = false; }}
+                  />
+                </div>
+              ) : (
+                <button class="apparel-titlebar__action apparel-titlebar__action--mobile-search" aria-label="Search" onClick$={() => (searchOpen.value = true)}>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+                </button>
+              )}
             </div>
           </div>
         </div>

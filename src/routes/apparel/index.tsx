@@ -49,9 +49,25 @@ export default component$(() => {
   });
   const sortBy = useSignal<SortKey>("popular");
 
+  const searchQuery = useComputed$(() => loc.url.searchParams.get("q") || "");
+
   const filtered = useComputed$(() => {
+    // Cross-category mappings: work wear items that also belong in other categories
+    const alsoBelongs: Record<string, string[]> = {
+      "CAR-9": ["Jackets"],   // Viking Insulated Jacket
+      "CAR-13": ["Jackets"],  // Viking 420D Jacket
+      "CAR-15": ["Jackets"],  // FR Hoodie
+      "CAR-16": ["Polos"],    // FR Long Sleeve Polo
+    };
+
+    // Search across all categories
+    if (searchQuery.value) {
+      const q = searchQuery.value.toLowerCase();
+      return allProducts.filter((p) => p.name.toLowerCase().includes(q) || p.sku.toLowerCase().includes(q) || p.category.toLowerCase().includes(q));
+    }
+
     if (activeCategory.value !== "All") {
-      const items = allProducts.filter((p) => p.category === activeCategory.value);
+      const items = allProducts.filter((p) => p.category === activeCategory.value || (alsoBelongs[p.sku]?.includes(activeCategory.value)));
       if (sortBy.value === "name") items.sort((a, b) => a.name.localeCompare(b.name));
       else if (sortBy.value === "newest") items.sort((a, b) => (b.badge === "New" ? 1 : 0) - (a.badge === "New" ? 1 : 0));
       return items;

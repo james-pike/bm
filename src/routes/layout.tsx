@@ -199,6 +199,7 @@ export default component$(() => {
 
   const showLogin = useSignal(false);
   const overlayFading = useSignal(false);
+  const menuOpen = useSignal(false);
   const savedLocale = useLocaleLoader();
   const locale = useSignal<Locale>(savedLocale.value);
 
@@ -496,9 +497,55 @@ export default component$(() => {
                 </>
               )}
             </button>
+            <button class="hamburger-btn" onClick$={() => (menuOpen.value = !menuOpen.value)} aria-label="Menu">
+              {menuOpen.value ? (
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg>
+              ) : (
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h18"/><path d="M3 6h18"/><path d="M3 18h18"/></svg>
+              )}
+            </button>
           </nav>
         </div>
       </header>
+
+      {/* Mobile Nav Drawer */}
+      {menuOpen.value && (
+        <div class="nav-drawer-overlay" onClick$={() => (menuOpen.value = false)}>
+          <nav class="nav-drawer" onClick$={(e) => e.stopPropagation()}>
+            <div class="nav-drawer__header">
+              <img src="/carmichael-logo.png" alt="Carmichael" class="nav-drawer__logo" width="48" height="48" />
+              <button class="nav-drawer__close" onClick$={() => (menuOpen.value = false)} aria-label="Close">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg>
+              </button>
+            </div>
+            <div class="nav-drawer__links">
+              <Link href="/" class={`nav-drawer__link ${loc.url.pathname === "/" ? "active" : ""}`} onClick$={() => (menuOpen.value = false)}>
+                {t("nav.home", locale.value)}
+              </Link>
+              <Link href="/apparel/" class={`nav-drawer__link ${loc.url.pathname.startsWith("/apparel") ? "active" : ""}`} onClick$={() => (menuOpen.value = false)}>
+                {t("nav.apparel", locale.value)}
+              </Link>
+              <Link href="/apparel/?category=Work Wear" class="nav-drawer__link" onClick$={() => (menuOpen.value = false)}>
+                {t("cat.Work Wear", locale.value)}
+              </Link>
+              <Link href="/apparel/?category=Jackets" class="nav-drawer__link" onClick$={() => (menuOpen.value = false)}>
+                {t("cat.Jackets", locale.value)}
+              </Link>
+              <Link href="/apparel/?category=Polos" class="nav-drawer__link" onClick$={() => (menuOpen.value = false)}>
+                {t("cat.Polos", locale.value)}
+              </Link>
+              <Link href="/apparel/?category=Hats" class="nav-drawer__link" onClick$={() => (menuOpen.value = false)}>
+                {t("cat.Hats", locale.value)}
+              </Link>
+            </div>
+            <div class="nav-drawer__footer">
+              <button class="nav-drawer__locale" onClick$={() => { toggleLocale(); menuOpen.value = false; }}>
+                {locale.value === "en" ? "Français" : "English"}
+              </button>
+            </div>
+          </nav>
+        </div>
+      )}
 
       <main>
         <Slot />
