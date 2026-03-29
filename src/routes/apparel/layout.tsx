@@ -1,7 +1,10 @@
 import { component$, Slot, useContext, useComputed$, useSignal, $ } from "@builder.io/qwik";
 import { routeLoader$, useLocation, useNavigate } from "@builder.io/qwik-city";
 import { LocaleContext, t } from "../../i18n";
-import { categories, categoryLabel } from "./products";
+import { categories as rawCategories, categoryLabel } from "./products";
+
+const CATEGORY_ORDER = ["All", "Work Wear", "Jackets", "Polos", "Hats"];
+const categories = CATEGORY_ORDER.filter(c => rawCategories.includes(c));
 
 // Keyed by category — "All" shows a general banner, others match their filter
 const heroBanners: Record<string, [{ src: string; alt: string }, { src: string; alt: string }]> = {
@@ -116,9 +119,11 @@ export default component$(() => {
                     autoFocus
                     value={searchQuery.value}
                     onInput$={(_, el) => { searchQuery.value = el.value; }}
-                    onKeyDown$={(e) => { if (e.key === "Enter") { doSearch(searchQuery.value); searchOpen.value = false; } if (e.key === "Escape") { searchOpen.value = false; } }}
-                    onBlur$={() => { doSearch(searchQuery.value); searchOpen.value = false; }}
+                    onKeyDown$={(e) => { if (e.key === "Enter") { doSearch(searchQuery.value); searchOpen.value = false; } if (e.key === "Escape") { searchQuery.value = ""; searchOpen.value = false; } }}
                   />
+                  <button class="apparel-titlebar__action" aria-label="Close search" onClick$={() => { doSearch(searchQuery.value); searchOpen.value = false; }} style="padding:2px;">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg>
+                  </button>
                 </div>
               ) : (
                 <button class="apparel-titlebar__action apparel-titlebar__action--mobile-search" aria-label="Search" onClick$={() => (searchOpen.value = true)}>

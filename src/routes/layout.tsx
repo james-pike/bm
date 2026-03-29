@@ -535,7 +535,7 @@ export default component$(() => {
                 {t("cat.Polos", locale.value)}
               </Link>
               <Link href="/apparel/?category=Hats" class="nav-drawer__link" onClick$={() => (menuOpen.value = false)}>
-                {t("cat.Hats", locale.value)}
+                {t("teaser.hats.title", locale.value)}
               </Link>
             </div>
             <div class="nav-drawer__footer">
