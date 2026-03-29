@@ -41,7 +41,8 @@ export default component$(() => {
   const addToCart = $(() => {
     const p = product.value;
     console.log("addToCart called", { p: p?.name, size: selectedSize.value, color: selectedColor.value });
-    if (!p || !selectedSize.value || !selectedColor.value) return;
+    if (!p || !selectedSize.value) return;
+    if (p.colors.length > 0 && !selectedColor.value) return;
     try {
       const saved = localStorage.getItem("ce_cart");
       const items = saved ? JSON.parse(saved) : [];
@@ -74,7 +75,8 @@ export default component$(() => {
 
   const orderNow = $(() => {
     const p = product.value;
-    if (!p || !selectedSize.value || !selectedColor.value) return;
+    if (!p || !selectedSize.value) return;
+    if (p.colors.length > 0 && !selectedColor.value) return;
     try {
       const saved = localStorage.getItem("ce_cart");
       const items = saved ? JSON.parse(saved) : [];
