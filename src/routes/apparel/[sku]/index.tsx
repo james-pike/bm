@@ -172,19 +172,10 @@ export default component$(() => {
               </div>
             )}
           </div>
-          <div class="product-modal__breadcrumb">
-            <span class="breadcrumb__link" onClick$={() => nav(`/apparel/?category=${p.category}`)}>
-              {t("apparel.title", locale.value)}
-            </span>
-            <span class="breadcrumb__sep">/</span>
-            <span class="breadcrumb__sku">{p.sku}</span>
-          </div>
           <div class="product-modal__details">
             <div class="product-card__category product-modal__category">{categoryLabel(p.category, locale.value)}</div>
-            <div class="product-modal__name-row">
-              <h2 class="product-modal__name">{p.name}</h2>
-              <div class="product-modal__price">${p.price}</div>
-            </div>
+            <h2 class="product-modal__name">{p.name}</h2>
+            <div class="product-modal__price">${p.price}</div>
             {p.material && (
               <div class="product-modal__material">
                 <strong>{t("modal.material", locale.value)}:</strong> {p.material}
@@ -212,20 +203,22 @@ export default component$(() => {
               </div>
             </div>
             <div class="product-modal__field product-modal__color-qty-row">
-              <div class="product-modal__color-group">
-                <label class="product-modal__label">{t("modal.color", locale.value)}{selectedColor.value && <span class="product-modal__color-inline"> — {colorName(selectedColor.value, locale.value)}</span>}</label>
-                <div class="product-modal__options">
-                  {p.colors.map((color) => (
-                    <button
-                      key={color}
-                      class={`product-modal__color ${selectedColor.value === color ? "active" : ""}`}
-                      style={{ background: color }}
-                      onClick$={() => (selectedColor.value = color)}
-                      title={colorName(color, locale.value)}
-                    />
-                  ))}
+              {p.colors.length > 0 && (
+                <div class="product-modal__color-group">
+                  <label class="product-modal__label">{t("modal.color", locale.value)}{selectedColor.value && <span class="product-modal__color-inline"> — {colorName(selectedColor.value, locale.value)}</span>}</label>
+                  <div class="product-modal__options">
+                    {p.colors.map((color) => (
+                      <button
+                        key={color}
+                        class={`product-modal__color ${selectedColor.value === color ? "active" : ""}`}
+                        style={{ background: color }}
+                        onClick$={() => (selectedColor.value = color)}
+                        title={colorName(color, locale.value)}
+                      />
+                    ))}
+                  </div>
                 </div>
-              </div>
+              )}
               <div class="product-modal__qty-group">
                 <label class="product-modal__label">{t("modal.quantity", locale.value)}</label>
                 <div class="product-modal__qty">
