@@ -513,7 +513,13 @@ export default component$(() => {
         <div class="nav-drawer-overlay" onClick$={() => (menuOpen.value = false)}>
           <nav class="nav-drawer" onClick$={(e) => e.stopPropagation()}>
             <div class="nav-drawer__header">
-              <img src="/carmichael-logo.png" alt="Carmichael" class="nav-drawer__logo" width="48" height="48" />
+              <div class="nav-drawer__brand">
+                <img src="/carmichael-logo.png" alt="Carmichael" class="nav-drawer__logo" width="48" height="48" />
+                <div class="nav-drawer__brand-text">
+                  <img src="/logo-carmichael.jpg" alt="Carmichael" class="nav-drawer__logo-text" />
+                  <span class="nav-drawer__apparel">{t("logo.apparel", locale.value)}</span>
+                </div>
+              </div>
               <button class="nav-drawer__close" onClick$={() => (menuOpen.value = false)} aria-label="Close">
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg>
               </button>
@@ -597,16 +603,16 @@ export default component$(() => {
                             <div>
                             <Link href={item.sku ? `/apparel/${item.sku}/` : "/apparel/"} class="cart-table__name-link">{item.name}</Link>
                             <div class="cart-table__meta">
-                              {colorName(item.color, locale.value)} / {item.size}                              <button class="cart-table__remove" onClick$={() => removeFromCart(i)}>&times;</button>
+                              {colorName(item.color, locale.value)} / {item.size}                              <button class="cart-table__remove" aria-label={`Remove ${item.name}`} onClick$={() => removeFromCart(i)}>&times;</button>
                             </div>
                             </div>
                             </div>
                           </td>
                           <td class="cart-table__qty">
                             <div class="cart-table__qty-controls">
-                              <button class="cart-table__qty-btn" onClick$={() => updateQty(i, -1)}>-</button>
+                              <button class="cart-table__qty-btn" aria-label={`Decrease quantity of ${item.name}`} onClick$={() => updateQty(i, -1)}>-</button>
                               <span>{item.quantity}</span>
-                              <button class="cart-table__qty-btn" onClick$={() => updateQty(i, 1)}>+</button>
+                              <button class="cart-table__qty-btn" aria-label={`Increase quantity of ${item.name}`} onClick$={() => updateQty(i, 1)}>+</button>
                             </div>
                           </td>
                           <td class="cart-table__total">${(Number(item.price) || 0) * item.quantity}</td>

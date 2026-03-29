@@ -224,6 +224,7 @@ export default component$(() => {
                         class={`product-modal__color ${selectedColor.value === color ? "active" : ""}`}
                         style={{ background: color }}
                         onClick$={() => (selectedColor.value = color)}
+                        aria-label={colorName(color, locale.value)}
                         title={colorName(color, locale.value)}
                       />
                     ))}
@@ -233,9 +234,9 @@ export default component$(() => {
               <div class="product-modal__qty-group">
                 <label class="product-modal__label">{t("modal.quantity", locale.value)}</label>
                 <div class="product-modal__qty">
-                  <button class="product-modal__qty-btn" onClick$={() => { if (selectedQty.value > 1) selectedQty.value--; }}>-</button>
+                  <button class="product-modal__qty-btn" aria-label="Decrease quantity" onClick$={() => { if (selectedQty.value > 1) selectedQty.value--; }}>-</button>
                   <span class="product-modal__qty-val">{selectedQty.value}</span>
-                  <button class="product-modal__qty-btn" onClick$={() => (selectedQty.value++)}>+</button>
+                  <button class="product-modal__qty-btn" aria-label="Increase quantity" onClick$={() => (selectedQty.value++)}>+</button>
                 </div>
               </div>
             </div>
@@ -320,7 +321,7 @@ export default component$(() => {
             }
           }}
         >
-          <button class="product-fullscreen__close" onClick$={() => { imgFullscreen.value = false; }}>&times;</button>
+          <button class="product-fullscreen__close" aria-label="Close fullscreen" onClick$={() => { imgFullscreen.value = false; }}>&times;</button>
           <img
             src={(p.imgs || [p.img])[imgIndex.value]}
             alt={p.name}
@@ -328,8 +329,8 @@ export default component$(() => {
           />
           {(p.imgs || [p.img]).length > 1 && (
             <div class="product-fullscreen__nav">
-              <button onClick$={(e) => { e.stopPropagation(); imgIndex.value = (imgIndex.value - 1 + (p.imgs || [p.img]).length) % (p.imgs || [p.img]).length; }}>&lsaquo;</button>
-              <button onClick$={(e) => { e.stopPropagation(); imgIndex.value = (imgIndex.value + 1) % (p.imgs || [p.img]).length; }}>&rsaquo;</button>
+              <button aria-label="Previous image" onClick$={(e) => { e.stopPropagation(); imgIndex.value = (imgIndex.value - 1 + (p.imgs || [p.img]).length) % (p.imgs || [p.img]).length; }}>&lsaquo;</button>
+              <button aria-label="Next image" onClick$={(e) => { e.stopPropagation(); imgIndex.value = (imgIndex.value + 1) % (p.imgs || [p.img]).length; }}>&rsaquo;</button>
             </div>
           )}
         </Modal.Panel>

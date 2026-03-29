@@ -103,6 +103,7 @@ export default component$(() => {
                   type="text"
                   class="apparel-titlebar__search-input"
                   placeholder=""
+                  aria-label="Search apparel"
                   value={searchQuery.value}
                   onInput$={(_, el) => { searchQuery.value = el.value; }}
                   onKeyDown$={(e) => { if (e.key === "Enter") doSearch(searchQuery.value); }}
@@ -116,6 +117,7 @@ export default component$(() => {
                     type="text"
                     class="apparel-titlebar__search-input"
                     placeholder=""
+                    aria-label="Search apparel"
                     autoFocus
                     value={searchQuery.value}
                     onInput$={(_, el) => { searchQuery.value = el.value; }}
