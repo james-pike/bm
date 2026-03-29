@@ -42,6 +42,23 @@ body {
   position: relative;
 }
 
+/* Qwik UI Modal reset */
+dialog {
+  padding: 0;
+  border: none;
+  background: transparent;
+  max-width: none;
+  max-height: none;
+  width: 100%;
+  height: 100%;
+}
+dialog::backdrop {
+  background: transparent;
+}
+dialog:not([open]) {
+  display: none;
+}
+
 /* Dot pattern on side margins — fades toward content center */
 .dot-pattern {
   position: relative;

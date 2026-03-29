@@ -1,4 +1,5 @@
 import { component$, Slot, useSignal, useVisibleTask$, $, useContextProvider, useStore, useComputed$ } from "@builder.io/qwik";
+import { Modal, Collapsible } from '@qwik-ui/headless';
 import {
   Link,
   routeAction$,
@@ -211,6 +212,7 @@ export default component$(() => {
   const ssrCartCount = useSignal(initialCartCount.value);
   const cartOpen = useSignal(false);
   const orderSubmitted = useSignal(false);
+  const checkoutOpen = useSignal(false);
   const formError = useSignal("");
   const formTouched = useSignal(false);
   const empNumber = useSignal("");
@@ -282,8 +284,7 @@ export default component$(() => {
     formTouched.value = true;
     if (!empNumber.value || !empName.value || !empDept.value) {
       formError.value = t("cart.error.required", locale.value);
-      const details = document.querySelector('.cart-drawer__checkout') as HTMLDetailsElement;
-      if (details && !details.open) details.open = true;
+      checkoutOpen.value = true;
       return;
     }
     formError.value = "";
@@ -323,8 +324,7 @@ export default component$(() => {
     const handler = () => {
       cartOpen.value = true;
       setTimeout(() => {
-        const details = document.querySelector('.cart-drawer__checkout') as HTMLDetailsElement;
-        if (details) details.open = true;
+        checkoutOpen.value = true;
       }, 100);
     };
     window.addEventListener("open-cart", handler);
@@ -395,9 +395,9 @@ export default component$(() => {
   return (
     <>
       {/* Login Modal */}
-      {showLogin.value && (
-        <div class={`login-overlay ${overlayFading.value ? "login-overlay--fading" : ""}`} onClick$={() => { if (auth.value.loggedIn) showLogin.value = false; }}>
-          <div class="login-modal" onClick$={(e) => e.stopPropagation()}>
+      <Modal.Root bind:show={showLogin} closeOnBackdropClick={auth.value.loggedIn} alert={!auth.value.loggedIn}>
+        <Modal.Panel class={`login-overlay ${overlayFading.value ? "login-overlay--fading" : ""}`}>
+          <div class="login-modal">
             {auth.value.loggedIn && (
               <button
                 class="login-modal__close"
@@ -449,8 +449,8 @@ export default component$(() => {
               </button>
             </Form>
           </div>
-        </div>
-      )}
+        </Modal.Panel>
+      </Modal.Root>
 
       {(auth.value.loggedIn || (loginAction.value && !loginAction.value.failed)) && <>
       <div class="desktop-soon">Desktop coming soon</div>
@@ -621,42 +621,44 @@ export default component$(() => {
                     </tfoot>
                   </table>
                 </div>
-                <details class="cart-drawer__checkout">
-                  <summary class="cart-drawer__checkout-title">
+                <Collapsible.Root class="cart-drawer__checkout" bind:open={checkoutOpen}>
+                  <Collapsible.Trigger class="cart-drawer__checkout-title">
                     {t("cart.orderdetails", locale.value)}
                     {(!empNumber.value || !empName.value || !empDept.value) && (
                       <span class={`cart-drawer__required-label ${formError.value ? "cart-drawer__required-label--error" : ""}`}>
                         {t("cart.requiredfields", locale.value)}
                       </span>
                     )}
-                  </summary>
-                  <div class="checkout-modal__row">
-                    <div class={`checkout-modal__field ${formTouched.value && !empNumber.value ? "checkout-modal__field--error" : ""}`}>
-                      <label>{t("cart.empnumber", locale.value)}</label>
+                  </Collapsible.Trigger>
+                  <Collapsible.Content>
+                    <div class="checkout-modal__row">
+                      <div class={`checkout-modal__field ${formTouched.value && !empNumber.value ? "checkout-modal__field--error" : ""}`}>
+                        <label>{t("cart.empnumber", locale.value)}</label>
+                        <input
+                          type="text"
+                          value={empNumber.value}
+                          onInput$={(_, el) => { empNumber.value = el.value; formError.value = ""; }}
+                        />
+                      </div>
+                      <div class={`checkout-modal__field ${formTouched.value && !empName.value ? "checkout-modal__field--error" : ""}`}>
+                        <label>{t("cart.fullname", locale.value)}</label>
+                        <input
+                          type="text"
+                          value={empName.value}
+                          onInput$={(_, el) => { empName.value = el.value; formError.value = ""; }}
+                        />
+                      </div>
+                    </div>
+                    <div class={`checkout-modal__field ${formTouched.value && !empDept.value ? "checkout-modal__field--error" : ""}`}>
+                      <label>{t("cart.department", locale.value)}</label>
                       <input
                         type="text"
-                        value={empNumber.value}
-                        onInput$={(_, el) => { empNumber.value = el.value; formError.value = ""; }}
+                        value={empDept.value}
+                        onInput$={(_, el) => (empDept.value = el.value)}
                       />
                     </div>
-                    <div class={`checkout-modal__field ${formTouched.value && !empName.value ? "checkout-modal__field--error" : ""}`}>
-                      <label>{t("cart.fullname", locale.value)}</label>
-                      <input
-                        type="text"
-                        value={empName.value}
-                        onInput$={(_, el) => { empName.value = el.value; formError.value = ""; }}
-                      />
-                    </div>
-                  </div>
-                  <div class={`checkout-modal__field ${formTouched.value && !empDept.value ? "checkout-modal__field--error" : ""}`}>
-                    <label>{t("cart.department", locale.value)}</label>
-                    <input
-                      type="text"
-                      value={empDept.value}
-                      onInput$={(_, el) => (empDept.value = el.value)}
-                    />
-                  </div>
-                </details>
+                  </Collapsible.Content>
+                </Collapsible.Root>
                 <div class="cart-drawer__footer">
                   <span class="cart-drawer__total">
                     {cartCount.value} {cartCount.value !== 1 ? t("cart.items", locale.value) : t("cart.item", locale.value)} — ${cart.items.reduce((sum, i) => sum + (Number(i.price) || 0) * i.quantity, 0)}
@@ -676,15 +678,15 @@ export default component$(() => {
       )}
 
       {/* Order Confirmation */}
-      {orderSubmitted.value && (
-        <div class="modal-overlay" onClick$={() => (orderSubmitted.value = false)}>
-          <div class="modal order-confirm" onClick$={(e) => e.stopPropagation()}>
+      <Modal.Root bind:show={orderSubmitted} closeOnBackdropClick={true}>
+        <Modal.Panel class="modal-overlay">
+          <div class="modal order-confirm">
             <h2 class="order-confirm__title">{t("order.title", locale.value)}</h2>
             <p class="order-confirm__text">{t("order.text", locale.value)}</p>
             <a href="/" class="btn btn--primary">{t("order.continue", locale.value)}</a>
           </div>
-        </div>
-      )}
+        </Modal.Panel>
+      </Modal.Root>
       </>}
     </>
   );

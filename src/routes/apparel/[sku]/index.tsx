@@ -1,8 +1,10 @@
 import { component$, useSignal, useComputed$, useVisibleTask$, $, useContext } from "@builder.io/qwik";
+import { Modal } from '@qwik-ui/headless';
 import { useLocation, useNavigate } from "@builder.io/qwik-city";
 import type { DocumentHead } from "@builder.io/qwik-city";
 import { LocaleContext, t } from "../../../i18n";
-import { allProducts, expandSizes, colorName, categoryLabel } from "../products";
+import { allProducts, colorName, categoryLabel } from "../products";
+import { expandSizes } from "../utils";
 
 export default component$(() => {
   const locale = useContext(LocaleContext);
@@ -301,12 +303,11 @@ export default component$(() => {
       {added.value && (
         <div class="toast">{t("modal.added", locale.value)} — {addedInfo.value}</div>
       )}
-      {imgFullscreen.value && (
-        <div
+      <Modal.Root bind:show={imgFullscreen} closeOnBackdropClick={true}>
+        <Modal.Panel
           class="product-fullscreen"
-          onClick$={() => { imgFullscreen.value = false; }}
-          onTouchStart$={(e) => { touchStartX.value = e.touches[0].clientX; }}
-          onTouchEnd$={(e) => {
+          onTouchStart$={(e: TouchEvent) => { touchStartX.value = e.touches[0].clientX; }}
+          onTouchEnd$={(e: TouchEvent) => {
             const diff = touchStartX.value - e.changedTouches[0].clientX;
             const imgs = p.imgs || [p.img];
             if (Math.abs(diff) > 40 && imgs.length > 1) {
@@ -331,8 +332,8 @@ export default component$(() => {
               <button onClick$={(e) => { e.stopPropagation(); imgIndex.value = (imgIndex.value + 1) % (p.imgs || [p.img]).length; }}>&rsaquo;</button>
             </div>
           )}
-        </div>
-      )}
+        </Modal.Panel>
+      </Modal.Root>
     </div>
   );
 });
