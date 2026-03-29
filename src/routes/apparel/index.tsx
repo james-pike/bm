@@ -50,14 +50,24 @@ export default component$(() => {
   const sortBy = useSignal<SortKey>("popular");
 
   const filtered = useComputed$(() => {
-    const items = activeCategory.value === "All" ? [...allProducts] : allProducts.filter((p) => p.category === activeCategory.value);
-
-    if (sortBy.value === "name") {
-      items.sort((a, b) => a.name.localeCompare(b.name));
-    } else if (sortBy.value === "newest") {
-      items.sort((a, b) => (b.badge === "New" ? 1 : 0) - (a.badge === "New" ? 1 : 0));
+    if (activeCategory.value !== "All") {
+      const items = allProducts.filter((p) => p.category === activeCategory.value);
+      if (sortBy.value === "name") items.sort((a, b) => a.name.localeCompare(b.name));
+      else if (sortBy.value === "newest") items.sort((a, b) => (b.badge === "New" ? 1 : 0) - (a.badge === "New" ? 1 : 0));
+      return items;
     }
-    return items;
+    // Interleave: alternate 1 work wear, 1 other
+    const workWear = allProducts.filter((p) => p.category === "Work Wear");
+    const other = allProducts.filter((p) => p.category !== "Work Wear");
+    const result: typeof allProducts = [];
+    let w = 0, o = 0;
+    while (w < workWear.length || o < other.length) {
+      if (o < other.length) result.push(other[o++]);
+      if (w < workWear.length) result.push(workWear[w++]);
+    }
+    if (sortBy.value === "name") result.sort((a, b) => a.name.localeCompare(b.name));
+    else if (sortBy.value === "newest") result.sort((a, b) => (b.badge === "New" ? 1 : 0) - (a.badge === "New" ? 1 : 0));
+    return result;
   });
 
   return (

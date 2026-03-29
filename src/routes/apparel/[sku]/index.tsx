@@ -261,10 +261,10 @@ export default component$(() => {
         </div>
       </div>
       {(() => {
-        const related = allProducts.filter((r) => r.sku !== p.sku).slice(0, 4);
+        const related = allProducts.filter((r) => r.sku !== p.sku && r.category === p.category).slice(0, 4);
         return (
           <div class="related-items">
-            <h3 class="related-items__title">{t("product.related", locale.value)}</h3>
+            <h3 class="related-items__title">More {categoryLabel(p.category, locale.value)}</h3>
             <div class="related-items__grid">
               {related.map((item) => (
                 <a key={item.sku} href={`/apparel/${item.sku}/`} class="product-card product-card-link">
