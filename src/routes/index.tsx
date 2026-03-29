@@ -1,4 +1,4 @@
-import { component$, useSignal, useVisibleTask$, useContext } from "@builder.io/qwik";
+import { component$, useSignal, useContext } from "@builder.io/qwik";
 import type { DocumentHead } from "@builder.io/qwik-city";
 import { LocaleContext, t } from "../i18n";
 
@@ -134,13 +134,7 @@ export default component$(() => {
         <div class="hero__bg" />
         <div class="hero__content">
           <div class="hero__text">
-            <div class="hero__badge">
-              <span class="hero__badge-dot" />
-              {t("hero.badge", locale.value)}
-            </div>
-            <h1 class="hero__title">
-              <span class="hero__title--accent">{t("hero.accent", locale.value)}</span> <span class="hero__title--muted">{t("hero.title.your", locale.value)}</span><img src="/carmichael-logo.png" alt="" class="hero__title-logo" /><br /><em>Carmichael</em> {t("hero.title.brand", locale.value)}
-            </h1>
+            <img src="/logo2.png" alt="Wear Your Carmichael Brand" class="hero__title-img" />
             <div class="hero__apparel-row">
               <p class="hero__subtitle-inline">{t("hero.subtitle", locale.value)}</p>
             </div>
