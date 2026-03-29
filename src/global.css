@@ -2291,7 +2291,6 @@ img { max-width: 100%; display: block; }
 @media (min-width: 769px) {
   .product-modal__actions { flex-wrap: wrap; }
   .product-modal__add { flex: 0 1 auto; }
-  .product-modal__add.btn--primary { color: var(--ce-white); }
 }
 .btn--secondary {
   background: transparent;

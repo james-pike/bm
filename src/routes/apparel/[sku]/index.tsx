@@ -254,7 +254,7 @@ export default component$(() => {
         </div>
       </div>
       {(() => {
-        const related = allProducts.filter((r) => r.sku !== p.sku && r.category === p.category).slice(0, 4);
+        const related = allProducts.filter((r) => r.sku !== p.sku && r.sku !== "CAR-12" && r.category === p.category).slice(0, 4);
         return (
           <div class="related-items">
             <h3 class="related-items__title">More {categoryLabel(p.category, locale.value)}</h3>
