@@ -1,5 +1,4 @@
 import { component$, useSignal, useComputed$, useVisibleTask$, $, useContext } from "@builder.io/qwik";
-import { Modal } from '@qwik-ui/headless';
 import { useLocation, useNavigate } from "@builder.io/qwik-city";
 import type { DocumentHead } from "@builder.io/qwik-city";
 import { LocaleContext, t } from "../../../i18n";
@@ -21,7 +20,6 @@ export default component$(() => {
   const selectedQty = useSignal(1);
   const added = useSignal(false);
   const addedInfo = useSignal("");
-  const imgFullscreen = useSignal(false);
   const userSelectedImg = useSignal(false);
 
   // Set initial color once product is known
@@ -143,7 +141,6 @@ export default component$(() => {
                   }
                 }
               }}
-              onClick$={() => { imgFullscreen.value = true; }}
             >
               {(p.imgs || [p.img]).map((src, i) => (
                 <img
@@ -283,16 +280,7 @@ export default component$(() => {
                   </div>
                   <div class="product-card__info">
                     <div class="product-card__name-row">
-                      <div class="product-card__name">
-                        {item.name}
-                        {item.colors.length > 0 && item.colors.map((color) => (
-                          <span
-                            key={color}
-                            class={`product-card__color-dot product-card__color-dot--sm ${color === "#ffffff" ? "product-card__color-dot--light" : ""}`}
-                            style={{ background: color }}
-                          />
-                        ))}
-                      </div>
+                      <div class="product-card__name">{item.name}</div>
                       <div class="product-card__price-group">
                         <div class="product-card__price">${item.price}</div>
                         <span class="product-card__sizes">{item.sizes === "One Size" ? t("modal.onesize", locale.value) : item.sizes}</span>
@@ -308,38 +296,6 @@ export default component$(() => {
       {added.value && (
         <div class="toast">{t("modal.added", locale.value)} — {addedInfo.value}</div>
       )}
-      <Modal.Root bind:show={imgFullscreen} closeOnBackdropClick={true}>
-        <Modal.Panel
-          class="product-fullscreen"
-          onClick$={(e: MouseEvent) => { if ((e.target as HTMLElement).classList.contains('product-fullscreen')) imgFullscreen.value = false; }}
-          onTouchStart$={(e: TouchEvent) => { touchStartX.value = e.touches[0].clientX; }}
-          onTouchEnd$={(e: TouchEvent) => {
-            const diff = touchStartX.value - e.changedTouches[0].clientX;
-            const imgs = p.imgs || [p.img];
-            if (Math.abs(diff) > 40 && imgs.length > 1) {
-              e.stopPropagation();
-              if (diff > 0) {
-                imgIndex.value = (imgIndex.value + 1) % imgs.length;
-              } else {
-                imgIndex.value = (imgIndex.value - 1 + imgs.length) % imgs.length;
-              }
-            }
-          }}
-        >
-          <button class="product-fullscreen__close" aria-label="Close fullscreen" onClick$={() => { imgFullscreen.value = false; }}>&times;</button>
-          <img
-            src={(p.imgs || [p.img])[imgIndex.value]}
-            alt={p.name}
-            class="product-fullscreen__img"
-          />
-          {(p.imgs || [p.img]).length > 1 && (
-            <div class="product-fullscreen__nav">
-              <button aria-label="Previous image" onClick$={(e) => { e.stopPropagation(); imgIndex.value = (imgIndex.value - 1 + (p.imgs || [p.img]).length) % (p.imgs || [p.img]).length; }}>&lsaquo;</button>
-              <button aria-label="Next image" onClick$={(e) => { e.stopPropagation(); imgIndex.value = (imgIndex.value + 1) % (p.imgs || [p.img]).length; }}>&rsaquo;</button>
-            </div>
-          )}
-        </Modal.Panel>
-      </Modal.Root>
     </div>
   );
 });

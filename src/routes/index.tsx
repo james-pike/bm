@@ -209,13 +209,6 @@ export default component$(() => {
                       <div class="product-card__name">
                         <span class="product-card__name-text">{item.name.replace(/#\S+/g, '').trim()}</span>
                         <span class="product-card__name-code">{(item.name.match(/#\S+/) || [''])[0]}</span>
-                        {item.colors.length > 0 && item.colors.map((color) => (
-                          <span
-                            key={color}
-                            class={`product-card__color-dot product-card__color-dot--sm ${color === "#ffffff" ? "product-card__color-dot--light" : ""}`}
-                            style={{ background: color }}
-                          />
-                        ))}
                       </div>
                       <div class="product-card__price-group">
                         <div class="product-card__price">${item.price}</div>

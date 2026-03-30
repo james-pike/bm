@@ -41,7 +41,7 @@ export const allProducts = [
   },
   {
     "sku": "CAR-3",
-    "name": "Men's UA Tech Polo",
+    "name": "Men's UA Tech Polo - Black",
     "category": "Polos",
     "sizes": "S - 4XL",
     "badge": "",
@@ -277,6 +277,51 @@ export const allProducts = [
     ],
     "material": "",
     "details": "UL Certified to NFPA 2112, NFPA 70E ASTM F1506 CAN/CGSB 155.20 CSA Z462 EN ISO 11611 Class 1"
+  },
+  {
+    "sku": "CAR-18",
+    "name": "Men's UA Tech Polo - Grey",
+    "category": "Polos",
+    "sizes": "S - 4XL",
+    "badge": "",
+    "colors": [],
+    "price": 100,
+    "img": "/sku/car18.png",
+    "imgs": [
+      "/sku/car18.png"
+    ],
+    "material": "",
+    "details": ""
+  },
+  {
+    "sku": "CAR-19",
+    "name": "Men's Coal Harbour® Snag Resistant Polo - Black",
+    "category": "Polos",
+    "sizes": "S - 4XL",
+    "badge": "",
+    "colors": [],
+    "price": 0,
+    "img": "/sku/car19.png",
+    "imgs": [
+      "/sku/car19.png"
+    ],
+    "material": "",
+    "details": "6.3-oz, 100% performance polyester flat tricot micropique, Rib knit collar, Moisture wicking, Snag resistant, Breathable, Tagless Classic fit, ANSI/ISEA 107 high visibility compliant"
+  },
+  {
+    "sku": "CAR-20",
+    "name": "Men's Coal Harbour® Snag Resistant Polo - Grey",
+    "category": "Polos",
+    "sizes": "S - 4XL",
+    "badge": "",
+    "colors": [],
+    "price": 0,
+    "img": "/sku/car20.png",
+    "imgs": [
+      "/sku/car20.png"
+    ],
+    "material": "",
+    "details": ""
   }
 ];
 
