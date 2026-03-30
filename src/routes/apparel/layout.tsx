@@ -71,9 +71,11 @@ export default component$(() => {
                       key={cat}
                       class={`apparel-titlebar__tab ${activeCategory.value === cat ? "active" : ""}`}
                       onClick$={() => {
-                        const el = document.querySelector('.apparel-titlebar');
                         const headerH = window.innerWidth <= 900 ? 48 : 58;
-                        const stickyPos = el ? el.getBoundingClientRect().top + window.scrollY - headerH + 3 : 0;
+                        const titlebar = document.querySelector('.apparel-titlebar');
+                        const titlebarH = (titlebar as HTMLElement)?.offsetHeight || 34;
+                        const catalog = document.querySelector('.apparel-catalog');
+                        const stickyPos = catalog ? catalog.getBoundingClientRect().top + window.scrollY - headerH - titlebarH : 0;
                         activeCategory.value = cat;
                         searchQuery.value = "";
                         if (window.innerWidth <= 1024) {

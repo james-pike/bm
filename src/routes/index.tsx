@@ -129,6 +129,8 @@ const TeaserCard = component$<{ t: typeof teasers[0] }>(({ t: teaser }) => {
 export default component$(() => {
   const locale = useContext(LocaleContext);
   const homeCat = useSignal("All");
+  const homeSearch = useSignal("");
+  const homeSearchOpen = useSignal(false);
 
   return (
     <>
@@ -183,6 +185,43 @@ export default component$(() => {
                 </button>
               ))}
             </div>
+            <div class="home-catalog__right">
+              <div class="apparel-titlebar__search home-catalog__search-desktop">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+                <input
+                  type="text"
+                  class="apparel-titlebar__search-input"
+                  placeholder=""
+                  aria-label="Search apparel"
+                  value={homeSearch.value}
+                  onInput$={(_, el) => { homeSearch.value = el.value; }}
+                  onKeyDown$={(e) => { if (e.key === "Enter") { homeCat.value = "All"; } }}
+                  onBlur$={() => { if (homeSearch.value) homeCat.value = "All"; }}
+                />
+              </div>
+              {homeSearchOpen.value ? (
+                <div class="apparel-titlebar__search apparel-titlebar__search--mobile">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+                  <input
+                    type="text"
+                    class="apparel-titlebar__search-input"
+                    placeholder=""
+                    aria-label="Search apparel"
+                    autoFocus
+                    value={homeSearch.value}
+                    onInput$={(_, el) => { homeSearch.value = el.value; }}
+                    onKeyDown$={(e) => { if (e.key === "Enter") { homeCat.value = "All"; homeSearchOpen.value = false; } if (e.key === "Escape") { homeSearch.value = ""; homeSearchOpen.value = false; } }}
+                  />
+                  <button class="apparel-titlebar__action" aria-label="Close search" onClick$={() => { homeSearchOpen.value = false; }} style="padding:2px;">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg>
+                  </button>
+                </div>
+              ) : (
+                <button class="apparel-titlebar__action apparel-titlebar__action--mobile-search" aria-label="Search" onClick$={() => (homeSearchOpen.value = true)}>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+                </button>
+              )}
+            </div>
           </div>
           <div class="apparel-grid">
             {(() => {
@@ -193,7 +232,10 @@ export default component$(() => {
                 "CAR-16": ["Polos"],
               };
               let items: Product[];
-              if (homeCat.value === "All") {
+              if (homeSearch.value) {
+                const q = homeSearch.value.toLowerCase();
+                items = allProducts.filter((p) => p.name.toLowerCase().includes(q) || p.sku.toLowerCase().includes(q) || p.category.toLowerCase().includes(q));
+              } else if (homeCat.value === "All") {
                 const workWear = allProducts.filter((p) => p.category === "Work Wear" && p.sku !== "CAR-12");
                 const other = allProducts.filter((p) => p.category !== "Work Wear");
                 items = [];

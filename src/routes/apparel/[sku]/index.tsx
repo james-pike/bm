@@ -20,6 +20,7 @@ export default component$(() => {
   const selectedQty = useSignal(1);
   const added = useSignal(false);
   const addedInfo = useSignal("");
+  const imgFullscreen = useSignal(false);
   const userSelectedImg = useSignal(false);
 
   // Set initial color once product is known
@@ -141,6 +142,7 @@ export default component$(() => {
                   }
                 }
               }}
+              onClick$={() => { if (window.innerWidth > 1024) imgFullscreen.value = true; }}
             >
               {(p.imgs || [p.img]).map((src, i) => (
                 <img
@@ -295,6 +297,17 @@ export default component$(() => {
       })()}
       {added.value && (
         <div class="toast">{t("modal.added", locale.value)} — {addedInfo.value}</div>
+      )}
+      {imgFullscreen.value && (
+        <div class="product-fullscreen" onClick$={() => (imgFullscreen.value = false)}>
+          <button class="product-fullscreen__close" aria-label="Close fullscreen" onClick$={(e) => { e.stopPropagation(); imgFullscreen.value = false; }}>&times;</button>
+          <img
+            src={(p.imgs || [p.img])[imgIndex.value]}
+            alt={p.name}
+            class="product-fullscreen__img"
+            onClick$={(e) => e.stopPropagation()}
+          />
+        </div>
       )}
     </div>
   );
