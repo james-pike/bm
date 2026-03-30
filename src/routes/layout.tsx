@@ -551,7 +551,7 @@ export default component$(() => {
               </a>
             </div>
             <div class="nav-drawer__footer">
-              <button class="nav-drawer__locale" onClick$={() => { toggleLocale(); menuOpen.value = false; }}>
+              <button class="nav-drawer__locale" onClick$={() => { toggleLocale(); }}>
                 {locale.value === "en" ? "Français" : "English"}
               </button>
             </div>

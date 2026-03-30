@@ -18,7 +18,8 @@ const ProductCard = component$<{ item: Product; sku: string }>(({ item, sku }) =
       <div class="product-card__info">
         <div class="product-card__name-row">
           <div class="product-card__name">
-            {item.name}
+            <span class="product-card__name-text">{item.name.replace(/#\S+/g, '').trim()}</span>
+            <span class="product-card__name-code">{(item.name.match(/#\S+/) || [''])[0]}</span>
             {item.colors.length > 0 && item.colors.map((color) => (
               <span
                 key={color}

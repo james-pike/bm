@@ -1,6 +1,8 @@
 import { component$, useSignal, useContext } from "@builder.io/qwik";
 import type { DocumentHead } from "@builder.io/qwik-city";
 import { LocaleContext, t } from "../i18n";
+import { allProducts, categoryLabel } from "./apparel/products";
+import type { Product } from "./apparel/products";
 
 
 const teasers = [
@@ -126,6 +128,7 @@ const TeaserCard = component$<{ t: typeof teasers[0] }>(({ t: teaser }) => {
 
 export default component$(() => {
   const locale = useContext(LocaleContext);
+  const homeCat = useSignal("All");
 
   return (
     <>
@@ -152,6 +155,81 @@ export default component$(() => {
             ))}
           </div>
 
+        </div>
+      </section>
+
+      {/* Apparel Catalog */}
+      <section class="home-catalog">
+        <div class="home-catalog__inner">
+          <div class="home-catalog__header">
+            <h2 class="home-catalog__title">{t("nav.apparel", locale.value)}</h2>
+            <div class="home-catalog__tabs">
+              {["All", "Work Wear", "Jackets", "Polos", "Hats"].map((cat) => (
+                <button
+                  key={cat}
+                  class={`apparel-titlebar__tab ${homeCat.value === cat ? "active" : ""}`}
+                  onClick$={() => (homeCat.value = cat)}
+                >
+                  {cat === "All" ? t("apparel.all", locale.value) : categoryLabel(cat, locale.value)}
+                </button>
+              ))}
+            </div>
+          </div>
+          <div class="apparel-grid">
+            {(() => {
+              const alsoBelongs: Record<string, string[]> = {
+                "CAR-9": ["Jackets"],
+                "CAR-13": ["Jackets"],
+                "CAR-15": ["Jackets"],
+                "CAR-16": ["Polos"],
+              };
+              let items: Product[];
+              if (homeCat.value === "All") {
+                const workWear = allProducts.filter((p) => p.category === "Work Wear" && p.sku !== "CAR-12");
+                const other = allProducts.filter((p) => p.category !== "Work Wear");
+                items = [];
+                let w = 0, o = 0;
+                while (w < workWear.length || o < other.length) {
+                  if (o < other.length) items.push(other[o++]);
+                  if (w < workWear.length) items.push(workWear[w++]);
+                }
+                const car12 = allProducts.find((p) => p.sku === "CAR-12");
+                if (car12) items.push(car12);
+              } else {
+                items = allProducts.filter((p) => p.category === homeCat.value || alsoBelongs[p.sku]?.includes(homeCat.value));
+                items = [...items.filter((p) => p.sku !== "CAR-12"), ...items.filter((p) => p.sku === "CAR-12")];
+              }
+              return items.map((item) => (
+                <a key={item.sku} href={`/apparel/${item.sku}/`} class="product-card product-card-link">
+                  <div class="product-card__image">
+                    <img src={item.img} alt={item.name} width="440" height="440" />
+                  </div>
+                  <div class="product-card__info">
+                    <div class="product-card__name-row">
+                      <div class="product-card__name">
+                        <span class="product-card__name-text">{item.name.replace(/#\S+/g, '').trim()}</span>
+                        <span class="product-card__name-code">{(item.name.match(/#\S+/) || [''])[0]}</span>
+                        {item.colors.length > 0 && item.colors.map((color) => (
+                          <span
+                            key={color}
+                            class={`product-card__color-dot product-card__color-dot--sm ${color === "#ffffff" ? "product-card__color-dot--light" : ""}`}
+                            style={{ background: color }}
+                          />
+                        ))}
+                      </div>
+                      <div class="product-card__price-group">
+                        <div class="product-card__price">${item.price}</div>
+                        <span class="product-card__sizes">{item.sizes}</span>
+                      </div>
+                    </div>
+                  </div>
+                </a>
+              ));
+            })()}
+          </div>
+          <a href="/apparel/" class="home-catalog__viewall btn btn--primary">
+            {t("teaser.all.cta", locale.value)}
+          </a>
         </div>
       </section>
     </>
