@@ -9,10 +9,7 @@ export const allProducts = [
     "category": "Jackets",
     "sizes": "XS - 4XL",
     "badge": "",
-    "colors": [
-      "#1a1a18",
-      "#4a4a4a"
-    ],
+    "colors": [],
     "price": 100,
     "img": "/softshell/j7603-soft-shell.png",
     "imgs": [
@@ -27,10 +24,7 @@ export const allProducts = [
     "category": "Jackets",
     "sizes": "XS - 4XL",
     "badge": "",
-    "colors": [
-      "#1a1a18",
-      "#4a4a4a"
-    ],
+    "colors": [],
     "price": 100,
     "img": "/softshell/l7603-ladies-soft-shell.png",
     "imgs": [
@@ -45,9 +39,7 @@ export const allProducts = [
     "category": "Polos",
     "sizes": "S - 4XL",
     "badge": "",
-    "colors": [
-      "#94a3b8"
-    ],
+    "colors": [],
     "price": 100,
     "img": "/uapolo/car1.png",
     "imgs": [
@@ -62,11 +54,7 @@ export const allProducts = [
     "category": "Polos",
     "sizes": "XS - 4XL",
     "badge": "",
-    "colors": [
-      "#1a1a18",
-      "#00703c",
-      "#94a3b8"
-    ],
+    "colors": [],
     "price": 100,
     "img": "/golf/green.png",
     "imgs": [
@@ -81,10 +69,7 @@ export const allProducts = [
     "category": "Polos",
     "sizes": "S - 4XL",
     "badge": "",
-    "colors": [
-      "#1a1a18",
-      "#94a3b8"
-    ],
+    "colors": [],
     "price": 100,
     "img": "/uapolo/womens-white.png",
     "imgs": [
@@ -99,10 +84,7 @@ export const allProducts = [
     "category": "Hats",
     "sizes": "One Size",
     "badge": "Popular",
-    "colors": [
-      "#1a1a18",
-      "#2c3e50"
-    ],
+    "colors": [],
     "price": 100,
     "img": "/hat/30109107PS2_FRONT.JPG",
     "imgs": [
@@ -117,11 +99,7 @@ export const allProducts = [
     "category": "Hats",
     "sizes": "One Size",
     "badge": "",
-    "colors": [
-      "#1a1a18",
-      "#2c3e50",
-      "#4a4a4a"
-    ],
+    "colors": [],
     "price": 100,
     "img": "/beanie/1.png",
     "imgs": [
@@ -129,19 +107,6 @@ export const allProducts = [
     ],
     "material": "100% Acrylic",
     "details": "Traditional knit hat with cuff, One size fits most"
-  },
-  {
-    "sku": "CAR-5",
-    "name": "Men's Golf Polo",
-    "category": "Polos",
-    "sizes": "M - 4XL",
-    "badge": "",
-    "colors": [],
-    "price": 100,
-    "img": "",
-    "imgs": [],
-    "material": "",
-    "details": ""
   },
   {
     "sku": "CAR-9",
@@ -300,7 +265,7 @@ export const allProducts = [
     "sizes": "S - 4XL",
     "badge": "",
     "colors": [],
-    "price": 0,
+    "price": 100,
     "img": "/sku/car19.png",
     "imgs": [
       "/sku/car19.png"
@@ -315,7 +280,7 @@ export const allProducts = [
     "sizes": "S - 4XL",
     "badge": "",
     "colors": [],
-    "price": 0,
+    "price": 100,
     "img": "/sku/car20.png",
     "imgs": [
       "/sku/car20.png"

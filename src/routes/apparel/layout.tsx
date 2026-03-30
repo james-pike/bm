@@ -73,14 +73,18 @@ export default component$(() => {
                       onClick$={() => {
                         activeCategory.value = cat;
                         searchQuery.value = "";
-                        setTimeout(() => {
-                          const el = document.querySelector('.apparel-titlebar');
-                          if (el) {
-                            const headerH = window.innerWidth <= 900 ? 48 : 58;
-                            const top = el.getBoundingClientRect().top + window.scrollY - headerH;
-                            window.scrollTo({ top, behavior: 'instant' });
-                          }
-                        }, 50);
+                        if (window.innerWidth <= 1024) {
+                          setTimeout(() => {
+                            const el = document.querySelector('.apparel-titlebar');
+                            if (el) {
+                              const headerH = window.innerWidth <= 900 ? 48 : 58;
+                              const top = el.getBoundingClientRect().top + window.scrollY - headerH;
+                              window.scrollTo({ top, behavior: 'instant' });
+                            }
+                          }, 50);
+                        } else {
+                          window.scrollTo({ top: 0, behavior: 'instant' });
+                        }
                       }}
                     >
                     {categoryLabel(cat, locale.value)}

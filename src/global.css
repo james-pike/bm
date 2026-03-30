@@ -198,7 +198,7 @@ img { max-width: 100%; display: block; }
 .site-header__inner {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 0 1.5rem;
+  padding: 0 0.75rem;
   height: 58px;
   display: flex;
   align-items: center;
@@ -2596,7 +2596,13 @@ img { max-width: 100%; display: block; }
 }
 
 .cart-drawer__header {
-  display: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 0.75rem;
+  background: var(--ce-white);
+  border-radius: var(--radius-sm);
+  margin: 0.2rem 0.2rem 0;
 }
 .cart-drawer__header .modal__close { position: static; }
 .cart-drawer__title {
@@ -3248,6 +3254,10 @@ details[open] > .cart-drawer__checkout-title::after {
   }
   .hero__badge {
     display: none;
+  }
+  .apparel-titlebar {
+    position: relative;
+    top: auto;
   }
   .hero__title {
     margin-bottom: 0.5rem;
