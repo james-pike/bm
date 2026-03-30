@@ -265,7 +265,13 @@ export default component$(() => {
         </div>
       </div>
       {(() => {
-        const related = allProducts.filter((r) => r.sku !== p.sku && r.sku !== "CAR-12" && r.category === p.category).slice(0, 4);
+        const alsoBelongs: Record<string, string[]> = {
+          "CAR-9": ["Jackets"],
+          "CAR-13": ["Jackets"],
+          "CAR-15": ["Jackets"],
+          "CAR-16": ["Polos"],
+        };
+        const related = allProducts.filter((r) => r.sku !== p.sku && r.sku !== "CAR-12" && (r.category === p.category || alsoBelongs[r.sku]?.includes(p.category))).slice(0, 4);
         return (
           <div class="related-items">
             <h3 class="related-items__title">More {categoryLabel(p.category, locale.value)}</h3>
@@ -277,21 +283,24 @@ export default component$(() => {
                   </div>
                   <div class="product-card__info">
                     <div class="product-card__name-row">
-                      <div class="product-card__name">{item.name}</div>
-                      <div class="product-card__price">${item.price}</div>
-                    </div>
-                    <div class="product-card__color-size-row">
-                      <div class="product-card__colors">
-                        {item.colors.map((color) => (
-                          <span
-                            key={color}
-                            class={`product-card__color-dot ${color === "#ffffff" ? "product-card__color-dot--light" : ""}`}
-                            style={{ background: color }}
-                            title={colorName(color, locale.value)}
-                          />
-                        ))}
+                      <div>
+                        <div class="product-card__name">{item.name}</div>
+                        {item.colors.length > 0 && (
+                          <div class="product-card__colors-inline">
+                            {item.colors.map((color) => (
+                              <span
+                                key={color}
+                                class={`product-card__color-dot product-card__color-dot--sm ${color === "#ffffff" ? "product-card__color-dot--light" : ""}`}
+                                style={{ background: color }}
+                              />
+                            ))}
+                          </div>
+                        )}
                       </div>
-                      <span class="product-card__sizes">{item.sizes === "One Size" ? t("modal.onesize", locale.value) : item.sizes}</span>
+                      <div class="product-card__price-group">
+                        <div class="product-card__price">${item.price}</div>
+                        <span class="product-card__sizes">{item.sizes === "One Size" ? t("modal.onesize", locale.value) : item.sizes}</span>
+                      </div>
                     </div>
                   </div>
                 </a>

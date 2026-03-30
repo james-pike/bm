@@ -57,7 +57,7 @@ export default component$(() => {
   const activeCategory = useComputed$(() => loc.url.searchParams.get("category") || "All");
 
   return (
-    <div class="apparel-page">
+    <div class="apparel-page dot-pattern">
       {isCatalog.value && (
         <div class="collection-hero">
           <div class="collection-hero__viewport">
