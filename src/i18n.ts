@@ -152,6 +152,7 @@ const translations = {
   "cart.empnumber.placeholder": { en: "e.g. CE-1234", fr: "ex. CE-1234" },
   "cart.fullname": { en: "Full Name *", fr: "Nom complet *" },
   "cart.fullname.placeholder": { en: "John Smith", fr: "Jean Tremblay" },
+  "cart.email": { en: "Email *", fr: "Courriel *" },
   "cart.department": { en: "Department / Site *", fr: "Département / Site *" },
   "cart.department.placeholder": { en: "e.g. Operations - Site 3", fr: "ex. Opérations - Site 3" },
   "cart.createorder": { en: "Create Order", fr: "Commander" },

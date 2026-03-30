@@ -16,11 +16,7 @@ export const allProducts = [
     "price": 100,
     "img": "/softshell/j7603-soft-shell.png",
     "imgs": [
-      "/softshell/j7603-soft-shell.png",
-      "/softshell/l7603-ladies-soft-shell.png",
-      "/uapolo/car1.png",
-      "/golf/green.png",
-      "/hat/30109107PS2_FRONT.JPG"
+      "/softshell/j7603-soft-shell.png"
     ],
     "material": "100% polyester with mechanical stretch, bonded micro fleece lining",
     "details": "Water repellent, wind resistant, anti-pill, YKK zippers, 1000mm waterproof rating, classic fit"
@@ -38,11 +34,7 @@ export const allProducts = [
     "price": 100,
     "img": "/softshell/l7603-ladies-soft-shell.png",
     "imgs": [
-      "/softshell/l7603-ladies-soft-shell.png",
-      "/softshell/j7603-soft-shell.png",
-      "/uapolo/womens-white.png",
-      "/golf/green.png",
-      "/beanie/1.png"
+      "/softshell/l7603-ladies-soft-shell.png"
     ],
     "material": "100% polyester with mechanical stretch, bonded micro fleece lining",
     "details": "Water repellent, wind resistant, anti-pill, YKK zippers, 1000mm waterproof rating, classic fit"
@@ -59,11 +51,7 @@ export const allProducts = [
     "price": 100,
     "img": "/uapolo/car1.png",
     "imgs": [
-      "/uapolo/car1.png",
-      "/uapolo/womens-white.png",
-      "/golf/green.png",
-      "/softshell/j7603-soft-shell.png",
-      "/hat/30109107PS2_FRONT.JPG"
+      "/uapolo/car1.png"
     ],
     "material": "100% polyester",
     "details": "Moisture-wicking, anti-odor technology, textured soft & breathable fabric, self-fabric collar, 3-button placket"
@@ -82,11 +70,7 @@ export const allProducts = [
     "price": 100,
     "img": "/golf/green.png",
     "imgs": [
-      "/golf/green.png",
-      "/uapolo/car1.png",
-      "/uapolo/womens-white.png",
-      "/softshell/l7603-ladies-soft-shell.png",
-      "/beanie/1.png"
+      "/golf/green.png"
     ],
     "material": "100% performance polyester flat tricot micropique",
     "details": "Self-fabric collar, moisture-wicking, snag resistant, breathable, tagless, relaxed fit, ANSI/ISEA 107 high visibility compliant (select colors)"
@@ -104,10 +88,7 @@ export const allProducts = [
     "price": 100,
     "img": "/uapolo/womens-white.png",
     "imgs": [
-      "/uapolo/womens-white.png",
-      "/golf/green.png",
-      "/softshell/j7603-soft-shell.png",
-      "/hat/30109107PS2_BACK.JPG"
+      "/uapolo/womens-white.png"
     ],
     "material": "100% polyester",
     "details": "Moisture-wicking, anti-odor technology, textured soft & breathable fabric, self-fabric collar, 3-button placket"
@@ -125,11 +106,7 @@ export const allProducts = [
     "price": 100,
     "img": "/hat/30109107PS2_FRONT.JPG",
     "imgs": [
-      "/hat/30109107PS2_FRONT.JPG",
-      "/hat/30109107PS2_BACK.JPG",
-      "/beanie/1.png",
-      "/golf/green.png",
-      "/spec.jpg"
+      "/hat/30109107PS2_FRONT.JPG"
     ],
     "material": "Poly/Spandex with Performance Mesh",
     "details": "Structured mid profile 6 panel Flexfit 110®, Shapeable pre-curved visor, Plastic snap back closure, UV protection, Moisture wicking, Contrasting grey undervisor, Flat embroidery with embroidered patch"
@@ -148,11 +125,7 @@ export const allProducts = [
     "price": 100,
     "img": "/beanie/1.png",
     "imgs": [
-      "/beanie/1.png",
-      "/hat/30109107PS2_FRONT.JPG",
-      "/hat/30109107PS2_BACK.JPG",
-      "/softshell/j7603-soft-shell.png",
-      "/uapolo/car1.png"
+      "/beanie/1.png"
     ],
     "material": "100% Acrylic",
     "details": "Traditional knit hat with cuff, one size fits most"

@@ -2,7 +2,7 @@ import { component$, useSignal, useComputed$, useContext } from "@builder.io/qwi
 import { useLocation } from "@builder.io/qwik-city";
 import type { DocumentHead } from "@builder.io/qwik-city";
 import { LocaleContext, t } from "../../i18n";
-import { allProducts, categories, colorName } from "./products";
+import { allProducts, categories } from "./products";
 import type { Product } from "./products";
 
 type SortKey = "popular" | "newest" | "name";
@@ -17,22 +17,23 @@ const ProductCard = component$<{ item: Product; sku: string }>(({ item, sku }) =
       </div>
       <div class="product-card__info">
         <div class="product-card__name-row">
-          <div class="product-card__name">{item.name}</div>
+          <div>
+            <div class="product-card__name">{item.name}</div>
+            {item.colors.length > 0 && (
+              <div class="product-card__colors-inline">
+                {item.colors.map((color) => (
+                  <span
+                    key={color}
+                    class={`product-card__color-dot product-card__color-dot--sm ${color === "#ffffff" ? "product-card__color-dot--light" : ""}`}
+                    style={{ background: color }}
+                  />
+                ))}
+              </div>
+            )}
+          </div>
           <div class="product-card__price-group">
             <div class="product-card__price">${item.price}</div>
             <span class="product-card__sizes">{item.sizes === "One Size" ? t("modal.onesize", locale.value) : item.sizes}</span>
-          </div>
-        </div>
-        <div class="product-card__color-size-row">
-          <div class="product-card__colors">
-            {item.colors.map((color) => (
-              <span
-                key={color}
-                class={`product-card__color-dot ${color === "#ffffff" ? "product-card__color-dot--light" : ""}`}
-                style={{ background: color }}
-                title={colorName(color, locale.value)}
-              />
-            ))}
           </div>
         </div>
       </div>

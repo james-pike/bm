@@ -217,6 +217,7 @@ export default component$(() => {
   const formTouched = useSignal(false);
   const empNumber = useSignal("");
   const empName = useSignal("");
+  const empEmail = useSignal("");
   const empDept = useSignal("");
 
   const cartCount = useComputed$(() => {
@@ -282,7 +283,7 @@ export default component$(() => {
 
   const submitOrder = $(async () => {
     formTouched.value = true;
-    if (!empNumber.value || !empName.value || !empDept.value) {
+    if (!empNumber.value || !empName.value || !empEmail.value || !empDept.value) {
       formError.value = t("cart.error.required", locale.value);
       checkoutOpen.value = true;
       return;
@@ -290,7 +291,7 @@ export default component$(() => {
     formError.value = "";
 
     const orderData = {
-      employee: { number: empNumber.value, name: empName.value, department: empDept.value },
+      employee: { number: empNumber.value, name: empName.value, email: empEmail.value, department: empDept.value },
       items: cart.items.map((i) => ({
         name: i.name, sku: i.sku, color: i.color, size: i.size,
         quantity: i.quantity, price: i.price,
@@ -313,6 +314,7 @@ export default component$(() => {
     cartOpen.value = false;
     empNumber.value = "";
     empName.value = "";
+    empEmail.value = "";
     formTouched.value = false;
     empDept.value = "";
   });
@@ -466,16 +468,18 @@ export default component$(() => {
               loading="eager"
               decoding="sync"
             />
-            <img
-              src="/logo-carmichael.jpg"
-              alt="Carmichael Apparel"
-              class="site-header__logo-text"
-              width="408"
-              height="61"
-              loading="eager"
-              decoding="sync"
-            />
-            <span class="site-header__logo-apparel">{t("logo.apparel", locale.value)}</span>
+            <div class="site-header__logo-brand">
+              <img
+                src="/logo-carmichael.jpg"
+                alt="Carmichael Apparel"
+                class="site-header__logo-text"
+                width="408"
+                height="61"
+                loading="eager"
+                decoding="sync"
+              />
+              <span class="site-header__logo-apparel">{t("logo.apparel", locale.value)}</span>
+            </div>
           </Link>
           <nav class="site-header__categories">
             <Link href="/" class={loc.url.pathname === "/" ? "active" : ""}>{t("nav.home", locale.value)}</Link>
@@ -632,7 +636,7 @@ export default component$(() => {
                 <Collapsible.Root class="cart-drawer__checkout" bind:open={checkoutOpen}>
                   <Collapsible.Trigger class="cart-drawer__checkout-title">
                     {t("cart.orderdetails", locale.value)}
-                    {(!empNumber.value || !empName.value || !empDept.value) && (
+                    {(!empNumber.value || !empName.value || !empEmail.value || !empDept.value) && (
                       <span class={`cart-drawer__required-label ${formError.value ? "cart-drawer__required-label--error" : ""}`}>
                         {t("cart.requiredfields", locale.value)}
                       </span>
@@ -656,6 +660,14 @@ export default component$(() => {
                           onInput$={(_, el) => { empName.value = el.value; formError.value = ""; }}
                         />
                       </div>
+                    </div>
+                    <div class={`checkout-modal__field ${formTouched.value && !empEmail.value ? "checkout-modal__field--error" : ""}`}>
+                      <label>{t("cart.email", locale.value)}</label>
+                      <input
+                        type="email"
+                        value={empEmail.value}
+                        onInput$={(_, el) => { empEmail.value = el.value; formError.value = ""; }}
+                      />
                     </div>
                     <div class={`checkout-modal__field ${formTouched.value && !empDept.value ? "checkout-modal__field--error" : ""}`}>
                       <label>{t("cart.department", locale.value)}</label>

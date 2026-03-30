@@ -200,10 +200,11 @@ img { max-width: 100%; display: block; }
   display: flex;
   align-items: center;
 }
-.site-header__logo { display: flex; align-items: center; flex-shrink: 0; margin-right: auto; gap: 0.25rem; position: relative; }
+.site-header__logo { display: flex; align-items: center; flex-shrink: 0; margin-right: auto; gap: 0.25rem; }
 .site-header__logo-img { height: 56px; width: auto; flex-shrink: 0; }
 .site-header__logo-text { height: 24px; width: auto; flex-shrink: 0; }
-.site-header__logo-apparel { font-size: 0.62rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ce-gray-400); position: absolute; bottom: 6px; left: 60px; }
+.site-header__logo-brand { display: flex; flex-direction: column; align-items: flex-start; }
+.site-header__logo-apparel { font-size: 0.62rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ce-gray-400); margin-top: -2px; }
 
 .site-header__categories { display: flex; align-items: center; gap: 1.5rem; margin-right: 2rem; flex-shrink: 0; }
 .site-header__categories a {
@@ -678,15 +679,15 @@ img { max-width: 100%; display: block; }
 }
 .nav-drawer__logo {
   border-radius: 4px;
-  height: 40px;
-  width: 40px;
+  height: 43px;
+  width: 43px;
 }
 .nav-drawer__brand-text {
   display: flex;
   flex-direction: column;
 }
 .nav-drawer__logo-text {
-  height: 16px;
+  height: 21px;
   width: auto;
 }
 .nav-drawer__apparel {
@@ -1326,6 +1327,17 @@ img { max-width: 100%; display: block; }
   transition: transform var(--transition-fast), box-shadow var(--transition-fast);
 }
 
+.product-card__colors-inline {
+  display: flex;
+  gap: 3px;
+  margin-top: 3px;
+}
+.product-card__color-dot--sm {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  cursor: default;
+}
 .product-card__color-dot:hover {
   transform: scale(1.2);
   box-shadow: 0 0 0 2px rgba(0,0,0,0.1);
@@ -1648,7 +1660,7 @@ img { max-width: 100%; display: block; }
   padding: 4px 12px;
   border: none;
   background: none;
-  font-size: 0.9rem;
+  font-size: 1rem;
   font-weight: 500;
   color: var(--ce-gray-500);
   cursor: pointer;
@@ -1677,8 +1689,9 @@ img { max-width: 100%; display: block; }
 .apparel-catalog__title {
   font-size: 0.82rem;
   font-weight: 500;
-  color: var(--ce-gray-300);
+  color: var(--ce-gray-900);
   letter-spacing: 0.01em;
+  margin-right: 0.5rem;
 }
 .apparel-catalog__title-cat {
   font-size: 1em;
@@ -2274,7 +2287,7 @@ img { max-width: 100%; display: block; }
   text-decoration: underline;
   text-underline-offset: 3px;
   cursor: pointer;
-  color: var(--ce-green);
+  color: var(--ce-gray-900);
   transition: color var(--transition-fast);
   font-size: 1rem;
   font-weight: 600;
@@ -3024,7 +3037,6 @@ details[open] > .cart-drawer__checkout-title::after {
 @media (max-width: 900px) {
   .product-carousel__slide:not(:first-child) { display: none; }
   .product-carousel__slide:first-child { opacity: 1; }
-  .product-thumbs { display: none; }
   .dot-pattern::before { opacity: 0.5; }
   .hero { min-height: auto; }
   .hero__content { text-align: left; padding: 1rem 1.5rem 1.5rem; align-items: flex-start; grid-template-columns: 1fr; }
@@ -3117,7 +3129,7 @@ details[open] > .cart-drawer__checkout-title::after {
   .site-header__logo { margin-top: -10px; margin-left: -5px; }
   .site-header__logo-img { height: 43px; align-self: center; transform: translateY(6px) scale(1.1); }
   .site-header__logo-text { height: 21px; }
-  .site-header__logo-apparel { position: absolute; bottom: -5px; left: 47px; font-size: 0.62rem; letter-spacing: 0.12em; }
+  .site-header__logo-apparel { font-size: 0.55rem; }
   .apparel-page { }
   .hero { margin-top: 0; padding-top: 64px; }
   .site-header__nav { gap: 6px; margin-right: -0.25rem; }
@@ -3269,7 +3281,7 @@ details[open] > .cart-drawer__checkout-title::after {
   .related-items__grid > :nth-child(4) { display: none; }
   .apparel-catalog { padding: 0.35rem 0.5rem 0.5rem; }
   .apparel-titlebar__row { height: 34px; padding: 0 0.75rem; margin: 0 0.25rem 0; }
-  .apparel-titlebar__tab { font-size: 0.88rem; padding: 4px 12px; }
+  .apparel-titlebar__tab { font-size: 1rem; padding: 4px 12px; }
   .apparel-catalog__title { font-size: 1rem; }
   .apparel-titlebar__left { gap: 0; flex: 1; }
   .apparel-titlebar__tabs { margin-left: 0; margin-right: auto; }
