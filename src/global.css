@@ -1337,6 +1337,9 @@ img { max-width: 100%; display: block; }
   height: 8px;
   border-radius: 50%;
   cursor: default;
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 2px;
 }
 .product-card__color-dot:hover {
   transform: scale(1.2);
@@ -3328,7 +3331,10 @@ details[open] > .cart-drawer__checkout-title::after {
   .cta-section { padding: 4rem 1rem; }
   .cta-section__inner { padding: 3rem 1.5rem; }
   .apparel-grid { grid-template-columns: repeat(2, 1fr); gap: 0.35rem; padding: 0; }
-  .related-items { display: none; }
+  .product-card__name { font-size: 0.78rem; line-height: 1.3; }
+  .related-items { margin-top: 0.35rem; }
+  .related-items__grid { grid-template-columns: repeat(2, 1fr); gap: 0.35rem; }
+  .related-items__title { font-size: 0.9rem; margin-bottom: 0.5rem; }
   .product-modal__category { display: none; }
   .popular-grid { grid-template-columns: 1fr 1fr; }
   .apparel-catalog:has(.product-detail) { padding: 0.3rem 0.35rem 0.35rem; }

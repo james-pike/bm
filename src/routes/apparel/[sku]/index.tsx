@@ -283,19 +283,15 @@ export default component$(() => {
                   </div>
                   <div class="product-card__info">
                     <div class="product-card__name-row">
-                      <div>
-                        <div class="product-card__name">{item.name}</div>
-                        {item.colors.length > 0 && (
-                          <div class="product-card__colors-inline">
-                            {item.colors.map((color) => (
-                              <span
-                                key={color}
-                                class={`product-card__color-dot product-card__color-dot--sm ${color === "#ffffff" ? "product-card__color-dot--light" : ""}`}
-                                style={{ background: color }}
-                              />
-                            ))}
-                          </div>
-                        )}
+                      <div class="product-card__name">
+                        {item.name}
+                        {item.colors.length > 0 && item.colors.map((color) => (
+                          <span
+                            key={color}
+                            class={`product-card__color-dot product-card__color-dot--sm ${color === "#ffffff" ? "product-card__color-dot--light" : ""}`}
+                            style={{ background: color }}
+                          />
+                        ))}
                       </div>
                       <div class="product-card__price-group">
                         <div class="product-card__price">${item.price}</div>

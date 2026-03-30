@@ -73,9 +73,9 @@ const translations = {
   "teaser.hats.cta": { en: "Shop Hats", fr: "Voir les chapeaux" },
 
   "teaser.workwear.tag": { en: "On the Job", fr: "Au travail" },
-  "teaser.workwear.title": { en: "Work Wear", fr: "Vêtements de travail" },
+  "teaser.workwear.title": { en: "Work Wear", fr: "Travail" },
   "teaser.workwear.text": { en: "Durable gear built for the jobsite.", fr: "Équipement durable conçu pour le chantier." },
-  "teaser.workwear.cta": { en: "Shop Work Wear", fr: "Voir les vêtements de travail" },
+  "teaser.workwear.cta": { en: "Shop Work Wear", fr: "Voir travail" },
 
   "teaser.tees.tag": { en: "Essentials", fr: "Essentiels" },
   "teaser.tees.title": { en: "Crew Neck Tees", fr: "T-shirts col rond" },
@@ -180,7 +180,7 @@ const translations = {
   "cat.Safety": { en: "Safety", fr: "Sécurité" },
   "cat.Caps": { en: "Caps & Beanies", fr: "Casquettes et tuques" },
   "cat.Jackets": { en: "Jackets", fr: "Manteaux" },
-  "cat.Work Wear": { en: "Work Wear", fr: "Vêtements de travail" },
+  "cat.Work Wear": { en: "Work Wear", fr: "Travail" },
 
   // Product detail
   "product.taptoclose": { en: "Tap anywhere to close", fr: "Appuyez pour fermer" },

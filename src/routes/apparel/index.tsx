@@ -17,19 +17,15 @@ const ProductCard = component$<{ item: Product; sku: string }>(({ item, sku }) =
       </div>
       <div class="product-card__info">
         <div class="product-card__name-row">
-          <div>
-            <div class="product-card__name">{item.name}</div>
-            {item.colors.length > 0 && (
-              <div class="product-card__colors-inline">
-                {item.colors.map((color) => (
-                  <span
-                    key={color}
-                    class={`product-card__color-dot product-card__color-dot--sm ${color === "#ffffff" ? "product-card__color-dot--light" : ""}`}
-                    style={{ background: color }}
-                  />
-                ))}
-              </div>
-            )}
+          <div class="product-card__name">
+            {item.name}
+            {item.colors.length > 0 && item.colors.map((color) => (
+              <span
+                key={color}
+                class={`product-card__color-dot product-card__color-dot--sm ${color === "#ffffff" ? "product-card__color-dot--light" : ""}`}
+                style={{ background: color }}
+              />
+            ))}
           </div>
           <div class="product-card__price-group">
             <div class="product-card__price">${item.price}</div>
@@ -61,20 +57,25 @@ export default component$(() => {
       "CAR-16": ["Polos"],    // FR Long Sleeve Polo
     };
 
+    const pushLast = (items: typeof allProducts) => {
+      const last = items.filter((p) => p.sku === "CAR-12");
+      return [...items.filter((p) => p.sku !== "CAR-12"), ...last];
+    };
+
     // Search across all categories
     if (searchQuery.value) {
       const q = searchQuery.value.toLowerCase();
-      return allProducts.filter((p) => p.name.toLowerCase().includes(q) || p.sku.toLowerCase().includes(q) || p.category.toLowerCase().includes(q));
+      return pushLast(allProducts.filter((p) => p.name.toLowerCase().includes(q) || p.sku.toLowerCase().includes(q) || p.category.toLowerCase().includes(q)));
     }
 
     if (activeCategory.value !== "All") {
       const items = allProducts.filter((p) => p.category === activeCategory.value || (alsoBelongs[p.sku]?.includes(activeCategory.value)));
       if (sortBy.value === "name") items.sort((a, b) => a.name.localeCompare(b.name));
       else if (sortBy.value === "newest") items.sort((a, b) => (b.badge === "New" ? 1 : 0) - (a.badge === "New" ? 1 : 0));
-      return items;
+      return pushLast(items);
     }
     // Interleave: alternate 1 work wear, 1 other
-    const workWear = allProducts.filter((p) => p.category === "Work Wear");
+    const workWear = allProducts.filter((p) => p.category === "Work Wear" && p.sku !== "CAR-12");
     const other = allProducts.filter((p) => p.category !== "Work Wear");
     const result: typeof allProducts = [];
     let w = 0, o = 0;
@@ -84,6 +85,8 @@ export default component$(() => {
     }
     if (sortBy.value === "name") result.sort((a, b) => a.name.localeCompare(b.name));
     else if (sortBy.value === "newest") result.sort((a, b) => (b.badge === "New" ? 1 : 0) - (a.badge === "New" ? 1 : 0));
+    const car12 = allProducts.find((p) => p.sku === "CAR-12");
+    if (car12) result.push(car12);
     return result;
   });
 
