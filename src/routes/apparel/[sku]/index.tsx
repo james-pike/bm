@@ -184,7 +184,6 @@ export default component$(() => {
             <span class="breadcrumb__sku">{p.sku}</span>
           </div>
           <div class="product-modal__details">
-            <div class="product-card__category product-modal__category">{categoryLabel(p.category, locale.value)}</div>
             <h2 class="product-modal__name">{p.name}</h2>
             <div class="product-modal__price">${p.price}</div>
             {p.material && (
