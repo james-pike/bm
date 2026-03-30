@@ -328,7 +328,7 @@ img { max-width: 100%; display: block; }
 .hero__title-icon {
   width: 150px;
   height: auto;
-  margin-bottom: 0.25rem;
+  margin-bottom: -1rem;
   display: block;
   margin-left: 350px;
 }
@@ -1086,6 +1086,15 @@ img { max-width: 100%; display: block; }
   overflow: hidden;
   aspect-ratio: 16/9;
   background: var(--ce-gray-200);
+  position: relative;
+}
+.teaser-card__image::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background: radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.15) 100%);
 }
 
 .teaser-card__img {
@@ -3141,7 +3150,8 @@ details[open] > .cart-drawer__checkout-title::after {
   .dot-pattern::before { opacity: 0.5; }
   .hero { min-height: auto; padding-bottom: 1rem; }
   .hero__content { text-align: left; padding: 2rem 2rem 1.5rem; align-items: flex-start; grid-template-columns: 1fr; }
-  .hero__title-icon { width: 85px; margin-bottom: 0.2rem; margin-left: min(195px, calc(100% - 85px)); }
+  .hero__title-icon { width: 85px; margin-bottom: -0.5rem; margin-left: calc(50% + 55px); }
+  .hero__title-img { margin-left: auto; margin-right: auto; }
   .hero__title-img { width: 280px; }
   .hero__subtitle { margin: 0 0 2rem; }
   .hero__actions { flex-wrap: wrap; }
@@ -3150,7 +3160,7 @@ details[open] > .cart-drawer__checkout-title::after {
   .hero__apparel-row { flex-direction: column; gap: 0; margin-bottom: 0; align-items: flex-start; }
   .section--teasers { margin-top: -1rem; }
   .section--teasers::before { top: 2rem; }
-  .hero__subtitle-inline { margin-left: 0; font-size: 1.5rem; white-space: normal; text-align: left; margin-top: 0.75rem; line-height: 1.4; letter-spacing: -0.04em; text-wrap: pretty; }
+  .hero__subtitle-inline { margin-left: 0; font-size: 1.5rem; white-space: normal; text-align: center; margin-top: 0.75rem; line-height: 1.4; letter-spacing: -0.04em; text-wrap: balance; }
   .hero__bento { display: none; }
   .featured-banner { grid-template-columns: 1fr; min-height: auto; }
   .featured-banner__image { min-height: auto; aspect-ratio: 16/9; }
@@ -3378,7 +3388,7 @@ details[open] > .cart-drawer__checkout-title::after {
 
 /* ===== Tablet (601px - 1024px) ===== */
 @media (min-width: 601px) and (max-width: 1024px) {
-  .hero { padding-bottom: 2rem; }
+  .hero { padding-bottom: 4rem; }
   .product-detail { max-width: 100%; }
   .product-modal__layout { grid-template-columns: 1fr 1fr; gap: 0.25rem; }
   .product-detail .product-modal__details { padding: 1.25rem 1rem 1rem; background: var(--ce-white); border-radius: var(--radius-sm); }
@@ -3400,6 +3410,9 @@ details[open] > .cart-drawer__checkout-title::after {
   .apparel-titlebar__right { display: flex; }
   .apparel-titlebar__search { display: none; }
   .apparel-titlebar__action--mobile-search { display: flex; }
+  .section--teasers { margin-top: 0; }
+  .section--teasers::before { top: 0; }
+  .teaser-grid { margin-top: 2rem !important; }
   .teaser-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.75rem; padding: 0; margin: 0 2rem; background: transparent; }
   .teaser-grid > .teaser-card:nth-child(2) { display: none; }
   .teaser-card { grid-template-columns: 1fr; min-height: auto; border: 1px solid var(--ce-gray-200); border-radius: 6px; }
@@ -3412,7 +3425,11 @@ details[open] > .cart-drawer__checkout-title::after {
   .teaser-card__title { font-size: 1rem; margin-bottom: 0; }
   .teaser-card__text { display: none; }
   .teaser-card .btn--primary { padding: 5px 14px; font-size: 0.72rem; flex-shrink: 0; }
-  .hero__content { padding: 1.5rem 2rem 2rem; gap: 1.5rem; }
+  .hero__content { padding: 1.5rem 2rem 2rem; gap: 1.5rem; grid-template-columns: 1fr; }
+  .hero__subtitle-inline { text-align: center; text-wrap: balance; }
+  .hero__apparel-row { align-items: center; }
+  .hero__title-icon { margin-left: calc(50% + 55px); }
+  .hero__title-img { margin-left: auto; margin-right: auto; }
   .hero__bento { display: grid; }
   .collection-hero { margin: 0.35rem 0.25rem 2px; padding: 0; }
   .collection-hero__viewport { aspect-ratio: 4/1; border-radius: var(--radius-sm); }
