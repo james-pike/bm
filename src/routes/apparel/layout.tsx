@@ -88,7 +88,17 @@ export default component$(() => {
                     <button
                       key={cat}
                       class={`apparel-titlebar__tab ${active ? "active" : ""}`}
-                      onClick$={() => { nav(`/apparel/?category=${cat}`); window.scrollTo({ top: 0, behavior: 'instant' }); }}
+                      onClick$={() => {
+                        nav(`/apparel/?category=${cat}`);
+                        requestAnimationFrame(() => {
+                          const el = document.querySelector('.apparel-titlebar');
+                          if (el) {
+                            const headerH = window.innerWidth <= 900 ? 48 : 58;
+                            const top = el.getBoundingClientRect().top + window.scrollY - headerH;
+                            window.scrollTo({ top, behavior: 'instant' });
+                          }
+                        });
+                      }}
                     >
                     {categoryLabel(cat, locale.value)}
                   </button>

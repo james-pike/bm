@@ -168,7 +168,18 @@ export default component$(() => {
                 <button
                   key={cat}
                   class={`apparel-titlebar__tab ${homeCat.value === cat ? "active" : ""}`}
-                  onClick$={() => { homeCat.value = cat; document.querySelector('.home-catalog__header')?.scrollIntoView({ behavior: 'instant', block: 'start' }); }}
+                  onClick$={() => {
+                    homeCat.value = cat;
+                    setTimeout(() => {
+                      const grid = document.querySelector('.home-catalog .apparel-grid');
+                      if (grid) {
+                        const headerH = window.innerWidth <= 900 ? 48 : 58;
+                        const tabH = document.querySelector('.home-catalog__header')?.getBoundingClientRect().height || 40;
+                        const top = grid.getBoundingClientRect().top + window.scrollY - headerH - tabH - 4;
+                        window.scrollTo({ top, behavior: 'instant' });
+                      }
+                    }, 50);
+                  }}
                 >
                   {cat === "All" ? t("apparel.all", locale.value) : categoryLabel(cat, locale.value)}
                 </button>
