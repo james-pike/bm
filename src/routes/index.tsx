@@ -137,7 +137,8 @@ export default component$(() => {
         <div class="hero__bg" />
         <div class="hero__content">
           <div class="hero__text">
-            <img src="/logo2.png" alt="Wear Your Carmichael Brand" class="hero__title-img" />
+            <img src="/carmichael-logo.png" alt="" class="hero__title-icon" />
+            <img src="/logo3.png" alt="Carmichael" class="hero__title-img" />
             <div class="hero__apparel-row">
               <p class="hero__subtitle-inline">{t("hero.subtitle", locale.value)}</p>
             </div>
