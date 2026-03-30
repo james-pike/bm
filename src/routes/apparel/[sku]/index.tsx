@@ -311,6 +311,7 @@ export default component$(() => {
       <Modal.Root bind:show={imgFullscreen} closeOnBackdropClick={true}>
         <Modal.Panel
           class="product-fullscreen"
+          onClick$={(e: MouseEvent) => { if ((e.target as HTMLElement).classList.contains('product-fullscreen')) imgFullscreen.value = false; }}
           onTouchStart$={(e: TouchEvent) => { touchStartX.value = e.touches[0].clientX; }}
           onTouchEnd$={(e: TouchEvent) => {
             const diff = touchStartX.value - e.changedTouches[0].clientX;
