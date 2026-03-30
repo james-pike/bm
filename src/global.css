@@ -1993,9 +1993,9 @@ img { max-width: 100%; display: block; }
   overflow: hidden;
 }
 .product-detail .product-carousel { border-radius: 6px; aspect-ratio: 1/1; margin: 0; }
-.product-detail .product-modal__details { padding: 0; background: transparent; }
+.product-detail .product-modal__details { padding: 1.25rem 1rem 1rem; background: var(--ce-white); border-radius: var(--radius-sm); }
 .product-modal__name-row { display: flex; align-items: baseline; justify-content: space-between; gap: 0.5rem; }
-.apparel-catalog:has(.product-detail) { padding: 1.5rem 2rem 4rem; }
+.apparel-catalog:has(.product-detail) { padding: 0.35rem 0.5rem 2rem; }
 
 /* ===== Related Items ===== */
 .related-items {
@@ -2233,7 +2233,7 @@ img { max-width: 100%; display: block; }
   display: grid;
   grid-template-columns: 1fr 2fr;
   grid-template-rows: auto 1fr;
-  gap: 0 1.5rem;
+  gap: 0.35rem 0.5rem;
   align-items: start;
 }
 .product-image-row {
@@ -2252,15 +2252,16 @@ img { max-width: 100%; display: block; }
 }
 
 .product-modal__breadcrumb {
-  background: transparent;
+  background: var(--ce-white);
   font-size: 1rem;
   margin-top: 0;
+  border-radius: var(--radius-sm);
   display: flex;
   align-items: center;
   gap: 0.5rem;
   position: relative;
   z-index: 2;
-  padding: 0.5rem 0;
+  padding: 0.5rem 1rem;
 }
 
 .breadcrumb__sku {
@@ -3255,12 +3256,14 @@ details[open] > .cart-drawer__checkout-title::after {
 /* ===== Tablet (601px - 1024px) ===== */
 @media (min-width: 601px) and (max-width: 1024px) {
   .product-detail { max-width: 100%; }
-  .product-modal__layout { grid-template-columns: 1fr 1fr; gap: 0 1rem; }
-  .product-detail .product-modal__details { padding: 1.25rem 0; }
+  .product-modal__layout { grid-template-columns: 1fr 1fr; gap: 0.35rem 0.5rem; }
+  .product-detail .product-modal__details { padding: 1.25rem 1rem 1rem; background: var(--ce-white); border-radius: var(--radius-sm); }
+  .product-modal__breadcrumb { padding: 0.5rem 1rem; background: var(--ce-white); border-radius: var(--radius-sm); }
   .product-image-row { flex-direction: column; }
   .product-thumbs--column { flex-direction: row; width: auto; }
   .product-thumbs__item { width: 56px; }
   .product-detail .product-carousel { aspect-ratio: 1/1; }
+  .apparel-catalog:has(.product-detail) { padding: 0.35rem 0.5rem 2rem; }
   .apparel-grid { grid-template-columns: repeat(3, 1fr); }
   .related-items__grid { grid-template-columns: repeat(3, 1fr); }
   .related-items__grid > :nth-child(4) { display: none; }
