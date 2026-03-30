@@ -255,7 +255,7 @@ img { max-width: 100%; display: block; }
     radial-gradient(ellipse 50% 22% at 30% 60%, rgba(255,255,255,0.13), transparent 60%),
     radial-gradient(ellipse 25% 20% at 85% 55%, rgba(255,255,255,0.14), transparent 70%),
     radial-gradient(ellipse 40% 18% at 15% 52%, rgba(255,255,255,0.12), transparent 75%),
-    linear-gradient(135deg, #1a3a28 0%, #2d6e45 40%, #4a9465 65%, #6db085 80%, #8ec4a0 90%, #b8d9c8 95%, #d4ebe0 98%, #f0f0ee 100%);
+    linear-gradient(180deg, #1a3a28 0%, #2d6e45 35%, #4a9465 55%, #6db085 70%, #8ec4a0 80%, #b8d9c8 88%, #d4ebe0 93%, #e2e2dd 100%);
 }
 
 .hero__content {
