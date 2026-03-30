@@ -2984,17 +2984,14 @@ img { max-width: 100%; display: block; }
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border: 1.5px solid var(--ce-gray-200);
-  border-radius: var(--radius-sm);
+  border: none;
+  border-radius: 0;
   outline: none;
-  background: var(--ce-gray-100);
-  padding: 0.6rem 0.75rem;
+  background: none;
+  padding: 0.5rem 0;
   width: 100%;
   font-family: inherit;
-  transition: background var(--transition-fast), border-color var(--transition-fast);
 }
-.cart-drawer__checkout-title:hover {
-  background: var(--ce-gray-200);
   border-color: var(--ce-gray-300);
 }
 .cart-drawer__checkout-title::-webkit-details-marker { display: none; }
@@ -3166,7 +3163,7 @@ details[open] > .cart-drawer__checkout-title::after {
   .featured-banner { grid-template-columns: 1fr; min-height: auto; }
   .featured-banner__image { min-height: auto; aspect-ratio: 16/9; }
   .featured-banner__content { justify-content: flex-start; padding: 1rem 1.25rem; }
-  .teaser-grid { grid-template-columns: 1fr; gap: 1.25rem; padding: 0; margin: 0 0.75rem; background: transparent; border-radius: 0; }
+  .teaser-grid { grid-template-columns: 1fr; gap: 1.25rem; padding: 0; margin: 0 0.5rem; background: transparent; border-radius: 0; }
   .teaser-grid > .teaser-card:nth-child(1) { order: 2; }
   .teaser-grid > .teaser-card:nth-child(2) { display: none; }
   .teaser-grid > .teaser-card:nth-child(3) { order: 1; }
@@ -3415,7 +3412,7 @@ details[open] > .cart-drawer__checkout-title::after {
   .section--teasers { margin-top: 0; }
   .section--teasers::before { top: 0; }
   .teaser-grid { margin-top: 2rem !important; }
-  .teaser-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.75rem; padding: 0; margin: 0 2rem; background: transparent; }
+  .teaser-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.75rem; padding: 0; margin: 0 1.5rem; background: transparent; }
   .teaser-grid > .teaser-card:nth-child(2) { display: none; }
   .teaser-card { grid-template-columns: 1fr; min-height: auto; border: 1px solid var(--ce-gray-200); border-radius: 6px; }
   .teaser-card__image { aspect-ratio: 16/9; }
