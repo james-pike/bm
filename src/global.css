@@ -196,7 +196,7 @@ img { max-width: 100%; display: block; }
 
 
 .site-header__inner {
-  max-width: 1280px;
+  max-width: 1440px;
   margin: 0 auto;
   padding: 0 0.75rem;
   height: 58px;
@@ -261,7 +261,7 @@ img { max-width: 100%; display: block; }
 .hero__content {
   position: relative;
   z-index: 2;
-  max-width: 1280px;
+  max-width: 1440px;
   margin: 0 auto;
   padding: 4.5rem 3rem 3rem;
   display: grid;
@@ -326,15 +326,15 @@ img { max-width: 100%; display: block; }
 }
 
 .hero__title-icon {
-  width: 150px;
+  width: 170px;
   height: auto;
   margin-bottom: -1rem;
   display: block;
-  margin-left: 350px;
+  margin-left: 390px;
 }
 .hero__title-img {
   max-width: 100%;
-  width: 500px;
+  width: 560px;
   height: auto;
   margin-bottom: 0.5rem;
   filter: brightness(0) invert(1);
@@ -400,7 +400,7 @@ img { max-width: 100%; display: block; }
   grid-template-columns: 220px 1fr;
   gap: 1.5rem;
   align-items: start;
-  max-width: 1280px;
+  max-width: 1440px;
   width: 100%;
   margin: 0 auto;
   padding: 1.5rem 2rem 2rem;
@@ -682,7 +682,7 @@ img { max-width: 100%; display: block; }
   min-height: 100vh;
 }
 .home-catalog__inner {
-  max-width: 1280px;
+  max-width: 1440px;
   margin: 0 auto;
   padding: 0;
 }
@@ -847,11 +847,11 @@ img { max-width: 100%; display: block; }
 }
 
 /* ===== Section Shared ===== */
-.section { padding: 6rem 2rem; max-width: 1280px; margin: 0 auto; }
+.section { padding: 6rem 2rem; max-width: 1440px; margin: 0 auto; }
 .section--full { max-width: none; }
 .section--teasers {
   padding: 0;
-  max-width: 1280px;
+  max-width: 1440px;
   margin: 0 auto;
   position: relative;
   z-index: 3;
@@ -916,7 +916,7 @@ img { max-width: 100%; display: block; }
 .stats-row {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  max-width: 1280px;
+  max-width: 1440px;
   margin: 0 auto;
   padding: 0 2rem;
   position: relative;
@@ -1575,7 +1575,7 @@ img { max-width: 100%; display: block; }
   padding: 2.5rem 2rem;
 }
 .site-footer__inner {
-  max-width: 1280px; margin: 0 auto;
+  max-width: 1440px; margin: 0 auto;
   display: flex; justify-content: space-between; align-items: center;
   flex-wrap: wrap; gap: 1rem;
 }
@@ -1594,7 +1594,7 @@ img { max-width: 100%; display: block; }
 }
 
 .apparel-catalog {
-  max-width: 1280px;
+  max-width: 1440px;
   margin: 0 auto;
   padding: 0;
   min-height: 100vh;
@@ -1622,7 +1622,7 @@ img { max-width: 100%; display: block; }
   position: sticky;
   top: 58px;
   z-index: 50;
-  max-width: 1280px;
+  max-width: 1440px;
   margin: 0 auto;
   padding: 0;
 }
@@ -1831,7 +1831,7 @@ img { max-width: 100%; display: block; }
 /* ===== Collection Hero Banner Carousel ===== */
 .collection-hero {
   position: relative;
-  max-width: 1280px;
+  max-width: 1440px;
   margin: 0 auto 0.35rem;
   padding: 0;
   z-index: 1;
@@ -3271,6 +3271,7 @@ details[open] > .cart-drawer__checkout-title::after {
 
 /* ===== Desktop (1025px+) ===== */
 @media (min-width: 1025px) {
+  html { font-size: 17px; }
   .collection-hero__slide {
     grid-template-columns: 1fr 1fr;
     gap: 2px;
