@@ -78,7 +78,7 @@ export default component$(() => {
                             const el = document.querySelector('.apparel-titlebar');
                             if (el) {
                               const headerH = window.innerWidth <= 900 ? 48 : 58;
-                              const top = el.getBoundingClientRect().top + window.scrollY - headerH;
+                              const top = el.getBoundingClientRect().top + window.scrollY - headerH + 2;
                               window.scrollTo({ top, behavior: 'instant' });
                             }
                           }, 50);
