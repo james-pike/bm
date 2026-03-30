@@ -122,10 +122,7 @@ dialog:not([open]) {
 
 .apparel-page { overflow: clip; }
 .apparel-page.dot-pattern::before {
-  background-image: radial-gradient(circle, rgba(255,255,255,0.45) 1.2px, transparent 1.2px);
-  left: 0;
-  width: 100%;
-  transform: none;
+  background-image: radial-gradient(circle, rgba(0,0,0,0.06) 1.2px, transparent 1.2px);
   z-index: 1;
 }
 
@@ -687,6 +684,10 @@ img { max-width: 100%; display: block; }
   border-radius: var(--radius-sm);
   padding: 0.5rem 1rem;
   margin-bottom: 0.35rem;
+  position: sticky;
+  top: 58px;
+  z-index: 50;
+  border-bottom: 1px solid var(--ce-gray-200);
 }
 .home-catalog__title {
   font-size: 1rem;
@@ -710,7 +711,7 @@ img { max-width: 100%; display: block; }
 }
 @media (max-width: 900px) {
   .home-catalog__inner { padding: 0 0.35rem; }
-  .home-catalog__header { padding: 0.4rem 0.75rem; }
+  .home-catalog__header { padding: 0.4rem 0.75rem; top: 48px; }
   .home-catalog__title { display: none; }
   .home-catalog .apparel-grid { grid-template-columns: repeat(2, 1fr); }
 }
@@ -1597,8 +1598,9 @@ img { max-width: 100%; display: block; }
 }
 
 .apparel-titlebar {
-  position: relative;
-  z-index: 2;
+  position: sticky;
+  top: 58px;
+  z-index: 50;
   max-width: 1280px;
   margin: 0 auto;
   padding: 0;
@@ -2069,7 +2071,7 @@ img { max-width: 100%; display: block; }
 
 /* ===== Related Items ===== */
 .related-items {
-  margin-top: 0.35rem;
+  margin-top: 1rem;
   padding-top: 0;
 }
 .related-items__title {
@@ -2627,10 +2629,10 @@ img { max-width: 100%; display: block; }
 .cart-drawer__items {
   flex: 1;
   overflow-y: auto;
-  padding: 1.25rem 1.25rem 1rem;
+  padding: 0.75rem 0.75rem;
   background: var(--ce-white);
   border-radius: var(--radius-sm);
-  margin: 0.5rem 0.35rem 0.35rem;
+  margin: 0.2rem 0.2rem;
 }
 .cart-item {
   display: flex;
@@ -2922,10 +2924,10 @@ img { max-width: 100%; display: block; }
 }
 
 .cart-drawer__checkout {
-  padding: 0.6rem 1.25rem;
+  padding: 0.5rem 0.75rem;
   background: var(--ce-white);
   border-radius: var(--radius-sm);
-  margin: 0 0.35rem;
+  margin: 0 0.2rem;
   display: flex;
   flex-direction: column;
   gap: 0;
@@ -2961,10 +2963,10 @@ details[open] > .cart-drawer__checkout-title::after {
   margin-bottom: 0.1rem;
 }
 .cart-drawer__footer {
-  padding: 0.35rem 1.25rem;
+  padding: 0.35rem 0.75rem;
   background: var(--ce-white);
   border-radius: var(--radius-sm);
-  margin: 0.35rem;
+  margin: 0.2rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -3110,7 +3112,7 @@ details[open] > .cart-drawer__checkout-title::after {
   .featured-banner { grid-template-columns: 1fr; min-height: auto; }
   .featured-banner__image { min-height: auto; aspect-ratio: 16/9; }
   .featured-banner__content { justify-content: flex-start; padding: 1rem 1.25rem; }
-  .teaser-grid { grid-template-columns: 1fr; gap: 1rem; padding: 0; margin: 0 0.5rem; background: transparent; border-radius: 0; }
+  .teaser-grid { grid-template-columns: 1fr; gap: 1rem; padding: 0; margin: 0 1rem; background: transparent; border-radius: 0; }
   .teaser-grid > .teaser-card:nth-child(1) { order: 2; }
   .teaser-grid > .teaser-card:nth-child(2) { order: 1; }
   .teaser-card__image--skewed { display: flex; overflow: hidden; }
@@ -3135,7 +3137,7 @@ details[open] > .cart-drawer__checkout-title::after {
   .teaser-grid { display: grid; }
   .apparel-catalog { padding: 0.35rem 0.35rem 0.35rem; }
   .apparel-titlebar { padding: 0; }
-  .apparel-titlebar { position: sticky; top: 47px; z-index: 50; }
+  .apparel-titlebar { top: 48px; }
   .apparel-titlebar__row { height: 34px; padding: 0 0.5rem; margin: 0 0.15rem 0; }
   .apparel-catalog__title { display: none; }
   .apparel-titlebar__left { gap: 0; flex: 1; }
@@ -3346,7 +3348,7 @@ details[open] > .cart-drawer__checkout-title::after {
   .apparel-titlebar__right { display: flex; }
   .apparel-titlebar__search { display: none; }
   .apparel-titlebar__action--mobile-search { display: flex; }
-  .teaser-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.75rem; padding: 0; margin: 0 1.5rem; background: transparent; }
+  .teaser-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.75rem; padding: 0; margin: 0 2rem; background: transparent; }
   .teaser-grid > .teaser-card:nth-child(1) { order: 2; }
   .teaser-grid > .teaser-card:nth-child(2) { order: 1; }
   .teaser-card { grid-template-columns: 1fr; min-height: auto; border: 1px solid var(--ce-gray-200); border-radius: 10px; }
@@ -3391,6 +3393,7 @@ details[open] > .cart-drawer__checkout-title::after {
   .product-card__name-code { display: none; }
   .related-items { margin-top: 0.35rem; }
   .related-items__grid { grid-template-columns: repeat(2, 1fr); gap: 0.35rem; }
+  .related-items__grid > :nth-child(n+3) { display: none; }
   .related-items__title { font-size: 0.9rem; margin-bottom: 0.5rem; }
   .product-modal__category { display: none; }
   .popular-grid { grid-template-columns: 1fr 1fr; }
@@ -3420,7 +3423,7 @@ details[open] > .cart-drawer__checkout-title::after {
   .product-modal__actions { flex-direction: row; }
   .cart-drawer__header { display: none; }
   .cart-drawer__close-desktop { display: none; }
-  .cart-drawer__items { padding: 0.4rem 0.75rem; margin: 0.2rem 0.35rem; }
+  .cart-drawer__items { padding: 0.4rem 0.75rem; margin: 0.2rem; }
   .cart-item { padding: 0.5rem 0; gap: 0.5rem; }
   .cart-item__img { width: 48px; height: 36px; }
   .cart-item__name { font-size: 0.8rem; }
@@ -3430,11 +3433,11 @@ details[open] > .cart-drawer__checkout-title::after {
   .cart-invoice__title { margin-bottom: 0.3rem; }
   .cart-invoice__table tbody td { padding: 0.3rem 0; }
   .cart-invoice__table tfoot td { padding: 0.4rem 0 0; }
-  .cart-drawer__checkout { padding: 0.5rem 0.75rem; gap: 0; margin: 0 0.35rem; }
+  .cart-drawer__checkout { padding: 0.5rem 0.75rem; gap: 0; margin: 0 0.2rem; }
   .cart-drawer__checkout[open] { gap: 0.5rem; }
   .checkout-modal__field label { margin-bottom: 0.1rem; font-size: 0.65rem; }
   .checkout-modal__field input { padding: 6px 10px; font-size: 16px; }
-  .cart-drawer__footer { padding: 0.65rem 0.75rem; margin: 0.35rem; }
+  .cart-drawer__footer { padding: 0.5rem 0.75rem; margin: 0.2rem; }
   .modal { padding: 0.5rem 1rem 1rem; margin: 0 0.5rem; }
   .modal .modal__close { top: 0.35rem; right: 0.5rem; width: 28px; height: 28px; font-size: 0.85rem; }
   .modal-overlay { padding: 0; align-items: flex-start; top: 48px; }

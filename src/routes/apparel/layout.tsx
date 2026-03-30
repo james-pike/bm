@@ -88,7 +88,7 @@ export default component$(() => {
                     <button
                       key={cat}
                       class={`apparel-titlebar__tab ${active ? "active" : ""}`}
-                      onClick$={() => nav(`/apparel/?category=${cat}`)}
+                      onClick$={() => { nav(`/apparel/?category=${cat}`); window.scrollTo({ top: 0, behavior: 'instant' }); }}
                     >
                     {categoryLabel(cat, locale.value)}
                   </button>

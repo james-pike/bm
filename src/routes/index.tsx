@@ -168,7 +168,7 @@ export default component$(() => {
                 <button
                   key={cat}
                   class={`apparel-titlebar__tab ${homeCat.value === cat ? "active" : ""}`}
-                  onClick$={() => (homeCat.value = cat)}
+                  onClick$={() => { homeCat.value = cat; document.querySelector('.home-catalog__header')?.scrollIntoView({ behavior: 'instant', block: 'start' }); }}
                 >
                   {cat === "All" ? t("apparel.all", locale.value) : categoryLabel(cat, locale.value)}
                 </button>
@@ -227,9 +227,6 @@ export default component$(() => {
               ));
             })()}
           </div>
-          <a href="/apparel/" class="home-catalog__viewall btn btn--primary">
-            {t("teaser.all.cta", locale.value)}
-          </a>
         </div>
       </section>
     </>
