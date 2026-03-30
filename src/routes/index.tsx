@@ -137,8 +137,8 @@ export default component$(() => {
         <div class="hero__bg" />
         <div class="hero__content">
           <div class="hero__text">
-            <img src="/carmichael-logo.png" alt="" class="hero__title-icon" />
-            <img src="/logo3.png" alt="Carmichael" class="hero__title-img" />
+            <img src="/carmichael-logo.png" alt="" class="hero__title-icon" width="200" height="200" loading="eager" decoding="sync" />
+            <img src="/logo3.png" alt="Carmichael" class="hero__title-img" width="408" height="61" loading="eager" decoding="sync" />
             <div class="hero__apparel-row">
               <p class="hero__subtitle-inline">{t("hero.subtitle", locale.value)}</p>
             </div>
@@ -170,16 +170,13 @@ export default component$(() => {
                   key={cat}
                   class={`apparel-titlebar__tab ${homeCat.value === cat ? "active" : ""}`}
                   onClick$={() => {
+                    const catalog = document.querySelector('.home-catalog');
+                    const headerH = window.innerWidth <= 900 ? 48 : 58;
+                    const tabH = (document.querySelector('.home-catalog__header') as HTMLElement)?.offsetHeight || 34;
+                    const catalogTop = catalog ? catalog.getBoundingClientRect().top + window.scrollY : 0;
+                    const stickyPos = catalogTop - headerH + tabH - 12;
                     homeCat.value = cat;
-                    window.scrollTo({ top: 0, behavior: 'instant' });
-                    setTimeout(() => {
-                      const tabBar = document.querySelector('.home-catalog__header');
-                      if (tabBar) {
-                        const headerH = window.innerWidth <= 900 ? 48 : 58;
-                        const top = tabBar.getBoundingClientRect().top + window.scrollY - headerH + 3;
-                        window.scrollTo({ top, behavior: 'instant' });
-                      }
-                    }, 20);
+                    window.scrollTo({ top: stickyPos, behavior: 'instant' });
                   }}
                 >
                   {cat === "All" ? t("apparel.all", locale.value) : categoryLabel(cat, locale.value)}

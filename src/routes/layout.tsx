@@ -37,7 +37,7 @@ export const useCartCountLoader = routeLoader$(({ cookie }) => {
 
 export const useLogin = routeAction$(
   ({ username, password }, { cookie, fail }) => {
-    if (username === "admin" && password === "CARMICHAEL") {
+    if (username === "admin" && password === "CM26") {
       cookie.set(AUTH_COOKIE, "authenticated", {
         path: "/",
         httpOnly: true,

@@ -71,18 +71,13 @@ export default component$(() => {
                       key={cat}
                       class={`apparel-titlebar__tab ${activeCategory.value === cat ? "active" : ""}`}
                       onClick$={() => {
+                        const el = document.querySelector('.apparel-titlebar');
+                        const headerH = window.innerWidth <= 900 ? 48 : 58;
+                        const stickyPos = el ? el.getBoundingClientRect().top + window.scrollY - headerH + 3 : 0;
                         activeCategory.value = cat;
                         searchQuery.value = "";
                         if (window.innerWidth <= 1024) {
-                          window.scrollTo({ top: 0, behavior: 'instant' });
-                          setTimeout(() => {
-                            const el = document.querySelector('.apparel-titlebar');
-                            if (el) {
-                              const headerH = window.innerWidth <= 900 ? 48 : 58;
-                              const top = el.getBoundingClientRect().top + window.scrollY - headerH + 3;
-                              window.scrollTo({ top, behavior: 'instant' });
-                            }
-                          }, 20);
+                          window.scrollTo({ top: stickyPos, behavior: 'instant' });
                         } else {
                           window.scrollTo({ top: 0, behavior: 'instant' });
                         }
