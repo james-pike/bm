@@ -71,7 +71,7 @@ export default component$(() => {
                       key={cat}
                       class={`apparel-titlebar__tab ${activeCategory.value === cat ? "active" : ""}`}
                       onClick$={() => {
-                        const headerH = window.innerWidth <= 900 ? 48 : 58;
+                        const headerH = window.innerWidth <= 900 ? 44 : 58;
                         const titlebar = document.querySelector('.apparel-titlebar');
                         const titlebarH = (titlebar as HTMLElement)?.offsetHeight || 34;
                         const catalog = document.querySelector('.apparel-catalog');
