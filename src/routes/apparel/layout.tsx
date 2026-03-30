@@ -1,34 +1,20 @@
-import { component$, Slot, useContext, useComputed$, useSignal, $ } from "@builder.io/qwik";
-import { routeLoader$, useLocation, useNavigate } from "@builder.io/qwik-city";
+import { component$, Slot, useContext, useComputed$, useSignal, $, createContextId, useContextProvider } from "@builder.io/qwik";
+import type { Signal } from "@builder.io/qwik";
+import { routeLoader$, useLocation } from "@builder.io/qwik-city";
 import { LocaleContext, t } from "../../i18n";
 import { categories as rawCategories, categoryLabel } from "./products";
+
+export const CategoryContext = createContextId<Signal<string>>("apparel-category");
+export const SearchContext = createContextId<Signal<string>>("apparel-search");
 
 const CATEGORY_ORDER = ["All", "Work Wear", "Jackets", "Polos", "Hats"];
 const categories = CATEGORY_ORDER.filter(c => rawCategories.includes(c));
 
 // Keyed by category — "All" shows a general banner, others match their filter
-const heroBanners: Record<string, [{ src: string; alt: string }, { src: string; alt: string }]> = {
-  All: [
-    { src: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=640&h=360&fit=crop", alt: "On the job" },
-    { src: "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=640&h=360&fit=crop", alt: "Apparel collection" },
-  ],
-  Polos: [
-    { src: "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=640&h=360&fit=crop", alt: "Polos" },
-    { src: "https://images.unsplash.com/photo-1523381210434-271e8be1f52b?w=640&h=360&fit=crop", alt: "Collection" },
-  ],
-  Jackets: [
-    { src: "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=640&h=360&fit=crop", alt: "Jackets" },
-    { src: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=640&h=360&fit=crop", alt: "On the job" },
-  ],
-  "Work Wear": [
-    { src: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=640&h=360&fit=crop", alt: "On the job" },
-    { src: "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=640&h=360&fit=crop", alt: "Apparel collection" },
-  ],
-  Hats: [
-    { src: "https://images.unsplash.com/photo-1556306535-0f09a537f0a3?w=640&h=360&fit=crop", alt: "Caps & hats" },
-    { src: "https://images.unsplash.com/photo-1521369909029-2afed882baee?w=640&h=360&fit=crop", alt: "Headwear" },
-  ],
-};
+const heroImg = [
+  { src: "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=640&h=360&fit=crop", alt: "Apparel collection" },
+  { src: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=640&h=360&fit=crop", alt: "On the job" },
+] as [{ src: string; alt: string }, { src: string; alt: string }];
 
 export const useApparelAuthGuard = routeLoader$(({ cookie, redirect }) => {
   if (cookie.get("ce_auth")?.value !== "authenticated") {
@@ -39,71 +25,67 @@ export const useApparelAuthGuard = routeLoader$(({ cookie, redirect }) => {
 export default component$(() => {
   const locale = useContext(LocaleContext);
   const loc = useLocation();
-  const nav = useNavigate();
+
 
   const isCatalog = useComputed$(() => /^\/apparel\/?$/.test(loc.url.pathname));
   const searchOpen = useSignal(false);
+  const activeCategory = useSignal(loc.url.searchParams.get("category") || "All");
   const searchQuery = useSignal(loc.url.searchParams.get("q") || "");
 
+  useContextProvider(CategoryContext, activeCategory);
+  useContextProvider(SearchContext, searchQuery);
+
   const doSearch = $((query: string) => {
-    const cat = loc.url.searchParams.get("category") || "All";
     if (query.trim()) {
-      nav(`/apparel/?category=All&q=${encodeURIComponent(query.trim())}`);
+      activeCategory.value = "All";
+      searchQuery.value = query.trim();
     } else {
-      nav(`/apparel/?category=${cat}`);
+      searchQuery.value = "";
     }
   });
 
-  const activeCategory = useComputed$(() => loc.url.searchParams.get("category") || "All");
-
   return (
     <div class="apparel-page dot-pattern">
-      {isCatalog.value && (
-        <div class="collection-hero">
-          <div class="collection-hero__viewport">
-            {Object.entries(heroBanners).map(([cat, imgs]) => (
-              <div key={cat} class={`collection-hero__slide ${activeCategory.value === cat ? "active" : ""}`}>
-                <div class="collection-hero__panel">
-                  <img src={imgs[0].src} alt={imgs[0].alt} width="640" height="360" loading="eager" />
-                </div>
-                <div class="collection-hero__panel">
-                  <img src={imgs[1].src} alt={imgs[1].alt} width="640" height="360" loading="eager" />
-                </div>
-              </div>
-            ))}
+      <div class="collection-hero" style={isCatalog.value ? {} : { display: 'none' }}>
+        <div class="collection-hero__viewport">
+          <div class="collection-hero__slide active">
+            <div class="collection-hero__panel">
+              <img src={heroImg[0].src} alt={heroImg[0].alt} width="640" height="360" loading="eager" decoding="sync" />
+            </div>
+            <div class="collection-hero__panel">
+              <img src={heroImg[1].src} alt={heroImg[1].alt} width="640" height="360" loading="eager" decoding="sync" />
+            </div>
           </div>
         </div>
-      )}
+      </div>
       {isCatalog.value && (
         <div class="apparel-titlebar apparel-titlebar--overlap">
           <div class="apparel-titlebar__row">
             <div class="apparel-titlebar__left">
-              <h1 class="apparel-catalog__title" onClick$={() => nav("/apparel/?category=All")} style={{ cursor: "pointer" }}>
+              <h1 class="apparel-catalog__title" onClick$={() => (activeCategory.value = "All")} style={{ cursor: "pointer" }}>
                 {t("apparel.title", locale.value)}
               </h1>
               <div class="apparel-titlebar__tabs">
-                {categories.map((cat) => {
-                  const active = (loc.url.searchParams.get("category") || "All") === cat;
-                  return (
+                {categories.map((cat) => (
                     <button
                       key={cat}
-                      class={`apparel-titlebar__tab ${active ? "active" : ""}`}
+                      class={`apparel-titlebar__tab ${activeCategory.value === cat ? "active" : ""}`}
                       onClick$={() => {
-                        nav(`/apparel/?category=${cat}`);
-                        requestAnimationFrame(() => {
+                        activeCategory.value = cat;
+                        searchQuery.value = "";
+                        setTimeout(() => {
                           const el = document.querySelector('.apparel-titlebar');
                           if (el) {
                             const headerH = window.innerWidth <= 900 ? 48 : 58;
                             const top = el.getBoundingClientRect().top + window.scrollY - headerH;
                             window.scrollTo({ top, behavior: 'instant' });
                           }
-                        });
+                        }, 50);
                       }}
                     >
                     {categoryLabel(cat, locale.value)}
                   </button>
-                );
-                })}
+                ))}
               </div>
             </div>
             <div class="apparel-titlebar__right">

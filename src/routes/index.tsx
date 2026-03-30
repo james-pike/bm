@@ -175,7 +175,7 @@ export default component$(() => {
                       if (grid) {
                         const headerH = window.innerWidth <= 900 ? 48 : 58;
                         const tabH = document.querySelector('.home-catalog__header')?.getBoundingClientRect().height || 40;
-                        const top = grid.getBoundingClientRect().top + window.scrollY - headerH - tabH - 4;
+                        const top = grid.getBoundingClientRect().top + window.scrollY - headerH - tabH + 2;
                         window.scrollTo({ top, behavior: 'instant' });
                       }
                     }, 50);

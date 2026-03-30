@@ -1,9 +1,9 @@
 import { component$, useSignal, useComputed$, useContext } from "@builder.io/qwik";
-import { useLocation } from "@builder.io/qwik-city";
 import type { DocumentHead } from "@builder.io/qwik-city";
 import { LocaleContext, t } from "../../i18n";
-import { allProducts, categories } from "./products";
+import { allProducts } from "./products";
 import type { Product } from "./products";
+import { CategoryContext, SearchContext } from "./layout";
 
 type SortKey = "popular" | "newest" | "name";
 
@@ -32,15 +32,9 @@ const ProductCard = component$<{ item: Product; sku: string }>(({ item, sku }) =
 });
 
 export default component$(() => {
-  const loc = useLocation();
-
-  const activeCategory = useComputed$(() => {
-    const cat = loc.url.searchParams.get("category") || "All";
-    return categories.includes(cat) ? cat : "All";
-  });
+  const activeCategory = useContext(CategoryContext);
+  const searchQuery = useContext(SearchContext);
   const sortBy = useSignal<SortKey>("popular");
-
-  const searchQuery = useComputed$(() => loc.url.searchParams.get("q") || "");
 
   const filtered = useComputed$(() => {
     // Cross-category mappings: work wear items that also belong in other categories
