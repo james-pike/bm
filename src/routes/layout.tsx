@@ -397,9 +397,9 @@ export default component$(() => {
   return (
     <>
       {/* Login Modal */}
-      <Modal.Root bind:show={showLogin} closeOnBackdropClick={auth.value.loggedIn} alert={!auth.value.loggedIn}>
-        <Modal.Panel class={`login-overlay ${overlayFading.value ? "login-overlay--fading" : ""}`}>
-          <div class="login-modal">
+      {showLogin.value && (
+        <div class={`login-overlay ${overlayFading.value ? "login-overlay--fading" : ""}`} onClick$={() => { if (auth.value.loggedIn) showLogin.value = false; }}>
+          <div class="login-modal" onClick$={(e) => e.stopPropagation()}>
             {auth.value.loggedIn && (
               <button
                 class="login-modal__close"
@@ -451,8 +451,8 @@ export default component$(() => {
               </button>
             </Form>
           </div>
-        </Modal.Panel>
-      </Modal.Root>
+        </div>
+      )}
 
       {(auth.value.loggedIn || (loginAction.value && !loginAction.value.failed)) && <>
       <div class="desktop-soon">Desktop coming soon</div>
@@ -487,6 +487,7 @@ export default component$(() => {
           </nav>
           <nav class="site-header__nav">
             <button class={`locale-btn ${cartOpen.value ? "locale-btn--cart-open" : ""}`} onClick$={toggleLocale} aria-label="Toggle language">
+              <svg class="locale-btn__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
               <span class="locale-btn__full">{locale.value === "en" ? "Français" : "English"}</span>
               <span class="locale-btn__short">{locale.value === "en" ? "FR" : "EN"}</span>
             </button>

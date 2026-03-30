@@ -74,14 +74,15 @@ export default component$(() => {
                         activeCategory.value = cat;
                         searchQuery.value = "";
                         if (window.innerWidth <= 1024) {
+                          window.scrollTo({ top: 0, behavior: 'instant' });
                           setTimeout(() => {
                             const el = document.querySelector('.apparel-titlebar');
                             if (el) {
                               const headerH = window.innerWidth <= 900 ? 48 : 58;
-                              const top = el.getBoundingClientRect().top + window.scrollY - headerH + 2;
+                              const top = el.getBoundingClientRect().top + window.scrollY - headerH + 3;
                               window.scrollTo({ top, behavior: 'instant' });
                             }
-                          }, 50);
+                          }, 20);
                         } else {
                           window.scrollTo({ top: 0, behavior: 'instant' });
                         }
