@@ -35,7 +35,7 @@ const translations = {
   "hero.title.your": { en: "Your", fr: "Votre" },
   "hero.title.brand": { en: "Brand", fr: "Marque" },
   "hero.subtitle": {
-    en: "Premium apparel to fit all roles, from the job site to the office.",
+    en: "From the job site to the office.",
     fr: "Vêtements pour tous les rôles, du chantier au bureau.",
   },
 
