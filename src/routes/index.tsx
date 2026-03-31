@@ -141,6 +141,7 @@ export default component$(() => {
           <div class="hero__text">
             <img src="/carmichael-logo.png" alt="" class="hero__title-icon" width="200" height="200" loading="eager" decoding="sync" />
             <img src="/logo3.png" alt="Carmichael" class="hero__title-img" width="408" height="61" loading="eager" decoding="sync" />
+            <span class="hero__title-apparel">{t("logo.apparel", locale.value)}</span>
             <div class="hero__apparel-row">
               <p class="hero__subtitle-inline">{t("hero.subtitle", locale.value)}</p>
             </div>
