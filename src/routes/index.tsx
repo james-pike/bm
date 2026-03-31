@@ -1,4 +1,5 @@
 import { component$, useSignal, useContext } from "@builder.io/qwik";
+import { Carousel } from "@qwik-ui/headless";
 import type { DocumentHead } from "@builder.io/qwik-city";
 import { LocaleContext, t } from "../i18n";
 import { allProducts, categoryLabel } from "./apparel/products";
@@ -141,15 +142,19 @@ export default component$(() => {
         <div class="hero__bg" />
         <div class="hero__content">
           <div class="hero__text">
-            <div class="hero__badge">
-              <span class="hero__badge-dot" />
-              {t("hero.badge", locale.value)}
-            </div>
-            <img src="/carmichael-logo.png" alt="" class="hero__title-icon" width="200" height="200" loading="eager" decoding="sync" />
-            <img src="/logo3.png" alt="Carmichael" class="hero__title-img" width="408" height="61" loading="eager" decoding="sync" />
-            <span class="hero__title-apparel">{t("logo.apparel", locale.value)}</span>
-            <div class="hero__apparel-row">
-              <p class="hero__subtitle-inline">{t("hero.subtitle", locale.value)}</p>
+            <div class="hero__logo-group">
+              <div class="hero__top-row">
+                <div class="hero__badge">
+                  <span class="hero__badge-dot" />
+                  {t("hero.badge", locale.value)}
+                </div>
+                <img src="/carmichael-logo.png" alt="" class="hero__title-icon" width="200" height="200" loading="eager" decoding="sync" />
+              </div>
+              <img src="/logo3.png" alt="Carmichael" class="hero__title-img" width="408" height="61" loading="eager" decoding="sync" />
+              <div class="hero__apparel-row">
+                <span class="hero__title-apparel">{t("logo.apparel", locale.value)}</span>
+                <p class="hero__subtitle-inline">{t("hero.subtitle", locale.value)}</p>
+              </div>
             </div>
           </div>
           <div class="hero__bento">
@@ -171,6 +176,26 @@ export default component$(() => {
             </a>
           </div>
         </div>
+
+        {/* Hero Carousel */}
+        <Carousel.Root class="hero-carousel" autoPlayIntervalMs={5000} align="start">
+          <Carousel.Scroller class="hero-carousel__scroller">
+            <Carousel.Slide class="hero-carousel__slide">
+              <img src="/van.jpeg" alt="On the job" loading="eager" />
+            </Carousel.Slide>
+            <Carousel.Slide class="hero-carousel__slide">
+              <img src="https://images.unsplash.com/photo-1617127365659-c47fa864d8bc?w=800&h=500&fit=crop&crop=center" alt="Outerwear" loading="eager" />
+            </Carousel.Slide>
+            <Carousel.Slide class="hero-carousel__slide">
+              <img src="https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=800&h=500&fit=crop&crop=center" alt="Apparel" loading="eager" />
+            </Carousel.Slide>
+          </Carousel.Scroller>
+          <Carousel.Pagination class="hero-carousel__dots">
+            {[0, 1, 2].map((i) => (
+              <Carousel.Bullet key={i} class="hero-carousel__dot" />
+            ))}
+          </Carousel.Pagination>
+        </Carousel.Root>
 
         {/* Featured Teasers (mobile only) */}
         <div class="section section--teasers">

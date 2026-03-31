@@ -157,7 +157,7 @@ export const allProducts = [
     "sku": "CAR-12",
     "name": "Flame-Resistant Relaxed Fit Canvas Work Pant Shadow #104204",
     "category": "Work Wear",
-    "sizes": "S - 4XL",
+    "sizes": " ",
     "badge": "",
     "colors": [],
     "price": 100,
@@ -296,10 +296,8 @@ export const allProducts = [
     "badge": "",
     "colors": [],
     "price": 100,
-    "img": "/l4007.png",
-    "imgs": [
-      "/l4007.png"
-    ],
+    "img": "",
+    "imgs": [],
     "material": "",
     "details": ""
   },
@@ -324,10 +322,8 @@ export const allProducts = [
     "badge": "",
     "colors": [],
     "price": 100,
-    "img": "/ladies rigbi logoed car.png",
-    "imgs": [
-      "/ladies rigbi logoed car.png"
-    ],
+    "img": "",
+    "imgs": [],
     "material": "",
     "details": ""
   },
@@ -336,21 +332,6 @@ export const allProducts = [
     "name": "Men's Rigi Eco Knit Full Zip - Trimark Sportswear",
     "category": "Jackets",
     "sizes": "S - 3XL",
-    "badge": "",
-    "colors": [],
-    "price": 100,
-    "img": "/mens rigi car logoed.png",
-    "imgs": [
-      "/mens rigi car logoed.png"
-    ],
-    "material": "",
-    "details": ""
-  },
-  {
-    "sku": "CAR-26",
-    "name": "Men's Coal Harbour® Everyday Polo #S4007",
-    "category": "Polos",
-    "sizes": "S - 4XL",
     "badge": "",
     "colors": [],
     "price": 100,
@@ -401,19 +382,6 @@ export const allProducts = [
     "imgs": [
       "/wuapb.png"
     ],
-    "material": "100% polyester",
-    "details": "Moisture-wicking, Anti-odor technology, Textured soft & breathable fabric, Self-fabric collar, 4-button placket"
-  },
-  {
-    "sku": "CAR-28",
-    "name": "Women's UA Tech Polo - Grey",
-    "category": "Polos",
-    "sizes": "XS - 2XL",
-    "badge": "",
-    "colors": [],
-    "price": 100,
-    "img": "",
-    "imgs": [],
     "material": "100% polyester",
     "details": "Moisture-wicking, Anti-odor technology, Textured soft & breathable fabric, Self-fabric collar, 4-button placket"
   },
