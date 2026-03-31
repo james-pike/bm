@@ -61,7 +61,7 @@ export const allProducts = [
       "/golf/green.png"
     ],
     "material": "100% performance polyester flat tricot micropique",
-    "details": "Self-fabric collar, Moisture-wicking, Snag resistant, Breathable, Tagless, Relaxed fit, ANSI/ISEA 107 high visibility compliant "
+    "details": "Self-fabric collar, Moisture-wicking, Snag resistant, Breathable, Tagless, Relaxed fit"
   },
   {
     "sku": "CAR-4",
@@ -151,7 +151,7 @@ export const allProducts = [
       "/sku/FRS-160-CARHARTT-SHIRT-_2_.png"
     ],
     "material": "",
-    "details": "7-ounces, 88% cotton / 12% high-tenacity nylon, FR twill"
+    "details": "7-ounces, 88% cotton / 12%, High-tenacity nylon, FR twill"
   },
   {
     "sku": "CAR-12",
@@ -255,8 +255,8 @@ export const allProducts = [
     "imgs": [
       "/sku/car18.png"
     ],
-    "material": "",
-    "details": ""
+    "material": "100% polyester ",
+    "details": "Moisture-wicking, Anti-odor technology, Textured soft & breathable fabric, Self-fabric collar, 3-button placket"
   },
   {
     "sku": "CAR-19",
