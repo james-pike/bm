@@ -355,13 +355,7 @@ export default component$(() => {
         </div>
       </div>
       {(() => {
-        const alsoBelongs: Record<string, string[]> = {
-          "CAR-9": ["Jackets"],
-          "CAR-13": ["Jackets"],
-          "CAR-15": ["Jackets"],
-          "CAR-16": ["Polos"],
-        };
-        const related = allProducts.filter((r) => r.sku !== p.sku && r.sku !== "CAR-12" && (r.category === p.category || alsoBelongs[r.sku]?.includes(p.category))).slice(0, 4);
+        const related = allProducts.filter((r) => r.sku !== p.sku && r.sku !== "CAR-12" && r.category === p.category).slice(0, 4);
         return (
           <div class="related-items">
             <h3 class="related-items__title">More {categoryLabel(p.category, locale.value)}</h3>

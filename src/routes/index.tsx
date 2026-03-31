@@ -135,16 +135,16 @@ export default component$(() => {
   const homeFilterOpen = useSignal(false);
 
   return (
-    <>
+    <div class="home-page">
       {/* Hero */}
       <section class="hero dot-pattern dot-pattern--light">
         <div class="hero__bg" />
         <div class="hero__content">
           <div class="hero__text">
-            {/* <div class="hero__badge">
+            <div class="hero__badge">
               <span class="hero__badge-dot" />
               {t("hero.badge", locale.value)}
-            </div> */}
+            </div>
             <img src="/carmichael-logo.png" alt="" class="hero__title-icon" width="200" height="200" loading="eager" decoding="sync" />
             <img src="/logo3.png" alt="Carmichael" class="hero__title-img" width="408" height="61" loading="eager" decoding="sync" />
             <span class="hero__title-apparel">{t("logo.apparel", locale.value)}</span>
@@ -152,19 +152,33 @@ export default component$(() => {
               <p class="hero__subtitle-inline">{t("hero.subtitle", locale.value)}</p>
             </div>
           </div>
-          <div class="hero__logo-slot">
-            <img src="/carmichael-logo.png" alt="Carmichael" class="hero__logo-img" />
+          <div class="hero__bento">
+            <a href="/apparel/?category=Work Wear" class="hero__photo hero__bento-a">
+              <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=600&h=900&fit=crop&crop=center" alt="Job site" loading="eager" />
+              <div class="hero__photo-overlay" />
+            </a>
+            <a href="/apparel/?category=Jackets" class="hero__photo hero__bento-b">
+              <img src="https://images.unsplash.com/photo-1617127365659-c47fa864d8bc?w=600&h=400&fit=crop&crop=center" alt="Outerwear" loading="eager" />
+              <div class="hero__photo-overlay" />
+            </a>
+            <a href="/apparel/?category=Polos" class="hero__photo hero__bento-c">
+              <img src="https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=600&h=400&fit=crop&crop=center" alt="Polos" loading="eager" />
+              <div class="hero__photo-overlay" />
+            </a>
+            <a href="/apparel/?category=Hats" class="hero__photo hero__bento-d">
+              <img src="https://images.unsplash.com/photo-1556306535-0f09a537f0a3?w=800&h=400&fit=crop&crop=center" alt="Hats" loading="eager" />
+              <div class="hero__photo-overlay" />
+            </a>
           </div>
         </div>
 
-        {/* Featured Teasers */}
+        {/* Featured Teasers (mobile only) */}
         <div class="section section--teasers">
           <div class="teaser-grid">
             {teasers.map((teaser) => (
               <TeaserCard key={teaser.slug} t={teaser} />
             ))}
           </div>
-
         </div>
       </section>
 
@@ -255,12 +269,6 @@ export default component$(() => {
           </div>
           <div class="apparel-grid">
             {(() => {
-              const alsoBelongs: Record<string, string[]> = {
-                "CAR-9": ["Jackets"],
-                "CAR-13": ["Jackets"],
-                "CAR-15": ["Jackets"],
-                "CAR-16": ["Polos"],
-              };
               const filterGender = (list: Product[]) => {
                 if (homeGender.value === "All") return list;
                 const prefix = homeGender.value === "Men" ? "men" : "women";
@@ -282,7 +290,7 @@ export default component$(() => {
                 const car12 = allProducts.find((p) => p.sku === "CAR-12");
                 if (car12) items.push(car12);
               } else {
-                items = allProducts.filter((p) => p.category === homeCat.value || alsoBelongs[p.sku]?.includes(homeCat.value));
+                items = allProducts.filter((p) => p.category === homeCat.value);
                 items = [...items.filter((p) => p.sku !== "CAR-12"), ...items.filter((p) => p.sku === "CAR-12")];
               }
               return filterGender(items).map((item) => (
@@ -308,7 +316,7 @@ export default component$(() => {
           </div>
         </div>
       </section>
-    </>
+    </div>
   );
 });
 
