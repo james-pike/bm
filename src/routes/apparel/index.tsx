@@ -3,7 +3,7 @@ import type { DocumentHead } from "@builder.io/qwik-city";
 import { LocaleContext, t } from "../../i18n";
 import { allProducts } from "./products";
 import type { Product } from "./products";
-import { CategoryContext, SearchContext } from "./layout";
+import { CategoryContext, SearchContext, GenderContext } from "./layout";
 
 type SortKey = "popular" | "newest" | "name";
 
@@ -34,6 +34,7 @@ const ProductCard = component$<{ item: Product; sku: string }>(({ item, sku }) =
 export default component$(() => {
   const activeCategory = useContext(CategoryContext);
   const searchQuery = useContext(SearchContext);
+  const genderFilter = useContext(GenderContext);
   const sortBy = useSignal<SortKey>("popular");
 
   const filtered = useComputed$(() => {
@@ -49,18 +50,23 @@ export default component$(() => {
       const last = items.filter((p) => p.sku === "CAR-12");
       return [...items.filter((p) => p.sku !== "CAR-12"), ...last];
     };
+    const filterGender = (items: typeof allProducts) => {
+      if (genderFilter.value === "All") return items;
+      const prefix = genderFilter.value === "Men" ? "men" : "women";
+      return items.filter((p) => p.name.toLowerCase().includes(prefix));
+    };
 
     // Search across all categories
     if (searchQuery.value) {
       const q = searchQuery.value.toLowerCase();
-      return pushLast(allProducts.filter((p) => p.name.toLowerCase().includes(q) || p.sku.toLowerCase().includes(q) || p.category.toLowerCase().includes(q)));
+      return filterGender(pushLast(allProducts.filter((p) => p.name.toLowerCase().includes(q) || p.sku.toLowerCase().includes(q) || p.category.toLowerCase().includes(q))));
     }
 
     if (activeCategory.value !== "All") {
       const items = allProducts.filter((p) => p.category === activeCategory.value || (alsoBelongs[p.sku]?.includes(activeCategory.value)));
       if (sortBy.value === "name") items.sort((a, b) => a.name.localeCompare(b.name));
       else if (sortBy.value === "newest") items.sort((a, b) => (b.badge === "New" ? 1 : 0) - (a.badge === "New" ? 1 : 0));
-      return pushLast(items);
+      return filterGender(pushLast(items));
     }
     // Interleave: alternate 1 work wear, 1 other
     const workWear = allProducts.filter((p) => p.category === "Work Wear" && p.sku !== "CAR-12");
@@ -75,7 +81,7 @@ export default component$(() => {
     else if (sortBy.value === "newest") result.sort((a, b) => (b.badge === "New" ? 1 : 0) - (a.badge === "New" ? 1 : 0));
     const car12 = allProducts.find((p) => p.sku === "CAR-12");
     if (car12) result.push(car12);
-    return result;
+    return filterGender(result);
   });
 
   return (

@@ -6,6 +6,7 @@ import { categories as rawCategories, categoryLabel } from "./products";
 
 export const CategoryContext = createContextId<Signal<string>>("apparel-category");
 export const SearchContext = createContextId<Signal<string>>("apparel-search");
+export const GenderContext = createContextId<Signal<string>>("apparel-gender");
 
 const CATEGORY_ORDER = ["All", "Work Wear", "Jackets", "Polos", "Hats"];
 const categories = CATEGORY_ORDER.filter(c => rawCategories.includes(c));
@@ -29,11 +30,14 @@ export default component$(() => {
 
   const isCatalog = useComputed$(() => /^\/apparel\/?$/.test(loc.url.pathname));
   const searchOpen = useSignal(false);
+  const filterOpen = useSignal(false);
   const activeCategory = useSignal(loc.url.searchParams.get("category") || "All");
   const searchQuery = useSignal(loc.url.searchParams.get("q") || "");
+  const genderFilter = useSignal("All");
 
   useContextProvider(CategoryContext, activeCategory);
   useContextProvider(SearchContext, searchQuery);
+  useContextProvider(GenderContext, genderFilter);
 
   const doSearch = $((query: string) => {
     if (query.trim()) {
@@ -66,16 +70,17 @@ export default component$(() => {
                 {t("apparel.title", locale.value)}
               </h1>
               <div class="apparel-titlebar__tabs">
-                {categories.map((cat) => (
+                {categories.filter(c => c !== "All").map((cat) => (
                     <button
                       key={cat}
                       class={`apparel-titlebar__tab ${activeCategory.value === cat ? "active" : ""}`}
                       onClick$={() => {
-                        const headerH = window.innerWidth <= 900 ? 44 : 58;
+                        const headerH = window.innerWidth <= 900 ? 46 : 58;
                         const titlebar = document.querySelector('.apparel-titlebar');
                         const titlebarH = (titlebar as HTMLElement)?.offsetHeight || 34;
                         const catalog = document.querySelector('.apparel-catalog');
                         const stickyPos = catalog ? catalog.getBoundingClientRect().top + window.scrollY - headerH - titlebarH : 0;
+                        if (activeCategory.value === cat && cat !== "All") { activeCategory.value = "All"; } else
                         activeCategory.value = cat;
                         searchQuery.value = "";
                         if (window.innerWidth <= 1024) {
@@ -91,6 +96,28 @@ export default component$(() => {
               </div>
             </div>
             <div class="apparel-titlebar__right">
+              <div class="gender-filter">
+                <button
+                  class={`apparel-titlebar__action ${genderFilter.value !== "All" ? "gender-filter--active" : ""}`}
+                  aria-label="Filter"
+                  onClick$={() => (filterOpen.value = !filterOpen.value)}
+                >
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
+                </button>
+                {filterOpen.value && (
+                  <div class="gender-filter__dropdown">
+                    {["All", "Men", "Women"].map((g) => (
+                      <button
+                        key={g}
+                        class={`gender-filter__option ${genderFilter.value === g ? "active" : ""}`}
+                        onClick$={() => { genderFilter.value = g; filterOpen.value = false; }}
+                      >
+                        {g === "All" ? "All" : g === "Men" ? "Men's" : "Women's"}
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
               <div class="apparel-titlebar__search">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
                 <input

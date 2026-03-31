@@ -168,13 +168,14 @@ export default component$(() => {
           <div class="home-catalog__header">
             <h2 class="home-catalog__title">{t("nav.apparel", locale.value)}</h2>
             <div class="home-catalog__tabs">
-              {["All", "Work Wear", "Jackets", "Polos", "Hats"].map((cat) => (
+              {["Work Wear", "Jackets", "Polos", "Hats"].map((cat) => (
                 <button
                   key={cat}
                   class={`apparel-titlebar__tab ${homeCat.value === cat ? "active" : ""}`}
                   onClick$={() => {
+                    if (homeCat.value === cat) { homeCat.value = "All"; return; }
                     const catalog = document.querySelector('.home-catalog');
-                    const headerH = window.innerWidth <= 900 ? 44 : 58;
+                    const headerH = window.innerWidth <= 900 ? 46 : 58;
                     const tabH = (document.querySelector('.home-catalog__header') as HTMLElement)?.offsetHeight || 34;
                     const catalogTop = catalog ? catalog.getBoundingClientRect().top + window.scrollY : 0;
                     const stickyPos = catalogTop - headerH + tabH - 12;
