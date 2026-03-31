@@ -143,6 +143,19 @@ export default component$(() => {
         <div class="hero__content">
           <div class="hero__text">
             <div class="hero__logo-group">
+              <div class="hero__card-header">
+                <a href="/" class="hero__card-logo">
+                  <img src="/carmichael-logo.png" alt="Carmichael" width="200" height="200" />
+                </a>
+                <div class="hero__card-actions">
+                  <button class="hero__card-btn" aria-label="Cart" onClick$={() => { window.dispatchEvent(new CustomEvent('toggle-cart')); }}>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/></svg>
+                  </button>
+                  <button class="hero__card-btn" aria-label="Menu" onClick$={() => { window.dispatchEvent(new CustomEvent('toggle-menu')); }}>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h18"/><path d="M3 6h18"/><path d="M3 18h18"/></svg>
+                  </button>
+                </div>
+              </div>
               <div class="hero__top-row">
                 <div class="hero__badge">
                   <span class="hero__badge-dot" />
@@ -155,6 +168,19 @@ export default component$(() => {
                 <span class="hero__title-apparel">{t("logo.apparel", locale.value)}</span>
                 <p class="hero__subtitle-inline">{t("hero.subtitle", locale.value)}</p>
               </div>
+              <Carousel.Root class="hero-carousel" autoPlayIntervalMs={6000} align="start" sensitivity={{ touch: 0.5, mouse: 0.5 }}>
+                <Carousel.Scroller class="hero-carousel__scroller">
+                  <Carousel.Slide class="hero-carousel__slide">
+                    <img src="/van.jpeg" alt="On the job" loading="eager" />
+                  </Carousel.Slide>
+                  <Carousel.Slide class="hero-carousel__slide">
+                    <img src="https://images.unsplash.com/photo-1617127365659-c47fa864d8bc?w=800&h=500&fit=crop&crop=center" alt="Outerwear" loading="eager" />
+                  </Carousel.Slide>
+                  <Carousel.Slide class="hero-carousel__slide">
+                    <img src="https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=800&h=500&fit=crop&crop=center" alt="Apparel" loading="eager" />
+                  </Carousel.Slide>
+                </Carousel.Scroller>
+              </Carousel.Root>
             </div>
           </div>
           <div class="hero__bento">
@@ -176,26 +202,6 @@ export default component$(() => {
             </a>
           </div>
         </div>
-
-        {/* Hero Carousel */}
-        <Carousel.Root class="hero-carousel" autoPlayIntervalMs={5000} align="start">
-          <Carousel.Scroller class="hero-carousel__scroller">
-            <Carousel.Slide class="hero-carousel__slide">
-              <img src="/van.jpeg" alt="On the job" loading="eager" />
-            </Carousel.Slide>
-            <Carousel.Slide class="hero-carousel__slide">
-              <img src="https://images.unsplash.com/photo-1617127365659-c47fa864d8bc?w=800&h=500&fit=crop&crop=center" alt="Outerwear" loading="eager" />
-            </Carousel.Slide>
-            <Carousel.Slide class="hero-carousel__slide">
-              <img src="https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=800&h=500&fit=crop&crop=center" alt="Apparel" loading="eager" />
-            </Carousel.Slide>
-          </Carousel.Scroller>
-          <Carousel.Pagination class="hero-carousel__dots">
-            {[0, 1, 2].map((i) => (
-              <Carousel.Bullet key={i} class="hero-carousel__dot" />
-            ))}
-          </Carousel.Pagination>
-        </Carousel.Root>
 
         {/* Featured Teasers (mobile only) */}
         <div class="section section--teasers">
