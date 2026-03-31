@@ -18,6 +18,9 @@ export default component$(() => {
   const selectedSize = useSignal("");
   const selectedColor = useSignal("");
   const selectedQty = useSignal(1);
+  const selectedWaist = useSignal("");
+  const selectedLength = useSignal("");
+  const selectedVariant = useSignal("");
   const added = useSignal(false);
   const addedInfo = useSignal("");
   const imgFullscreen = useSignal(false);
@@ -39,36 +42,57 @@ export default component$(() => {
     cleanup(() => clearInterval(interval));
   });
 
+  const waistLengthSkus = new Set(["CAR-12", "CAR-14"]);
+  const variantSkus = new Set(["CAR-11", "CAR-17"]);
+  const variantOptions = ["Regular", "Tall"];
+  const waistOptions = ["28", "29", "30", "31", "32", "33", "34", "35", "36", "38", "40", "42", "44", "46", "48", "50"];
+  const lengthOptions = ["30", "32", "34", "36"];
+
   const addToCart = $(() => {
     const p = product.value;
     console.log("addToCart called", { p: p?.name, size: selectedSize.value, color: selectedColor.value });
     if (!p || !selectedSize.value) return;
     if (p.colors.length > 0 && !selectedColor.value) return;
+    if (waistLengthSkus.has(p.sku) && (!selectedWaist.value || !selectedLength.value)) return;
+    if (variantSkus.has(p.sku) && !selectedVariant.value) return;
+    const sizeVal = waistLengthSkus.has(p.sku)
+      ? `W${selectedWaist.value} x L${selectedLength.value}`
+      : variantSkus.has(p.sku)
+        ? `${selectedSize.value} ${selectedVariant.value}`
+        : selectedSize.value;
     try {
       const saved = localStorage.getItem("ce_cart");
       const items = saved ? JSON.parse(saved) : [];
       const existing = items.find(
-        (i: any) => i.name === p.name && i.size === selectedSize.value && i.color === selectedColor.value
+        (i: any) => i.name === p.name && i.size === sizeVal && i.color === selectedColor.value
       );
       if (existing) {
         existing.quantity += selectedQty.value;
       } else {
-        items.push({
+        const item: any = {
           name: p.name,
           sku: p.sku,
           category: p.category,
-          size: selectedSize.value,
+          size: sizeVal,
           color: selectedColor.value,
           quantity: selectedQty.value,
           price: p.price,
           img: p.img,
-        });
+        };
+        if (waistLengthSkus.has(p.sku)) {
+          item.waist = selectedWaist.value;
+          item.length = selectedLength.value;
+        }
+        if (variantSkus.has(p.sku)) {
+          item.variant = selectedVariant.value;
+        }
+        items.push(item);
       }
       localStorage.setItem("ce_cart", JSON.stringify(items));
       console.log("cart saved, dispatching event", items.length, "items");
       window.dispatchEvent(new CustomEvent("cart-updated"));
     } catch (err) { console.error("addToCart error:", err); }
-    addedInfo.value = `${p.name} — ${colorName(selectedColor.value, "en")} / ${selectedSize.value}`;
+    addedInfo.value = `${p.name} — ${colorName(selectedColor.value, "en")} / ${sizeVal}`;
     added.value = true;
     selectedQty.value = 1;
     setTimeout(() => { added.value = false; }, 3800);
@@ -78,31 +102,50 @@ export default component$(() => {
     const p = product.value;
     if (!p || !selectedSize.value) return;
     if (p.colors.length > 0 && !selectedColor.value) return;
+    if (waistLengthSkus.has(p.sku) && (!selectedWaist.value || !selectedLength.value)) return;
+    if (variantSkus.has(p.sku) && !selectedVariant.value) return;
+    const sizeVal = waistLengthSkus.has(p.sku)
+      ? `W${selectedWaist.value} x L${selectedLength.value}`
+      : variantSkus.has(p.sku)
+        ? `${selectedSize.value} ${selectedVariant.value}`
+        : selectedSize.value;
     try {
       const saved = localStorage.getItem("ce_cart");
       const items = saved ? JSON.parse(saved) : [];
-      items.push({
+      const item: any = {
         name: p.name,
         sku: p.sku,
         category: p.category,
-        size: selectedSize.value,
+        size: sizeVal,
         color: selectedColor.value,
         quantity: selectedQty.value,
         price: p.price,
         img: p.img,
-      });
+      };
+      if (waistLengthSkus.has(p.sku)) {
+        item.waist = selectedWaist.value;
+        item.length = selectedLength.value;
+      }
+      if (variantSkus.has(p.sku)) {
+        item.variant = selectedVariant.value;
+      }
+      items.push(item);
       localStorage.setItem("ce_cart", JSON.stringify(items));
       window.dispatchEvent(new CustomEvent("cart-updated"));
       window.dispatchEvent(new CustomEvent("open-cart"));
     } catch { /* ignore */ }
   });
 
-  // Initialize color and auto-select default size (prefer M)
+  // Initialize color and auto-select default size (prefer L)
   if (!colorInitialized.value && product.value) {
     selectedColor.value = product.value.colors[0];
-    const sizes = expandSizes(product.value.sizes);
-    const lIdx = sizes.indexOf("L");
-    selectedSize.value = lIdx !== -1 ? sizes[lIdx] : sizes[0];
+    if (waistLengthSkus.has(product.value.sku)) {
+      selectedSize.value = "W/L";
+    } else {
+      const sizes = expandSizes(product.value.sizes);
+      const lIdx = sizes.indexOf("L");
+      selectedSize.value = lIdx !== -1 ? sizes[lIdx] : sizes[0];
+    }
     colorInitialized.value = true;
   }
 
@@ -197,6 +240,7 @@ export default component$(() => {
                 ))}
               </ul>
             )}
+            {!waistLengthSkus.has(p.sku) && (
             <div class="product-modal__field">
               <label class="product-modal__label">{t("modal.size", locale.value)}</label>
               <div class="product-modal__options">
@@ -211,6 +255,53 @@ export default component$(() => {
                 ))}
               </div>
             </div>
+            )}
+            {waistLengthSkus.has(p.sku) && (
+              <div class="product-modal__field product-modal__waist-length-row">
+                <div class="product-modal__select-group">
+                  <label class="product-modal__label">Waist</label>
+                  <select
+                    class="product-modal__select"
+                    value={selectedWaist.value}
+                    onChange$={(_, el) => (selectedWaist.value = el.value)}
+                  >
+                    <option value="" disabled>Select</option>
+                    {waistOptions.map((w) => (
+                      <option key={w} value={w}>{w}</option>
+                    ))}
+                  </select>
+                </div>
+                <div class="product-modal__select-group">
+                  <label class="product-modal__label">Length</label>
+                  <select
+                    class="product-modal__select"
+                    value={selectedLength.value}
+                    onChange$={(_, el) => (selectedLength.value = el.value)}
+                  >
+                    <option value="" disabled>Select</option>
+                    {lengthOptions.map((l) => (
+                      <option key={l} value={l}>{l}</option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+            )}
+            {variantSkus.has(p.sku) && (
+              <div class="product-modal__field">
+                <label class="product-modal__label">Variant</label>
+                <div class="product-modal__options">
+                  {variantOptions.map((v) => (
+                    <button
+                      key={v}
+                      class={`product-modal__option ${selectedVariant.value === v ? "active" : ""}`}
+                      onClick$={() => (selectedVariant.value = v)}
+                    >
+                      {v}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
             <div class="product-modal__field product-modal__color-qty-row">
               {p.colors.length > 0 && (
                 <div class="product-modal__color-group">
@@ -241,7 +332,7 @@ export default component$(() => {
             <div class="product-modal__actions">
               <button
                 class="btn btn--primary product-modal__add"
-                disabled={!selectedSize.value}
+                disabled={!selectedSize.value || (waistLengthSkus.has(p.sku) && (!selectedWaist.value || !selectedLength.value)) || (variantSkus.has(p.sku) && !selectedVariant.value)}
                 onClick$={addToCart}
               >
                 {added.value ? (
@@ -253,7 +344,7 @@ export default component$(() => {
               </button>
               <button
                 class="btn btn--secondary product-modal__add"
-                disabled={!selectedSize.value}
+                disabled={!selectedSize.value || (waistLengthSkus.has(p.sku) && (!selectedWaist.value || !selectedLength.value)) || (variantSkus.has(p.sku) && !selectedVariant.value)}
                 onClick$={orderNow}
               >
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>

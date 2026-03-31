@@ -66,7 +66,7 @@ export const useSubmitOrder = routeAction$(async (data, { fail, env }) => {
 
   const { employee, items, date } = data as {
     employee: { number: string; name: string; department: string };
-    items: { name: string; sku?: string; color: string; size: string; quantity: number; price: number }[];
+    items: { name: string; sku?: string; color: string; size: string; quantity: number; price: number; waist?: string; length?: string; variant?: string }[];
     date: string;
   };
 
@@ -111,7 +111,7 @@ export const useSubmitOrder = routeAction$(async (data, { fail, env }) => {
   const itemRows = items.map((i) =>
     `<tr>
       <td style="padding:6px 12px;border-bottom:1px solid #eee">${i.name}${i.sku ? ` <span style="color:#999;font-size:12px">(${i.sku})</span>` : ""}</td>
-      <td style="padding:6px 12px;border-bottom:1px solid #eee">${cName(i.color)} / ${i.size}</td>
+      <td style="padding:6px 12px;border-bottom:1px solid #eee">${cName(i.color)} / ${i.size}${i.waist ? ` / W${i.waist} L${i.length}` : ""}</td>
       <td style="padding:6px 12px;border-bottom:1px solid #eee;text-align:center">${i.quantity}</td>
       <td style="padding:6px 12px;border-bottom:1px solid #eee;text-align:right">$${(Number(i.price) || 0) * i.quantity}</td>
     </tr>`
@@ -174,6 +174,9 @@ interface CartItem {
   quantity: number;
   price: number;
   img: string;
+  waist?: string;
+  length?: string;
+  variant?: string;
 }
 
 const colorKeyMap: Record<string, string> = {
@@ -295,6 +298,9 @@ export default component$(() => {
       items: cart.items.map((i) => ({
         name: i.name, sku: i.sku, color: i.color, size: i.size,
         quantity: i.quantity, price: i.price,
+        ...(i.waist ? { waist: i.waist } : {}),
+        ...(i.length ? { length: i.length } : {}),
+        ...(i.variant ? { variant: i.variant } : {}),
       })),
       date: new Date().toLocaleDateString("en-CA"),
     };
@@ -610,7 +616,7 @@ export default component$(() => {
                             <div>
                             <Link href={item.sku ? `/apparel/${item.sku}/` : "/apparel/"} class="cart-table__name-link">{item.name}</Link>
                             <div class="cart-table__meta">
-                              {colorName(item.color, locale.value)} / {item.size}                              <button class="cart-table__remove" aria-label={`Remove ${item.name}`} onClick$={() => removeFromCart(i)}>&times;</button>
+                              {colorName(item.color, locale.value)} / {item.size}{item.waist ? ` / W${item.waist} L${item.length}` : ""}                              <button class="cart-table__remove" aria-label={`Remove ${item.name}`} onClick$={() => removeFromCart(i)}>&times;</button>
                             </div>
                             </div>
                             </div>
