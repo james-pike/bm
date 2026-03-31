@@ -131,6 +131,8 @@ export default component$(() => {
   const homeCat = useSignal("All");
   const homeSearch = useSignal("");
   const homeSearchOpen = useSignal(false);
+  const homeGender = useSignal("All");
+  const homeFilterOpen = useSignal(false);
 
   return (
     <>
@@ -192,6 +194,28 @@ export default component$(() => {
               ))}
             </div>
             <div class="home-catalog__right">
+              <div class="gender-filter">
+                <button
+                  class={`apparel-titlebar__action ${homeGender.value !== "All" ? "gender-filter--active" : ""}`}
+                  aria-label="Filter"
+                  onClick$={() => (homeFilterOpen.value = !homeFilterOpen.value)}
+                >
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
+                </button>
+                {homeFilterOpen.value && (
+                  <div class="gender-filter__dropdown">
+                    {["All", "Men", "Women"].map((g) => (
+                      <button
+                        key={g}
+                        class={`gender-filter__option ${homeGender.value === g ? "active" : ""}`}
+                        onClick$={() => { homeGender.value = g; homeFilterOpen.value = false; }}
+                      >
+                        {g === "All" ? "All" : g === "Men" ? "Men's" : "Women's"}
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
               <div class="apparel-titlebar__search home-catalog__search-desktop">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
                 <input
@@ -237,6 +261,11 @@ export default component$(() => {
                 "CAR-15": ["Jackets"],
                 "CAR-16": ["Polos"],
               };
+              const filterGender = (list: Product[]) => {
+                if (homeGender.value === "All") return list;
+                const prefix = homeGender.value === "Men" ? "men" : "women";
+                return list.filter((p) => p.name.toLowerCase().includes(prefix));
+              };
               let items: Product[];
               if (homeSearch.value) {
                 const q = homeSearch.value.toLowerCase();
@@ -256,7 +285,7 @@ export default component$(() => {
                 items = allProducts.filter((p) => p.category === homeCat.value || alsoBelongs[p.sku]?.includes(homeCat.value));
                 items = [...items.filter((p) => p.sku !== "CAR-12"), ...items.filter((p) => p.sku === "CAR-12")];
               }
-              return items.map((item) => (
+              return filterGender(items).map((item) => (
                 <a key={item.sku} href={`/apparel/${item.sku}/`} class="product-card product-card-link">
                   <div class="product-card__image">
                     <img src={item.img} alt={item.name} width="440" height="440" />
