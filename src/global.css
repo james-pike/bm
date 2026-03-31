@@ -264,7 +264,7 @@ img { max-width: 100%; display: block; }
   z-index: 2;
   max-width: 1440px;
   margin: 0 auto;
-  padding: 3.5rem 3rem 3rem;
+  padding: 1.5rem 3rem 3rem;
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 2rem;
@@ -285,7 +285,7 @@ img { max-width: 100%; display: block; }
   }
 }
 
-.hero__text { color: var(--ce-white); }
+.hero__text { color: var(--ce-white); position: relative; }
 
 .hero__badge {
   display: inline-flex;
@@ -300,7 +300,11 @@ img { max-width: 100%; display: block; }
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  margin-bottom: 1rem;
+  position: absolute;
+  top: -0.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
 }
 
 .hero__badge-dot {
@@ -327,15 +331,15 @@ img { max-width: 100%; display: block; }
 }
 
 .hero__title-icon {
-  width: clamp(95px, 14vw, 170px);
+  width: clamp(110px, 17vw, 210px);
   height: auto;
   margin-bottom: -1rem;
   display: block;
-  margin-left: calc(clamp(310px, 44vw, 560px) - clamp(95px, 14vw, 170px));
+  margin-left: calc(clamp(360px, 50vw, 660px) - clamp(110px, 17vw, 210px));
 }
 .hero__title-img {
   max-width: 100%;
-  width: clamp(310px, 44vw, 560px);
+  width: clamp(360px, 50vw, 660px);
   height: auto;
   margin-bottom: 0.5rem;
   filter: brightness(0) invert(1);
@@ -3280,7 +3284,7 @@ details[open] > .cart-drawer__checkout-title::after {
   .dot-pattern::before { opacity: 0.5; }
   .hero { min-height: auto; padding-bottom: 0.4rem; }
   .hero__content { text-align: left; padding: 2.5rem 0.5rem 1.5rem; align-items: flex-start; grid-template-columns: 1fr; overflow: hidden; }
-  .hero__title-icon { margin-bottom: -0.5rem; margin-left: calc(50% + clamp(310px, 44vw, 560px) / 2 - clamp(95px, 14vw, 170px)); }
+  .hero__title-icon { margin-bottom: -0.5rem; margin-left: calc(50% + clamp(360px, 50vw, 660px) / 2 - clamp(110px, 17vw, 210px)); }
   .hero__title-img { margin-left: auto; margin-right: auto; }
   .hero__title-img { margin-left: auto; margin-right: auto; }
   .hero__subtitle { margin: 0 0 2rem; }
@@ -3436,7 +3440,7 @@ details[open] > .cart-drawer__checkout-title::after {
     top: -0.5rem;
   }
   .hero__badge {
-    display: none;
+    display: inline-flex;
   }
   .apparel-titlebar {
     position: relative;

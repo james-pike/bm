@@ -296,8 +296,10 @@ export const allProducts = [
     "badge": "",
     "colors": [],
     "price": 100,
-    "img": "",
-    "imgs": [],
+    "img": "/l4007.png",
+    "imgs": [
+      "/l4007.png"
+    ],
     "material": "",
     "details": ""
   },
@@ -322,8 +324,10 @@ export const allProducts = [
     "badge": "",
     "colors": [],
     "price": 100,
-    "img": "",
-    "imgs": [],
+    "img": "/ladies rigbi logoed car.png",
+    "imgs": [
+      "/ladies rigbi logoed car.png"
+    ],
     "material": "",
     "details": ""
   },
@@ -335,8 +339,10 @@ export const allProducts = [
     "badge": "",
     "colors": [],
     "price": 100,
-    "img": "",
-    "imgs": [],
+    "img": "/mens rigi car logoed.png",
+    "imgs": [
+      "/mens rigi car logoed.png"
+    ],
     "material": "",
     "details": ""
   },
