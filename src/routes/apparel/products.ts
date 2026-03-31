@@ -50,7 +50,7 @@ export const allProducts = [
   },
   {
     "sku": "CAR-6",
-    "name": "Women's Golf Polo",
+    "name": "Women's Coal Harbour® Snag Resistant Polo #L455 - Green",
     "category": "Polos",
     "sizes": "XS - 4XL",
     "badge": "",
@@ -65,9 +65,9 @@ export const allProducts = [
   },
   {
     "sku": "CAR-4",
-    "name": "Women's UA Tech Polo",
+    "name": "Women's UA Tech Polo - White",
     "category": "Polos",
-    "sizes": "S - 4XL",
+    "sizes": "XS - 2XL",
     "badge": "",
     "colors": [],
     "price": 100,
@@ -76,10 +76,10 @@ export const allProducts = [
       "/uapolo/womens-white.png"
     ],
     "material": "100% polyester",
-    "details": "Moisture-wicking, Anti-odor technology, Textured soft & breathable fabric, Self-fabric collar, 3-button placket"
+    "details": "Moisture-wicking, Anti-odor technology, Textured soft & breathable fabric, Self-fabric collar, 4-button placket"
   },
   {
-    "sku": "CAR-7",
+    "sku": "CAR-21",
     "name": "Embroidered Cap",
     "category": "Hats",
     "sizes": "One Size",
@@ -94,7 +94,7 @@ export const allProducts = [
     "details": "Structured mid profile 6 panel Flexfit 110®, Shapeable pre-curved visor, Plastic snap back closure, UV protection, Moisture wicking, Contrasting grey undervisor, Flat embroidery with embroidered patch"
   },
   {
-    "sku": "CAR-8",
+    "sku": "CAR-18",
     "name": "Flip Toque",
     "category": "Hats",
     "sizes": "One Size",
@@ -136,7 +136,7 @@ export const allProducts = [
       "/sku/viking-3907FRWP.png"
     ],
     "material": "",
-    "details": "Flame resistance self-extinguishing for momentary contact with open flame "
+    "details": "Flame resistance, Self-extinguishing for momentary contact with open flame "
   },
   {
     "sku": "CAR-11",
@@ -150,8 +150,8 @@ export const allProducts = [
     "imgs": [
       "/sku/FRS-160-CARHARTT-SHIRT-_2_.png"
     ],
-    "material": "",
-    "details": "7-ounces, 88% cotton / 12%, High-tenacity nylon, FR twill"
+    "material": "88% cotton / 12% High-tenacity nylon",
+    "details": "7-ounces, FR twill"
   },
   {
     "sku": "CAR-12",
@@ -165,8 +165,8 @@ export const allProducts = [
     "imgs": [
       "/sku/carhartt-104204.png"
     ],
-    "material": "",
-    "details": "9-ounce, 98% cotton / 2% spandex canvas"
+    "material": "98% cotton / 2% spandex canvas",
+    "details": "9-ounces"
   },
   {
     "sku": "CAR-13",
@@ -180,8 +180,8 @@ export const allProducts = [
     "imgs": [
       "/sku/jacket-logoed-3307J.png"
     ],
-    "material": "",
-    "details": "100% Waterproof and windproof, Toughest fabric to resist punctures rips snags and abrasions, Heavy-duty 420 denier nylon with PVC backing"
+    "material": "Heavy-duty 420 denier nylon with PVC backing",
+    "details": "100% Waterproof and windproof, Toughest fabric to resist punctures rips snags and abrasions"
   },
   {
     "sku": "CAR-14",
@@ -230,7 +230,7 @@ export const allProducts = [
   },
   {
     "sku": "CAR-17",
-    "name": "Atlas Guardian FR/AR OHSA Hi Vis Coveralls-Grey #1072",
+    "name": "Atlas Guardian FR/AR Ohsa Hi Vis Coveralls - Grey #1072",
     "category": "Work Wear",
     "sizes": "XS - 7XL",
     "badge": "",
@@ -244,7 +244,7 @@ export const allProducts = [
     "details": ""
   },
   {
-    "sku": "CAR-18",
+    "sku": "CAR-8",
     "name": "Men's UA Tech Polo - Grey",
     "category": "Polos",
     "sizes": "S - 4XL",
@@ -270,8 +270,8 @@ export const allProducts = [
     "imgs": [
       "/sku/car19.png"
     ],
-    "material": "",
-    "details": "6.3-oz, 100% performance polyester flat tricot micropique, Rib knit collar, Moisture wicking, Snag resistant, Breathable, Tagless Classic fit, High visibility compliant"
+    "material": "100% performance polyester flat tricot micropique",
+    "details": "6.3-oz, Rib knit collar, Moisture wicking, Snag resistant, Breathable, Tagless Classic fit"
   },
   {
     "sku": "CAR-20",
@@ -285,8 +285,161 @@ export const allProducts = [
     "imgs": [
       "/sku/car20.png"
     ],
+    "material": "100% performance polyester flat tricot micropique",
+    "details": "6.3-oz, Rib knit collar, Moisture wicking, Snag resistant, Breathable, Tagless Classic fit"
+  },
+  {
+    "sku": "CAR-22",
+    "name": "Women's Coal Harbour® Everyday Polo #L4007",
+    "category": "Polos",
+    "sizes": "S - 4XL",
+    "badge": "",
+    "colors": [],
+    "price": 100,
+    "img": "",
+    "imgs": [],
     "material": "",
     "details": ""
+  },
+  {
+    "sku": "CAR-23",
+    "name": "Women's Harriton Easy Blend Polo #M265W",
+    "category": "Polos",
+    "sizes": "XS - 3XL",
+    "badge": "",
+    "colors": [],
+    "price": 100,
+    "img": "",
+    "imgs": [],
+    "material": "",
+    "details": ""
+  },
+  {
+    "sku": "CAR-24",
+    "name": "Women's Rigi Eco Knit Full Zip - Trimark Sportswear",
+    "category": "Jackets",
+    "sizes": "XS - 2XL",
+    "badge": "",
+    "colors": [],
+    "price": 100,
+    "img": "",
+    "imgs": [],
+    "material": "",
+    "details": ""
+  },
+  {
+    "sku": "CAR-25",
+    "name": "Men's Rigi Eco Knit Full Zip - Trimark Sportswear",
+    "category": "Jackets",
+    "sizes": "S - 3XL",
+    "badge": "",
+    "colors": [],
+    "price": 100,
+    "img": "",
+    "imgs": [],
+    "material": "",
+    "details": ""
+  },
+  {
+    "sku": "CAR-26",
+    "name": "Men's Coal Harbour® Everyday Polo #S4007",
+    "category": "Polos",
+    "sizes": "S - 4XL",
+    "badge": "",
+    "colors": [],
+    "price": 100,
+    "img": "",
+    "imgs": [],
+    "material": "",
+    "details": ""
+  },
+  {
+    "sku": "CAR-5",
+    "name": "Women's Coal Harbour® Snag Resistant Polo #L455 - Grey",
+    "category": "Polos",
+    "sizes": "S - 4XL",
+    "badge": "",
+    "colors": [],
+    "price": 100,
+    "img": "/wpg.png",
+    "imgs": [
+      "/wpg.png"
+    ],
+    "material": "100% performance polyester flat tricot micropique",
+    "details": "Self-fabric collar, Moisture-wicking, Snag resistant, Breathable, Tagless, Relaxed fit"
+  },
+  {
+    "sku": "CAR-7",
+    "name": "Women's Coal Harbour® Snag Resistant Polo #L455 - Black",
+    "category": "Polos",
+    "sizes": "S - 4XL",
+    "badge": "",
+    "colors": [],
+    "price": 100,
+    "img": "/wpb.png",
+    "imgs": [
+      "/wpb.png"
+    ],
+    "material": "100% performance polyester flat tricot micropique",
+    "details": "Self-fabric collar, Moisture-wicking, Snag resistant, Breathable, Tagless, Relaxed fit"
+  },
+  {
+    "sku": "CAR-27",
+    "name": "Women's UA Tech Polo - Black",
+    "category": "Polos",
+    "sizes": "XS - 2XL",
+    "badge": "",
+    "colors": [],
+    "price": 100,
+    "img": "/wuapb.png",
+    "imgs": [
+      "/wuapb.png"
+    ],
+    "material": "100% polyester",
+    "details": "Moisture-wicking, Anti-odor technology, Textured soft & breathable fabric, Self-fabric collar, 4-button placket"
+  },
+  {
+    "sku": "CAR-28",
+    "name": "Women's UA Tech Polo - Grey",
+    "category": "Polos",
+    "sizes": "XS - 2XL",
+    "badge": "",
+    "colors": [],
+    "price": 100,
+    "img": "",
+    "imgs": [],
+    "material": "100% polyester",
+    "details": "Moisture-wicking, Anti-odor technology, Textured soft & breathable fabric, Self-fabric collar, 4-button placket"
+  },
+  {
+    "sku": "CAR-29",
+    "name": "Men's Full Zip Alpine Fleece",
+    "category": "Jackets",
+    "sizes": "XS - 4XL",
+    "badge": "",
+    "colors": [],
+    "price": 100,
+    "img": "/sku/mens-fleece.png",
+    "imgs": [
+      "/sku/mens-fleece.png"
+    ],
+    "material": "60% Cotton / 40% Acrylic",
+    "details": "Heavyweight cuffs hem, and stand up collar, Long-sleeve, FW zipper pull, Even hem"
+  },
+  {
+    "sku": "CAR-30",
+    "name": "Women's Full Zip Alpine Fleece",
+    "category": "Jackets",
+    "sizes": "S - 4XL",
+    "badge": "",
+    "colors": [],
+    "price": 100,
+    "img": "/womens-fleece.png",
+    "imgs": [
+      "/womens-fleece.png"
+    ],
+    "material": "60% Cotton / 40% Acrylic",
+    "details": "Heavyweight cuffs hem, and stand up collar, Long-sleeve, FW zipper pull, Even hem"
   }
 ];
 
