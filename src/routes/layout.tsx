@@ -343,16 +343,8 @@ export default component$(() => {
   // eslint-disable-next-line qwik/no-use-visible-task
   useVisibleTask$(({ cleanup }) => {
     const onScroll = () => { headerScrolled.value = window.scrollY > 60; };
-    const onToggleCart = () => { cartOpen.value = !cartOpen.value; };
-    const onToggleMenu = () => { menuOpen.value = !menuOpen.value; };
     window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("toggle-cart", onToggleCart);
-    window.addEventListener("toggle-menu", onToggleMenu);
-    cleanup(() => {
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("toggle-cart", onToggleCart);
-      window.removeEventListener("toggle-menu", onToggleMenu);
-    });
+    cleanup(() => window.removeEventListener("scroll", onScroll));
   }, { strategy: 'document-ready' });
 
   // Close cart on navigation

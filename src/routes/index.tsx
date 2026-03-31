@@ -143,19 +143,6 @@ export default component$(() => {
         <div class="hero__content">
           <div class="hero__text">
             <div class="hero__logo-group">
-              <div class="hero__card-header">
-                <a href="/" class="hero__card-logo">
-                  <img src="/carmichael-logo.png" alt="Carmichael" width="200" height="200" />
-                </a>
-                <div class="hero__card-actions">
-                  <button class="hero__card-btn" aria-label="Cart" onClick$={() => { window.dispatchEvent(new CustomEvent('toggle-cart')); }}>
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/></svg>
-                  </button>
-                  <button class="hero__card-btn" aria-label="Menu" onClick$={() => { window.dispatchEvent(new CustomEvent('toggle-menu')); }}>
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h18"/><path d="M3 6h18"/><path d="M3 18h18"/></svg>
-                  </button>
-                </div>
-              </div>
               <div class="hero__top-row">
                 <div class="hero__badge">
                   <span class="hero__badge-dot" />
