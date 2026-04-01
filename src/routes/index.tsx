@@ -148,13 +148,13 @@ export default component$(() => {
         <div class="hero__content">
           <div class="hero__text">
             <div class="hero__logo-group">
-              <Carousel.Root class="hero-carousel" autoPlayIntervalMs={6000} align="start" sensitivity={{ touch: 0.5, mouse: 0.5 }}>
+              <Carousel.Root class="hero-carousel" autoPlayIntervalMs={6000} align="start" sensitivity={{ touch: 0, mouse: 0 }}>
                 <Carousel.Scroller class="hero-carousel__scroller">
                   <Carousel.Slide class="hero-carousel__slide">
                     <img src="/van.jpeg" alt="On the job" loading="eager" />
                   </Carousel.Slide>
                   <Carousel.Slide class="hero-carousel__slide">
-                    <img src="https://images.unsplash.com/photo-1617127365659-c47fa864d8bc?w=800&h=500&fit=crop&crop=center" alt="Outerwear" loading="eager" />
+                    <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=800&h=500&fit=crop&crop=center" alt="On the job" loading="eager" />
                   </Carousel.Slide>
                   <Carousel.Slide class="hero-carousel__slide">
                     <img src="https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=800&h=500&fit=crop&crop=center" alt="Apparel" loading="eager" />
