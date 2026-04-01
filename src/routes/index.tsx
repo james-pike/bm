@@ -17,6 +17,7 @@ const teasers = [
     imgs: [
       "/sku/_INSULATED_VIKING_frj3957frj_-removebg-preview.png",
       "/sku/ww2-removebg-preview.png",
+      "/sku/Coverall-FlaME-1072GR.png",
     ],
     skewed: true,
   },
@@ -30,6 +31,7 @@ const teasers = [
     imgs: [
       "/hat/30109107PS2_FRONT.JPG",
       "/softshell/j7603-soft-shell.png",
+      "/sku/mens-fleece.png",
     ],
     skewed: true,
   },
@@ -43,6 +45,7 @@ const teasers = [
     imgs: [
       "/sku/j7603-soft-shell-removebg-preview.png",
       "/sku/l7603-ladies-soft-shell-removebg-preview.png",
+      "/sku/jacket-logoed-3307J.png",
     ],
     skewed: true,
   },
@@ -56,6 +59,7 @@ const teasers = [
     imgs: [
       "/sku/green-removebg-preview.png",
       "/sku/womens-white-removebg-preview.png",
+      "/sku/MENS-CLASSIC-LONG-SLEEVE-SMP2.png",
     ],
     skewed: true,
   },
@@ -69,6 +73,7 @@ const teasers = [
     imgs: [
       "/hat/30109107PS2_FRONT.JPG",
       "/beanie/1.png",
+      "/hat/30109107PS2_BACK.JPG",
     ],
     skewed: true,
   },
