@@ -1207,19 +1207,32 @@ img { max-width: 100%; display: block; }
 .nav-drawer__link {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 28px;
   padding: 10px 12px;
   font-size: 1.05rem;
   font-weight: 500;
   color: var(--ce-gray-700);
+  text-transform: capitalize;
   text-decoration: none;
   background: var(--ce-white);
   border-radius: var(--radius-sm);
   transition: background 0.15s ease, color 0.15s ease;
+  position: relative;
 }
 .nav-drawer__link svg {
   flex-shrink: 0;
   opacity: 0.4;
+  width: 20px;
+  height: 20px;
+}
+.nav-drawer__link::before {
+  content: '';
+  position: absolute;
+  left: 42px;
+  top: 6px;
+  bottom: 6px;
+  width: 1px;
+  background: var(--ce-gray-200);
 }
 .nav-drawer__link.active svg {
   opacity: 0.7;
