@@ -3727,11 +3727,11 @@ details[open] > .cart-drawer__checkout-title::after {
   .teaser-card .btn--primary:hover { background: var(--tc-btn-bg); color: var(--ce-gray-900); }
   .teaser-card:hover .teaser-card__body::after { background: linear-gradient(90deg, var(--tc-glow, #F5A623), var(--tc-btn-bg, var(--ce-orange)), var(--tc-glow, #F5A623)); }
   .teaser-card__image { aspect-ratio: 3/1; }
-  .teaser-card__body { padding: 0.3rem 0.75rem 0.35rem; flex-direction: row; align-items: center; justify-content: space-between; }
+  .teaser-card__body { padding: 0.35rem 0.75rem 0.35rem 1rem; flex-direction: row; align-items: center; justify-content: space-between; }
   .teaser-card__body .featured-banner__tag { display: none; }
-  .teaser-card__title { font-size: 0.9rem; margin-bottom: 0; }
+  .teaser-card__title { font-size: 1rem; margin-bottom: 0; }
   .teaser-card__text { display: none; }
-  .teaser-card .btn--primary { padding: 4px 8px; font-size: 0.65rem; flex-shrink: 0; letter-spacing: -0.02em; }
+  .teaser-card .btn--primary { padding: 3px 8px; font-size: 0.65rem; flex-shrink: 0; letter-spacing: -0.02em; }
   .teaser-grid { display: grid; }
   .apparel-catalog { padding: 0 0.15rem 0.35rem; }
   .apparel-titlebar { padding: 0; }
@@ -4016,11 +4016,11 @@ details[open] > .cart-drawer__checkout-title::after {
   .teaser-card__image--skewed { display: flex; overflow: hidden; }
   .teaser-card__skewed-img { display: block; flex: 1; min-width: 0; height: 100%; object-fit: contain; object-position: center center; transform: skewX(-3deg) scaleX(1.08); background: rgba(255,255,255,0.5); }
   .teaser-card__skewed-img:nth-child(2) { background: rgba(80,80,80,0.15); }
-  .teaser-card__body { padding: 0.3rem 0.75rem 0.35rem; flex-direction: row; align-items: center; justify-content: space-between; }
+  .teaser-card__body { padding: 0.35rem 0.75rem 0.35rem 1rem; flex-direction: row; align-items: center; justify-content: space-between; }
   .teaser-card__body .featured-banner__tag { display: none; }
-  .teaser-card__title { font-size: 0.9rem; margin-bottom: 0; }
+  .teaser-card__title { font-size: 1rem; margin-bottom: 0; }
   .teaser-card__text { display: none; }
-  .teaser-card .btn--primary { padding: 4px 8px; font-size: 0.65rem; flex-shrink: 0; letter-spacing: -0.02em; }
+  .teaser-card .btn--primary { padding: 3px 8px; font-size: 0.65rem; flex-shrink: 0; letter-spacing: -0.02em; }
   .hero__content { padding: 0 0 0.5rem; gap: 0.5rem; grid-template-columns: 1fr; }
   .hero__badge { position: static; transform: none; margin-bottom: 0; }
   .hero__subtitle-inline { text-align: left; }

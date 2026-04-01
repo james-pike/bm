@@ -16,8 +16,8 @@ const teasers = [
     ctaKey: "teaser.workwear.cta" as const,
     imgs: [
       "/sku/_INSULATED_VIKING_frj3957frj_-removebg-preview.png",
-      "/sku/ww2-removebg-preview.png",
-      "/sku/Coverall-FlaME-1072GR.png",
+      "/sku/carmicheal-337-logo.png",
+      "/sku/FRS-160-CARHARTT-SHIRT-_2_.png",
     ],
     skewed: true,
   },
@@ -44,8 +44,8 @@ const teasers = [
     ctaKey: "teaser.jackets.cta" as const,
     imgs: [
       "/sku/j7603-soft-shell-removebg-preview.png",
+      "/womens-fleece.png",
       "/sku/l7603-ladies-soft-shell-removebg-preview.png",
-      "/sku/jacket-logoed-3307J.png",
     ],
     skewed: true,
   },
@@ -58,8 +58,8 @@ const teasers = [
     ctaKey: "teaser.polos.cta" as const,
     imgs: [
       "/sku/green-removebg-preview.png",
-      "/sku/womens-white-removebg-preview.png",
-      "/sku/MENS-CLASSIC-LONG-SLEEVE-SMP2.png",
+      "/sku/car20.png",
+      "/uapolo/car1.png",
     ],
     skewed: true,
   },
