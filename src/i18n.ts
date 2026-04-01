@@ -53,7 +53,7 @@ const translations = {
   "teaser.all.text": { en: "Browse the complete Carmichael branded collection.", fr: "Parcourez la collection complète Carmichael." },
   "teaser.all.cta": { en: "Browse Apparel", fr: "Parcourir les vêtements" },
   "teaser.jackets.tag": { en: "Cold Weather", fr: "Temps froid" },
-  "teaser.jackets.title": { en: "Jackets & Fleeces", fr: "Manteaux et polaires" },
+  "teaser.jackets.title": { en: "Jackets & Fleeces", fr: "Manteaux" },
   "teaser.jackets.text": { en: "Softshell and insulated options built for Canadian weather.", fr: "Options softshell et isolées conçues pour le climat canadien." },
   "teaser.jackets.cta": { en: "Shop Jackets", fr: "Voir les manteaux" },
 
@@ -68,7 +68,7 @@ const translations = {
   "teaser.hoodies.cta": { en: "Shop Hoodies", fr: "Voir les kangourous" },
 
   "teaser.hats.tag": { en: "Headwear", fr: "Couvre-chefs" },
-  "teaser.hats.title": { en: "Caps & Beanies", fr: "Casquettes et tuques" },
+  "teaser.hats.title": { en: "Caps & Beanies", fr: "Casquettes" },
   "teaser.hats.text": { en: "Embroidered caps and knit beanies for every season.", fr: "Casquettes brodées et tuques tricotées pour toutes les saisons." },
   "teaser.hats.cta": { en: "Shop Hats", fr: "Voir les chapeaux" },
 
@@ -178,7 +178,7 @@ const translations = {
   "cat.Hoodies": { en: "Hoodies", fr: "Kangourous" },
   "cat.Hats": { en: "Hats", fr: "Chapeaux" },
   "cat.Safety": { en: "Safety", fr: "Sécurité" },
-  "cat.Caps": { en: "Caps & Beanies", fr: "Casquettes et tuques" },
+  "cat.Caps": { en: "Caps & Beanies", fr: "Casquettes" },
   "cat.Jackets": { en: "Jackets", fr: "Manteaux" },
   "cat.Work Wear": { en: "Work Wear", fr: "Travail" },
 
