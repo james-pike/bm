@@ -148,13 +148,28 @@ export default component$(() => {
         <div class="hero__content">
           <div class="hero__text">
             <div class="hero__logo-group">
+              <div class="hero-card-header">
+                <a href="/" class="hero-card-header__logo">
+                  <img src="/carmichael-logo.png" alt="Carmichael" class="hero-card-header__logo-img" width="200" height="200" loading="eager" />
+                  <div class="hero-card-header__brand">
+                    <img src="/logo3.png" alt="Carmichael" class="hero-card-header__brand-text" width="408" height="61" loading="eager" />
+                    <span class="hero-card-header__apparel">{t("logo.apparel", locale.value)}</span>
+                  </div>
+                </a>
+                <button class="hero-card-header__menu" onClick$={() => {
+                  const btn = document.querySelector('.hamburger-btn') as HTMLElement;
+                  btn?.click();
+                }} aria-label="Menu">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h18"/><path d="M3 6h18"/><path d="M3 18h18"/></svg>
+                </button>
+              </div>
               <Carousel.Root class="hero-carousel" autoPlayIntervalMs={6000} align="start" sensitivity={{ touch: 0.5, mouse: 0.5 }}>
                 <Carousel.Scroller class="hero-carousel__scroller">
                   <Carousel.Slide class="hero-carousel__slide">
-                    <img src="/van.jpeg" alt="On the job" loading="eager" />
+                    <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=800&h=500&fit=crop&crop=center" alt="On the job" loading="eager" />
                   </Carousel.Slide>
                   <Carousel.Slide class="hero-carousel__slide">
-                    <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=800&h=500&fit=crop&crop=center" alt="On the job" loading="eager" />
+                    <img src="/van.jpeg" alt="On the job" loading="eager" />
                   </Carousel.Slide>
                   <Carousel.Slide class="hero-carousel__slide">
                     <img src="https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=800&h=500&fit=crop&crop=center" alt="Apparel" loading="eager" />
@@ -172,6 +187,9 @@ export default component$(() => {
               <div class="hero__apparel-row">
                 <span class="hero__title-apparel">{t("logo.apparel", locale.value)}</span>
                 <p class="hero__subtitle-inline">{t("hero.subtitle", locale.value)}</p>
+              </div>
+              <div class="hero-bottom-img">
+                <img src="/van.jpeg" alt="On the job" loading="eager" />
               </div>
             </div>
           </div>

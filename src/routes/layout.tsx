@@ -347,6 +347,24 @@ export default component$(() => {
     cleanup(() => window.removeEventListener("scroll", onScroll));
   }, { strategy: 'document-ready' });
 
+  // Lock scroll when menu is open
+  // eslint-disable-next-line qwik/no-use-visible-task
+  useVisibleTask$(({ track }) => {
+    track(() => menuOpen.value);
+    if (menuOpen.value) {
+      const scrollY = window.scrollY;
+      document.body.style.position = "fixed";
+      document.body.style.top = `-${scrollY}px`;
+      document.body.style.left = "0";
+      document.body.style.right = "0";
+      document.body.style.overflow = "hidden";
+    } else {
+      const scrollY = Math.abs(parseInt(document.body.style.top || "0", 10));
+      document.body.style.cssText = "";
+      window.scrollTo({ top: scrollY, behavior: "instant" });
+    }
+  }, { strategy: 'document-ready' });
+
   // Close cart on navigation
   // eslint-disable-next-line qwik/no-use-visible-task
   useVisibleTask$(({ track }) => {
@@ -462,7 +480,7 @@ export default component$(() => {
 
       {(auth.value.loggedIn || (loginAction.value && !loginAction.value.failed)) && <>
       <div class="desktop-soon">Desktop coming soon</div>
-      <header class={`site-header site-header--white ${cartOpen.value ? "site-header--cart-open" : ""}`}>
+      <header class={`site-header site-header--white ${cartOpen.value ? "site-header--cart-open" : ""} ${loc.url.pathname === "/" && !cartOpen.value ? `site-header--hero-hidden ${headerScrolled.value ? "site-header--hero-visible" : ""}` : ""}`}>
         <div class="site-header__inner">
           <Link href="/" class="site-header__logo">
             <img
