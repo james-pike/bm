@@ -137,11 +137,29 @@ export default component$(() => {
 
   return (
     <div class="home-page">
+      {/* Full-width banner carousel */}
+      <div class="hero-carousel-wrap">
+        <Carousel.Root class="hero-carousel" autoPlayIntervalMs={6000} align="start" sensitivity={{ touch: 0.5, mouse: 0.5 }}>
+          <Carousel.Scroller class="hero-carousel__scroller">
+            <Carousel.Slide class="hero-carousel__slide">
+              <img src="/van.jpeg" alt="On the job" loading="eager" />
+            </Carousel.Slide>
+            <Carousel.Slide class="hero-carousel__slide">
+              <img src="https://images.unsplash.com/photo-1617127365659-c47fa864d8bc?w=800&h=500&fit=crop&crop=center" alt="Outerwear" loading="eager" />
+            </Carousel.Slide>
+            <Carousel.Slide class="hero-carousel__slide">
+              <img src="https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=800&h=500&fit=crop&crop=center" alt="Apparel" loading="eager" />
+            </Carousel.Slide>
+          </Carousel.Scroller>
+        </Carousel.Root>
+      </div>
+
       {/* Hero */}
       <section class="hero dot-pattern dot-pattern--light">
         <div class="hero__bg" />
         <div class="hero__content">
           <div class="hero__text">
+            <div class="hero__logo-group-wrap">
             <div class="hero__logo-group">
               <div class="hero__top-row">
                 <div class="hero__badge">
@@ -155,19 +173,7 @@ export default component$(() => {
                 <span class="hero__title-apparel">{t("logo.apparel", locale.value)}</span>
                 <p class="hero__subtitle-inline">{t("hero.subtitle", locale.value)}</p>
               </div>
-              <Carousel.Root class="hero-carousel" autoPlayIntervalMs={6000} align="start" sensitivity={{ touch: 0.5, mouse: 0.5 }}>
-                <Carousel.Scroller class="hero-carousel__scroller">
-                  <Carousel.Slide class="hero-carousel__slide">
-                    <img src="/van.jpeg" alt="On the job" loading="eager" />
-                  </Carousel.Slide>
-                  <Carousel.Slide class="hero-carousel__slide">
-                    <img src="https://images.unsplash.com/photo-1617127365659-c47fa864d8bc?w=800&h=500&fit=crop&crop=center" alt="Outerwear" loading="eager" />
-                  </Carousel.Slide>
-                  <Carousel.Slide class="hero-carousel__slide">
-                    <img src="https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=800&h=500&fit=crop&crop=center" alt="Apparel" loading="eager" />
-                  </Carousel.Slide>
-                </Carousel.Scroller>
-              </Carousel.Root>
+            </div>
             </div>
           </div>
           <div class="hero__bento">
