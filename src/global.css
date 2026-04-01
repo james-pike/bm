@@ -261,7 +261,7 @@ img { max-width: 100%; display: block; }
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  background: linear-gradient(160deg, #0f2619 0%, #1a3a28 10%, #2d6e45 20%, #4a9465 35%, #8ec4a0 50%, #d4d4d4 70%);
+  background: linear-gradient(160deg, #1f5035 0%, #2d6e45 10%, #3a8555 20%, #4a9465 35%, #8ec4a0 50%, #d4d4d4 70%);
   padding-top: 8px;
   padding-bottom: 0.5rem;
 }

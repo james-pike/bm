@@ -42,7 +42,7 @@ export const useLogin = routeAction$(
         path: "/",
         httpOnly: true,
         sameSite: "lax",
-        maxAge: 60 * 60 * 24 * 7,
+        maxAge: 60 * 60 * 24 * 3,
       });
       return { success: true };
     }
