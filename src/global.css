@@ -1156,7 +1156,7 @@ img { max-width: 100%; display: block; }
 .nav-drawer__brand {
   background: var(--ce-white);
   border-radius: var(--radius-sm);
-  padding: 4px 0.5rem 4px 0.6rem;
+  padding: 2px 0.5rem 2px 0.3rem;
   height: auto;
 }
 .nav-drawer__brand {
@@ -1191,7 +1191,7 @@ img { max-width: 100%; display: block; }
   border: none;
   border-radius: var(--radius-sm);
   cursor: pointer;
-  color: var(--ce-gray-400);
+  color: var(--ce-gray-300);
   padding: 0;
   display: flex;
   align-items: center;
