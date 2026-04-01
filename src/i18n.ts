@@ -180,7 +180,7 @@ const translations = {
   "cat.Safety": { en: "Safety", fr: "Sécurité" },
   "cat.Caps": { en: "Caps & Beanies", fr: "Casquettes et tuques" },
   "cat.Jackets": { en: "Jackets", fr: "Manteaux" },
-  "cat.Work Wear": { en: "Workwear", fr: "Travail" },
+  "cat.Work Wear": { en: "Work Wear", fr: "Travail" },
 
   // Product detail
   "product.taptoclose": { en: "Tap anywhere to close", fr: "Appuyez pour fermer" },

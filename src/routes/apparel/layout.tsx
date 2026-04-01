@@ -90,7 +90,7 @@ export default component$(() => {
                         }
                       }}
                     >
-                    {categoryLabel(cat, locale.value)}
+                    {cat === "Work Wear" ? "Workwear" : categoryLabel(cat, locale.value)}
                   </button>
                 ))}
               </div>

@@ -226,7 +226,7 @@ export default component$(() => {
                     window.scrollTo({ top: stickyPos, behavior: 'instant' });
                   }}
                 >
-                  {cat === "All" ? t("apparel.all", locale.value) : categoryLabel(cat, locale.value)}
+                  {cat === "All" ? t("apparel.all", locale.value) : cat === "Work Wear" ? "Workwear" : categoryLabel(cat, locale.value)}
                 </button>
               ))}
             </div>
