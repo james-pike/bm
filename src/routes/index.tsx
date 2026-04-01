@@ -203,11 +203,16 @@ export default component$(() => {
                   </Carousel.Slide>
                 </Carousel.Scroller>
               </Carousel.Root>
-              <div class="hero__teaser-grid">
-                {teasers.map((teaser) => (
-                  <TeaserCard key={teaser.slug} t={teaser} />
-                ))}
-              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero__content">
+          <div class="hero__text">
+            <div class="teaser-card-section">
+              {teasers.map((teaser) => (
+                <TeaserCard key={teaser.slug} t={teaser} />
+              ))}
             </div>
           </div>
         </div>
