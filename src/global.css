@@ -1148,8 +1148,8 @@ img { max-width: 100%; display: block; }
 .nav-drawer__brand {
   background: var(--ce-white);
   border-radius: var(--radius-sm);
-  padding: 0 0.5rem 0 0.6rem;
-  height: 42px;
+  padding: 6px 0.5rem 6px 0.6rem;
+  height: auto;
 }
 .nav-drawer__brand {
   display: flex;
@@ -1247,6 +1247,10 @@ img { max-width: 100%; display: block; }
   color: var(--ce-gray-700);
   cursor: pointer;
   font-family: inherit;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
 }
 .nav-drawer__locale:hover {
   background: var(--ce-gray-200);
