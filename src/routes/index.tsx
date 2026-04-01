@@ -190,7 +190,7 @@ export default component$(() => {
                   <p class="hero__subtitle-inline">{t("hero.subtitle", locale.value)}</p>
                 </div>
               </div>
-              <Carousel.Root class="hero-carousel" autoPlayIntervalMs={6000} align="start" sensitivity={{ touch: 0.5, mouse: 0.5 }}>
+              <Carousel.Root class="hero-carousel" autoPlayIntervalMs={6000} align="start" sensitivity={{ touch: 0.5, mouse: 0.5 }} rewind>
                 <Carousel.Scroller class="hero-carousel__scroller">
                   <Carousel.Slide class="hero-carousel__slide">
                     <img src="/van.jpeg" alt="On the job" loading="eager" />
