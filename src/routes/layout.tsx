@@ -588,6 +588,27 @@ export default component$(() => {
         <Slot />
       </main>
 
+      <footer class="site-footer">
+        <div class="site-footer__inner">
+          <div class="site-footer__brand">
+            <img src="/carmichael-logo.png" alt="Carmichael" class="site-footer__logo" width="200" height="200" />
+            <div class="site-footer__brand-text">
+              <img src="/logo3.png" alt="Carmichael" class="site-footer__logo-text" width="408" height="61" />
+              <span class="site-footer__apparel">{t("logo.apparel", locale.value)}</span>
+            </div>
+          </div>
+          <nav class="site-footer__links">
+            <Link href="/">{t("nav.home", locale.value)}</Link>
+            <Link href="/apparel/">{t("nav.apparel", locale.value)}</Link>
+            <Link href="/apparel/?category=Work Wear">{t("cat.Work Wear", locale.value)}</Link>
+            <Link href="/apparel/?category=Jackets">{t("cat.Jackets", locale.value)}</Link>
+            <Link href="/apparel/?category=Polos">{t("cat.Polos", locale.value)}</Link>
+            <Link href="/apparel/?category=Hats">{t("cat.Hats", locale.value)}</Link>
+          </nav>
+          <p class="site-footer__copy">&copy; {new Date().getFullYear()} Carmichael. {t("hero.subtitle", locale.value)}</p>
+        </div>
+      </footer>
+
       {/* Cart Drawer */}
       {cartOpen.value && (
         <div class="modal-overlay" onClick$={() => (cartOpen.value = false)}>

@@ -317,15 +317,19 @@ img { max-width: 100%; display: block; }
 
 .hero__text { color: var(--ce-white); position: relative; text-shadow: 0 1px 3px rgba(0,0,0,0.15); }
 
-/* Teaser grid inside hero card */
-.hero__teaser-grid {
+/* Teaser card section — separate card below hero */
+.teaser-card-section {
   display: grid;
   grid-template-columns: 1fr;
   gap: 0.4rem;
-  margin: 0.4rem -0.9rem 0.5rem;
-  padding: 0;
+  background: var(--ce-gray-200);
+  border-radius: 10px;
+  padding: 0.5rem;
+  box-shadow:
+    0 4px 16px rgba(0,0,0,0.06),
+    0 1px 4px rgba(0,0,0,0.04);
 }
-.hero__teaser-grid > .teaser-card:nth-child(2) { display: none; }
+.teaser-card-section > .teaser-card:nth-child(2) { display: none; }
 
 /* Hero Carousel — bottom of hero card */
 .hero-carousel {
@@ -974,9 +978,74 @@ img { max-width: 100%; display: block; }
 @keyframes slide-in-left { from { transform: translateX(-100%); } to { transform: translateX(0); } }
 
 /* ===== Home Catalog Section ===== */
+/* Site Footer */
+.site-footer {
+  background: #1a3a28;
+  color: rgba(255,255,255,0.7);
+  padding: 2rem 1rem 1.5rem;
+}
+.site-footer__inner {
+  max-width: 1440px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+}
+.site-footer__brand {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.site-footer__logo {
+  height: 40px;
+  width: 40px;
+  border-radius: 4px;
+}
+.site-footer__brand-text {
+  display: flex;
+  flex-direction: column;
+}
+.site-footer__logo-text {
+  height: 18px;
+  width: auto;
+  filter: brightness(0) invert(1);
+}
+.site-footer__apparel {
+  font-size: 0.5rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.4);
+  margin-top: -1px;
+}
+.site-footer__links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem 1rem;
+}
+.site-footer__links a {
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: rgba(255,255,255,0.6);
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+.site-footer__links a:hover {
+  color: var(--ce-white);
+}
+.site-footer__copy {
+  font-size: 0.7rem;
+  color: rgba(255,255,255,0.35);
+  margin: 0;
+  text-align: center;
+}
+
 .home-catalog {
   background: transparent;
   padding: 0 0 2rem;
+  margin-top: 1rem;
   min-height: 100vh;
 }
 .home-catalog__inner {
@@ -1490,6 +1559,7 @@ img { max-width: 100%; display: block; }
   justify-content: space-between;
   background: rgba(255,255,255,0.08);
 }
+.teaser-card .teaser-card__body { background: #2d6e45; }
 .teaser-card__body::after {
   content: '';
   position: absolute;
