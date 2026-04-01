@@ -146,8 +146,8 @@ export default component$(() => {
       <section class="hero">
         <div class="hero__content">
           <div class="hero__text">
-            <div class="hero__logo-group dot-pattern dot-pattern--light">
-              <div class="hero-card-header">
+            <div class="hero__logo-group">
+              <div class="hero-card-header dot-pattern dot-pattern--light">
                 <a href="/" class="hero-card-header__logo">
                   <img src="/carmichael-logo.png" alt="Carmichael" class="hero-card-header__logo-img" width="200" height="200" loading="eager" />
                   <div class="hero-card-header__brand">
@@ -176,7 +176,7 @@ export default component$(() => {
                   </button>
                 </div>
               </div>
-              <div class="hero__middle-section">
+              <div class="hero__middle-section dot-pattern dot-pattern--light">
                 <div class="hero__top-row">
                   <div class="hero__badge">
                     <span class="hero__badge-dot" />
@@ -193,10 +193,10 @@ export default component$(() => {
               <Carousel.Root class="hero-carousel" autoPlayIntervalMs={6000} align="start" sensitivity={{ touch: 0.5, mouse: 0.5 }}>
                 <Carousel.Scroller class="hero-carousel__scroller">
                   <Carousel.Slide class="hero-carousel__slide">
-                    <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=800&h=500&fit=crop&crop=center" alt="On the job" loading="eager" />
+                    <img src="/van.jpeg" alt="On the job" loading="eager" />
                   </Carousel.Slide>
                   <Carousel.Slide class="hero-carousel__slide">
-                    <img src="/van.jpeg" alt="On the job" loading="eager" />
+                    <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=800&h=500&fit=crop&crop=center" alt="On the job" loading="eager" />
                   </Carousel.Slide>
                   <Carousel.Slide class="hero-carousel__slide">
                     <img src="https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=800&h=500&fit=crop&crop=center" alt="Apparel" loading="eager" />
