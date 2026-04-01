@@ -156,12 +156,26 @@ export default component$(() => {
                     <span class="hero-card-header__apparel">{t("logo.apparel", locale.value)}</span>
                   </div>
                 </a>
-                <button class="hero-card-header__menu" onClick$={() => {
-                  const btn = document.querySelector('.hamburger-btn') as HTMLElement;
-                  btn?.click();
-                }} aria-label="Menu">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h18"/><path d="M3 6h18"/><path d="M3 18h18"/></svg>
-                </button>
+                <div class="hero-card-header__actions">
+                  <button class="hero-card-header__btn" onClick$={() => {
+                    const btn = document.querySelector('.locale-btn') as HTMLElement;
+                    btn?.click();
+                  }} aria-label="Language">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
+                  </button>
+                  <button class="hero-card-header__btn" onClick$={() => {
+                    const btn = document.querySelector('.cart-btn') as HTMLElement;
+                    btn?.click();
+                  }} aria-label="Cart">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/></svg>
+                  </button>
+                  <button class="hero-card-header__btn" onClick$={() => {
+                    const btn = document.querySelector('.hamburger-btn') as HTMLElement;
+                    btn?.click();
+                  }} aria-label="Menu">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h18"/><path d="M3 6h18"/><path d="M3 18h18"/></svg>
+                  </button>
+                </div>
               </div>
               <Carousel.Root class="hero-carousel" autoPlayIntervalMs={6000} align="start" sensitivity={{ touch: 0.5, mouse: 0.5 }}>
                 <Carousel.Scroller class="hero-carousel__scroller">
@@ -176,17 +190,19 @@ export default component$(() => {
                   </Carousel.Slide>
                 </Carousel.Scroller>
               </Carousel.Root>
-              <div class="hero__top-row">
-                <div class="hero__badge">
-                  <span class="hero__badge-dot" />
-                  {t("hero.badge", locale.value)}
+              <div class="hero__middle-section">
+                <div class="hero__top-row">
+                  <div class="hero__badge">
+                    <span class="hero__badge-dot" />
+                    {t("hero.badge", locale.value)}
+                  </div>
+                  <img src="/carmichael-logo.png" alt="" class="hero__title-icon" width="200" height="200" loading="eager" decoding="sync" />
                 </div>
-                <img src="/carmichael-logo.png" alt="" class="hero__title-icon" width="200" height="200" loading="eager" decoding="sync" />
-              </div>
-              <img src="/logo3.png" alt="Carmichael" class="hero__title-img" width="408" height="61" loading="eager" decoding="sync" />
-              <div class="hero__apparel-row">
-                <span class="hero__title-apparel">{t("logo.apparel", locale.value)}</span>
-                <p class="hero__subtitle-inline">{t("hero.subtitle", locale.value)}</p>
+                <img src="/logo3.png" alt="Carmichael" class="hero__title-img" width="408" height="61" loading="eager" decoding="sync" />
+                <div class="hero__apparel-row">
+                  <span class="hero__title-apparel">{t("logo.apparel", locale.value)}</span>
+                  <p class="hero__subtitle-inline">{t("hero.subtitle", locale.value)}</p>
+                </div>
               </div>
               <div class="hero-bottom-img">
                 <img src="/van.jpeg" alt="On the job" loading="eager" />
