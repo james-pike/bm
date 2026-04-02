@@ -76,7 +76,7 @@ const _teasers = [
 ];
 
 
-const TeaserCard = component$<{ t: typeof teasers[0] }>(({ t: teaser }) => {
+const TeaserCard = component$<{ t: typeof _teasers[0] }>(({ t: teaser }) => {
   const locale = useContext(LocaleContext);
   const imgIndex = useSignal(0);
   const hovering = useSignal(false);
@@ -211,10 +211,10 @@ export default component$(() => {
                       <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=800&h=500&fit=crop&crop=center" alt="On the job" loading="eager" />
                     </Carousel.Slide>
                   </Carousel.Scroller>
-                  <div class="hero-bento-carousel__dots">
-                    <Carousel.Step class="hero-bento-carousel__dot" step={0} />
-                    <Carousel.Step class="hero-bento-carousel__dot" step={1} />
-                  </div>
+                  <Carousel.Pagination class="hero-bento-carousel__dots">
+                    <Carousel.Bullet class="hero-bento-carousel__dot" />
+                    <Carousel.Bullet class="hero-bento-carousel__dot" />
+                  </Carousel.Pagination>
                 </Carousel.Root>
               </div>
               <div class="hero-categories">
