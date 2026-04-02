@@ -132,7 +132,7 @@ const translations = {
   "modal.onesize": { en: "One Size", fr: "Taille unique" },
 
   // Cart drawer
-  "cart.mycart": { en: "Cart", fr: "Panier" },
+  "cart.mycart": { en: "My Cart", fr: "Mon panier" },
   "cart.title": { en: "MY CART", fr: "PANIER" },
   "cart.empty": { en: "Your cart is empty", fr: "Votre panier est vide" },
   "cart.backtoapparel": { en: "Back to Apparel", fr: "Retour aux vêtements" },

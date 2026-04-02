@@ -292,7 +292,7 @@ img { max-width: 100%; display: block; }
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  background: linear-gradient(180deg, #0f2619 0%, #1a3a28 15%, #2d6e45 35%, #4a9465 55%, #8ec4a0 80%, #c5ccc5 90%, var(--ce-gray-200) 100%);
+  background: linear-gradient(180deg, #1f4e32 0%, #1f4e32 30%, #276040 50%, #4a9465 70%, #8ec4a0 85%, var(--ce-gray-200) 100%);
   padding-top: 8px;
   padding-bottom: 1.5rem;
 }
@@ -398,6 +398,139 @@ img { max-width: 100%; display: block; }
   border-radius: 8px;
   border: none;
   overflow: hidden;
+}
+
+/* Hero bento carousel — desktop */
+.hero-bento-carousel {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+}
+.hero-bento-carousel__scroller {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16/9;
+  overflow: hidden;
+}
+.hero-bento-carousel__slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 1s ease;
+}
+.hero-bento-carousel__slide[data-active] {
+  opacity: 1;
+  z-index: 1;
+}
+.hero-bento-carousel__slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.hero-bento-carousel__slide::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at center, transparent 30%, rgba(0,0,0,0.2) 100%),
+    linear-gradient(to right, rgba(0,40,20,0.3) 0%, transparent 30%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.hero-bento-carousel__dots {
+  display: flex;
+  gap: 4px;
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  z-index: 5;
+}
+.hero-bento-carousel__dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  border: none;
+  background: rgba(255,255,255,0.4);
+  cursor: pointer;
+  padding: 0;
+  transition: background 0.2s ease;
+}
+.hero-bento-carousel__dot[data-active] {
+  background: var(--ce-white);
+}
+
+/* Hero categories — inside hero card */
+.hero-categories {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+  margin: 0 -0.5rem;
+  width: calc(100% + 1rem);
+  padding-top: 0.5rem;
+}
+.hero-categories .category-card {
+  border-radius: 0;
+  aspect-ratio: 16/9;
+}
+
+/* Category row — 4 stock image cards */
+.category-row {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+  padding: 0 0 1rem;
+  max-width: 1536px;
+  margin: 0 auto;
+}
+.category-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 6px;
+  text-decoration: none;
+  aspect-ratio: 4/3;
+}
+.category-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.3s ease;
+}
+.category-card:hover img {
+  transform: none;
+}
+.category-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to top, rgba(0,0,0,0.5) 0%, transparent 50%),
+    radial-gradient(ellipse at center, transparent 30%, rgba(0,0,0,0.2) 100%);
+  pointer-events: none;
+}
+.category-card__label {
+  position: absolute;
+  bottom: 0.75rem;
+  left: 0.75rem;
+  color: var(--ce-white);
+  font-size: 0.9rem;
+  font-weight: 600;
+  z-index: 1;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.3);
+}
+@media (min-width: 1025px) {
+  .category-row {
+    grid-template-columns: repeat(4, 1fr);
+    padding: 0 2rem 1.5rem;
+  }
+  .category-card__label {
+    font-size: 1.1rem;
+    bottom: 1rem;
+    left: 1rem;
+  }
 }
 
 /* Hero Carousel — bottom of hero card */
@@ -3920,6 +4053,34 @@ details[open] > .cart-drawer__checkout-title::after {
   .collection-hero__viewport {
     aspect-ratio: 7 / 1;
   }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background-image: radial-gradient(circle, rgba(255,255,255,0.4) 1.5px, transparent 1.5px);
+    background-size: 40px 40px;
+    -webkit-mask-image:
+      linear-gradient(to right,
+        rgba(0,0,0,0.4) 0%,
+        rgba(0,0,0,0.1) 5%,
+        transparent 10%,
+        transparent 90%,
+        rgba(0,0,0,0.1) 95%,
+        rgba(0,0,0,0.4) 100%
+      );
+    mask-image:
+      linear-gradient(to right,
+        rgba(0,0,0,0.4) 0%,
+        rgba(0,0,0,0.1) 5%,
+        transparent 10%,
+        transparent 90%,
+        rgba(0,0,0,0.1) 95%,
+        rgba(0,0,0,0.4) 100%
+      );
+    opacity: 0.3;
+  }
   .hero__content {
     grid-template-columns: 1fr;
     max-width: 1536px;
@@ -3946,7 +4107,9 @@ details[open] > .cart-drawer__checkout-title::after {
       0 8px 32px rgba(0,0,0,0.1),
       inset 0 0 16px rgba(0,0,0,0.12);
   }
-  .hero-card-header.dot-pattern::before,
+  .hero-card-header.dot-pattern::before {
+    opacity: 0.3;
+  }
   .hero__middle-section.dot-pattern::before {
     opacity: 0.5;
   }
@@ -3959,6 +4122,15 @@ details[open] > .cart-drawer__checkout-title::after {
   }
   .hero-card-header__brand { display: none !important; }
   .hero-card-header__btn-label { display: inline; }
+  .hero-card-header__actions .hero-card-header__btn:nth-child(3) { display: none; }
+  .hero-card-header__actions .hero-card-header__btn:nth-child(2) {
+    background: var(--ce-gold);
+    border-color: var(--ce-gold);
+    color: var(--ce-gray-900);
+  }
+  .hero-card-header__actions .hero-card-header__btn:nth-child(2) svg {
+    stroke: var(--ce-gray-900);
+  }
   .hero__logo-group { border-radius: 0; }
   .hero-card-header__brand { display: flex; }
   .hero__badge {
@@ -4005,11 +4177,23 @@ details[open] > .cart-drawer__checkout-title::after {
   .hero-carousel {
     display: none;
   }
+  .hero-categories {
+    grid-column: 1 / -1;
+    grid-row: 3;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    padding-top: 0;
+    margin: 0;
+    width: 100%;
+  }
+  .hero-categories .category-card {
+    aspect-ratio: 16/9;
+  }
   .hero-bento {
     display: flex;
     flex-direction: column;
     grid-column: 2;
-    grid-row: 2 / 4;
+    grid-row: 2;
     gap: 8px;
     border-radius: 0;
     overflow: hidden;
@@ -4032,10 +4216,10 @@ details[open] > .cart-drawer__checkout-title::after {
   }
   .hero-bento__a { flex: 0 0 auto; }
   .hero-bento__a img { width: 100%; aspect-ratio: 16/9; object-fit: cover; }
-  .hero-bento__b,
-  .hero-bento__c { flex: 1; }
-  .hero-bento__b img,
-  .hero-bento__c img { width: 100%; aspect-ratio: 16/9; object-fit: cover; }
+  .hero-bento__b { flex: 1; }
+  .hero-bento__c { flex: 0 0 auto; }
+  .hero-bento__b img { width: 100%; aspect-ratio: 16/9; object-fit: cover; }
+  .hero-bento__c img { width: 100%; aspect-ratio: 3/1; object-fit: cover; }
   .hero-bento {
     flex-wrap: wrap;
   }

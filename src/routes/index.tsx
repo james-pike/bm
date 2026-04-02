@@ -6,7 +6,8 @@ import { allProducts, categoryLabel } from "./apparel/products";
 import type { Product } from "./apparel/products";
 
 
-const teasers = [
+/* eslint-disable @typescript-eslint/no-unused-vars */
+const _teasers = [
   {
     slug: "work-wear",
     category: "Work Wear",
@@ -187,9 +188,6 @@ export default component$(() => {
                   <p class="hero__subtitle-inline">{t("hero.subtitle", locale.value)}</p>
                 </div>
               </div>
-              <div class="hero-bento__item hero-left-img">
-                <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=800&h=500&fit=crop&crop=center" alt="On the job" loading="eager" />
-              </div>
               <Carousel.Root class="hero-carousel" autoPlayIntervalMs={6000} align="start" sensitivity={{ touch: 0.5, mouse: 0.5 }} rewind>
                 <Carousel.Scroller class="hero-carousel__scroller">
                   <Carousel.Slide class="hero-carousel__slide">
@@ -204,17 +202,38 @@ export default component$(() => {
                 </Carousel.Scroller>
               </Carousel.Root>
               <div class="hero-bento">
-                <div class="hero-bento__item hero-bento__b">
-                  <img src="/van.jpeg" alt="On the job" loading="eager" />
-                </div>
-                <div class="hero-bento__row">
-                  <div class="hero-bento__item hero-bento__c">
-                    <img src="/van.jpeg" alt="On the job" loading="eager" />
+                <Carousel.Root class="hero-bento-carousel" autoPlayIntervalMs={6000} align="start" sensitivity={{ touch: 0.5, mouse: 0.5 }} rewind>
+                  <Carousel.Scroller class="hero-bento-carousel__scroller">
+                    <Carousel.Slide class="hero-bento-carousel__slide">
+                      <img src="/van.jpeg" alt="On the job" loading="eager" />
+                    </Carousel.Slide>
+                    <Carousel.Slide class="hero-bento-carousel__slide">
+                      <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=800&h=500&fit=crop&crop=center" alt="On the job" loading="eager" />
+                    </Carousel.Slide>
+                  </Carousel.Scroller>
+                  <div class="hero-bento-carousel__dots">
+                    <Carousel.Step class="hero-bento-carousel__dot" step={0} />
+                    <Carousel.Step class="hero-bento-carousel__dot" step={1} />
                   </div>
-                  <div class="hero-bento__item hero-bento__d">
-                    <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=600&h=400&fit=crop&crop=center" alt="On the job" loading="eager" />
-                  </div>
-                </div>
+                </Carousel.Root>
+              </div>
+              <div class="hero-categories">
+                <a href="/apparel/?category=Work Wear" class="category-card">
+                  <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=400&h=300&fit=crop&crop=center" alt="Work Wear" loading="lazy" />
+                  <span class="category-card__label">{categoryLabel("Work Wear", locale.value)}</span>
+                </a>
+                <a href="/apparel/?category=Jackets" class="category-card">
+                  <img src="/carmichael-services/careers.jpeg" alt="Jackets" loading="lazy" />
+                  <span class="category-card__label">{t("teaser.jackets.title", locale.value)}</span>
+                </a>
+                <a href="/apparel/?category=Polos" class="category-card">
+                  <img src="https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=400&h=300&fit=crop&crop=center" alt="Polos" loading="lazy" />
+                  <span class="category-card__label">{t("teaser.polos.title", locale.value)}</span>
+                </a>
+                <a href="/apparel/?category=Hats" class="category-card">
+                  <img src="https://images.unsplash.com/photo-1556306535-0f09a537f0a3?w=400&h=300&fit=crop&crop=center" alt="Hats" loading="lazy" />
+                  <span class="category-card__label">{t("teaser.hats.title", locale.value)}</span>
+                </a>
               </div>
             </div>
           </div>
@@ -222,11 +241,7 @@ export default component$(() => {
 
       </section>
 
-      <div class="teaser-card-section">
-        {teasers.map((teaser) => (
-          <TeaserCard key={teaser.slug} t={teaser} />
-        ))}
-      </div>
+
 
       {/* Apparel Catalog */}
       <section class="home-catalog">
@@ -249,7 +264,7 @@ export default component$(() => {
                     window.scrollTo({ top: stickyPos, behavior: 'instant' });
                   }}
                 >
-                  {cat === "All" ? t("apparel.all", locale.value) : cat === "Work Wear" ? "Workwear" : categoryLabel(cat, locale.value)}
+                  {cat === "All" ? t("apparel.all", locale.value) : categoryLabel(cat, locale.value)}
                 </button>
               ))}
               <div class="home-catalog__gender-section">
