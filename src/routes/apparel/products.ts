@@ -322,8 +322,8 @@ export const allProducts = [
     "badge": "",
     "colors": [],
     "price": 100,
-    "img": "",
-    "imgs": [],
+    "img": "/ladies-rigbi-logoed-car.png",
+    "imgs": ["/ladies-rigbi-logoed-car.png"],
     "material": "",
     "details": ""
   },
@@ -335,8 +335,8 @@ export const allProducts = [
     "badge": "",
     "colors": [],
     "price": 100,
-    "img": "",
-    "imgs": [],
+    "img": "/mens-rigi-car-logoed.png",
+    "imgs": ["/mens-rigi-car-logoed.png"],
     "material": "",
     "details": ""
   },
@@ -423,8 +423,8 @@ export const allProducts = [
     "badge": "",
     "colors": [],
     "price": 100,
-    "img": "",
-    "imgs": [],
+    "img": "/mens-roots-fleece.png",
+    "imgs": ["/mens-roots-fleece.png"],
     "material": "",
     "details": ""
   },
@@ -436,8 +436,8 @@ export const allProducts = [
     "badge": "",
     "colors": [],
     "price": 100,
-    "img": "",
-    "imgs": [],
+    "img": "/womens-roots-fleece.png",
+    "imgs": ["/womens-roots-fleece.png"],
     "material": "",
     "details": ""
   }
