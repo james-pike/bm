@@ -1791,7 +1791,7 @@ img { max-width: 100%; display: block; }
   aspect-ratio: 1/1;
   position: relative;
   overflow: hidden;
-  background: var(--ce-gray-100, #f3f4f6);
+  background: var(--ce-white);
 }
 
 .product-card__image img {
@@ -1799,11 +1799,17 @@ img { max-width: 100%; display: block; }
   inset: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
   object-position: center center;
   transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+.product-card--cover .product-card__image img {
+  object-fit: cover;
+}
+.product-card--cover .product-card__image {
+  background: var(--ce-gray-100);
+}
 .product-card:hover .product-card__image img {
   transform: none;
 }

@@ -322,8 +322,8 @@ export const allProducts = [
     "badge": "",
     "colors": [],
     "price": 100,
-    "img": "",
-    "imgs": [],
+    "img": "/ladies rigbi logoed car.png",
+    "imgs": ["/ladies rigbi logoed car.png"],
     "material": "",
     "details": ""
   },
@@ -335,8 +335,8 @@ export const allProducts = [
     "badge": "",
     "colors": [],
     "price": 100,
-    "img": "",
-    "imgs": [],
+    "img": "/mens rigi car logoed.png",
+    "imgs": ["/mens rigi car logoed.png"],
     "material": "",
     "details": ""
   },
@@ -414,6 +414,36 @@ export const allProducts = [
     ],
     "material": "60% Cotton / 40% Acrylic",
     "details": "Heavyweight cuffs hem, and stand up collar, Long-sleeve, FW zipper pull, Even hem"
+  },
+  {
+    "sku": "CAR-31",
+    "name": "Men's Roots73 Fleece",
+    "category": "Jackets",
+    "sizes": "S - 3XL",
+    "badge": "",
+    "colors": [],
+    "price": 100,
+    "img": "/mens fllece.png",
+    "imgs": [
+      "/mens fllece.png"
+    ],
+    "material": "",
+    "details": ""
+  },
+  {
+    "sku": "CAR-32",
+    "name": "Women's Roots73 Fleece",
+    "category": "Jackets",
+    "sizes": "XS - 2XL",
+    "badge": "",
+    "colors": [],
+    "price": 100,
+    "img": "/womens roots fleece.png",
+    "imgs": [
+      "/womens roots fleece.png"
+    ],
+    "material": "",
+    "details": ""
   }
 ];
 

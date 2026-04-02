@@ -352,7 +352,7 @@ export default component$(() => {
                 items = [...items.filter((p) => p.sku !== "CAR-12"), ...items.filter((p) => p.sku === "CAR-12")];
               }
               return filterGender(items).map((item) => (
-                <a key={item.sku} href={`/apparel/${item.sku}/`} class="product-card product-card-link">
+                <a key={item.sku} href={`/apparel/${item.sku}/`} class={`product-card product-card-link ${item.sku === "CAR-21" ? "product-card--cover" : ""}`}>
                   <div class="product-card__image">
                     <img src={item.img} alt={item.name} width="440" height="440" />
                   </div>
