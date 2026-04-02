@@ -252,6 +252,18 @@ export default component$(() => {
                   {cat === "All" ? t("apparel.all", locale.value) : cat === "Work Wear" ? "Workwear" : categoryLabel(cat, locale.value)}
                 </button>
               ))}
+              <div class="home-catalog__gender-section">
+                <h3 class="home-catalog__filter-title">Filter</h3>
+                {["All", "Men", "Women"].map((g) => (
+                  <button
+                    key={g}
+                    class={`apparel-titlebar__tab ${homeGender.value === g ? "active" : ""}`}
+                    onClick$={() => { homeGender.value = g; }}
+                  >
+                    {g === "All" ? "All" : g === "Men" ? "Men's" : "Women's"}
+                  </button>
+                ))}
+              </div>
             </div>
             <div class="home-catalog__right">
               <div class="gender-filter">
