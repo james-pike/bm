@@ -322,8 +322,8 @@ export const allProducts = [
     "badge": "",
     "colors": [],
     "price": 100,
-    "img": "/ladies-rigbi-logoed-car.png",
-    "imgs": ["/ladies-rigbi-logoed-car.png"],
+    "img": "",
+    "imgs": [],
     "material": "",
     "details": ""
   },
@@ -335,8 +335,8 @@ export const allProducts = [
     "badge": "",
     "colors": [],
     "price": 100,
-    "img": "/mens-rigi-car-logoed.png",
-    "imgs": ["/mens-rigi-car-logoed.png"],
+    "img": "",
+    "imgs": [],
     "material": "",
     "details": ""
   },
@@ -417,31 +417,27 @@ export const allProducts = [
   },
   {
     "sku": "CAR-31",
-    "name": "Men's Roots73 Fleece",
+    "name": "Men's Roots Fleece",
     "category": "Jackets",
-    "sizes": "S - 3XL",
+    "sizes": "S - 4XL",
     "badge": "",
     "colors": [],
     "price": 100,
-    "img": "/mens-roots-fleece.png",
-    "imgs": [
-      "/mens-roots-fleece.png"
-    ],
+    "img": "",
+    "imgs": [],
     "material": "",
     "details": ""
   },
   {
     "sku": "CAR-32",
-    "name": "Women's Roots73 Fleece",
+    "name": "Women's Roots Fleece",
     "category": "Jackets",
-    "sizes": "XS - 2XL",
+    "sizes": "S - 4XL",
     "badge": "",
     "colors": [],
     "price": 100,
-    "img": "/womens-roots-fleece.png",
-    "imgs": [
-      "/womens-roots-fleece.png"
-    ],
+    "img": "",
+    "imgs": [],
     "material": "",
     "details": ""
   }
