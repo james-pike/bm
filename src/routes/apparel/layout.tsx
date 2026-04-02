@@ -70,7 +70,7 @@ export default component$(() => {
                 {t("apparel.title", locale.value)}
               </h1>
               <div class="apparel-titlebar__tabs">
-                {categories.filter(c => c !== "All").map((cat) => (
+                {categories.map((cat) => (
                     <button
                       key={cat}
                       class={`apparel-titlebar__tab ${activeCategory.value === cat ? "active" : ""}`}

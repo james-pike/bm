@@ -17,7 +17,6 @@ const teasers = [
     imgs: [
       "/sku/_INSULATED_VIKING_frj3957frj_-removebg-preview.png",
       "/sku/carmicheal-337-logo.png",
-      "/sku/FRS-160-CARHARTT-SHIRT-_2_.png",
     ],
     skewed: true,
   },
@@ -31,7 +30,6 @@ const teasers = [
     imgs: [
       "/hat/30109107PS2_FRONT.JPG",
       "/softshell/j7603-soft-shell.png",
-      "/sku/mens-fleece.png",
     ],
     skewed: true,
   },
@@ -45,7 +43,6 @@ const teasers = [
     imgs: [
       "/sku/j7603-soft-shell-removebg-preview.png",
       "/womens-fleece.png",
-      "/sku/l7603-ladies-soft-shell-removebg-preview.png",
     ],
     skewed: true,
   },
@@ -59,7 +56,6 @@ const teasers = [
     imgs: [
       "/sku/green-removebg-preview.png",
       "/sku/car20.png",
-      "/uapolo/car1.png",
     ],
     skewed: true,
   },
@@ -73,7 +69,6 @@ const teasers = [
     imgs: [
       "/hat/30109107PS2_FRONT.JPG",
       "/beanie/1.png",
-      "/hat/30109107PS2_BACK.JPG",
     ],
     skewed: true,
   },
@@ -161,12 +156,14 @@ export default component$(() => {
                     btn?.click();
                   }} aria-label="Language">
                     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
+                    <span class="hero-card-header__btn-label">{locale.value === "en" ? "Français" : "English"}</span>
                   </button>
                   <button class="hero-card-header__btn" onClick$={() => {
                     const btn = document.querySelector('.cart-btn') as HTMLElement;
                     btn?.click();
                   }} aria-label="Cart">
                     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/></svg>
+                    <span class="hero-card-header__btn-label">{t("cart.mycart", locale.value)}</span>
                   </button>
                   <button class="hero-card-header__btn" onClick$={() => {
                     const btn = document.querySelector('.hamburger-btn') as HTMLElement;
@@ -190,6 +187,9 @@ export default component$(() => {
                   <p class="hero__subtitle-inline">{t("hero.subtitle", locale.value)}</p>
                 </div>
               </div>
+              <a href="/apparel/" class="hero-bento__item hero-left-img">
+                <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=800&h=500&fit=crop&crop=center" alt="On the job" loading="eager" />
+              </a>
               <Carousel.Root class="hero-carousel" autoPlayIntervalMs={6000} align="start" sensitivity={{ touch: 0.5, mouse: 0.5 }} rewind>
                 <Carousel.Scroller class="hero-carousel__scroller">
                   <Carousel.Slide class="hero-carousel__slide">
@@ -203,20 +203,30 @@ export default component$(() => {
                   </Carousel.Slide>
                 </Carousel.Scroller>
               </Carousel.Root>
+              <div class="hero-bento">
+                <a href="/apparel/?category=Jackets" class="hero-bento__item hero-bento__b">
+                  <img src="/van.jpeg" alt="On the job" loading="eager" />
+                </a>
+                <div class="hero-bento__row">
+                  <a href="/apparel/" class="hero-bento__item hero-bento__c">
+                    <img src="/van.jpeg" alt="On the job" loading="eager" />
+                  </a>
+                  <a href="/apparel/?category=Polos" class="hero-bento__item hero-bento__d">
+                    <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=600&h=400&fit=crop&crop=center" alt="On the job" loading="eager" />
+                  </a>
+                </div>
+              </div>
             </div>
           </div>
         </div>
 
-        <div class="hero__content">
-          <div class="hero__text">
-            <div class="teaser-card-section">
-              {teasers.map((teaser) => (
-                <TeaserCard key={teaser.slug} t={teaser} />
-              ))}
-            </div>
-          </div>
-        </div>
       </section>
+
+      <div class="teaser-card-section">
+        {teasers.map((teaser) => (
+          <TeaserCard key={teaser.slug} t={teaser} />
+        ))}
+      </div>
 
       {/* Apparel Catalog */}
       <section class="home-catalog">
@@ -224,7 +234,7 @@ export default component$(() => {
           <div class="home-catalog__header">
             <h2 class="home-catalog__title">{t("nav.apparel", locale.value)}</h2>
             <div class="home-catalog__tabs">
-              {["Work Wear", "Jackets", "Polos", "Hats"].map((cat) => (
+              {["All", "Work Wear", "Jackets", "Polos", "Hats"].map((cat) => (
                 <button
                   key={cat}
                   class={`apparel-titlebar__tab ${homeCat.value === cat ? "active" : ""}`}

@@ -479,7 +479,7 @@ export default component$(() => {
       )}
 
       {(auth.value.loggedIn || (loginAction.value && !loginAction.value.failed)) && <>
-      <div class="desktop-soon">Desktop coming soon</div>
+      <div class="desktop-soon">Tablet coming soon</div>
       <header class={`site-header site-header--white ${cartOpen.value ? "site-header--cart-open" : ""} ${loc.url.pathname === "/" && !cartOpen.value ? `site-header--hero-hidden ${headerScrolled.value ? "site-header--hero-visible" : ""}` : ""}`}>
         <div class="site-header__inner">
           <Link href="/" class="site-header__logo">
@@ -606,7 +606,6 @@ export default component$(() => {
             <Link href="/apparel/?category=Polos">{t("cat.Polos", locale.value)}</Link>
             <Link href="/apparel/?category=Hats">{t("cat.Hats", locale.value)}</Link>
           </nav>
-          <p class="site-footer__copy">&copy; {new Date().getFullYear()} Carmichael. {t("hero.subtitle", locale.value)}</p>
         </div>
       </footer>
 
