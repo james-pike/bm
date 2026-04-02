@@ -187,9 +187,9 @@ export default component$(() => {
                   <p class="hero__subtitle-inline">{t("hero.subtitle", locale.value)}</p>
                 </div>
               </div>
-              <a href="/apparel/" class="hero-bento__item hero-left-img">
+              <div class="hero-bento__item hero-left-img">
                 <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=800&h=500&fit=crop&crop=center" alt="On the job" loading="eager" />
-              </a>
+              </div>
               <Carousel.Root class="hero-carousel" autoPlayIntervalMs={6000} align="start" sensitivity={{ touch: 0.5, mouse: 0.5 }} rewind>
                 <Carousel.Scroller class="hero-carousel__scroller">
                   <Carousel.Slide class="hero-carousel__slide">
@@ -204,16 +204,16 @@ export default component$(() => {
                 </Carousel.Scroller>
               </Carousel.Root>
               <div class="hero-bento">
-                <a href="/apparel/?category=Jackets" class="hero-bento__item hero-bento__b">
+                <div class="hero-bento__item hero-bento__b">
                   <img src="/van.jpeg" alt="On the job" loading="eager" />
-                </a>
+                </div>
                 <div class="hero-bento__row">
-                  <a href="/apparel/" class="hero-bento__item hero-bento__c">
+                  <div class="hero-bento__item hero-bento__c">
                     <img src="/van.jpeg" alt="On the job" loading="eager" />
-                  </a>
-                  <a href="/apparel/?category=Polos" class="hero-bento__item hero-bento__d">
+                  </div>
+                  <div class="hero-bento__item hero-bento__d">
                     <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=600&h=400&fit=crop&crop=center" alt="On the job" loading="eager" />
-                  </a>
+                  </div>
                 </div>
               </div>
             </div>
