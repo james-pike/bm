@@ -292,7 +292,7 @@ img { max-width: 100%; display: block; }
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  background: linear-gradient(150deg, #0f2619 0%, #1a3a28 15%, #2d6e45 35%, #4a9465 55%, #8ec4a0 80%, #c5ccc5 90%, var(--ce-gray-200) 100%);
+  background: linear-gradient(180deg, #0f2619 0%, #1a3a28 15%, #2d6e45 35%, #4a9465 55%, #8ec4a0 80%, #c5ccc5 90%, var(--ce-gray-200) 100%);
   padding-top: 8px;
   padding-bottom: 1.5rem;
 }
@@ -605,7 +605,7 @@ img { max-width: 100%; display: block; }
   letter-spacing: 0.03em;
 }
 .hero__middle-section {
-  padding: 0.5rem 1.2rem 1.7rem 1.5rem;
+  padding: 0.5rem 1.2rem 2rem 1.5rem;
   border-bottom: none;
   margin: -0.15rem -0.9rem 0;
   border-left: 2px solid rgba(255,255,255,0.06);
@@ -727,7 +727,7 @@ img { max-width: 100%; display: block; }
 }
 
 .hero__subtitle-inline {
-  font-size: 0.9rem;
+  font-size: 1rem;
   font-weight: 400;
   color: var(--ce-white);
   letter-spacing: 0.02em;
@@ -3772,7 +3772,7 @@ details[open] > .cart-drawer__checkout-title::after {
   .hero__apparel-row { flex-direction: column; gap: 0; margin-bottom: 0; align-items: flex-start; width: auto; margin-left: 0; }
   .section--teasers { margin-top: -1rem; }
   .section--teasers::before { top: 2rem; }
-  .hero__subtitle-inline { margin-left: 0; font-size: 1.2rem; white-space: normal; text-align: left; margin-top: 0.35rem; line-height: 1.4; letter-spacing: -0.03em; padding: 0; }
+  .hero__subtitle-inline { margin-left: 0; font-size: 1.35rem; white-space: normal; text-align: left; margin-top: 0.5rem; line-height: 1.4; letter-spacing: -0.03em; padding: 0; }
   .hero__title-apparel { margin-left: 0; }
   .hero__bento { display: none; }
   .featured-banner { grid-template-columns: 1fr; min-height: auto; }
@@ -3940,6 +3940,10 @@ details[open] > .cart-drawer__checkout-title::after {
       0 8px 32px rgba(0,0,0,0.1),
       inset 0 0 16px rgba(0,0,0,0.12);
   }
+  .hero-card-header.dot-pattern::before,
+  .hero__middle-section.dot-pattern::before {
+    opacity: 0.5;
+  }
   .hero-card-header {
     grid-column: 1 / -1;
     padding: 0.25rem 1.5rem;
@@ -3990,7 +3994,7 @@ details[open] > .cart-drawer__checkout-title::after {
   .hero__subtitle-inline {
     text-align: left;
     margin-top: 1.25rem;
-    font-size: 1.6rem;
+    font-size: 1.8rem;
   }
   .hero-carousel {
     display: none;
@@ -4018,7 +4022,7 @@ details[open] > .cart-drawer__checkout-title::after {
     object-fit: cover;
     display: block;
     opacity: 1;
-    aspect-ratio: 3.2/1;
+    aspect-ratio: 2.5/1;
   }
   .hero-bento__a { flex: 0 0 auto; }
   .hero-bento__a img { width: 100%; aspect-ratio: 16/9; object-fit: cover; }
@@ -4046,7 +4050,7 @@ details[open] > .cart-drawer__checkout-title::after {
     flex: 1;
   }
   .hero-bento__row .hero-bento__item img {
-    aspect-ratio: 16/9;
+    aspect-ratio: 4/3;
     object-fit: cover;
     width: 100%;
   }
