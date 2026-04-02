@@ -599,8 +599,8 @@ img { max-width: 100%; display: block; }
   z-index: 5;
 }
 .hero-carousel__dot {
-  width: 12px;
-  height: 12px;
+  width: 8px;
+  height: 8px;
   border-radius: 2px;
   border: none;
   background: rgba(255,255,255,0.4);
@@ -4188,7 +4188,7 @@ details[open] > .cart-drawer__checkout-title::after {
     width: 100%;
   }
   .hero-categories .category-card {
-    aspect-ratio: 16/9;
+    aspect-ratio: 4/3;
   }
   .hero-bento {
     display: flex;

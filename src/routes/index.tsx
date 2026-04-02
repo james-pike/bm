@@ -197,9 +197,14 @@ export default component$(() => {
                     <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=800&h=500&fit=crop&crop=center" alt="On the job" loading="eager" />
                   </Carousel.Slide>
                   <Carousel.Slide class="hero-carousel__slide">
-                    <img src="https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=800&h=500&fit=crop&crop=center" alt="Apparel" loading="eager" />
+                    <img src="/carmichael-services/careers.jpeg" alt="Carmichael team" loading="eager" />
                   </Carousel.Slide>
                 </Carousel.Scroller>
+                <Carousel.Pagination class="hero-carousel__dots">
+                  <Carousel.Bullet class="hero-carousel__dot" />
+                  <Carousel.Bullet class="hero-carousel__dot" />
+                  <Carousel.Bullet class="hero-carousel__dot" />
+                </Carousel.Pagination>
               </Carousel.Root>
               <div class="hero-bento">
                 <Carousel.Root class="hero-bento-carousel" autoPlayIntervalMs={6000} align="start" sensitivity={{ touch: 0.5, mouse: 0.5 }} rewind>
@@ -210,8 +215,12 @@ export default component$(() => {
                     <Carousel.Slide class="hero-bento-carousel__slide">
                       <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=800&h=500&fit=crop&crop=center" alt="On the job" loading="eager" />
                     </Carousel.Slide>
+                    <Carousel.Slide class="hero-bento-carousel__slide">
+                      <img src="/carmichael-services/careers.jpeg" alt="Carmichael team" loading="eager" />
+                    </Carousel.Slide>
                   </Carousel.Scroller>
                   <Carousel.Pagination class="hero-bento-carousel__dots">
+                    <Carousel.Bullet class="hero-bento-carousel__dot" />
                     <Carousel.Bullet class="hero-bento-carousel__dot" />
                     <Carousel.Bullet class="hero-bento-carousel__dot" />
                   </Carousel.Pagination>
@@ -219,7 +228,7 @@ export default component$(() => {
               </div>
               <div class="hero-categories">
                 <a href="/apparel/?category=Work Wear" class="category-card">
-                  <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=400&h=300&fit=crop&crop=center" alt="Work Wear" loading="lazy" />
+                  <img src="/carmichael-services/boiler-technicians.jpeg" alt="Work Wear" loading="lazy" />
                   <span class="category-card__label">{categoryLabel("Work Wear", locale.value)}</span>
                 </a>
                 <a href="/apparel/?category=Jackets" class="category-card">
@@ -231,7 +240,7 @@ export default component$(() => {
                   <span class="category-card__label">{t("teaser.polos.title", locale.value)}</span>
                 </a>
                 <a href="/apparel/?category=Hats" class="category-card">
-                  <img src="https://images.unsplash.com/photo-1556306535-0f09a537f0a3?w=400&h=300&fit=crop&crop=center" alt="Hats" loading="lazy" />
+                  <img src="/hat/30109107PS2_FRONT.JPG" alt="Hats" loading="lazy" />
                   <span class="category-card__label">{t("teaser.hats.title", locale.value)}</span>
                 </a>
               </div>
