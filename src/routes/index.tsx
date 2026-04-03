@@ -194,14 +194,10 @@ export default component$(() => {
                     <img src="/van.jpeg" alt="On the job" loading="eager" />
                   </Carousel.Slide>
                   <Carousel.Slide class="hero-carousel__slide">
-                    <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=800&h=500&fit=crop&crop=center" alt="On the job" loading="eager" />
-                  </Carousel.Slide>
-                  <Carousel.Slide class="hero-carousel__slide">
                     <img src="/carmichael-services/careers.jpeg" alt="Carmichael team" loading="eager" />
                   </Carousel.Slide>
                 </Carousel.Scroller>
                 <Carousel.Pagination class="hero-carousel__dots">
-                  <Carousel.Bullet class="hero-carousel__dot" />
                   <Carousel.Bullet class="hero-carousel__dot" />
                   <Carousel.Bullet class="hero-carousel__dot" />
                 </Carousel.Pagination>
@@ -213,14 +209,10 @@ export default component$(() => {
                       <img src="/van.jpeg" alt="On the job" loading="eager" />
                     </Carousel.Slide>
                     <Carousel.Slide class="hero-bento-carousel__slide">
-                      <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=800&h=500&fit=crop&crop=center" alt="On the job" loading="eager" />
-                    </Carousel.Slide>
-                    <Carousel.Slide class="hero-bento-carousel__slide">
                       <img src="/carmichael-services/careers.jpeg" alt="Carmichael team" loading="eager" />
                     </Carousel.Slide>
                   </Carousel.Scroller>
                   <Carousel.Pagination class="hero-bento-carousel__dots">
-                    <Carousel.Bullet class="hero-bento-carousel__dot" />
                     <Carousel.Bullet class="hero-bento-carousel__dot" />
                     <Carousel.Bullet class="hero-bento-carousel__dot" />
                   </Carousel.Pagination>
