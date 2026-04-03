@@ -3,7 +3,6 @@ import { t } from "../../i18n";
 import type { Locale } from "../../i18n";
 
 export const allProducts = [
-  // ── Jackets: Soft Shell ──────────────────────────────────
   {
     "sku": "CAR-1",
     "name": "Men's Soft Shell Jacket",
@@ -34,7 +33,6 @@ export const allProducts = [
     "material": "100% polyester with mechanical stretch, bonded micro fleece lining",
     "details": "Water repellent, Wind resistant, Anti-pill, YKK zippers, 1000mm waterproof rating, Classic fit"
   },
-  // ── Jackets: Rigi Eco Knit Full Zip ──────────────────────
   {
     "sku": "CAR-25",
     "name": "Men's Rigi Eco Knit Full Zip - Trimark Sportswear",
@@ -44,7 +42,9 @@ export const allProducts = [
     "colors": [],
     "price": 100,
     "img": "/mens-rigi-car-logoed.png",
-    "imgs": ["/mens-rigi-car-logoed.png"],
+    "imgs": [
+      "/mens-rigi-car-logoed.png"
+    ],
     "material": "",
     "details": ""
   },
@@ -57,11 +57,12 @@ export const allProducts = [
     "colors": [],
     "price": 100,
     "img": "/ladies-rigbi-logoed-car.png",
-    "imgs": ["/ladies-rigbi-logoed-car.png"],
+    "imgs": [
+      "/ladies-rigbi-logoed-car.png"
+    ],
     "material": "",
     "details": ""
   },
-  // ── Jackets: Full Zip Alpine Fleece ──────────────────────
   {
     "sku": "CAR-29",
     "name": "Men's Full Zip Alpine Fleece",
@@ -92,7 +93,6 @@ export const allProducts = [
     "material": "60% Cotton / 40% Acrylic",
     "details": "Heavyweight cuffs hem, and stand up collar, Long-sleeve, FW zipper pull, Even hem"
   },
-  // ── Jackets: Roots Fleece ────────────────────────────────
   {
     "sku": "CAR-31",
     "name": "Men's Roots Fleece",
@@ -102,7 +102,9 @@ export const allProducts = [
     "colors": [],
     "price": 100,
     "img": "/mens-roots-fleece.png",
-    "imgs": ["/mens-roots-fleece.png"],
+    "imgs": [
+      "/mens-roots-fleece.png"
+    ],
     "material": "",
     "details": ""
   },
@@ -115,11 +117,12 @@ export const allProducts = [
     "colors": [],
     "price": 100,
     "img": "/womens-roots-fleece.png",
-    "imgs": ["/womens-roots-fleece.png"],
+    "imgs": [
+      "/womens-roots-fleece.png"
+    ],
     "material": "",
     "details": ""
   },
-  // ── Polos: UA Tech Polo ──────────────────────────────────
   {
     "sku": "CAR-3",
     "name": "Men's UA Tech Polo - Black",
@@ -180,7 +183,6 @@ export const allProducts = [
     "material": "100% polyester",
     "details": "Moisture-wicking, Anti-odor technology, Textured soft & breathable fabric, Self-fabric collar, 4-button placket"
   },
-  // ── Polos: Coal Harbour Snag Resistant ───────────────────
   {
     "sku": "CAR-19",
     "name": "Men's Coal Harbour® Snag Resistant Polo - Black",
@@ -256,7 +258,6 @@ export const allProducts = [
     "material": "100% performance polyester flat tricot micropique",
     "details": "Self-fabric collar, Moisture-wicking, Snag resistant, Breathable, Tagless, Relaxed fit"
   },
-  // ── Polos: Coal Harbour Everyday (women's only) ──────────
   {
     "sku": "CAR-22",
     "name": "Women's Coal Harbour® Everyday Polo #L4007",
@@ -270,7 +271,6 @@ export const allProducts = [
     "material": "",
     "details": ""
   },
-  // ── Polos: Harriton Easy Blend (women's only) ────────────
   {
     "sku": "CAR-23",
     "name": "Women's Harriton Easy Blend Polo #M265W",
@@ -284,7 +284,6 @@ export const allProducts = [
     "material": "",
     "details": ""
   },
-  // ── Hats ─────────────────────────────────────────────────
   {
     "sku": "CAR-21",
     "name": "Embroidered Cap",
@@ -315,7 +314,6 @@ export const allProducts = [
     "material": "100% Acrylic",
     "details": "Traditional knit hat with cuff, One size fits most"
   },
-  // ── Work Wear ────────────────────────────────────────────
   {
     "sku": "CAR-9",
     "name": "Viking Professional® Insulated Journeyman Jacket #3957FRJ",
