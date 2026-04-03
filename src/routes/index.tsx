@@ -194,10 +194,14 @@ export default component$(() => {
                     <img src="/van.jpeg" alt="On the job" loading="eager" />
                   </Carousel.Slide>
                   <Carousel.Slide class="hero-carousel__slide">
+                    <img src="/carmichael-services/boiler-technicians.jpeg" alt="Work Wear" loading="eager" />
+                  </Carousel.Slide>
+                  <Carousel.Slide class="hero-carousel__slide">
                     <img src="/carmichael-services/careers.jpeg" alt="Carmichael team" loading="eager" />
                   </Carousel.Slide>
                 </Carousel.Scroller>
                 <Carousel.Pagination class="hero-carousel__dots">
+                  <Carousel.Bullet class="hero-carousel__dot" />
                   <Carousel.Bullet class="hero-carousel__dot" />
                   <Carousel.Bullet class="hero-carousel__dot" />
                 </Carousel.Pagination>
@@ -209,10 +213,14 @@ export default component$(() => {
                       <img src="/van.jpeg" alt="On the job" loading="eager" />
                     </Carousel.Slide>
                     <Carousel.Slide class="hero-bento-carousel__slide">
+                      <img src="/carmichael-services/boiler-technicians.jpeg" alt="Work Wear" loading="eager" />
+                    </Carousel.Slide>
+                    <Carousel.Slide class="hero-bento-carousel__slide">
                       <img src="/carmichael-services/careers.jpeg" alt="Carmichael team" loading="eager" />
                     </Carousel.Slide>
                   </Carousel.Scroller>
                   <Carousel.Pagination class="hero-bento-carousel__dots">
+                    <Carousel.Bullet class="hero-bento-carousel__dot" />
                     <Carousel.Bullet class="hero-bento-carousel__dot" />
                     <Carousel.Bullet class="hero-bento-carousel__dot" />
                   </Carousel.Pagination>
@@ -224,11 +232,11 @@ export default component$(() => {
                   <span class="category-card__label">{categoryLabel("Work Wear", locale.value)}</span>
                 </a>
                 <a href="/apparel/?category=Jackets" class="category-card">
-                  <img src="/carmichael-services/careers.jpeg" alt="Jackets" loading="lazy" />
+                  <img src="/carmichael-services/hvac-retrofit.jpeg" alt="Jackets" loading="lazy" />
                   <span class="category-card__label">{t("teaser.jackets.title", locale.value)}</span>
                 </a>
                 <a href="/apparel/?category=Polos" class="category-card">
-                  <img src="https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=400&h=300&fit=crop&crop=center" alt="Polos" loading="lazy" />
+                  <img src="/carmichael-services/careers.jpeg" alt="Polos" loading="lazy" />
                   <span class="category-card__label">{t("teaser.polos.title", locale.value)}</span>
                 </a>
                 <a href="/apparel/?category=Hats" class="category-card">

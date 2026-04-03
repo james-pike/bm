@@ -13,7 +13,7 @@ const categories = CATEGORY_ORDER.filter(c => rawCategories.includes(c));
 
 // Keyed by category — "All" shows a general banner, others match their filter
 const heroImg = [
-  { src: "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=640&h=360&fit=crop", alt: "Apparel collection" },
+  { src: "/carmichael-services/boiler-technicians.jpeg", alt: "Work Wear collection" },
   { src: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=640&h=360&fit=crop", alt: "On the job" },
 ] as [{ src: string; alt: string }, { src: string; alt: string }];
 
@@ -63,62 +63,89 @@ export default component$(() => {
         </div>
       </div>
       {isCatalog.value && (
-        <div class="apparel-titlebar apparel-titlebar--overlap">
-          <div class="apparel-titlebar__row">
-            <div class="apparel-titlebar__left">
-              <h1 class="apparel-catalog__title" onClick$={() => (activeCategory.value = "All")} style={{ cursor: "pointer" }}>
-                {t("apparel.title", locale.value)}
-              </h1>
-              <div class="apparel-titlebar__tabs">
-                {categories.map((cat) => (
-                    <button
-                      key={cat}
-                      class={`apparel-titlebar__tab ${activeCategory.value === cat ? "active" : ""}`}
-                      onClick$={() => {
-                        const headerH = window.innerWidth <= 900 ? 46 : 58;
-                        const titlebar = document.querySelector('.apparel-titlebar');
-                        const titlebarH = (titlebar as HTMLElement)?.offsetHeight || 34;
-                        const catalog = document.querySelector('.apparel-catalog');
-                        const stickyPos = catalog ? catalog.getBoundingClientRect().top + window.scrollY - headerH - titlebarH : 0;
-                        if (activeCategory.value === cat && cat !== "All") { activeCategory.value = "All"; } else
-                        activeCategory.value = cat;
-                        searchQuery.value = "";
-                        if (window.innerWidth <= 1024) {
-                          window.scrollTo({ top: stickyPos, behavior: 'instant' });
-                        } else {
-                          window.scrollTo({ top: 0, behavior: 'instant' });
-                        }
-                      }}
-                    >
-                    {categoryLabel(cat, locale.value)}
-                  </button>
-                ))}
-              </div>
-            </div>
-            <div class="apparel-titlebar__right">
-              <div class="gender-filter">
-                <button
-                  class={`apparel-titlebar__action ${genderFilter.value !== "All" ? "gender-filter--active" : ""}`}
-                  aria-label="Filter"
-                  onClick$={() => (filterOpen.value = !filterOpen.value)}
-                >
-                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
-                </button>
-                {filterOpen.value && (
-                  <div class="gender-filter__dropdown">
-                    {["All", "Men", "Women"].map((g) => (
+        <>
+          {/* Mobile top bar */}
+          <div class="apparel-titlebar apparel-titlebar--mobile">
+            <div class="apparel-titlebar__row">
+              <div class="apparel-titlebar__left">
+                <div class="apparel-titlebar__tabs">
+                  {categories.map((cat) => (
                       <button
-                        key={g}
-                        class={`gender-filter__option ${genderFilter.value === g ? "active" : ""}`}
-                        onClick$={() => { genderFilter.value = g; filterOpen.value = false; }}
+                        key={cat}
+                        class={`apparel-titlebar__tab ${activeCategory.value === cat ? "active" : ""}`}
+                        onClick$={() => {
+                          const headerH = window.innerWidth <= 900 ? 46 : 58;
+                          const titlebar = document.querySelector('.apparel-titlebar');
+                          const titlebarH = (titlebar as HTMLElement)?.offsetHeight || 34;
+                          const catalog = document.querySelector('.apparel-catalog');
+                          const stickyPos = catalog ? catalog.getBoundingClientRect().top + window.scrollY - headerH - titlebarH : 0;
+                          if (activeCategory.value === cat && cat !== "All") { activeCategory.value = "All"; } else
+                          activeCategory.value = cat;
+                          searchQuery.value = "";
+                          window.scrollTo({ top: stickyPos, behavior: 'instant' });
+                        }}
                       >
-                        {g === "All" ? "All" : g === "Men" ? "Men's" : "Women's"}
-                      </button>
-                    ))}
+                      {categoryLabel(cat, locale.value)}
+                    </button>
+                  ))}
+                </div>
+              </div>
+              <div class="apparel-titlebar__right">
+                <div class="gender-filter">
+                  <button
+                    class={`apparel-titlebar__action ${genderFilter.value !== "All" ? "gender-filter--active" : ""}`}
+                    aria-label="Filter"
+                    onClick$={() => (filterOpen.value = !filterOpen.value)}
+                  >
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
+                  </button>
+                  {filterOpen.value && (
+                    <div class="gender-filter__dropdown">
+                      {["All", "Men", "Women"].map((g) => (
+                        <button
+                          key={g}
+                          class={`gender-filter__option ${genderFilter.value === g ? "active" : ""}`}
+                          onClick$={() => { genderFilter.value = g; filterOpen.value = false; }}
+                        >
+                          {g === "All" ? "All" : g === "Men" ? "Men's" : "Women's"}
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
+                {searchOpen.value ? (
+                  <div class="apparel-titlebar__search apparel-titlebar__search--mobile">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+                    <input
+                      type="text"
+                      class="apparel-titlebar__search-input"
+                      placeholder=""
+                      aria-label="Search apparel"
+                      autoFocus
+                      value={searchQuery.value}
+                      onInput$={(_, el) => { searchQuery.value = el.value; }}
+                      onKeyDown$={(e) => { if (e.key === "Enter") { doSearch(searchQuery.value); searchOpen.value = false; } if (e.key === "Escape") { searchQuery.value = ""; searchOpen.value = false; } }}
+                    />
+                    <button class="apparel-titlebar__action" aria-label="Close search" onClick$={() => { doSearch(searchQuery.value); searchOpen.value = false; }} style="padding:2px;">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg>
+                    </button>
                   </div>
+                ) : (
+                  <button class="apparel-titlebar__action apparel-titlebar__action--mobile-search" aria-label="Search" onClick$={() => (searchOpen.value = true)}>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+                  </button>
                 )}
               </div>
-              <div class="apparel-titlebar__search">
+            </div>
+          </div>
+
+          {/* Desktop sidebar + grid wrapper */}
+          <div class="apparel-layout">
+            <aside class="apparel-sidebar">
+              <h2 class="apparel-sidebar__title" onClick$={() => (activeCategory.value = "All")} style={{ cursor: "pointer" }}>
+                {t("apparel.title", locale.value)}
+              </h2>
+              <div class="apparel-sidebar__search">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
                 <input
                   type="text"
@@ -131,33 +158,44 @@ export default component$(() => {
                   onBlur$={() => doSearch(searchQuery.value)}
                 />
               </div>
-              {searchOpen.value ? (
-                <div class="apparel-titlebar__search apparel-titlebar__search--mobile">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
-                  <input
-                    type="text"
-                    class="apparel-titlebar__search-input"
-                    placeholder=""
-                    aria-label="Search apparel"
-                    autoFocus
-                    value={searchQuery.value}
-                    onInput$={(_, el) => { searchQuery.value = el.value; }}
-                    onKeyDown$={(e) => { if (e.key === "Enter") { doSearch(searchQuery.value); searchOpen.value = false; } if (e.key === "Escape") { searchQuery.value = ""; searchOpen.value = false; } }}
-                  />
-                  <button class="apparel-titlebar__action" aria-label="Close search" onClick$={() => { doSearch(searchQuery.value); searchOpen.value = false; }} style="padding:2px;">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg>
+              <nav class="apparel-sidebar__nav">
+                {categories.map((cat) => (
+                  <button
+                    key={cat}
+                    class={`apparel-sidebar__link ${activeCategory.value === cat ? "active" : ""}`}
+                    onClick$={() => {
+                      if (activeCategory.value === cat && cat !== "All") { activeCategory.value = "All"; } else
+                      activeCategory.value = cat;
+                      searchQuery.value = "";
+                      window.scrollTo({ top: 0, behavior: 'instant' });
+                    }}
+                  >
+                    {categoryLabel(cat, locale.value)}
                   </button>
+                ))}
+              </nav>
+              <div class="apparel-sidebar__gender">
+                <span class="apparel-sidebar__label">Filter</span>
+                <div class="apparel-sidebar__gender-btns">
+                  {["All", "Men", "Women"].map((g) => (
+                    <button
+                      key={g}
+                      class={`apparel-sidebar__gender-btn ${genderFilter.value === g ? "active" : ""}`}
+                      onClick$={() => { genderFilter.value = g; }}
+                    >
+                      {g === "All" ? "All" : g === "Men" ? "Men's" : "Women's"}
+                    </button>
+                  ))}
                 </div>
-              ) : (
-                <button class="apparel-titlebar__action apparel-titlebar__action--mobile-search" aria-label="Search" onClick$={() => (searchOpen.value = true)}>
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
-                </button>
-              )}
+              </div>
+            </aside>
+            <div class="apparel-layout__main">
+              <Slot />
             </div>
           </div>
-        </div>
+        </>
       )}
-      <Slot />
+      {!isCatalog.value && <Slot />}
     </div>
   );
 });
