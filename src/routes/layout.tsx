@@ -111,7 +111,7 @@ export const useSubmitOrder = routeAction$(async (data, { fail, env }) => {
   const itemRows = items.map((i) =>
     `<tr>
       <td style="padding:6px 12px;border-bottom:1px solid #eee">${i.name}${i.sku ? ` <span style="color:#999;font-size:12px">(${i.sku})</span>` : ""}</td>
-      <td style="padding:6px 12px;border-bottom:1px solid #eee">${cName(i.color)} / ${i.size}${i.waist ? ` / W${i.waist} L${i.length}` : ""}</td>
+      <td style="padding:6px 12px;border-bottom:1px solid #eee">${i.color ? cName(i.color) + " / " : ""}${i.size}${i.waist ? ` / W${i.waist} L${i.length}` : ""}</td>
       <td style="padding:6px 12px;border-bottom:1px solid #eee;text-align:center">${i.quantity}</td>
       <td style="padding:6px 12px;border-bottom:1px solid #eee;text-align:right">$${(Number(i.price) || 0) * i.quantity}</td>
     </tr>`
@@ -655,7 +655,7 @@ export default component$(() => {
                             <div>
                             <Link href={item.sku ? `/apparel/${item.sku}/` : "/apparel/"} class="cart-table__name-link">{item.name}</Link>
                             <div class="cart-table__meta">
-                              {colorName(item.color, locale.value)} / {item.size}{item.waist ? ` / W${item.waist} L${item.length}` : ""}                              <button class="cart-table__remove" aria-label={`Remove ${item.name}`} onClick$={() => removeFromCart(i)}>&times;</button>
+                              {item.color ? `${colorName(item.color, locale.value)} / ` : ""}{item.size}{item.waist ? ` / W${item.waist} L${item.length}` : ""}                              <button class="cart-table__remove" aria-label={`Remove ${item.name}`} onClick$={() => removeFromCart(i)}>&times;</button>
                             </div>
                             </div>
                             </div>

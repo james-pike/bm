@@ -1,9 +1,9 @@
-import { component$, useSignal, useContext } from "@builder.io/qwik";
+import { component$, useSignal, useContext, useVisibleTask$ } from "@builder.io/qwik";
 import { Carousel } from "@qwik-ui/headless";
 import type { DocumentHead } from "@builder.io/qwik-city";
 import { LocaleContext, t } from "../i18n";
-import { allProducts, categoryLabel } from "./apparel/products";
-import type { Product } from "./apparel/products";
+import { categoryLabel } from "./apparel/products";
+import { ProductCatalog } from "../components/product-catalog/product-catalog";
 
 
 /* eslint-disable @typescript-eslint/no-unused-vars */
@@ -130,11 +130,20 @@ const TeaserCard = component$<{ t: typeof _teasers[0] }>(({ t: teaser }) => {
 
 export default component$(() => {
   const locale = useContext(LocaleContext);
-  const homeCat = useSignal("All");
-  const homeSearch = useSignal("");
-  const homeSearchOpen = useSignal(false);
-  const homeGender = useSignal("All");
-  const homeFilterOpen = useSignal(false);
+  const hasCartItems = useSignal(false);
+
+  // eslint-disable-next-line qwik/no-use-visible-task
+  useVisibleTask$(({ cleanup }) => {
+    const check = () => {
+      try {
+        const cart = JSON.parse(localStorage.getItem("ce_cart") || "[]");
+        hasCartItems.value = cart.length > 0;
+      } catch { hasCartItems.value = false; }
+    };
+    check();
+    window.addEventListener("cart-updated", check);
+    cleanup(() => window.removeEventListener("cart-updated", check));
+  });
 
   return (
     <div class="home-page">
@@ -159,7 +168,7 @@ export default component$(() => {
                     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
                     <span class="hero-card-header__btn-label">{locale.value === "en" ? "Français" : "English"}</span>
                   </button>
-                  <button class="hero-card-header__btn" onClick$={() => {
+                  <button class={`hero-card-header__btn ${hasCartItems.value ? "hero-card-header__btn--cart-active" : ""}`} onClick$={() => {
                     const btn = document.querySelector('.cart-btn') as HTMLElement;
                     btn?.click();
                   }} aria-label="Cart">
@@ -253,151 +262,7 @@ export default component$(() => {
 
 
       {/* Apparel Catalog */}
-      <section class="home-catalog">
-        <div class="home-catalog__inner">
-          <div class="home-catalog__header">
-            <h2 class="home-catalog__title">{t("nav.apparel", locale.value)}</h2>
-            <div class="home-catalog__tabs">
-              {["All", "Work Wear", "Jackets", "Polos", "Hats"].map((cat) => (
-                <button
-                  key={cat}
-                  class={`apparel-titlebar__tab ${homeCat.value === cat ? "active" : ""}`}
-                  onClick$={() => {
-                    if (homeCat.value === cat) { homeCat.value = "All"; return; }
-                    const catalog = document.querySelector('.home-catalog');
-                    const headerH = window.innerWidth <= 900 ? 46 : 58;
-                    const tabH = (document.querySelector('.home-catalog__header') as HTMLElement)?.offsetHeight || 34;
-                    const catalogTop = catalog ? catalog.getBoundingClientRect().top + window.scrollY : 0;
-                    const stickyPos = catalogTop - headerH + tabH - 12;
-                    homeCat.value = cat;
-                    window.scrollTo({ top: stickyPos, behavior: 'instant' });
-                  }}
-                >
-                  {cat === "All" ? t("apparel.all", locale.value) : categoryLabel(cat, locale.value)}
-                </button>
-              ))}
-              <div class="home-catalog__gender-section">
-                <h3 class="home-catalog__filter-title">Filter</h3>
-                {["All", "Men", "Women"].map((g) => (
-                  <button
-                    key={g}
-                    class={`apparel-titlebar__tab ${homeGender.value === g ? "active" : ""}`}
-                    onClick$={() => { homeGender.value = g; }}
-                  >
-                    {g === "All" ? "All" : g === "Men" ? "Men's" : "Women's"}
-                  </button>
-                ))}
-              </div>
-            </div>
-            <div class="home-catalog__right">
-              <div class="gender-filter">
-                <button
-                  class={`apparel-titlebar__action ${homeGender.value !== "All" ? "gender-filter--active" : ""}`}
-                  aria-label="Filter"
-                  onClick$={() => (homeFilterOpen.value = !homeFilterOpen.value)}
-                >
-                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
-                </button>
-                {homeFilterOpen.value && (
-                  <div class="gender-filter__dropdown">
-                    {["All", "Men", "Women"].map((g) => (
-                      <button
-                        key={g}
-                        class={`gender-filter__option ${homeGender.value === g ? "active" : ""}`}
-                        onClick$={() => { homeGender.value = g; homeFilterOpen.value = false; }}
-                      >
-                        {g === "All" ? "All" : g === "Men" ? "Men's" : "Women's"}
-                      </button>
-                    ))}
-                  </div>
-                )}
-              </div>
-              <div class="apparel-titlebar__search home-catalog__search-desktop">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
-                <input
-                  type="text"
-                  class="apparel-titlebar__search-input"
-                  placeholder=""
-                  aria-label="Search apparel"
-                  value={homeSearch.value}
-                  onInput$={(_, el) => { homeSearch.value = el.value; }}
-                  onKeyDown$={(e) => { if (e.key === "Enter") { homeCat.value = "All"; } }}
-                  onBlur$={() => { if (homeSearch.value) homeCat.value = "All"; }}
-                />
-              </div>
-              {homeSearchOpen.value ? (
-                <div class="apparel-titlebar__search apparel-titlebar__search--mobile">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
-                  <input
-                    type="text"
-                    class="apparel-titlebar__search-input"
-                    placeholder=""
-                    aria-label="Search apparel"
-                    autoFocus
-                    value={homeSearch.value}
-                    onInput$={(_, el) => { homeSearch.value = el.value; }}
-                    onKeyDown$={(e) => { if (e.key === "Enter") { homeCat.value = "All"; homeSearchOpen.value = false; } if (e.key === "Escape") { homeSearch.value = ""; homeSearchOpen.value = false; } }}
-                  />
-                  <button class="apparel-titlebar__action" aria-label="Close search" onClick$={() => { homeSearchOpen.value = false; }} style="padding:2px;">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg>
-                  </button>
-                </div>
-              ) : (
-                <button class="apparel-titlebar__action apparel-titlebar__action--mobile-search" aria-label="Search" onClick$={() => (homeSearchOpen.value = true)}>
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
-                </button>
-              )}
-            </div>
-          </div>
-          <div class="apparel-grid">
-            {(() => {
-              const filterGender = (list: Product[]) => {
-                if (homeGender.value === "All") return list;
-                const prefix = homeGender.value === "Men" ? "men" : "women";
-                return list.filter((p) => p.name.toLowerCase().includes(prefix));
-              };
-              let items: Product[];
-              if (homeSearch.value) {
-                const q = homeSearch.value.toLowerCase();
-                items = allProducts.filter((p) => p.name.toLowerCase().includes(q) || p.sku.toLowerCase().includes(q) || p.category.toLowerCase().includes(q));
-              } else if (homeCat.value === "All") {
-                const workWear = allProducts.filter((p) => p.category === "Work Wear" && p.sku !== "CAR-12");
-                const other = allProducts.filter((p) => p.category !== "Work Wear");
-                items = [];
-                let w = 0, o = 0;
-                while (w < workWear.length || o < other.length) {
-                  if (o < other.length) items.push(other[o++]);
-                  if (w < workWear.length) items.push(workWear[w++]);
-                }
-                const car12 = allProducts.find((p) => p.sku === "CAR-12");
-                if (car12) items.push(car12);
-              } else {
-                items = allProducts.filter((p) => p.category === homeCat.value);
-                items = [...items.filter((p) => p.sku !== "CAR-12"), ...items.filter((p) => p.sku === "CAR-12")];
-              }
-              return filterGender(items).map((item) => (
-                <a key={item.sku} href={`/apparel/${item.sku}/`} class={`product-card product-card-link ${item.sku === "CAR-21" ? "product-card--cover" : ""}`}>
-                  <div class="product-card__image">
-                    <img src={item.img} alt={item.name} width="440" height="440" />
-                  </div>
-                  <div class="product-card__info">
-                    <div class="product-card__name-row">
-                      <div class="product-card__name">
-                        <span class="product-card__name-text">{item.name.replace(/#\S+/g, '').trim()}</span>
-                        <span class="product-card__name-code">{(item.name.match(/#\S+/) || [''])[0]}</span>
-                      </div>
-                      <div class="product-card__price-group">
-                        <div class="product-card__price">${item.price}</div>
-                        <span class="product-card__sizes">{item.sizes}</span>
-                      </div>
-                    </div>
-                  </div>
-                </a>
-              ));
-            })()}
-          </div>
-        </div>
-      </section>
+      <ProductCatalog />
     </div>
   );
 });

@@ -92,7 +92,7 @@ export default component$(() => {
       console.log("cart saved, dispatching event", items.length, "items");
       window.dispatchEvent(new CustomEvent("cart-updated"));
     } catch (err) { console.error("addToCart error:", err); }
-    addedInfo.value = `${p.name} — ${colorName(selectedColor.value, "en")} / ${sizeVal}`;
+    addedInfo.value = selectedColor.value ? `${p.name} — ${colorName(selectedColor.value, "en")} / ${sizeVal}` : `${p.name} — ${sizeVal}`;
     added.value = true;
     selectedQty.value = 1;
     setTimeout(() => { added.value = false; }, 3800);
