@@ -3,8 +3,8 @@ import { routeLoader$, useLocation } from "@builder.io/qwik-city";
 import { ProductCatalog } from "../../components/product-catalog/product-catalog";
 
 const heroImg = [
-  { src: "/carmichael-services/boiler-technicians.jpeg", alt: "Work Wear collection" },
-  { src: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=640&h=360&fit=crop", alt: "On the job" },
+  { src: "/carmichael-services/careers.jpeg", alt: "Carmichael team" },
+  { src: "/carmichael-services/industrial-refrigeration.jpeg", alt: "Industrial refrigeration" },
 ] as [{ src: string; alt: string }, { src: string; alt: string }];
 
 export const useApparelAuthGuard = routeLoader$(({ cookie, redirect }) => {

@@ -160,6 +160,10 @@ export default component$(() => {
                     <span class="hero-card-header__apparel">{t("logo.apparel", locale.value)}</span>
                   </div>
                 </a>
+                <nav class="hero-card-header__nav">
+                  <a href="/" class="hero-card-header__nav-link active">{t("nav.home", locale.value)}</a>
+                  <a href="/apparel/" class="hero-card-header__nav-link">{t("nav.apparel", locale.value)}</a>
+                </nav>
                 <div class="hero-card-header__actions">
                   <button class="hero-card-header__btn" onClick$={() => {
                     const btn = document.querySelector('.locale-btn') as HTMLElement;
@@ -200,7 +204,7 @@ export default component$(() => {
               <Carousel.Root class="hero-carousel" autoPlayIntervalMs={6000} align="start" sensitivity={{ touch: 0.5, mouse: 0.5 }} rewind>
                 <Carousel.Scroller class="hero-carousel__scroller">
                   <Carousel.Slide class="hero-carousel__slide">
-                    <img src="/van.jpeg" alt="On the job" loading="eager" />
+                    <img src="/carmichael-services/van-building.jpeg" alt="Carmichael service van" loading="eager" />
                   </Carousel.Slide>
                   <Carousel.Slide class="hero-carousel__slide">
                     <img src="/carmichael-services/boiler-technicians.jpeg" alt="Work Wear" loading="eager" />
@@ -219,7 +223,7 @@ export default component$(() => {
                 <Carousel.Root class="hero-bento-carousel" autoPlayIntervalMs={6000} align="start" sensitivity={{ touch: 0.5, mouse: 0.5 }} rewind>
                   <Carousel.Scroller class="hero-bento-carousel__scroller">
                     <Carousel.Slide class="hero-bento-carousel__slide">
-                      <img src="/van.jpeg" alt="On the job" loading="eager" />
+                      <img src="/carmichael-services/van-building.jpeg" alt="Carmichael service van" loading="eager" />
                     </Carousel.Slide>
                     <Carousel.Slide class="hero-bento-carousel__slide">
                       <img src="/carmichael-services/boiler-technicians.jpeg" alt="Work Wear" loading="eager" />
@@ -237,19 +241,19 @@ export default component$(() => {
               </div>
               <div class="hero-categories">
                 <a href="/apparel/?category=Work Wear" class="category-card">
-                  <img src="/carmichael-services/boiler-technicians.jpeg" alt="Work Wear" loading="lazy" />
+                  <img src="/carmichael-services/boiler-technicians.jpeg" alt="Work Wear" width="400" height="300" loading="lazy" />
                   <span class="category-card__label">{categoryLabel("Work Wear", locale.value)}</span>
                 </a>
                 <a href="/apparel/?category=Jackets" class="category-card">
-                  <img src="/carmichael-services/hvac-retrofit.jpeg" alt="Jackets" loading="lazy" />
+                  <img src="/carmichael-services/hvac-retrofit.jpeg" alt="Jackets" width="400" height="300" loading="lazy" />
                   <span class="category-card__label">{t("teaser.jackets.title", locale.value)}</span>
                 </a>
                 <a href="/apparel/?category=Polos" class="category-card">
-                  <img src="/carmichael-services/careers.jpeg" alt="Polos" loading="lazy" />
+                  <img src="/carmichael-services/careers.jpeg" alt="Polos" width="400" height="300" loading="lazy" />
                   <span class="category-card__label">{t("teaser.polos.title", locale.value)}</span>
                 </a>
                 <a href="/apparel/?category=Hats" class="category-card">
-                  <img src="/hat/30109107PS2_FRONT.JPG" alt="Hats" loading="lazy" />
+                  <img src="/hat/30109107PS2_FRONT.JPG" alt="Hats" width="400" height="300" loading="lazy" />
                   <span class="category-card__label">{t("teaser.hats.title", locale.value)}</span>
                 </a>
               </div>

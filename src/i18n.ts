@@ -155,7 +155,10 @@ const translations = {
   "cart.email": { en: "Email *", fr: "Courriel *" },
   "cart.department": { en: "Department / Site *", fr: "Département / Site *" },
   "cart.department.placeholder": { en: "e.g. Operations - Site 3", fr: "ex. Opérations - Site 3" },
-  "cart.createorder": { en: "Create Order", fr: "Commander" },
+  "cart.createorder": { en: "Place Order", fr: "Commander" },
+  "cart.checkout": { en: "Checkout", fr: "Passer à la caisse" },
+  "cart.backtocart": { en: "Back to Cart", fr: "Retour au panier" },
+  "cart.ordersummary": { en: "Order Summary", fr: "Résumé de la commande" },
 
   // Cart errors
   "cart.error.both": { en: "Employee number and name are required", fr: "Le numéro d'employé et le nom sont requis" },
@@ -180,7 +183,7 @@ const translations = {
   "cat.Safety": { en: "Safety", fr: "Sécurité" },
   "cat.Caps": { en: "Caps & Beanies", fr: "Casquettes" },
   "cat.Jackets": { en: "Jackets", fr: "Manteaux" },
-  "cat.Work Wear": { en: "Work Wear", fr: "Vêtements de travail" },
+  "cat.Work Wear": { en: "Work Wear", fr: "Travail" },
 
   // Product detail
   "product.taptoclose": { en: "Tap anywhere to close", fr: "Appuyez pour fermer" },

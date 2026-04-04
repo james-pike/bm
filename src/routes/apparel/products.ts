@@ -45,8 +45,8 @@ export const allProducts = [
     "imgs": [
       "/mens-rigi-car-logoed.png"
     ],
-    "material": "",
-    "details": ""
+    "material": "53% Cotton/ 47% Recycled Polyester textured doubleknit, 225 g/m² (7.5 oz/yd²)",
+    "details": "Eco-friendly polyblend doubleknit fabric, Global Recycled Standard Certified, Breathable and moisture-wicking, Anti-pill, UPF 40+ protection, Self-fabric waistband and cuffs"
   },
   {
     "sku": "CAR-24",
@@ -60,8 +60,8 @@ export const allProducts = [
     "imgs": [
       "/ladies-rigbi-logoed-car.png"
     ],
-    "material": "",
-    "details": ""
+    "material": "53% Cotton/ 47% Recycled Polyester textured doubleknit, 225 g/m² (7.5 oz/yd²)",
+    "details": "Eco-friendly polyblend doubleknit fabric, Global Recycled Standard Certified, Breathable and moisture-wicking, Anti-pill, UPF 40+ protection, Self-fabric waistband and cuffs, Shaped seams for a better fit"
   },
   {
     "sku": "CAR-29",
@@ -97,7 +97,7 @@ export const allProducts = [
     "sku": "CAR-31",
     "name": "Men's Roots Fleece",
     "category": "Jackets",
-    "sizes": "S - 4XL",
+    "sizes": "S - 3XL",
     "badge": "",
     "colors": [],
     "price": 100,
@@ -105,14 +105,14 @@ export const allProducts = [
     "imgs": [
       "/mens-roots-fleece.png"
     ],
-    "material": "",
-    "details": ""
+    "material": "75% Recycled Polyester 25% Polyester anti-pill microfleece, 270 g/m² (8.0 oz/yd²), Contrast: 60% Polyester 40% Recycled Polyester 240T woven interior collar & zipper flap. 100% Recycled polyester brushed tricot knit pocket bags",
+    "details": "Anti-pill microfleece, Global Recycled Standard (GRS) Certified"
   },
   {
     "sku": "CAR-32",
     "name": "Women's Roots Fleece",
     "category": "Jackets",
-    "sizes": "S - 4XL",
+    "sizes": "XS - 2XL",
     "badge": "",
     "colors": [],
     "price": 100,
@@ -268,8 +268,8 @@ export const allProducts = [
     "price": 100,
     "img": "",
     "imgs": [],
-    "material": "",
-    "details": ""
+    "material": "100% performance polyester double-knit jersey",
+    "details": "No bleed fabric (NBF) created with a unique cationic dye process for easy printing, Self-fabric collar, Moisture wicking and breathable, Tagless, Relaxed fit, 6.6-oz"
   },
   {
     "sku": "CAR-23",

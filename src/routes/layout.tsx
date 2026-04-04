@@ -216,6 +216,8 @@ export default component$(() => {
   const cartOpen = useSignal(false);
   const orderSubmitted = useSignal(false);
   const checkoutOpen = useSignal(false);
+  const checkoutStep = useSignal<"cart" | "details">("cart");
+  const summaryOpen = useSignal(false);
   const formError = useSignal("");
   const formTouched = useSignal(false);
   const empNumber = useSignal("");
@@ -513,9 +515,9 @@ export default component$(() => {
             <button class={`locale-btn ${cartOpen.value ? "locale-btn--cart-open" : ""}`} onClick$={toggleLocale} aria-label="Toggle language">
               <span class="locale-btn__full">{locale.value === "en" ? "Français" : "English"}</span>
               <span class="locale-btn__short">{locale.value === "en" ? "FR" : "EN"}</span>
-              <svg class="locale-btn__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
+              <svg class="locale-btn__icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
             </button>
-            <button class={`cart-btn ${cart.items.length > 0 ? "cart-btn--active" : ""}`} onClick$={() => { cartOpen.value = !cartOpen.value; }}>
+            <button class={`cart-btn ${cart.items.length > 0 ? "cart-btn--active" : ""}`} onClick$={() => { cartOpen.value = !cartOpen.value; if (!cartOpen.value) checkoutStep.value = "cart"; }}>
               <span class="cart-btn__label">{t("cart.mycart", locale.value)}</span>
               {cartOpen.value ? (
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg>
@@ -635,7 +637,7 @@ export default component$(() => {
                 <p>{t("cart.empty", locale.value)}</p>
                 <a href="/apparel/" class="cart-drawer__back-link" onClick$={() => (cartOpen.value = false)}>{t("cart.backtoapparel", locale.value)}</a>
               </div>
-            ) : (
+            ) : checkoutStep.value === "cart" ? (
               <>
                 <div class="cart-drawer__items">
                   <table class="cart-table">
@@ -679,16 +681,47 @@ export default component$(() => {
                     </tfoot>
                   </table>
                 </div>
-                <Collapsible.Root class="cart-drawer__checkout" bind:open={checkoutOpen}>
-                  <Collapsible.Trigger class="cart-drawer__checkout-title">
-                    {t("cart.orderdetails", locale.value)}
-                    {(!empNumber.value || !empName.value || !empEmail.value || !empDept.value) && (
-                      <span class={`cart-drawer__required-label ${formError.value ? "cart-drawer__required-label--error" : ""}`}>
-                        {t("cart.requiredfields", locale.value)}
-                      </span>
-                    )}
-                  </Collapsible.Trigger>
-                  <Collapsible.Content>
+                <div class="cart-drawer__footer">
+                  <span class="cart-drawer__total">
+                    {cartCount.value} {cartCount.value !== 1 ? t("cart.items", locale.value) : t("cart.item", locale.value)} — ${cart.items.reduce((sum, i) => sum + (Number(i.price) || 0) * i.quantity, 0)}
+                  </span>
+                  <button
+                    class="btn btn--primary cart-drawer__order-btn"
+                    onClick$={() => { checkoutStep.value = "details"; }}
+                  >
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+                    {t("cart.checkout", locale.value)}
+                  </button>
+                </div>
+              </>
+            ) : (
+              <>
+                <div class="cart-drawer__details-step">
+                  <button class="cart-drawer__back-btn" onClick$={() => { checkoutStep.value = "cart"; }}>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+                    {t("cart.backtocart", locale.value)}
+                  </button>
+                  <Collapsible.Root class="cart-drawer__summary" bind:open={summaryOpen}>
+                    <Collapsible.Trigger class="cart-drawer__checkout-title">
+                      {t("cart.ordersummary", locale.value)} — {cartCount.value} {cartCount.value !== 1 ? t("cart.items", locale.value) : t("cart.item", locale.value)}
+                    </Collapsible.Trigger>
+                    <Collapsible.Content>
+                      <div class="cart-drawer__summary-list">
+                        {cart.items.map((item) => (
+                          <div key={`${item.name}-${item.size}`} class="cart-drawer__summary-item">
+                            <span>{item.quantity}x {item.name}</span>
+                            <span>${(Number(item.price) || 0) * item.quantity}</span>
+                          </div>
+                        ))}
+                        <div class="cart-drawer__summary-item cart-drawer__summary-total">
+                          <span>{t("cart.invoice.subtotal", locale.value)}</span>
+                          <span>${cart.items.reduce((sum, i) => sum + (Number(i.price) || 0) * i.quantity, 0)}</span>
+                        </div>
+                      </div>
+                    </Collapsible.Content>
+                  </Collapsible.Root>
+                  <div class="checkout-modal__form">
+                    <h3 class="checkout-modal__form-title">{t("cart.orderdetails", locale.value)}</h3>
                     <div class="checkout-modal__row">
                       <div class={`checkout-modal__field ${formTouched.value && !empNumber.value ? "checkout-modal__field--error" : ""}`}>
                         <label>{t("cart.empnumber", locale.value)}</label>
@@ -723,8 +756,8 @@ export default component$(() => {
                         onInput$={(_, el) => (empDept.value = el.value)}
                       />
                     </div>
-                  </Collapsible.Content>
-                </Collapsible.Root>
+                  </div>
+                </div>
                 <div class="cart-drawer__footer">
                   <span class="cart-drawer__total">
                     {cartCount.value} {cartCount.value !== 1 ? t("cart.items", locale.value) : t("cart.item", locale.value)} — ${cart.items.reduce((sum, i) => sum + (Number(i.price) || 0) * i.quantity, 0)}

@@ -26,9 +26,15 @@ export default component$(() => {
           />
         )}
         <RouterHead />
+        <style dangerouslySetInnerHTML={`
+          html{overflow-y:scroll}
+          body.loading{opacity:0}
+          body.ready{opacity:1;transition:opacity 0.1s ease}
+        `} />
       </head>
-      <body lang="en" translate="no" class="notranslate">
+      <body lang="en" translate="no" class="notranslate loading">
         <RouterOutlet />
+        <script dangerouslySetInnerHTML="window.addEventListener('load',function(){document.body.classList.remove('loading');document.body.classList.add('ready')})" />
       </body>
     </QwikCityProvider>
   );

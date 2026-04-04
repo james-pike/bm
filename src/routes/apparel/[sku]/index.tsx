@@ -1,4 +1,5 @@
 import { component$, useSignal, useComputed$, useVisibleTask$, $, useContext } from "@builder.io/qwik";
+import { Carousel } from "@qwik-ui/headless";
 import { useLocation, useNavigate } from "@builder.io/qwik-city";
 import type { DocumentHead } from "@builder.io/qwik-city";
 import { LocaleContext, t } from "../../../i18n";
@@ -355,12 +356,13 @@ export default component$(() => {
         </div>
       </div>
       {(() => {
-        const related = allProducts.filter((r) => r.sku !== p.sku && r.sku !== "CAR-12" && r.category === p.category).slice(0, 4);
+        const related = allProducts.filter((r) => r.sku !== p.sku && r.sku !== "CAR-12" && r.category === p.category).slice(0, 8);
         return (
           <div class="related-items">
             <h3 class="related-items__title">More {categoryLabel(p.category, locale.value)}</h3>
+            {/* Desktop grid */}
             <div class="related-items__grid">
-              {related.map((item) => (
+              {related.slice(0, 4).map((item) => (
                 <a key={item.sku} href={`/apparel/${item.sku}/`} class="product-card product-card-link">
                   <div class="product-card__image">
                     <img src={item.img} alt={item.name} width="440" height="440" loading="eager" decoding="async" />
@@ -377,6 +379,29 @@ export default component$(() => {
                 </a>
               ))}
             </div>
+            {/* Mobile carousel */}
+            <Carousel.Root class="related-carousel" slidesPerView={2} gap={6} align="start" sensitivity={{ touch: 0.5, mouse: 0.5 }}>
+              <Carousel.Scroller class="related-carousel__scroller">
+                {related.map((item) => (
+                  <Carousel.Slide key={item.sku} class="related-carousel__slide">
+                    <a href={`/apparel/${item.sku}/`} class="product-card product-card-link">
+                      <div class="product-card__image">
+                        <img src={item.img} alt={item.name} width="440" height="440" loading="lazy" decoding="async" />
+                      </div>
+                      <div class="product-card__info">
+                        <div class="product-card__name-row">
+                          <div class="product-card__name">{item.name}</div>
+                          <div class="product-card__price-group">
+                            <div class="product-card__price">${item.price}</div>
+                            <span class="product-card__sizes">{item.sizes === "One Size" ? t("modal.onesize", locale.value) : item.sizes}</span>
+                          </div>
+                        </div>
+                      </div>
+                    </a>
+                  </Carousel.Slide>
+                ))}
+              </Carousel.Scroller>
+            </Carousel.Root>
           </div>
         );
       })()}
