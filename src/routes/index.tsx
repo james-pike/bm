@@ -196,10 +196,12 @@ export default component$(() => {
                   <img src="/carmichael-logo.png" alt="" class="hero__title-icon" width="200" height="200" loading="eager" decoding="sync" />
                 </div>
                 <img src="/logo3.png" alt="Carmichael" class="hero__title-img" width="408" height="61" loading="eager" decoding="sync" />
-                <div class="hero__apparel-row">
-                  <span class="hero__title-apparel">{t("logo.apparel", locale.value)}</span>
-                  <p class="hero__subtitle-inline">{t("hero.subtitle", locale.value)}</p>
+                <span class="hero__title-apparel">{t("logo.apparel", locale.value)}</span>
+                <div class="hero__logo-spacer">
+                  <img src="/carmichael-logo.png" alt="" width="200" height="200" loading="eager" />
+                  <span class="hero__logo-spacer-text">(proudly canadian logo)</span>
                 </div>
+                <p class="hero__subtitle-inline">{t("hero.subtitle", locale.value)}</p>
               </div>
               <Carousel.Root class="hero-carousel" autoPlayIntervalMs={6000} align="start" sensitivity={{ touch: 0.5, mouse: 0.5 }} rewind>
                 <Carousel.Scroller class="hero-carousel__scroller">
@@ -223,17 +225,13 @@ export default component$(() => {
                 <Carousel.Root class="hero-bento-carousel" autoPlayIntervalMs={6000} align="start" sensitivity={{ touch: 0.5, mouse: 0.5 }} rewind>
                   <Carousel.Scroller class="hero-bento-carousel__scroller">
                     <Carousel.Slide class="hero-bento-carousel__slide">
-                      <img src="/carmichael-services/van-building.jpeg" alt="Carmichael service van" loading="eager" />
+                      <img src="/van.jpeg" alt="Carmichael service van" loading="eager" />
                     </Carousel.Slide>
                     <Carousel.Slide class="hero-bento-carousel__slide">
-                      <img src="/carmichael-services/boiler-technicians.jpeg" alt="Work Wear" loading="eager" />
-                    </Carousel.Slide>
-                    <Carousel.Slide class="hero-bento-carousel__slide">
-                      <img src="/carmichael-services/careers.jpeg" alt="Carmichael team" loading="eager" />
+                      <img src="/carmichael-services/van-building.jpeg" alt="Carmichael van" loading="eager" />
                     </Carousel.Slide>
                   </Carousel.Scroller>
                   <Carousel.Pagination class="hero-bento-carousel__dots">
-                    <Carousel.Bullet class="hero-bento-carousel__dot" />
                     <Carousel.Bullet class="hero-bento-carousel__dot" />
                     <Carousel.Bullet class="hero-bento-carousel__dot" />
                   </Carousel.Pagination>
