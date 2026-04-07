@@ -279,7 +279,7 @@ img { max-width: 100%; display: block; }
   align-items: center;
 }
 .site-header__logo { display: flex; align-items: center; flex-shrink: 0; margin-right: auto; gap: 2px; }
-.site-header__logo-img { height: 56px; width: auto; flex-shrink: 0; }
+.site-header__logo-img { height: 50px; width: auto; flex-shrink: 0; }
 .site-header__logo-text { height: 24px; width: auto; flex-shrink: 0; }
 .site-header__logo-brand { display: flex; flex-direction: column; align-items: flex-start; transition: opacity 0.3s ease; }
 .site-header__logo-apparel { font-size: 0.62rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ce-gray-400); margin-top: -2px; }
@@ -296,7 +296,7 @@ img { max-width: 100%; display: block; }
 .site-header__categories a:hover { color: var(--ce-green); }
 .site-header__categories a.active { color: var(--ce-green); font-weight: 600; text-decoration: underline; text-underline-offset: 4px; }
 
-.site-header__nav { display: flex; align-items: center; gap: 4px; flex-shrink: 0; }
+.site-header__nav { display: flex; align-items: center; gap: 2px; flex-shrink: 0; }
 .site-header__nav a {
   font-size: 0.95rem; font-weight: 500;
   color: var(--ce-gray-700);
