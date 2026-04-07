@@ -153,7 +153,7 @@ export const useSubmitOrder = routeAction$(async (data, { fail, env }) => {
     await resend.emails.send({
       from: "Carmichael Apparel <onboarding@resend.dev>", // TODO: change to orders@carmichaelengineering.com after domain verification
       to: ["cs@safetyhouse.ca"],
-      subject: `Apparel Order — ${employee.name} (${employee.number}) — ${date}`,
+      subject: `Apparel Order — ${employee.name} — ${date}`,
       html,
     });
   } catch (err) {
