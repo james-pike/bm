@@ -41,9 +41,7 @@ export const ProductCatalog = component$<{ class?: string }>(({ "class": cls }) 
   const locale = useContext(LocaleContext);
   const activeCat = useSignal("All");
   const searchQuery = useSignal("");
-  const genderFilter = useSignal("All");
   const searchOpen = useSignal(false);
-  const filterOpen = useSignal(false);
 
   const doSearch = $((query: string) => {
     if (query.trim()) {
@@ -59,22 +57,16 @@ export const ProductCatalog = component$<{ class?: string }>(({ "class": cls }) 
       const last = items.filter((p) => p.sku === "CAR-12");
       return [...items.filter((p) => p.sku !== "CAR-12"), ...last];
     };
-    const filterGender = (items: Product[]) => {
-      if (genderFilter.value === "All") return items;
-      const prefix = genderFilter.value === "Men" ? "men" : "women";
-      return items.filter((p) => p.name.toLowerCase().includes(prefix));
-    };
-
     if (searchQuery.value) {
       const q = searchQuery.value.toLowerCase();
-      return filterGender(pushLast(allProducts.filter((p) =>
+      return pushLast(allProducts.filter((p) =>
         p.name.toLowerCase().includes(q) || p.sku.toLowerCase().includes(q) || p.category.toLowerCase().includes(q)
-      )));
+      ));
     }
 
     if (activeCat.value !== "All") {
       const items = allProducts.filter((p) => p.category === activeCat.value);
-      return filterGender(pushLast(items));
+      return pushLast(items);
     }
 
     // Interleave: alternate 1 work wear, 1 other
@@ -88,7 +80,7 @@ export const ProductCatalog = component$<{ class?: string }>(({ "class": cls }) 
     }
     const car12 = allProducts.find((p) => p.sku === "CAR-12");
     if (car12) result.push(car12);
-    return filterGender(result);
+    return result;
   });
 
   return (
@@ -137,42 +129,8 @@ export const ProductCatalog = component$<{ class?: string }>(({ "class": cls }) 
                 {cat === "All" ? t("apparel.all", locale.value) : categoryLabel(cat, locale.value)}
               </button>
             ))}
-            <div class="home-catalog__gender-section">
-              <h3 class="home-catalog__filter-title">Filter</h3>
-              {["All", "Men", "Women"].map((g) => (
-                <button
-                  key={g}
-                  class={`apparel-titlebar__tab ${genderFilter.value === g ? "active" : ""}`}
-                  onClick$={() => { genderFilter.value = g; }}
-                >
-                  {g === "All" ? "All" : g === "Men" ? "Men's" : "Women's"}
-                </button>
-              ))}
-            </div>
           </div>
           <div class="home-catalog__right">
-            <div class="gender-filter">
-              <button
-                class={`apparel-titlebar__action ${genderFilter.value !== "All" ? "gender-filter--active" : ""}`}
-                aria-label="Filter"
-                onClick$={() => (filterOpen.value = !filterOpen.value)}
-              >
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
-              </button>
-              {filterOpen.value && (
-                <div class="gender-filter__dropdown">
-                  {["All", "Men", "Women"].map((g) => (
-                    <button
-                      key={g}
-                      class={`gender-filter__option ${genderFilter.value === g ? "active" : ""}`}
-                      onClick$={() => { genderFilter.value = g; filterOpen.value = false; }}
-                    >
-                      {g === "All" ? "All" : g === "Men" ? "Men's" : "Women's"}
-                    </button>
-                  ))}
-                </div>
-              )}
-            </div>
             <div class="apparel-titlebar__search home-catalog__search-desktop">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
               <input

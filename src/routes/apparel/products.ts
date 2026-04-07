@@ -71,10 +71,8 @@ export const allProducts = [
     "badge": "",
     "colors": [],
     "price": 100,
-    "img": "/sku/mens-fleece.png",
-    "imgs": [
-      "/sku/mens-fleece.png"
-    ],
+    "img": "",
+    "imgs": [],
     "material": "60% Cotton / 40% Acrylic",
     "details": "Heavyweight cuffs hem, and stand up collar, Long-sleeve, FW zipper pull, Even hem"
   },
@@ -266,8 +264,8 @@ export const allProducts = [
     "badge": "",
     "colors": [],
     "price": 100,
-    "img": "",
-    "imgs": [],
+    "img": "/s455 mens green.png",
+    "imgs": ["/s455 mens green.png"],
     "material": "100% performance polyester double-knit jersey",
     "details": "No bleed fabric (NBF) created with a unique cationic dye process for easy printing, Self-fabric collar, Moisture wicking and breathable, Tagless, Relaxed fit, 6.6-oz"
   },
@@ -279,8 +277,8 @@ export const allProducts = [
     "badge": "",
     "colors": [],
     "price": 100,
-    "img": "",
-    "imgs": [],
+    "img": "/M265w womens harriigton.png",
+    "imgs": ["/M265w womens harriigton.png"],
     "material": "",
     "details": ""
   },
