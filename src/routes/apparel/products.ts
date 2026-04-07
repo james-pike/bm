@@ -313,34 +313,19 @@ export const allProducts = [
     "details": "Traditional knit hat with cuff, One size fits most"
   },
   {
-    "sku": "CAR-9",
-    "name": "Viking Professional® Insulated Journeyman Jacket #3957FRJ",
+    "sku": "CAR-16",
+    "name": "Men's Classic Lightweight FR Long Sleeve Polo #SMP2",
     "category": "Work Wear",
-    "sizes": "S - 5XL",
+    "sizes": "M - 3XL",
     "badge": "",
     "colors": [],
     "price": 100,
-    "img": "/sku/_INSULATED-VIKING-frj3957frj-_1_.png",
+    "img": "/sku/MENS-CLASSIC-LONG-SLEEVE-SMP2.png",
     "imgs": [
-      "/sku/_INSULATED-VIKING-frj3957frj-_1_.png"
+      "/sku/MENS-CLASSIC-LONG-SLEEVE-SMP2.png"
     ],
     "material": "",
-    "details": "Waterproof and windproof"
-  },
-  {
-    "sku": "CAR-10",
-    "name": "Viking Professional® Insulated Journeyman Bib #3957FRJ",
-    "category": "Work Wear",
-    "sizes": "S - 4XL",
-    "badge": "",
-    "colors": [],
-    "price": 100,
-    "img": "/sku/viking-3907FRWP.png",
-    "imgs": [
-      "/sku/viking-3907FRWP.png"
-    ],
-    "material": "",
-    "details": "Flame resistance, Self-extinguishing for momentary contact with open flame "
+    "details": "Flame resistant, 6.5 oz.(220 g/m²), Swiss Pique, Category 2 Protection"
   },
   {
     "sku": "CAR-11",
@@ -358,19 +343,19 @@ export const allProducts = [
     "details": "7-ounces, FR twill"
   },
   {
-    "sku": "CAR-12",
-    "name": "Flame-Resistant Relaxed Fit Canvas Work Pant Shadow #104204",
+    "sku": "CAR-15",
+    "name": "FR Heavyweight Cotton Hoodie-Black #337",
     "category": "Work Wear",
-    "sizes": " ",
+    "sizes": "XS - 7XL",
     "badge": "",
     "colors": [],
     "price": 100,
-    "img": "/sku/carhartt-104204.png",
+    "img": "/sku/carmicheal-337-logo.png",
     "imgs": [
-      "/sku/carhartt-104204.png"
+      "/sku/carmicheal-337-logo.png"
     ],
-    "material": "98% cotton / 2% spandex canvas",
-    "details": "9-ounces"
+    "material": "",
+    "details": "Durable material holds up to the toughest working conditions, Sewn with FR thread for flame resistance, Detachable snap hood"
   },
   {
     "sku": "CAR-13",
@@ -388,6 +373,51 @@ export const allProducts = [
     "details": "100% Waterproof and windproof, Toughest fabric to resist punctures rips snags and abrasions"
   },
   {
+    "sku": "CAR-9",
+    "name": "Viking Professional® Insulated Journeyman Jacket #3957FRJ",
+    "category": "Work Wear",
+    "sizes": "S - 5XL",
+    "badge": "",
+    "colors": [],
+    "price": 100,
+    "img": "/sku/_INSULATED-VIKING-frj3957frj-_1_.png",
+    "imgs": [
+      "/sku/_INSULATED-VIKING-frj3957frj-_1_.png"
+    ],
+    "material": "",
+    "details": "Waterproof and windproof"
+  },
+  {
+    "sku": "CAR-12",
+    "name": "Flame-Resistant Relaxed Fit Canvas Work Pant Shadow #104204",
+    "category": "Work Wear",
+    "sizes": " ",
+    "badge": "",
+    "colors": [],
+    "price": 100,
+    "img": "/sku/carhartt-104204.png",
+    "imgs": [
+      "/sku/carhartt-104204.png"
+    ],
+    "material": "98% cotton / 2% spandex canvas",
+    "details": "9-ounces"
+  },
+  {
+    "sku": "CAR-10",
+    "name": "Viking Professional® Insulated Journeyman Bib #3957FRJ",
+    "category": "Work Wear",
+    "sizes": "S - 4XL",
+    "badge": "",
+    "colors": [],
+    "price": 100,
+    "img": "/sku/viking-3907FRWP.png",
+    "imgs": [
+      "/sku/viking-3907FRWP.png"
+    ],
+    "material": "",
+    "details": "Flame resistance, Self-extinguishing for momentary contact with open flame "
+  },
+  {
     "sku": "CAR-14",
     "name": "Viking Journeyman® 420D Bib Pants #3307P",
     "category": "Work Wear",
@@ -401,36 +431,6 @@ export const allProducts = [
     ],
     "material": "",
     "details": "Viking Journeyman® 420D Bib Pants #3307P"
-  },
-  {
-    "sku": "CAR-15",
-    "name": "FR Heavyweight Cotton Hoodie-Black #337",
-    "category": "Work Wear",
-    "sizes": "XS - 7XL",
-    "badge": "",
-    "colors": [],
-    "price": 100,
-    "img": "/sku/carmicheal-337-logo.png",
-    "imgs": [
-      "/sku/carmicheal-337-logo.png"
-    ],
-    "material": "",
-    "details": "Durable material holds up to the toughest working conditions, Sewn with FR thread for flame resistance, Detachable snap hood"
-  },
-  {
-    "sku": "CAR-16",
-    "name": "Men's Classic Lightweight FR Long Sleeve Polo #SMP2",
-    "category": "Work Wear",
-    "sizes": "M - 3XL",
-    "badge": "",
-    "colors": [],
-    "price": 100,
-    "img": "/sku/MENS-CLASSIC-LONG-SLEEVE-SMP2.png",
-    "imgs": [
-      "/sku/MENS-CLASSIC-LONG-SLEEVE-SMP2.png"
-    ],
-    "material": "",
-    "details": "Flame resistant, 6.5 oz.(220 g/m²), Swiss Pique, Category 2 Protection"
   },
   {
     "sku": "CAR-17",
