@@ -264,8 +264,8 @@ export const allProducts = [
     "badge": "",
     "colors": [],
     "price": 100,
-    "img": "/s455 mens green.png",
-    "imgs": ["/s455 mens green.png"],
+    "img": "/s455-mens-green.png",
+    "imgs": ["/s455-mens-green.png"],
     "material": "100% performance polyester double-knit jersey",
     "details": "No bleed fabric (NBF) created with a unique cationic dye process for easy printing, Self-fabric collar, Moisture wicking and breathable, Tagless, Relaxed fit, 6.6-oz"
   },
@@ -277,8 +277,8 @@ export const allProducts = [
     "badge": "",
     "colors": [],
     "price": 100,
-    "img": "/M265w womens harriigton.png",
-    "imgs": ["/M265w womens harriigton.png"],
+    "img": "/m265w-womens-harriton.png",
+    "imgs": ["/m265w-womens-harriton.png"],
     "material": "",
     "details": ""
   },
