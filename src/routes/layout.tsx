@@ -65,7 +65,7 @@ export const useSubmitOrder = routeAction$(async (data, { fail, env }) => {
   const apiKey = env.get("RESEND_API_KEY") || env.get("VITE_RESEND_API_KEY") || import.meta.env.VITE_RESEND_API_KEY;
 
   const { employee, items, date } = data as {
-    employee: { number: string; name: string; department: string };
+    employee: { name: string; email: string; phone: string; department: string };
     items: { name: string; sku?: string; color: string; size: string; quantity: number; price: number; waist?: string; length?: string; variant?: string }[];
     date: string;
   };
