@@ -151,6 +151,7 @@ export default component$(() => {
       <section class="hero">
         <div class="hero__content">
           <div class="hero__text">
+            {/* Hero card - hidden on desktop */}
             <div class="hero__logo-group">
               <div class="hero__under-construction">Cover Under Construction</div>
               <div class="hero-card-header dot-pattern dot-pattern--light">
