@@ -86,11 +86,10 @@ export const useSubmitOrder = routeAction$(async (data, { fail, env }) => {
   try {
     const db = createClient({ url: tursoUrl, authToken: tursoToken });
     await db.execute({
-      sql: `INSERT INTO orders (vendor, emp_number, emp_name, emp_dept, items, total, status, created_at, updated_at)
-            VALUES (?, ?, ?, ?, ?, ?, 'pending', datetime('now'), datetime('now'))`,
+      sql: `INSERT INTO orders (vendor, emp_name, emp_dept, items, total, status, created_at, updated_at)
+            VALUES (?, ?, ?, ?, ?, 'pending', datetime('now'), datetime('now'))`,
       args: [
         "carmichael",
-        employee.number,
         employee.name,
         employee.department,
         JSON.stringify(items),
@@ -125,8 +124,8 @@ export const useSubmitOrder = routeAction$(async (data, { fail, env }) => {
       <div style="padding:24px;border:1px solid #e5e7eb;border-top:none;border-radius:0 0 8px 8px">
         <p style="margin:0 0 4px"><strong>Date:</strong> ${date}</p>
         <p style="margin:0 0 4px"><strong>Employee:</strong> ${employee.name}</p>
-        <p style="margin:0 0 4px"><strong>Employee #:</strong> ${employee.number}</p>
-        ${employee.department ? `<p style="margin:0 0 4px"><strong>Department / Site:</strong> ${employee.department}</p>` : ""}
+        ${employee.phone ? `<p style="margin:0 0 4px"><strong>Phone:</strong> ${employee.phone}</p>` : ""}
+        ${employee.department ? `<p style="margin:0 0 4px"><strong>Location:</strong> ${employee.department}</p>` : ""}
         <hr style="border:none;border-top:1px solid #e5e7eb;margin:16px 0">
         <table style="width:100%;border-collapse:collapse;font-size:14px">
           <thead>
@@ -220,9 +219,10 @@ export default component$(() => {
   const summaryOpen = useSignal(false);
   const formError = useSignal("");
   const formTouched = useSignal(false);
-  const empNumber = useSignal("");
-  const empName = useSignal("");
+  const empFirstName = useSignal("");
+  const empLastName = useSignal("");
   const empEmail = useSignal("");
+  const empPhone = useSignal("");
   const empDept = useSignal("");
 
   const cartCount = useComputed$(() => {
@@ -288,7 +288,7 @@ export default component$(() => {
 
   const submitOrder = $(async () => {
     formTouched.value = true;
-    if (!empNumber.value || !empName.value || !empEmail.value || !empDept.value) {
+    if (!empFirstName.value || !empLastName.value || !empEmail.value || !empPhone.value || !empDept.value) {
       formError.value = t("cart.error.required", locale.value);
       checkoutOpen.value = true;
       return;
@@ -296,7 +296,7 @@ export default component$(() => {
     formError.value = "";
 
     const orderData = {
-      employee: { number: empNumber.value, name: empName.value, email: empEmail.value, department: empDept.value },
+      employee: { name: `${empFirstName.value} ${empLastName.value}`, email: empEmail.value, phone: empPhone.value, department: empDept.value },
       items: cart.items.map((i) => ({
         name: i.name, sku: i.sku, color: i.color, size: i.size,
         quantity: i.quantity, price: i.price,
@@ -320,11 +320,12 @@ export default component$(() => {
     window.dispatchEvent(new CustomEvent("cart-updated"));
     orderSubmitted.value = true;
     cartOpen.value = false;
-    empNumber.value = "";
-    empName.value = "";
+    empFirstName.value = "";
+    empLastName.value = "";
     empEmail.value = "";
-    formTouched.value = false;
+    empPhone.value = "";
     empDept.value = "";
+    formTouched.value = false;
   });
 
 
@@ -723,22 +724,30 @@ export default component$(() => {
                   <div class="checkout-modal__form">
                     <h3 class="checkout-modal__form-title">{t("cart.orderdetails", locale.value)}</h3>
                     <div class="checkout-modal__row">
-                      <div class={`checkout-modal__field ${formTouched.value && !empNumber.value ? "checkout-modal__field--error" : ""}`}>
-                        <label>{t("cart.empnumber", locale.value)}</label>
+                      <div class={`checkout-modal__field ${formTouched.value && !empFirstName.value ? "checkout-modal__field--error" : ""}`}>
+                        <label>{t("cart.firstname", locale.value)}</label>
                         <input
                           type="text"
-                          value={empNumber.value}
-                          onInput$={(_, el) => { empNumber.value = el.value; formError.value = ""; }}
+                          value={empFirstName.value}
+                          onInput$={(_, el) => { empFirstName.value = el.value; formError.value = ""; }}
                         />
                       </div>
-                      <div class={`checkout-modal__field ${formTouched.value && !empName.value ? "checkout-modal__field--error" : ""}`}>
-                        <label>{t("cart.fullname", locale.value)}</label>
+                      <div class={`checkout-modal__field ${formTouched.value && !empLastName.value ? "checkout-modal__field--error" : ""}`}>
+                        <label>{t("cart.lastname", locale.value)}</label>
                         <input
                           type="text"
-                          value={empName.value}
-                          onInput$={(_, el) => { empName.value = el.value; formError.value = ""; }}
+                          value={empLastName.value}
+                          onInput$={(_, el) => { empLastName.value = el.value; formError.value = ""; }}
                         />
                       </div>
+                    </div>
+                    <div class={`checkout-modal__field ${formTouched.value && !empPhone.value ? "checkout-modal__field--error" : ""}`}>
+                      <label>{t("cart.phone", locale.value)}</label>
+                      <input
+                        type="tel"
+                        value={empPhone.value}
+                        onInput$={(_, el) => { empPhone.value = el.value; formError.value = ""; }}
+                      />
                     </div>
                     <div class={`checkout-modal__field ${formTouched.value && !empEmail.value ? "checkout-modal__field--error" : ""}`}>
                       <label>{t("cart.email", locale.value)}</label>
@@ -749,7 +758,7 @@ export default component$(() => {
                       />
                     </div>
                     <div class={`checkout-modal__field ${formTouched.value && !empDept.value ? "checkout-modal__field--error" : ""}`}>
-                      <label>{t("cart.department", locale.value)}</label>
+                      <label>{t("cart.location", locale.value)}</label>
                       <input
                         type="text"
                         value={empDept.value}

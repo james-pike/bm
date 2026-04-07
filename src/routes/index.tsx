@@ -152,6 +152,7 @@ export default component$(() => {
         <div class="hero__content">
           <div class="hero__text">
             <div class="hero__logo-group">
+              <div class="hero__under-construction">Cover Under Construction</div>
               <div class="hero-card-header dot-pattern dot-pattern--light">
                 <a href="/" class="hero-card-header__logo">
                   <img src="/carmichael-logo.png" alt="Carmichael" class="hero-card-header__logo-img" width="200" height="200" loading="eager" />
