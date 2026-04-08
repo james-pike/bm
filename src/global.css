@@ -4387,7 +4387,7 @@ details[open] > .cart-drawer__checkout-title::after {
   .hero-card-header__btn--cart-active svg {
     stroke: var(--ce-gray-900) !important;
   }
-  .hero__logo-group { border-radius: 0; margin-left: 0; margin-right: 0; width: 100%; margin-top: -58px; padding-top: calc(58px + 50px); }
+  .hero__logo-group { border-radius: 0 0 10px 10px; margin-left: 0; margin-right: 0; width: 100%; margin-top: -58px; padding-top: calc(58px + 50px); padding-bottom: 18px; }
   .hero-card-header__brand { display: flex; }
   .hero__badge {
     font-size: 0.75rem;
