@@ -1,4 +1,4 @@
-import { component$, useSignal, useComputed$, useContext, $ } from "@builder.io/qwik";
+import { component$, useSignal, useComputed$, useContext, $, useVisibleTask$ } from "@builder.io/qwik";
 import { LocaleContext, t } from "../../i18n";
 import { allProducts, categoryLabel } from "../../routes/apparel/products";
 import type { Product } from "../../routes/apparel/products";
@@ -42,6 +42,22 @@ export const ProductCatalog = component$<{ class?: string }>(({ "class": cls }) 
   const activeCat = useSignal("All");
   const searchQuery = useSignal("");
   const searchOpen = useSignal(false);
+
+  const HASH_TO_CAT: Record<string, string> = {
+    "work-wear": "Work Wear",
+    "jackets": "Jackets",
+    "polos": "Polos",
+    "hats": "Hats",
+  };
+
+  // eslint-disable-next-line qwik/no-use-visible-task
+  useVisibleTask$(() => {
+    const hash = window.location.hash.replace("#", "");
+    if (hash && HASH_TO_CAT[hash]) {
+      activeCat.value = HASH_TO_CAT[hash];
+      history.replaceState(null, "", window.location.pathname);
+    }
+  });
 
   const doSearch = $((query: string) => {
     if (query.trim()) {

@@ -238,19 +238,19 @@ export default component$(() => {
                 <span class="hero__logo-spacer-text">(proudly canadian logo)</span>
               </div>
               <div class="hero-categories">
-                <a href="/apparel/?category=Work Wear" class="category-card">
+                <a href="/apparel/#work-wear" class="category-card">
                   <img src="/carmichael-services/boiler-technicians.jpeg" alt="Work Wear" width="400" height="300" loading="lazy" />
                   <span class="category-card__label">{categoryLabel("Work Wear", locale.value)}</span>
                 </a>
-                <a href="/apparel/?category=Jackets" class="category-card">
+                <a href="/apparel/#jackets" class="category-card">
                   <img src="/carmichael-services/hvac-retrofit.jpeg" alt="Jackets" width="400" height="300" loading="lazy" />
                   <span class="category-card__label">{t("teaser.jackets.title", locale.value)}</span>
                 </a>
-                <a href="/apparel/?category=Polos" class="category-card">
+                <a href="/apparel/#polos" class="category-card">
                   <img src="/carmichael-services/careers.jpeg" alt="Polos" width="400" height="300" loading="lazy" />
                   <span class="category-card__label">{t("teaser.polos.title", locale.value)}</span>
                 </a>
-                <a href="/apparel/?category=Hats" class="category-card">
+                <a href="/apparel/#hats" class="category-card">
                   <img src="/hat/30109107PS2_FRONT.JPG" alt="Hats" width="400" height="300" loading="lazy" />
                   <span class="category-card__label">{t("teaser.hats.title", locale.value)}</span>
                 </a>
