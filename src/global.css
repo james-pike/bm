@@ -692,9 +692,9 @@ img { max-width: 100%; display: block; }
   width: 100%;
   max-width: 700px;
   margin: 0 auto 0.5rem;
-  margin-left: 3px;
-  margin-right: 3px;
-  width: calc(100% - 6px);
+  margin-left: 2px;
+  margin-right: 2px;
+  width: calc(100% - 4px);
   background: linear-gradient(135deg, #132e1e 0%, #1a3d28 30%, #24573b 60%, #307a4e 100%);
   border: 1px solid rgba(255,255,255,0.08);
   border-radius: 10px;
@@ -1337,9 +1337,8 @@ img { max-width: 100%; display: block; }
 
 .home-catalog {
   background: transparent;
-  padding: 0 0 2rem;
+  padding: 0 0 1rem;
   margin-top: 0;
-  min-height: 100vh;
 }
 .home-catalog__inner {
   max-width: 1440px;
@@ -2348,7 +2347,6 @@ img { max-width: 100%; display: block; }
   max-width: 1440px;
   margin: 0 auto;
   padding: 0;
-  min-height: 100vh;
   position: relative;
   z-index: 1;
   background: transparent;

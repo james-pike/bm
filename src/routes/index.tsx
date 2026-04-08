@@ -206,17 +206,13 @@ export default component$(() => {
               <Carousel.Root class="hero-carousel" autoPlayIntervalMs={6000} align="start" sensitivity={{ touch: 0.5, mouse: 0.5 }} rewind>
                 <Carousel.Scroller class="hero-carousel__scroller">
                   <Carousel.Slide class="hero-carousel__slide">
-                    <img src="/carmichael-services/van-building.jpeg" alt="Carmichael service van" loading="eager" />
+                    <img src="/van.jpeg" alt="Carmichael service van" loading="eager" />
                   </Carousel.Slide>
                   <Carousel.Slide class="hero-carousel__slide">
-                    <img src="/carmichael-services/boiler-technicians.jpeg" alt="Work Wear" loading="eager" />
-                  </Carousel.Slide>
-                  <Carousel.Slide class="hero-carousel__slide">
-                    <img src="/carmichael-services/careers.jpeg" alt="Carmichael team" loading="eager" />
+                    <img src="/carmichael-services/van-building.jpeg" alt="Carmichael van" loading="eager" />
                   </Carousel.Slide>
                 </Carousel.Scroller>
                 <Carousel.Pagination class="hero-carousel__dots">
-                  <Carousel.Bullet class="hero-carousel__dot" />
                   <Carousel.Bullet class="hero-carousel__dot" />
                   <Carousel.Bullet class="hero-carousel__dot" />
                 </Carousel.Pagination>
