@@ -227,10 +227,10 @@ export default component$(() => {
                 <Carousel.Root class="hero-bento-carousel" autoPlayIntervalMs={6000} align="start" sensitivity={{ touch: 0.5, mouse: 0.5 }} rewind>
                   <Carousel.Scroller class="hero-bento-carousel__scroller">
                     <Carousel.Slide class="hero-bento-carousel__slide">
-                      <img src="/van.jpeg" alt="Carmichael service van" loading="eager" />
+                      <img src="/carmichael-services/van-building.jpeg" alt="Carmichael van" loading="eager" />
                     </Carousel.Slide>
                     <Carousel.Slide class="hero-bento-carousel__slide">
-                      <img src="/carmichael-services/van-building.jpeg" alt="Carmichael van" loading="eager" />
+                      <img src="/van.jpeg" alt="Carmichael service van" loading="eager" />
                     </Carousel.Slide>
                   </Carousel.Scroller>
                   <Carousel.Pagination class="hero-bento-carousel__dots">
@@ -238,6 +238,10 @@ export default component$(() => {
                     <Carousel.Bullet class="hero-bento-carousel__dot" />
                   </Carousel.Pagination>
                 </Carousel.Root>
+              </div>
+              <div class="hero__logo-spacer hero__logo-spacer--mobile">
+                <img src="/carmichael-logo.png" alt="" width="200" height="200" loading="eager" />
+                <span class="hero__logo-spacer-text">(proudly canadian logo)</span>
               </div>
               <div class="hero-categories">
                 <a href="/apparel/?category=Work Wear" class="category-card">

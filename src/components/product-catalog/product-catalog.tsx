@@ -108,7 +108,8 @@ export const ProductCatalog = component$<{ class?: string }>(({ "class": cls }) 
                   if (isDesktop) {
                     const grid = document.querySelector('.home-catalog .apparel-grid');
                     const gridTop = grid ? grid.getBoundingClientRect().top + window.scrollY - headerH - 8 : 0;
-                    window.scrollTo({ top: gridTop, behavior: 'smooth' });
+                    const needsScrollUp = gridTop < window.scrollY;
+                    window.scrollTo({ top: gridTop, behavior: needsScrollUp ? 'instant' : 'smooth' });
                   } else {
                     const catalog = document.querySelector('.home-catalog');
                     const tabH = (document.querySelector('.home-catalog__header') as HTMLElement)?.offsetHeight || 34;
