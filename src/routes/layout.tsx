@@ -334,9 +334,8 @@ export default component$(() => {
   useVisibleTask$(({ cleanup }) => {
     const handler = () => {
       cartOpen.value = true;
-      setTimeout(() => {
-        checkoutOpen.value = true;
-      }, 100);
+      checkoutStep.value = "details";
+      checkoutOpen.value = true;
     };
     window.addEventListener("open-cart", handler);
     cleanup(() => window.removeEventListener("open-cart", handler));
@@ -407,17 +406,18 @@ export default component$(() => {
 
   // Close modal and unlock scroll on successful login
   // eslint-disable-next-line qwik/no-use-visible-task
-  useVisibleTask$(({ track }) => {
+  useVisibleTask$(({ track, cleanup }) => {
     track(() => loginAction.value);
     if (loginAction.value && !loginAction.value.failed) {
       overlayFading.value = true;
       document.documentElement.style.overflow = "";
       document.body.style.cssText = "";
       window.scrollTo({ top: 0, behavior: "instant" });
-      setTimeout(() => {
+      const tid = setTimeout(() => {
         showLogin.value = false;
         overlayFading.value = false;
       }, 800);
+      cleanup(() => clearTimeout(tid));
     }
   }, { strategy: 'document-ready' });
 

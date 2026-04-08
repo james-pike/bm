@@ -131,6 +131,8 @@ const TeaserCard = component$<{ t: typeof _teasers[0] }>(({ t: teaser }) => {
 export default component$(() => {
   const locale = useContext(LocaleContext);
   const hasCartItems = useSignal(false);
+  const heroIndex = useSignal(0);
+  const bentoIndex = useSignal(0);
 
   // eslint-disable-next-line qwik/no-use-visible-task
   useVisibleTask$(({ cleanup }) => {
@@ -143,6 +145,16 @@ export default component$(() => {
     check();
     window.addEventListener("cart-updated", check);
     cleanup(() => window.removeEventListener("cart-updated", check));
+  });
+
+  // Carousel autoplay (manual to avoid qwik-ui serialization bug)
+  // eslint-disable-next-line qwik/no-use-visible-task
+  useVisibleTask$(({ cleanup }) => {
+    const id = setInterval(() => {
+      heroIndex.value = (heroIndex.value + 1) % 2;
+      bentoIndex.value = (bentoIndex.value + 1) % 2;
+    }, 6000);
+    cleanup(() => clearInterval(id));
   });
 
   return (
@@ -203,7 +215,7 @@ export default component$(() => {
                 </div>
                 <p class="hero__subtitle-inline">{t("hero.subtitle", locale.value)}</p>
               </div>
-              <Carousel.Root class="hero-carousel" autoPlayIntervalMs={6000} align="start" sensitivity={{ touch: 0.5, mouse: 0.5 }} rewind>
+              <Carousel.Root class="hero-carousel" bind:selectedIndex={heroIndex} align="start" sensitivity={{ touch: 0.5, mouse: 0.5 }} rewind>
                 <Carousel.Scroller class="hero-carousel__scroller">
                   <Carousel.Slide class="hero-carousel__slide">
                     <img src="/van.jpeg" alt="Carmichael service van" loading="eager" />
@@ -218,7 +230,7 @@ export default component$(() => {
                 </Carousel.Pagination>
               </Carousel.Root>
               <div class="hero-bento">
-                <Carousel.Root class="hero-bento-carousel" autoPlayIntervalMs={6000} align="start" sensitivity={{ touch: 0.5, mouse: 0.5 }} rewind>
+                <Carousel.Root class="hero-bento-carousel" bind:selectedIndex={bentoIndex} align="start" sensitivity={{ touch: 0.5, mouse: 0.5 }} rewind>
                   <Carousel.Scroller class="hero-bento-carousel__scroller">
                     <Carousel.Slide class="hero-bento-carousel__slide">
                       <img src="/carmichael-services/van-building.jpeg" alt="Carmichael van" loading="eager" />
