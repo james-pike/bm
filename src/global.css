@@ -707,7 +707,6 @@ img { max-width: 100%; display: block; }
     0 0 90px 35px rgba(255,255,255,0.08);
   overflow: hidden;
 }
-.hero__under-construction { display: none; }
 .hero-card-header {
   display: flex;
   align-items: center;
@@ -4380,21 +4379,6 @@ details[open] > .cart-drawer__checkout-title::after {
   }
   .hero-card-header {
     display: none;
-  }
-  .hero__logo-group > *:not(.hero__under-construction) {
-    display: none;
-  }
-  .hero__under-construction {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    grid-column: 1 / -1;
-    min-height: 300px;
-    font-size: 1.5rem;
-    font-weight: 600;
-    color: rgba(255,255,255,0.6);
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
   }
   .hero-card-header__logo { padding-left: 6px; }
   .hero-card-header__nav {
