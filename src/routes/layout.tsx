@@ -482,7 +482,6 @@ export default component$(() => {
       )}
 
       {(auth.value.loggedIn || (loginAction.value && !loginAction.value.failed)) && <>
-      <div class="desktop-soon">Tablet coming soon</div>
       <header class={`site-header site-header--white ${cartOpen.value ? "site-header--cart-open" : ""} ${loc.url.pathname === "/" && !cartOpen.value ? `site-header--hero-hidden ${headerScrolled.value ? "site-header--hero-visible" : ""}` : ""}`}>
         <div class="site-header__inner">
           <Link href="/" class="site-header__logo">
