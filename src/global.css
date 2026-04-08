@@ -692,9 +692,9 @@ img { max-width: 100%; display: block; }
   width: 100%;
   max-width: 700px;
   margin: 0 auto 0.5rem;
-  margin-left: 1px;
-  margin-right: 1px;
-  width: calc(100% - 2px);
+  margin-left: 5px;
+  margin-right: 5px;
+  width: calc(100% - 10px);
   background: linear-gradient(135deg, #132e1e 0%, #1a3d28 30%, #24573b 60%, #307a4e 100%);
   border: 1px solid rgba(255,255,255,0.08);
   border-radius: 10px;
@@ -4475,6 +4475,8 @@ details[open] > .cart-drawer__checkout-title::after {
   .hero-bento {
     display: flex;
     flex-direction: column;
+    justify-content: flex-end;
+    align-self: end;
     grid-column: 2;
     grid-row: 2;
     gap: 8px;
@@ -4560,6 +4562,7 @@ details[open] > .cart-drawer__checkout-title::after {
     margin-top: -0.5rem;
   }
   .hero { padding-bottom: 0.75rem; padding-top: 0; }
+  .hero__logo-group { min-height: calc(100vh - 90px); }
   .home-catalog__inner {
     max-width: calc(1440px - 34px);
     background: rgba(255,255,255,0.14);
