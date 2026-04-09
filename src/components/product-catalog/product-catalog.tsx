@@ -120,7 +120,7 @@ export const ProductCatalog = component$<{ class?: string }>(({ "class": cls }) 
                   activeCat.value = cat;
                   searchQuery.value = "";
                   const isDesktop = window.innerWidth > 1024;
-                  const headerH = window.innerWidth <= 900 ? 46 : 58;
+                  const headerH = window.innerWidth <= 900 ? 52 : 58;
                   if (isDesktop) {
                     const grid = document.querySelector('.home-catalog .apparel-grid');
                     const gridTop = grid ? grid.getBoundingClientRect().top + window.scrollY - headerH - 8 : 0;
@@ -130,7 +130,7 @@ export const ProductCatalog = component$<{ class?: string }>(({ "class": cls }) 
                     const catalog = document.querySelector('.home-catalog');
                     const tabH = (document.querySelector('.home-catalog__header') as HTMLElement)?.offsetHeight || 34;
                     const catalogTop = catalog ? catalog.getBoundingClientRect().top + window.scrollY : 0;
-                    const stickyPos = catalogTop - headerH + tabH - 12;
+                    const stickyPos = catalogTop - headerH + tabH - 30;
                     window.scrollTo({ top: stickyPos, behavior: 'instant' });
                   }
                 }}
