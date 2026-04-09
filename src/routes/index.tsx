@@ -176,29 +176,6 @@ export default component$(() => {
                   <a href="/" class="hero-card-header__nav-link active">{t("nav.home", locale.value)}</a>
                   <a href="/apparel/" class="hero-card-header__nav-link">{t("nav.apparel", locale.value)}</a>
                 </nav>
-                <div class="hero-card-header__actions">
-                  <button class="hero-card-header__btn" onClick$={() => {
-                    const btn = document.querySelector('.locale-btn') as HTMLElement;
-                    btn?.click();
-                  }} aria-label="Language">
-                    <span class="hero-card-header__locale-short">{locale.value === "en" ? "FR" : "EN"}</span>
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
-                    <span class="hero-card-header__btn-label">{locale.value === "en" ? "Français" : "English"}</span>
-                  </button>
-                  <button class={`hero-card-header__btn ${hasCartItems.value ? "hero-card-header__btn--cart-active" : ""}`} onClick$={() => {
-                    const btn = document.querySelector('.cart-btn') as HTMLElement;
-                    btn?.click();
-                  }} aria-label="Cart">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/></svg>
-                    <span class="hero-card-header__btn-label">{t("cart.mycart", locale.value)}</span>
-                  </button>
-                  <button class="hero-card-header__btn" onClick$={() => {
-                    const btn = document.querySelector('.hamburger-btn') as HTMLElement;
-                    btn?.click();
-                  }} aria-label="Menu">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h18"/><path d="M3 6h18"/><path d="M3 18h18"/></svg>
-                  </button>
-                </div>
               </div>
               <div class="hero__middle-section dot-pattern dot-pattern--light">
                 <div class="hero__top-row">
@@ -256,11 +233,11 @@ export default component$(() => {
                   <span class="category-card__label">{categoryLabel("Work Wear", locale.value)}</span>
                 </a>
                 <a href="/apparel/#jackets" class="category-card">
-                  <img src="/carmichael-services/hvac-retrofit.jpeg" alt="Jackets" width="400" height="300" loading="lazy" />
+                  <img src="/carmichael-services/careers.jpeg" alt="Jackets" width="400" height="300" loading="lazy" />
                   <span class="category-card__label">{t("teaser.jackets.title", locale.value)}</span>
                 </a>
                 <a href="/apparel/#polos" class="category-card">
-                  <img src="/carmichael-services/careers.jpeg" alt="Polos" width="400" height="300" loading="lazy" />
+                  <img src="/carmichael-services/hvac-retrofit.jpeg" alt="Polos" width="400" height="300" loading="lazy" />
                   <span class="category-card__label">{t("teaser.polos.title", locale.value)}</span>
                 </a>
                 <a href="/apparel/#hats" class="category-card">
