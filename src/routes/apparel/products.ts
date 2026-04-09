@@ -281,8 +281,10 @@ export const allProducts = [
     "badge": "",
     "colors": [],
     "price": 100,
-    "img": "",
-    "imgs": [],
+    "img": "/m265w-womens-harriton.png",
+    "imgs": [
+      "/m265w-womens-harriton.png"
+    ],
     "material": "65% polyester / 35% cotton piqué",
     "details": " Special poly/cotton blend helps reduce shrinkage, Wrinkle-resistant, Softly shaped for more flattering feminine fit, Flat-knit collar and cuffs, Set-in sleeves, Side seams, Three-button placket, Hemmed bottom with side vents, #M265W"
   },
