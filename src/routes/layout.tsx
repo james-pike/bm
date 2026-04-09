@@ -216,7 +216,7 @@ export default component$(() => {
   const orderSubmitted = useSignal(false);
   const checkoutOpen = useSignal(false);
   const checkoutStep = useSignal<"cart" | "details">("cart");
-  const summaryOpen = useSignal(false);
+  const summaryOpen = useSignal(true);
   const formError = useSignal("");
   const formTouched = useSignal(false);
   const empFirstName = useSignal("");
@@ -657,7 +657,8 @@ export default component$(() => {
                             <div>
                             <Link href={item.sku ? `/apparel/${item.sku}/` : "/apparel/"} class="cart-table__name-link">{item.name}</Link>
                             <div class="cart-table__meta">
-                              {item.color ? `${colorName(item.color, locale.value)} / ` : ""}{item.size}{item.waist ? ` / W${item.waist} L${item.length}` : ""}                              <button class="cart-table__remove" aria-label={`Remove ${item.name}`} onClick$={() => removeFromCart(i)}>&times;</button>
+                              <span>{item.color ? `${colorName(item.color, locale.value)} / ` : ""}{item.size}{item.waist ? ` / W${item.waist} L${item.length}` : ""}</span>
+                              <button class="cart-table__remove" aria-label={`Remove ${item.name}`} onClick$={() => removeFromCart(i)}>&times;</button>
                             </div>
                             </div>
                             </div>
@@ -687,7 +688,7 @@ export default component$(() => {
                   </span>
                   <button
                     class="btn btn--primary cart-drawer__order-btn"
-                    onClick$={() => { checkoutStep.value = "details"; }}
+                    onClick$={() => { summaryOpen.value = cart.items.length <= 4; checkoutStep.value = "details"; }}
                   >
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
                     {t("cart.checkout", locale.value)}

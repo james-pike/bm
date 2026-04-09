@@ -166,6 +166,7 @@ export const ProductCatalog = component$<{ class?: string }>(({ "class": cls }) 
                   value={searchQuery.value}
                   onInput$={(_, el) => { searchQuery.value = el.value; }}
                   onKeyDown$={(e) => { if (e.key === "Enter") { doSearch(searchQuery.value); searchOpen.value = false; } if (e.key === "Escape") { searchQuery.value = ""; searchOpen.value = false; } }}
+                  onBlur$={() => { doSearch(searchQuery.value); searchOpen.value = false; }}
                 />
                 <button class="apparel-titlebar__action" aria-label="Close search" onClick$={() => { doSearch(searchQuery.value); searchOpen.value = false; }} style="padding:2px;">
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg>
