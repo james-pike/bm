@@ -71,10 +71,8 @@ export const allProducts = [
     "badge": "",
     "colors": [],
     "price": 100,
-    "img": "/sku/mens-fleece.png",
-    "imgs": [
-      "/sku/mens-fleece.png"
-    ],
+    "img": "",
+    "imgs": [],
     "material": "60% Cotton / 40% Acrylic",
     "details": "Heavyweight cuffs hem, and stand up collar, Long-sleeve, FW zipper pull, Even hem"
   },
