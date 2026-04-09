@@ -4260,6 +4260,7 @@ details[open] > .cart-drawer__checkout-title::after {
   .product-carousel__slide:not(:first-child) { display: none; }
   .product-carousel__slide:first-child { opacity: 1; }
   .dot-pattern::before { opacity: 0.5; }
+  .dot-pattern--light::before { opacity: 0.25; }
   .hero { min-height: auto; padding-bottom: 0.6rem; }
   .hero__content { text-align: left; padding: 0; align-items: flex-start; grid-template-columns: 1fr; overflow: hidden; gap: 0; }
   .hero__subtitle { margin: 0 0 2rem; }
