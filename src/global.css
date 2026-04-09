@@ -842,14 +842,14 @@ img { max-width: 100%; display: block; }
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0.4rem 0;
+  padding: 0.85rem 0 0.4rem;
 }
 @media (min-width: 1025px) {
   .hero__logo-spacer {
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    padding: 0;
+    padding: 0.5rem 0 0;
   }
   .hero__logo-spacer--mobile {
     display: none;
@@ -4976,7 +4976,7 @@ details[open] > .cart-drawer__checkout-title::after {
   .hero-categories { grid-template-columns: repeat(4, 1fr); gap: 6px; width: 100%; margin: 0; padding-top: 0; }
 
   /* Hero logo spacer mobile */
-  .hero__logo-spacer--mobile { padding: 0.5rem 0; }
+  .hero__logo-spacer--mobile { padding: 0.95rem 0 0.5rem; }
   .hero__logo-spacer--mobile img { width: 40px; }
 
   /* Hero card margin */
