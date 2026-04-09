@@ -210,11 +210,10 @@ export default component$(() => {
                 </div>
                 <img src="/logo3.png" alt="Carmichael" class="hero__title-img" width="408" height="61" loading="eager" decoding="sync" />
                 <span class="hero__title-apparel">{t("logo.apparel", locale.value)}</span>
-                <div class="hero__logo-spacer">
-                  <img src="/carmichael-logo.png" alt="" width="200" height="200" loading="eager" />
-                  <span class="hero__logo-spacer-text">(proudly canadian logo)</span>
-                </div>
                 <p class="hero__subtitle-inline">{t("hero.subtitle", locale.value)}</p>
+                <div class="hero__logo-spacer">
+                  <img src="/carmichael-services/canada2.png" alt="Proudly Canadian" class="hero__logo-spacer-canada" loading="eager" />
+                </div>
               </div>
               <Carousel.Root class="hero-carousel" bind:selectedIndex={heroIndex} align="start" sensitivity={{ touch: 0.5, mouse: 0.5 }} rewind>
                 <Carousel.Scroller class="hero-carousel__scroller">
@@ -247,8 +246,7 @@ export default component$(() => {
                 </Carousel.Root>
               </div>
               <div class="hero__logo-spacer hero__logo-spacer--mobile">
-                <img src="/carmichael-logo.png" alt="" width="200" height="200" loading="eager" />
-                <span class="hero__logo-spacer-text">(proudly canadian logo)</span>
+                <img src="/carmichael-services/canada2.png" alt="Proudly Canadian" class="hero__logo-spacer-canada" loading="eager" />
               </div>
               <div class="hero-categories">
                 <a href="/apparel/#work-wear" class="category-card">

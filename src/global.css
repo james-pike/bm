@@ -848,8 +848,9 @@ img { max-width: 100%; display: block; }
   .hero__logo-spacer {
     display: flex;
     align-items: center;
-    justify-content: flex-start;
-    padding: 0.5rem 0 0;
+    justify-content: flex-end;
+    padding: 0;
+    margin-top: -0.4rem;
   }
   .hero__logo-spacer--mobile {
     display: none;
@@ -869,12 +870,16 @@ img { max-width: 100%; display: block; }
   font-style: italic;
   margin-left: 0.5rem;
 }
-.hero__logo-spacer-canada {
+.hero__logo-spacer .hero__logo-spacer-canada {
   height: auto;
-  width: 22%;
-  max-width: 140px;
+  width: 48%;
+  max-width: 280px;
   opacity: 0.85;
-  margin-left: 0.5rem;
+  margin-left: 0;
+}
+.hero__logo-spacer--mobile .hero__logo-spacer-canada {
+  width: 80px;
+  max-width: 80px;
 }
 .hero__top-row {
   display: flex;
@@ -4978,6 +4983,7 @@ details[open] > .cart-drawer__checkout-title::after {
   /* Hero logo spacer mobile */
   .hero__logo-spacer--mobile { padding: 0.95rem 0 0.5rem; }
   .hero__logo-spacer--mobile img { width: 40px; }
+  .hero__logo-spacer--mobile .hero__logo-spacer-canada { width: 96px; max-width: 96px; }
 
   /* Hero card margin */
   .hero__logo-group { margin-left: 8px; margin-right: 8px; width: calc(100% - 16px); }
