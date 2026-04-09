@@ -215,7 +215,7 @@ export default component$(() => {
                   <img src="/carmichael-services/canada2.png" alt="Proudly Canadian" class="hero__logo-spacer-canada" loading="eager" />
                 </div>
               </div>
-              <Carousel.Root class="hero-carousel" bind:selectedIndex={heroIndex} align="start" sensitivity={{ touch: 0.5, mouse: 0.5 }} rewind>
+              <Carousel.Root class="hero-carousel" bind:selectedIndex={heroIndex} align="start" draggable={false} rewind>
                 <Carousel.Scroller class="hero-carousel__scroller">
                   <Carousel.Slide class="hero-carousel__slide">
                     <img src="/carmichael-services/van-building.jpeg" alt="Carmichael van" loading="eager" />
@@ -230,7 +230,7 @@ export default component$(() => {
                 </Carousel.Pagination>
               </Carousel.Root>
               <div class="hero-bento">
-                <Carousel.Root class="hero-bento-carousel" bind:selectedIndex={bentoIndex} align="start" sensitivity={{ touch: 0.5, mouse: 0.5 }} rewind>
+                <Carousel.Root class="hero-bento-carousel" bind:selectedIndex={bentoIndex} align="start" draggable={false} rewind>
                   <Carousel.Scroller class="hero-bento-carousel__scroller">
                     <Carousel.Slide class="hero-bento-carousel__slide">
                       <img src="/carmichael-services/van-building.jpeg" alt="Carmichael van" loading="eager" />

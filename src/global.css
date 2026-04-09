@@ -443,6 +443,7 @@ img { max-width: 100%; display: block; }
   width: 100%;
   aspect-ratio: 4/3;
   overflow: hidden;
+  transform: none !important;
 }
 .hero-bento-carousel__slide {
   position: absolute;
@@ -462,12 +463,17 @@ img { max-width: 100%; display: block; }
   display: block;
 }
 .hero-bento-carousel__slide { transition: opacity 1.4s ease; }
+.hero-bento-carousel__slide--transparent { transform: none !important; }
 .hero-bento-carousel__slide--transparent img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  transform: translate(-50%, -50%) scale(1.2) !important;
   object-fit: contain;
   object-position: center center;
   padding: 0;
-  transform: scale(1.15);
-  transform-origin: center center;
 }
 .hero-bento-carousel__slide--transparent::after { display: none !important; }
 .hero-bento-carousel__slide::after {
@@ -628,6 +634,7 @@ img { max-width: 100%; display: block; }
   position: relative;
   aspect-ratio: 1.5 / 1;
   overflow: hidden;
+  transform: none !important;
 }
 @media (max-width: 600px) {
   .hero-carousel__scroller {
@@ -5183,13 +5190,24 @@ details[open] > .cart-drawer__checkout-title::after {
     aspect-ratio: 1 / 1;
   }
   .hero-carousel::after { display: block; border-radius: 8px; }
-  .hero-carousel__scroller { aspect-ratio: auto; height: 100%; position: relative; }
+  .hero-carousel__scroller { aspect-ratio: auto; height: 100%; position: relative; transform: none !important; overflow: hidden !important; }
   /* Keep slides absolutely positioned even when active (like desktop's bento carousel) */
-  .hero-carousel__slide { position: absolute; inset: 0; transition: opacity 1.4s ease; }
-  .hero-carousel__slide[data-active] { position: absolute; opacity: 1; z-index: 1; }
+  .hero-carousel__slide { position: absolute !important; inset: 0 !important; transition: opacity 1.4s ease; transform: none !important; }
+  .hero-carousel__slide[data-active] { position: absolute !important; opacity: 1; z-index: 1; }
   .hero-carousel__slide img { width: 100%; height: 100%; object-fit: cover; object-position: 35% center; }
-  /* Slide 2 — transparent PNG: fade smoothly over slide 1, contained (not cropped) */
-  .hero-carousel__slide--transparent img { object-fit: contain; object-position: center center; padding: 8% 10%; transform: none; }
+  /* Slide 2 — transparent PNG: locked to center, fade smoothly over slide 1 */
+  .hero-carousel__slide--transparent { transform: none !important; }
+  .hero-carousel__slide--transparent img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    transform: translate(-50%, -50%) scale(1.2) !important;
+    object-fit: contain;
+    object-position: center center;
+    padding: 0;
+  }
   .hero-carousel__slide--transparent::after { display: none; }
 
   /* Bento hidden on tablet — desktop only */
