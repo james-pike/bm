@@ -1481,9 +1481,11 @@ img { max-width: 100%; display: block; }
   .home-catalog .apparel-grid.apparel-grid--cols-3 { grid-template-columns: repeat(3, 1fr); }
   .home-catalog__header { height: 38px; padding: 0 0.5rem; top: 58px; border-radius: 0; margin-bottom: 0; }
   .home-catalog__title { display: none; }
-  .apparel-titlebar__action--tablet-cols { display: flex; }
 }
 .apparel-titlebar__action--tablet-cols { display: none; }
+@media (min-width: 768px) and (max-width: 1024px) {
+  .apparel-titlebar__action--tablet-cols { display: flex; }
+}
 
 .nav-drawer__header {
   display: grid;
