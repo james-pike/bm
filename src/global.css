@@ -479,7 +479,7 @@ img { max-width: 100%; display: block; }
   left: 50%;
   width: 100%;
   height: 100%;
-  transform: translate(-50%, -50%) scale(1.2) !important;
+  transform: translate(-50%, -50%) scale(1.12) !important;
   object-fit: contain;
   object-position: center center;
   padding: 0;
@@ -647,11 +647,31 @@ img { max-width: 100%; display: block; }
 }
 @media (max-width: 600px) {
   .hero-carousel__scroller {
-    aspect-ratio: 2 / 1;
+    aspect-ratio: 16 / 9;
   }
   .hero-bottom-img img {
-    aspect-ratio: 2 / 1;
+    aspect-ratio: 16 / 9;
   }
+  .hero-carousel__slide:first-child img {
+    object-fit: cover !important;
+    object-position: 20% center !important;
+    transform: scale(1.4);
+    transform-origin: 20% center;
+  }
+  /* Keep slides absolutely positioned even when active so they don't collapse */
+  .hero-carousel__slide { position: absolute !important; inset: 0 !important; }
+  .hero-carousel__slide[data-active] { position: absolute !important; opacity: 1; z-index: 1; }
+  /* Slide 2 (transparent car) — zoomed out so the full car fits */
+  .hero-carousel__slide--transparent img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: contain !important;
+    object-position: center center !important;
+    transform: scale(1.05);
+    transform-origin: center center;
+    padding: 0;
+  }
+  .hero-carousel__slide--transparent::after { display: none; }
 }
 .hero-carousel__slide {
   position: absolute;
@@ -865,7 +885,17 @@ img { max-width: 100%; display: block; }
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0.85rem 0 0.4rem;
+  padding: 0.3rem 0 0.55rem;
+  margin: 0.4rem -0.9rem 0;
+  width: calc(100% + 1.8rem);
+  background:
+    radial-gradient(ellipse 80% 70% at 50% 55%, rgba(255,255,255,0.22) 0%, transparent 70%),
+    linear-gradient(135deg, rgba(255,255,255,0.14) 0%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.16) 100%);
+  border: 1px solid rgba(0,0,0,0.15);
+  border-radius: 8px;
+  box-shadow:
+    inset 0 1px 2px rgba(255,255,255,0.08),
+    inset 0 2px 6px rgba(0,0,0,0.1);
 }
 @media (min-width: 1025px) {
   .hero__logo-spacer {
@@ -901,8 +931,8 @@ img { max-width: 100%; display: block; }
   margin-left: 0;
 }
 .hero__logo-spacer--mobile .hero__logo-spacer-canada {
-  width: 80px;
-  max-width: 80px;
+  width: 220px;
+  max-width: 220px;
 }
 .hero__top-row {
   display: flex;
@@ -1508,7 +1538,7 @@ img { max-width: 100%; display: block; }
   .home-catalog__title { display: none; }
 }
 .apparel-titlebar__action--tablet-cols { display: none; }
-@media (min-width: 768px) and (max-width: 1024px) {
+@media (min-width: 901px) and (max-width: 1024px) {
   .apparel-titlebar__action--tablet-cols { display: flex; }
 }
 
@@ -5125,7 +5155,7 @@ details[open] > .cart-drawer__checkout-title::after {
   .site-header--hero-hidden.site-header--hero-visible .site-header__logo-text,
   .site-header--hero-hidden.site-header--hero-visible .site-header__logo-brand { opacity: 1 !important; }
 
-  /* Hero card grid: header row 1, cluster+carousel row 2, categories row 3 */
+  /* Hero card grid: in-card header row 1, cluster+carousel row 2, categories row 3 */
   .hero__logo-group {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -5136,7 +5166,7 @@ details[open] > .cart-drawer__checkout-title::after {
     align-items: stretch;
   }
 
-  /* In-card header — full-width row 1, baked into the card like mobile/desktop */
+  /* Show in-card header at top of green card; hide site-header on home page */
   .hero-card-header {
     display: flex;
     grid-column: 1 / -1;
@@ -5144,9 +5174,34 @@ details[open] > .cart-drawer__checkout-title::after {
     margin: 0 -10px;
     padding: 0.2rem 0.5rem;
   }
-  .hero-card-header__brand { display: flex; }
   .hero-card-header__nav { display: flex; align-items: center; gap: 0.5rem; margin-left: auto; margin-right: 0.5rem; }
   .hero-card-header__actions { display: flex; }
+  /* Logo + brand text in the in-card header are hidden until page is scrolled */
+  .hero-card-header__logo-img,
+  .hero-card-header__brand { opacity: 0; transition: opacity 0.3s ease; }
+  html.scrolled .hero-card-header__logo-img,
+  html.scrolled .hero-card-header__brand { opacity: 1; }
+  .hero-card-header__brand { display: flex; }
+  /* Site-header completely hidden over hero on home page; the in-card header serves as the visible bar.
+     Reappears at top of viewport on scroll. */
+  .site-header--hero-hidden {
+    position: sticky;
+    top: 0;
+    transform: none;
+    opacity: 0;
+    pointer-events: none;
+    background: transparent !important;
+    border-bottom: none !important;
+    transition: opacity 0.3s ease, background 0.3s ease, border-bottom 0.3s ease;
+    margin-bottom: -58px;
+  }
+  .site-header--hero-hidden.site-header--hero-visible {
+    opacity: 1;
+    pointer-events: auto;
+    background: var(--ce-white) !important;
+    border-bottom: 2px solid var(--ce-gray-200) !important;
+    margin-bottom: 0;
+  }
 
   /* Title cluster — left column, styled exactly like desktop's middle section */
   .hero__middle-section {
@@ -5168,7 +5223,7 @@ details[open] > .cart-drawer__checkout-title::after {
     justify-content: flex-start;
     align-items: center;
     text-align: center;
-    aspect-ratio: 1 / 1;
+    aspect-ratio: 4 / 3;
     overflow: hidden;
     gap: 0;
   }
@@ -5185,7 +5240,7 @@ details[open] > .cart-drawer__checkout-title::after {
   .hero__logo-spacer .hero__logo-spacer-canada { width: 38%; max-width: 140px; opacity: 0.85; margin: 0; }
   .hero__logo-spacer--mobile { display: none; }
 
-  /* Carousel — right column, square to match cluster */
+  /* Carousel — right column, 4/3 to match desktop bento carousel */
   .hero-carousel {
     display: block;
     grid-column: 2;
@@ -5196,25 +5251,26 @@ details[open] > .cart-drawer__checkout-title::after {
     border: 1px solid rgba(255,255,255,0.06);
     align-self: stretch;
     overflow: hidden;
-    aspect-ratio: 1 / 1;
+    aspect-ratio: 4 / 3;
   }
   .hero-carousel::after { display: block; border-radius: 8px; }
-  .hero-carousel__scroller { aspect-ratio: auto; height: 100%; position: relative; transform: none !important; overflow: hidden !important; }
+  .hero-carousel [data-qui-carousel-viewport] { width: 100%; height: 100%; position: relative; }
+  .hero-carousel__scroller { aspect-ratio: auto; height: 100% !important; width: 100% !important; position: relative; transform: none !important; overflow: hidden !important; }
   /* Keep slides absolutely positioned even when active (like desktop's bento carousel) */
-  .hero-carousel__slide { position: absolute !important; inset: 0 !important; transition: opacity 1.4s ease; transform: none !important; }
-  .hero-carousel__slide[data-active] { position: absolute !important; opacity: 1; z-index: 1; }
-  .hero-carousel__slide img { width: 100%; height: 100%; object-fit: cover; object-position: 35% center; }
+  .hero-carousel__slide { position: absolute !important; inset: 0 !important; opacity: 0; transition: opacity 1.4s ease; transform: none !important; }
+  .hero-carousel__slide[data-active] { position: absolute !important; opacity: 1 !important; z-index: 2; }
+  .hero-carousel__slide img { width: 100% !important; height: 100% !important; object-fit: cover !important; object-position: 35% center; display: block; position: relative; z-index: 1; }
   /* Slide 2 — transparent PNG: locked to center, fade smoothly over slide 1 */
   .hero-carousel__slide--transparent { transform: none !important; }
   .hero-carousel__slide--transparent img {
-    position: absolute;
+    position: absolute !important;
     top: 50%;
     left: 50%;
-    width: 100%;
-    height: 100%;
-    transform: translate(-50%, -50%) scale(1.2) !important;
-    object-fit: contain;
-    object-position: center center;
+    width: 100% !important;
+    height: 100% !important;
+    transform: translate(-50%, -50%) scale(1.12) !important;
+    object-fit: contain !important;
+    object-position: center center !important;
     padding: 0;
   }
   .hero-carousel__slide--transparent::after { display: none; }

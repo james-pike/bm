@@ -112,7 +112,7 @@ export const useSubmitOrder = routeAction$(async (data, { fail, env }) => {
       <td style="padding:6px 12px;border-bottom:1px solid #eee">${i.name}${i.sku ? ` <span style="color:#999;font-size:12px">(${i.sku})</span>` : ""}</td>
       <td style="padding:6px 12px;border-bottom:1px solid #eee">${i.color ? cName(i.color) + " / " : ""}${i.size}${i.waist ? ` / W${i.waist} L${i.length}` : ""}</td>
       <td style="padding:6px 12px;border-bottom:1px solid #eee;text-align:center">${i.quantity}</td>
-      <td style="padding:6px 12px;border-bottom:1px solid #eee;text-align:right">$${(Number(i.price) || 0) * i.quantity}</td>
+      <td style="padding:6px 12px;border-bottom:1px solid #eee;text-align:right">$${(((Number(i.price) || 0) * i.quantity)).toFixed(2)}</td>
     </tr>`
   ).join("");
 
@@ -140,7 +140,7 @@ export const useSubmitOrder = routeAction$(async (data, { fail, env }) => {
           <tfoot>
             <tr>
               <td colspan="3" style="padding:10px 12px;text-align:right;font-weight:700">Total</td>
-              <td style="padding:10px 12px;text-align:right;font-weight:700;color:#00703c">$${total}</td>
+              <td style="padding:10px 12px;text-align:right;font-weight:700;color:#00703c">$${total.toFixed(2)}</td>
             </tr>
           </tfoot>
         </table>
@@ -344,7 +344,10 @@ export default component$(() => {
   // Sticky header on scroll (mobile landing page)
   // eslint-disable-next-line qwik/no-use-visible-task
   useVisibleTask$(({ cleanup }) => {
-    const onScroll = () => { headerScrolled.value = window.scrollY > 60; };
+    const onScroll = () => {
+      headerScrolled.value = window.scrollY > 60;
+      document.documentElement.classList.toggle("scrolled", window.scrollY > 60);
+    };
     window.addEventListener("scroll", onScroll, { passive: true });
     cleanup(() => window.removeEventListener("scroll", onScroll));
   }, { strategy: 'document-ready' });
@@ -670,21 +673,21 @@ export default component$(() => {
                               <button class="cart-table__qty-btn" aria-label={`Increase quantity of ${item.name}`} onClick$={() => updateQty(i, 1)}>+</button>
                             </div>
                           </td>
-                          <td class="cart-table__total">${(Number(item.price) || 0) * item.quantity}</td>
+                          <td class="cart-table__total">${(((Number(item.price) || 0) * item.quantity)).toFixed(2)}</td>
                         </tr>
                       ))}
                     </tbody>
                     <tfoot>
                       <tr>
                         <td colSpan={2} class="cart-table__subtotal-label">{t("cart.invoice.subtotal", locale.value)}</td>
-                        <td class="cart-table__subtotal-val">${cart.items.reduce((sum, i) => sum + (Number(i.price) || 0) * i.quantity, 0)}</td>
+                        <td class="cart-table__subtotal-val">${cart.items.reduce((sum, i) => sum + (Number(i.price) || 0) * i.quantity, 0).toFixed(2)}</td>
                       </tr>
                     </tfoot>
                   </table>
                 </div>
                 <div class="cart-drawer__footer">
                   <span class="cart-drawer__total">
-                    {cartCount.value} {cartCount.value !== 1 ? t("cart.items", locale.value) : t("cart.item", locale.value)} — ${cart.items.reduce((sum, i) => sum + (Number(i.price) || 0) * i.quantity, 0)}
+                    {cartCount.value} {cartCount.value !== 1 ? t("cart.items", locale.value) : t("cart.item", locale.value)} — ${cart.items.reduce((sum, i) => sum + (Number(i.price) || 0) * i.quantity, 0).toFixed(2)}
                   </span>
                   <button
                     class="btn btn--primary cart-drawer__order-btn"
@@ -711,12 +714,12 @@ export default component$(() => {
                         {cart.items.map((item) => (
                           <div key={`${item.name}-${item.size}`} class="cart-drawer__summary-item">
                             <span>{item.quantity}x {item.name}</span>
-                            <span>${(Number(item.price) || 0) * item.quantity}</span>
+                            <span>${(((Number(item.price) || 0) * item.quantity)).toFixed(2)}</span>
                           </div>
                         ))}
                         <div class="cart-drawer__summary-item cart-drawer__summary-total">
                           <span>{t("cart.invoice.subtotal", locale.value)}</span>
-                          <span>${cart.items.reduce((sum, i) => sum + (Number(i.price) || 0) * i.quantity, 0)}</span>
+                          <span>${cart.items.reduce((sum, i) => sum + (Number(i.price) || 0) * i.quantity, 0).toFixed(2)}</span>
                         </div>
                       </div>
                     </Collapsible.Content>
@@ -769,7 +772,7 @@ export default component$(() => {
                 </div>
                 <div class="cart-drawer__footer">
                   <span class="cart-drawer__total">
-                    {cartCount.value} {cartCount.value !== 1 ? t("cart.items", locale.value) : t("cart.item", locale.value)} — ${cart.items.reduce((sum, i) => sum + (Number(i.price) || 0) * i.quantity, 0)}
+                    {cartCount.value} {cartCount.value !== 1 ? t("cart.items", locale.value) : t("cart.item", locale.value)} — ${cart.items.reduce((sum, i) => sum + (Number(i.price) || 0) * i.quantity, 0).toFixed(2)}
                   </span>
                   <button
                     class="btn btn--primary cart-drawer__order-btn"

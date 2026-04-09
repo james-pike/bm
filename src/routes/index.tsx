@@ -133,6 +133,7 @@ export default component$(() => {
   const hasCartItems = useSignal(false);
   const heroIndex = useSignal(0);
   const bentoIndex = useSignal(0);
+  const carouselPaused = useSignal(false);
 
   // eslint-disable-next-line qwik/no-use-visible-task
   useVisibleTask$(({ cleanup }) => {
@@ -151,10 +152,23 @@ export default component$(() => {
   // eslint-disable-next-line qwik/no-use-visible-task
   useVisibleTask$(({ cleanup }) => {
     const id = setInterval(() => {
+      if (carouselPaused.value) return;
       heroIndex.value = (heroIndex.value + 1) % 2;
       bentoIndex.value = (bentoIndex.value + 1) % 2;
-    }, 6000);
-    cleanup(() => clearInterval(id));
+    }, 9000);
+    // Resume autoplay when user clicks anywhere outside a carousel pagination
+    const onDocClick = (e: MouseEvent) => {
+      if (!carouselPaused.value) return;
+      const target = e.target as HTMLElement;
+      if (!target.closest('.hero-carousel__dots, .hero-bento-carousel__dots')) {
+        carouselPaused.value = false;
+      }
+    };
+    document.addEventListener('click', onDocClick);
+    cleanup(() => {
+      clearInterval(id);
+      document.removeEventListener('click', onDocClick);
+    });
   });
 
   return (
@@ -216,7 +230,7 @@ export default component$(() => {
                 </div>
               </div>
               <Carousel.Root class="hero-carousel dot-pattern dot-pattern--light" bind:selectedIndex={heroIndex} align="start" draggable={false} rewind>
-                <Carousel.Scroller class="hero-carousel__scroller">
+                <Carousel.Scroller class="hero-carousel__scroller" onClick$={() => { carouselPaused.value = true; heroIndex.value = (heroIndex.value + 1) % 2; }}>
                   <Carousel.Slide class="hero-carousel__slide">
                     <img src="/carmichael-services/van-building.jpeg" alt="Carmichael van" loading="eager" />
                   </Carousel.Slide>
@@ -224,14 +238,14 @@ export default component$(() => {
                     <img src="/carmichael.png" alt="Carmichael vintage car" loading="eager" />
                   </Carousel.Slide>
                 </Carousel.Scroller>
-                <Carousel.Pagination class="hero-carousel__dots">
+                <Carousel.Pagination class="hero-carousel__dots" onClick$={() => { carouselPaused.value = true; }}>
                   <Carousel.Bullet class="hero-carousel__dot" />
                   <Carousel.Bullet class="hero-carousel__dot" />
                 </Carousel.Pagination>
               </Carousel.Root>
               <div class="hero-bento">
                 <Carousel.Root class="hero-bento-carousel dot-pattern dot-pattern--light" bind:selectedIndex={bentoIndex} align="start" draggable={false} rewind>
-                  <Carousel.Scroller class="hero-bento-carousel__scroller">
+                  <Carousel.Scroller class="hero-bento-carousel__scroller" onClick$={() => { carouselPaused.value = true; bentoIndex.value = (bentoIndex.value + 1) % 2; }}>
                     <Carousel.Slide class="hero-bento-carousel__slide">
                       <img src="/carmichael-services/van-building.jpeg" alt="Carmichael van" loading="eager" />
                     </Carousel.Slide>
@@ -239,7 +253,7 @@ export default component$(() => {
                       <img src="/carmichael.png" alt="Carmichael vintage car" loading="eager" />
                     </Carousel.Slide>
                   </Carousel.Scroller>
-                  <Carousel.Pagination class="hero-bento-carousel__dots">
+                  <Carousel.Pagination class="hero-bento-carousel__dots" onClick$={() => { carouselPaused.value = true; }}>
                     <Carousel.Bullet class="hero-bento-carousel__dot" />
                     <Carousel.Bullet class="hero-bento-carousel__dot" />
                   </Carousel.Pagination>
