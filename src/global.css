@@ -170,6 +170,15 @@ dialog:not([open]) {
   background-size: 12px 12px;
   opacity: 0.3;
 }
+.hero-carousel.dot-pattern::before,
+.hero-bento-carousel.dot-pattern::before {
+  left: 0;
+  width: 100%;
+  transform: none;
+  z-index: 0;
+  background-size: 12px 12px;
+  opacity: 0.42;
+}
 
 .dot-pattern > * { position: relative; z-index: 1; }
 a { color: inherit; text-decoration: none; }
