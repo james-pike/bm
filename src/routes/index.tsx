@@ -218,10 +218,10 @@ export default component$(() => {
               <Carousel.Root class="hero-carousel" bind:selectedIndex={heroIndex} align="start" sensitivity={{ touch: 0.5, mouse: 0.5 }} rewind>
                 <Carousel.Scroller class="hero-carousel__scroller">
                   <Carousel.Slide class="hero-carousel__slide">
-                    <img src="/van.jpeg" alt="Carmichael service van" loading="eager" />
+                    <img src="/carmichael-services/van-building.jpeg" alt="Carmichael van" loading="eager" />
                   </Carousel.Slide>
                   <Carousel.Slide class="hero-carousel__slide">
-                    <img src="/carmichael-services/van-building.jpeg" alt="Carmichael van" loading="eager" />
+                    <img src="/van.jpeg" alt="Carmichael service van" loading="eager" />
                   </Carousel.Slide>
                 </Carousel.Scroller>
                 <Carousel.Pagination class="hero-carousel__dots">

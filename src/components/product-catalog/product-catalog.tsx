@@ -42,6 +42,7 @@ export const ProductCatalog = component$<{ class?: string }>(({ "class": cls }) 
   const activeCat = useSignal("All");
   const searchQuery = useSignal("");
   const searchOpen = useSignal(false);
+  const tabletCols = useSignal(2);
 
   const HASH_TO_CAT: Record<string, string> = {
     "work-wear": "Work Wear",
@@ -120,7 +121,7 @@ export const ProductCatalog = component$<{ class?: string }>(({ "class": cls }) 
                   activeCat.value = cat;
                   searchQuery.value = "";
                   const isDesktop = window.innerWidth > 1024;
-                  const headerH = window.innerWidth <= 900 ? 52 : 58;
+                  const headerH = window.innerWidth <= 900 ? 49 : 58;
                   if (isDesktop) {
                     const grid = document.querySelector('.home-catalog .apparel-grid');
                     const gridTop = grid ? grid.getBoundingClientRect().top + window.scrollY - headerH - 8 : 0;
@@ -173,13 +174,26 @@ export const ProductCatalog = component$<{ class?: string }>(({ "class": cls }) 
                 </button>
               </div>
             ) : (
-              <button class="apparel-titlebar__action apparel-titlebar__action--mobile-search" aria-label="Search" onClick$={() => (searchOpen.value = true)}>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
-              </button>
+              <>
+                <button
+                  class="apparel-titlebar__action apparel-titlebar__action--tablet-cols"
+                  aria-label={`Show ${tabletCols.value === 2 ? 3 : 2} per row`}
+                  onClick$={() => { tabletCols.value = tabletCols.value === 2 ? 3 : 2; }}
+                >
+                  {tabletCols.value === 2 ? (
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="5" height="18"/><rect x="9.5" y="3" width="5" height="18"/><rect x="16" y="3" width="5" height="18"/></svg>
+                  ) : (
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="8" height="18"/><rect x="13" y="3" width="8" height="18"/></svg>
+                  )}
+                </button>
+                <button class="apparel-titlebar__action apparel-titlebar__action--mobile-search" aria-label="Search" onClick$={() => (searchOpen.value = true)}>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+                </button>
+              </>
             )}
           </div>
         </div>
-        <div class="apparel-grid">
+        <div class={`apparel-grid apparel-grid--cols-${tabletCols.value}`}>
           {filtered.value.map((item) => (
             <ProductCard key={item.sku} item={item} sku={item.sku} />
           ))}
