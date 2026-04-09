@@ -2053,9 +2053,8 @@ img { max-width: 100%; display: block; }
 }
 
 .product-card:hover {
-  transform: translateY(-2px);
   box-shadow: 0 8px 24px rgba(0,0,0,0.1);
-  filter: brightness(1.04);
+  filter: brightness(1.06);
 }
 
 .product-card__image {
@@ -4461,11 +4460,9 @@ details[open] > .cart-drawer__checkout-title::after {
   }
   .hero-card-header__nav-link:hover { color: var(--ce-white); }
   .hero-card-header__nav-link.active { color: var(--ce-white); }
-  .hero-card-header__btn { padding: 10px; }
-  .hero-card-header__actions { gap: 8px; }
   .hero-card-header__brand { display: none !important; }
-  .hero-card-header__btn-label { display: inline; }
-  .hero-card-header__actions .hero-card-header__btn:nth-child(3) { display: none; }
+  /* Desktop main site-header is visible from first view, so the in-card actions would be duplicates. */
+  .hero-card-header__actions { display: none; }
   .hero-card-header__btn--cart-active {
     background: var(--ce-gold) !important;
     border-color: var(--ce-gold) !important;

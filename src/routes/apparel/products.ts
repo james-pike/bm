@@ -71,8 +71,10 @@ export const allProducts = [
     "badge": "",
     "colors": [],
     "price": 100,
-    "img": "",
-    "imgs": [],
+    "img": "/sku/mens-fleece.png",
+    "imgs": [
+      "/sku/mens-fleece.png"
+    ],
     "material": "60% Cotton / 40% Acrylic",
     "details": "Heavyweight cuffs hem, and stand up collar, Long-sleeve, FW zipper pull, Even hem"
   },
@@ -212,38 +214,23 @@ export const allProducts = [
     "details": "6.3-oz, Rib knit collar, Moisture wicking, Snag resistant, Breathable, Tagless Classic fit"
   },
   {
-    "sku": "CAR-6",
-    "name": "Women's Coal Harbour® Snag Resistant Polo #L455 - Green",
+    "sku": "CAR-22",
+    "name": "Men's Coal Harbour® Snag Resistant Polo - Green",
     "category": "Polos",
-    "sizes": "XS - 4XL",
+    "sizes": "XS-6XL",
     "badge": "",
     "colors": [],
     "price": 100,
-    "img": "/golf/green.png",
+    "img": "/s455-mens-green.png",
     "imgs": [
-      "/golf/green.png"
+      "/s455-mens-green.png"
     ],
     "material": "100% performance polyester flat tricot micropique",
-    "details": "Self-fabric collar, Moisture-wicking, Snag resistant, Breathable, Tagless, Relaxed fit"
-  },
-  {
-    "sku": "CAR-5",
-    "name": "Women's Coal Harbour® Snag Resistant Polo #L455 - Grey",
-    "category": "Polos",
-    "sizes": "S - 4XL",
-    "badge": "",
-    "colors": [],
-    "price": 100,
-    "img": "/wpg.png",
-    "imgs": [
-      "/wpg.png"
-    ],
-    "material": "100% performance polyester flat tricot micropique",
-    "details": "Self-fabric collar, Moisture-wicking, Snag resistant, Breathable, Tagless, Relaxed fit"
+    "details": "6.3-oz, Rib knit collar, Moisture wicking, Snag resistant, Breathable, Tagless Classic fit"
   },
   {
     "sku": "CAR-7",
-    "name": "Women's Coal Harbour® Snag Resistant Polo #L455 - Black",
+    "name": "Women's Coal Harbour® Snag Resistant Polo - Black",
     "category": "Polos",
     "sizes": "S - 4XL",
     "badge": "",
@@ -254,33 +241,50 @@ export const allProducts = [
       "/wpb.png"
     ],
     "material": "100% performance polyester flat tricot micropique",
-    "details": "Self-fabric collar, Moisture-wicking, Snag resistant, Breathable, Tagless, Relaxed fit"
+    "details": "Self-fabric collar, Moisture-wicking, Snag resistant, Breathable, Tagless, Relaxed fit, #L455"
   },
   {
-    "sku": "CAR-22",
-    "name": "Women's Coal Harbour® Everyday Polo #L4007",
+    "sku": "CAR-5",
+    "name": "Women's Coal Harbour® Snag Resistant Polo - Grey",
     "category": "Polos",
     "sizes": "S - 4XL",
     "badge": "",
     "colors": [],
     "price": 100,
-    "img": "/s455-mens-green.png",
-    "imgs": ["/s455-mens-green.png"],
-    "material": "100% performance polyester double-knit jersey",
-    "details": "No bleed fabric (NBF) created with a unique cationic dye process for easy printing, Self-fabric collar, Moisture wicking and breathable, Tagless, Relaxed fit, 6.6-oz"
+    "img": "/wpg.png",
+    "imgs": [
+      "/wpg.png"
+    ],
+    "material": "100% performance polyester flat tricot micropique",
+    "details": "Self-fabric collar, Moisture-wicking, Snag resistant, Breathable, Tagless, Relaxed fit, #L455"
+  },
+  {
+    "sku": "CAR-6",
+    "name": "Women's Coal Harbour® Snag Resistant Polo - Green",
+    "category": "Polos",
+    "sizes": "XS - 4XL",
+    "badge": "",
+    "colors": [],
+    "price": 100,
+    "img": "/golf/green.png",
+    "imgs": [
+      "/golf/green.png"
+    ],
+    "material": "100% performance polyester flat tricot micropique",
+    "details": "Self-fabric collar, Moisture-wicking, Snag resistant, Breathable, Tagless, Relaxed fit, #L455"
   },
   {
     "sku": "CAR-23",
-    "name": "Women's Harriton Easy Blend Polo #M265W",
+    "name": "Women's Harriton Easy Blend Polo",
     "category": "Polos",
     "sizes": "XS - 3XL",
     "badge": "",
     "colors": [],
     "price": 100,
-    "img": "/m265w-womens-harriton.png",
-    "imgs": ["/m265w-womens-harriton.png"],
-    "material": "",
-    "details": ""
+    "img": "",
+    "imgs": [],
+    "material": "65% polyester / 35% cotton piqué",
+    "details": " Special poly/cotton blend helps reduce shrinkage, Wrinkle-resistant, Softly shaped for more flattering feminine fit, Flat-knit collar and cuffs, Set-in sleeves, Side seams, Three-button placket, Hemmed bottom with side vents, #M265W"
   },
   {
     "sku": "CAR-21",
@@ -313,68 +317,8 @@ export const allProducts = [
     "details": "Traditional knit hat with cuff, One size fits most"
   },
   {
-    "sku": "CAR-16",
-    "name": "Men's Classic Lightweight FR Long Sleeve Polo #SMP2",
-    "category": "Work Wear",
-    "sizes": "M - 3XL",
-    "badge": "",
-    "colors": [],
-    "price": 100,
-    "img": "/sku/MENS-CLASSIC-LONG-SLEEVE-SMP2.png",
-    "imgs": [
-      "/sku/MENS-CLASSIC-LONG-SLEEVE-SMP2.png"
-    ],
-    "material": "",
-    "details": "Flame resistant, 6.5 oz.(220 g/m²), Swiss Pique, Category 2 Protection"
-  },
-  {
-    "sku": "CAR-11",
-    "name": "Flame-Resistant Classic Twill Shirt #FRS160",
-    "category": "Work Wear",
-    "sizes": "S - 4XL",
-    "badge": "",
-    "colors": [],
-    "price": 100,
-    "img": "/sku/FRS-160-CARHARTT-SHIRT-_2_.png",
-    "imgs": [
-      "/sku/FRS-160-CARHARTT-SHIRT-_2_.png"
-    ],
-    "material": "88% cotton / 12% High-tenacity nylon",
-    "details": "7-ounces, FR twill"
-  },
-  {
-    "sku": "CAR-15",
-    "name": "FR Heavyweight Cotton Hoodie-Black #337",
-    "category": "Work Wear",
-    "sizes": "XS - 7XL",
-    "badge": "",
-    "colors": [],
-    "price": 100,
-    "img": "/sku/carmicheal-337-logo.png",
-    "imgs": [
-      "/sku/carmicheal-337-logo.png"
-    ],
-    "material": "",
-    "details": "Durable material holds up to the toughest working conditions, Sewn with FR thread for flame resistance, Detachable snap hood"
-  },
-  {
-    "sku": "CAR-13",
-    "name": "Viking Journeyman® 420D Jacket #3307J",
-    "category": "Work Wear",
-    "sizes": "S - 5XL",
-    "badge": "",
-    "colors": [],
-    "price": 100,
-    "img": "/sku/jacket-logoed-3307J.png",
-    "imgs": [
-      "/sku/jacket-logoed-3307J.png"
-    ],
-    "material": "Heavy-duty 420 denier nylon with PVC backing",
-    "details": "100% Waterproof and windproof, Toughest fabric to resist punctures rips snags and abrasions"
-  },
-  {
     "sku": "CAR-9",
-    "name": "Viking Professional® Insulated Journeyman Jacket #3957FRJ",
+    "name": "Viking Professional® Insulated Journeyman Jacket",
     "category": "Work Wear",
     "sizes": "S - 5XL",
     "badge": "",
@@ -385,26 +329,11 @@ export const allProducts = [
       "/sku/_INSULATED-VIKING-frj3957frj-_1_.png"
     ],
     "material": "",
-    "details": "Waterproof and windproof"
-  },
-  {
-    "sku": "CAR-12",
-    "name": "Flame-Resistant Relaxed Fit Canvas Work Pant Shadow #104204",
-    "category": "Work Wear",
-    "sizes": " ",
-    "badge": "",
-    "colors": [],
-    "price": 100,
-    "img": "/sku/carhartt-104204.png",
-    "imgs": [
-      "/sku/carhartt-104204.png"
-    ],
-    "material": "98% cotton / 2% spandex canvas",
-    "details": "9-ounces"
+    "details": "Waterproof, Windproof, #3957FRJ"
   },
   {
     "sku": "CAR-10",
-    "name": "Viking Professional® Insulated Journeyman Bib #3957FRJ",
+    "name": "Viking Professional® Insulated Journeyman Bib",
     "category": "Work Wear",
     "sizes": "S - 4XL",
     "badge": "",
@@ -415,11 +344,56 @@ export const allProducts = [
       "/sku/viking-3907FRWP.png"
     ],
     "material": "",
-    "details": "Flame resistance, Self-extinguishing for momentary contact with open flame "
+    "details": "Flame resistance, Self-extinguishing for momentary contact with open flame, #3957FRJ"
+  },
+  {
+    "sku": "CAR-11",
+    "name": "Flame-Resistant Classic Twill Shirt",
+    "category": "Work Wear",
+    "sizes": "S - 4XL",
+    "badge": "",
+    "colors": [],
+    "price": 100,
+    "img": "/sku/FRS-160-CARHARTT-SHIRT-_2_.png",
+    "imgs": [
+      "/sku/FRS-160-CARHARTT-SHIRT-_2_.png"
+    ],
+    "material": "88% cotton / 12% High-tenacity nylon",
+    "details": "7-ounces, FR twill, #FRS160"
+  },
+  {
+    "sku": "CAR-12",
+    "name": "Flame-Resistant Relaxed Fit Canvas Work Pant Shadow",
+    "category": "Work Wear",
+    "sizes": " ",
+    "badge": "",
+    "colors": [],
+    "price": 100,
+    "img": "/sku/carhartt-104204.png",
+    "imgs": [
+      "/sku/carhartt-104204.png"
+    ],
+    "material": "98% cotton / 2% spandex canvas",
+    "details": "Flame resistant, 9-ounces, #104204"
+  },
+  {
+    "sku": "CAR-13",
+    "name": "Viking Journeyman® 420D Jacket",
+    "category": "Work Wear",
+    "sizes": "S - 5XL",
+    "badge": "",
+    "colors": [],
+    "price": 100,
+    "img": "/sku/jacket-logoed-3307J.png",
+    "imgs": [
+      "/sku/jacket-logoed-3307J.png"
+    ],
+    "material": "Heavy-duty 420 denier nylon with PVC backing",
+    "details": "100% Waterproof and windproof, Toughest fabric to resist punctures rips snags and abrasions, #3307J"
   },
   {
     "sku": "CAR-14",
-    "name": "Viking Journeyman® 420D Bib Pants #3307P",
+    "name": "Viking Journeyman® 420D Bib Pants",
     "category": "Work Wear",
     "sizes": "S - 4XL",
     "badge": "",
@@ -430,11 +404,41 @@ export const allProducts = [
       "/sku/Viking-3307P.png"
     ],
     "material": "",
-    "details": "Viking Journeyman® 420D Bib Pants #3307P"
+    "details": "#3307P"
+  },
+  {
+    "sku": "CAR-15",
+    "name": "FR Heavyweight Cotton Hoodie-Black ",
+    "category": "Work Wear",
+    "sizes": "XS - 7XL",
+    "badge": "",
+    "colors": [],
+    "price": 100,
+    "img": "/sku/carmicheal-337-logo.png",
+    "imgs": [
+      "/sku/carmicheal-337-logo.png"
+    ],
+    "material": "",
+    "details": "Durable material holds up to the toughest working conditions, Sewn with FR thread for flame resistance, Detachable snap hood, #337"
+  },
+  {
+    "sku": "CAR-16",
+    "name": "Men's Classic Lightweight FR Long Sleeve Polo",
+    "category": "Work Wear",
+    "sizes": "M - 3XL",
+    "badge": "",
+    "colors": [],
+    "price": 100,
+    "img": "/sku/MENS-CLASSIC-LONG-SLEEVE-SMP2.png",
+    "imgs": [
+      "/sku/MENS-CLASSIC-LONG-SLEEVE-SMP2.png"
+    ],
+    "material": "",
+    "details": "Flame resistant, 6.5 oz.(220 g/m²), Swiss Pique, Category 2 Protection, #SMP2"
   },
   {
     "sku": "CAR-17",
-    "name": "Atlas Guardian FR/AR Ohsa Hi Vis Coveralls - Grey #1072",
+    "name": "Atlas Guardian FR/AR Ohsa Hi Vis Coveralls - Grey ",
     "category": "Work Wear",
     "sizes": "XS - 7XL",
     "badge": "",
@@ -445,7 +449,7 @@ export const allProducts = [
       "/sku/Coverall-FlaME-1072GR.png"
     ],
     "material": "",
-    "details": ""
+    "details": "#1072"
   }
 ];
 
