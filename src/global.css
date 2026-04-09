@@ -850,7 +850,7 @@ img { max-width: 100%; display: block; }
     align-items: center;
     justify-content: flex-end;
     padding: 0;
-    margin-top: -0.4rem;
+    margin-top: -0.9rem;
   }
   .hero__logo-spacer--mobile {
     display: none;
