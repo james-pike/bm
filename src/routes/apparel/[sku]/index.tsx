@@ -380,27 +380,35 @@ export default component$(() => {
               ))}
             </div>
             {/* Mobile carousel */}
-            <Carousel.Root class="related-carousel" slidesPerView={2} gap={6} align="start" sensitivity={{ touch: 0.5, mouse: 0.5 }}>
-              <Carousel.Scroller class="related-carousel__scroller">
-                {related.map((item) => (
-                  <Carousel.Slide key={item.sku} class="related-carousel__slide">
-                    <a href={`/apparel/${item.sku}/`} class="product-card product-card-link">
-                      <div class="product-card__image">
-                        <img src={item.img} alt={item.name} width="440" height="440" loading="lazy" decoding="async" />
-                      </div>
-                      <div class="product-card__info">
-                        <div class="product-card__name-row">
-                          <div class="product-card__name">{item.name}</div>
-                          <div class="product-card__price-group">
-                            <div class="product-card__price">${item.price}</div>
-                            <span class="product-card__sizes">{item.sizes === "One Size" ? t("modal.onesize", locale.value) : item.sizes}</span>
+            <Carousel.Root class="related-carousel" slidesPerView={2} gap={6} align="start" sensitivity={{ touch: 1.5, mouse: 1.5 }}>
+              <div class="related-carousel__wrapper">
+                <Carousel.Previous class="related-carousel__arrow related-carousel__arrow--prev">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+                </Carousel.Previous>
+                <Carousel.Scroller class="related-carousel__scroller">
+                  {related.map((item) => (
+                    <Carousel.Slide key={item.sku} class="related-carousel__slide">
+                      <a href={`/apparel/${item.sku}/`} class="product-card product-card-link">
+                        <div class="product-card__image">
+                          <img src={item.img} alt={item.name} width="440" height="440" loading="lazy" decoding="async" />
+                        </div>
+                        <div class="product-card__info">
+                          <div class="product-card__name-row">
+                            <div class="product-card__name">{item.name}</div>
+                            <div class="product-card__price-group">
+                              <div class="product-card__price">${item.price}</div>
+                              <span class="product-card__sizes">{item.sizes === "One Size" ? t("modal.onesize", locale.value) : item.sizes}</span>
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    </a>
-                  </Carousel.Slide>
-                ))}
-              </Carousel.Scroller>
+                      </a>
+                    </Carousel.Slide>
+                  ))}
+                </Carousel.Scroller>
+                <Carousel.Next class="related-carousel__arrow related-carousel__arrow--next">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+                </Carousel.Next>
+              </div>
             </Carousel.Root>
           </div>
         );
