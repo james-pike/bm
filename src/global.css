@@ -850,7 +850,7 @@ img { max-width: 100%; display: block; }
     align-items: center;
     justify-content: flex-end;
     padding: 0;
-    margin-top: -0.9rem;
+    margin-top: -1.5rem;
   }
   .hero__logo-spacer--mobile {
     display: none;
@@ -4507,7 +4507,7 @@ details[open] > .cart-drawer__checkout-title::after {
     align-self: end;
     aspect-ratio: 4 / 3;
     overflow: hidden;
-    padding-top: 1rem;
+    padding-top: 1.6rem;
     gap: 0;
   }
   .hero__title-icon {
