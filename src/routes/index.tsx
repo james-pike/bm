@@ -234,7 +234,7 @@ export default component$(() => {
                   <Carousel.Slide class="hero-carousel__slide">
                     <img src="/carmichael-services/van-building.jpeg" alt="Carmichael van" loading="eager" />
                   </Carousel.Slide>
-                  <Carousel.Slide class="hero-carousel__slide hero-carousel__slide--transparent">
+                  <Carousel.Slide class="hero-carousel__slide hero-carousel__slide--transparent hero-carousel__slide--white">
                     <img src="/carmichael.png" alt="Carmichael vintage car" loading="eager" />
                   </Carousel.Slide>
                 </Carousel.Scroller>
@@ -249,7 +249,7 @@ export default component$(() => {
                     <Carousel.Slide class="hero-bento-carousel__slide">
                       <img src="/carmichael-services/van-building.jpeg" alt="Carmichael van" loading="eager" />
                     </Carousel.Slide>
-                    <Carousel.Slide class="hero-bento-carousel__slide hero-bento-carousel__slide--transparent">
+                    <Carousel.Slide class="hero-bento-carousel__slide hero-bento-carousel__slide--transparent hero-bento-carousel__slide--white">
                       <img src="/carmichael.png" alt="Carmichael vintage car" loading="eager" />
                     </Carousel.Slide>
                   </Carousel.Scroller>

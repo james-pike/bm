@@ -154,7 +154,7 @@ export default component$(() => {
     return (
       <div class="apparel-catalog" id="products">
         <div class="product-detail">
-          <p style={{ padding: "2rem", textAlign: "center" }}>Product not found.</p>
+          <p style={{ padding: "2rem", textAlign: "center" }}>{t("product.notfound", locale.value)}</p>
           <button class="btn btn--primary" onClick$={() => nav("/apparel/")} style={{ margin: "0 auto", display: "block" }}>
             {t("apparel.title", locale.value)}
           </button>
@@ -260,26 +260,26 @@ export default component$(() => {
             {waistLengthSkus.has(p.sku) && (
               <div class="product-modal__field product-modal__waist-length-row">
                 <div class="product-modal__select-group">
-                  <label class="product-modal__label">Waist</label>
+                  <label class="product-modal__label">{t("product.waist", locale.value)}</label>
                   <select
                     class="product-modal__select"
                     value={selectedWaist.value}
                     onChange$={(_, el) => (selectedWaist.value = el.value)}
                   >
-                    <option value="" disabled>Select</option>
+                    <option value="" disabled>{t("product.select", locale.value)}</option>
                     {waistOptions.map((w) => (
                       <option key={w} value={w}>{w}</option>
                     ))}
                   </select>
                 </div>
                 <div class="product-modal__select-group">
-                  <label class="product-modal__label">Length</label>
+                  <label class="product-modal__label">{t("product.length", locale.value)}</label>
                   <select
                     class="product-modal__select"
                     value={selectedLength.value}
                     onChange$={(_, el) => (selectedLength.value = el.value)}
                   >
-                    <option value="" disabled>Select</option>
+                    <option value="" disabled>{t("product.select", locale.value)}</option>
                     {lengthOptions.map((l) => (
                       <option key={l} value={l}>{l}</option>
                     ))}
@@ -289,7 +289,7 @@ export default component$(() => {
             )}
             {variantSkus.has(p.sku) && (
               <div class="product-modal__field">
-                <label class="product-modal__label">Variant</label>
+                <label class="product-modal__label">{t("product.variant", locale.value)}</label>
                 <div class="product-modal__options">
                   {variantOptions.map((v) => (
                     <button
@@ -359,7 +359,7 @@ export default component$(() => {
         const related = allProducts.filter((r) => r.sku !== p.sku && r.sku !== "CAR-12" && r.category === p.category).slice(0, 8);
         return (
           <div class="related-items">
-            <h3 class="related-items__title">More {categoryLabel(p.category, locale.value)}</h3>
+            <h3 class="related-items__title">{t("product.more", locale.value)} {categoryLabel(p.category, locale.value)}</h3>
             {/* Desktop grid */}
             <div class="related-items__grid">
               {related.slice(0, 4).map((item) => (

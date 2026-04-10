@@ -186,6 +186,12 @@ const translations = {
   // Product detail
   "product.taptoclose": { en: "Tap anywhere to close", fr: "Appuyez pour fermer" },
   "product.related": { en: "Related Items", fr: "Articles connexes" },
+  "product.more": { en: "More", fr: "Plus de" },
+  "product.notfound": { en: "Product not found.", fr: "Produit introuvable." },
+  "product.waist": { en: "Waist", fr: "Tour de taille" },
+  "product.length": { en: "Length", fr: "Longueur" },
+  "product.variant": { en: "Variant", fr: "Variante" },
+  "product.select": { en: "Select", fr: "Choisir" },
 } as const;
 
 export type TranslationKey = keyof typeof translations;
