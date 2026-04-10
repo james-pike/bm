@@ -2,7 +2,6 @@ import { component$, useSignal, useContext, useVisibleTask$ } from "@builder.io/
 import { Carousel } from "@qwik-ui/headless";
 import type { DocumentHead } from "@builder.io/qwik-city";
 import { LocaleContext, t } from "../i18n";
-import { categoryLabel } from "./apparel/products";
 import { ProductCatalog } from "../components/product-catalog/product-catalog";
 
 export default component$(() => {
