@@ -10,13 +10,13 @@ export const allProducts = [
     "sizes": "XS - 4XL",
     "badge": "",
     "colors": [],
-    "price": 100,
+    "price": 65,
     "img": "/softshell/j7603-soft-shell.png",
     "imgs": [
       "/softshell/j7603-soft-shell.png"
     ],
     "material": "100% polyester with mechanical stretch, bonded micro fleece lining",
-    "details": "Water repellent, Wind resistant, Anti-pill, YKK zippers, 1000mm waterproof rating, Classic fit"
+    "details": "Water repellent, Wind resistant, Anti-pill, YKK zippers, 1000mm waterproof rating, Classic fit #J7603"
   },
   {
     "sku": "CAR-2",
@@ -25,13 +25,13 @@ export const allProducts = [
     "sizes": "XS - 4XL",
     "badge": "",
     "colors": [],
-    "price": 100,
+    "price": 65,
     "img": "/softshell/l7603-ladies-soft-shell.png",
     "imgs": [
       "/softshell/l7603-ladies-soft-shell.png"
     ],
     "material": "100% polyester with mechanical stretch, bonded micro fleece lining",
-    "details": "Water repellent, Wind resistant, Anti-pill, YKK zippers, 1000mm waterproof rating, Classic fit"
+    "details": "Water repellent, Wind resistant, Anti-pill, YKK zippers, 1000mm waterproof rating, Classic fit #L7603"
   },
   {
     "sku": "CAR-25",
@@ -40,7 +40,7 @@ export const allProducts = [
     "sizes": "S - 3XL",
     "badge": "",
     "colors": [],
-    "price": 100,
+    "price": 0,
     "img": "/mens-rigi-car-logoed.png",
     "imgs": [
       "/mens-rigi-car-logoed.png"
@@ -55,7 +55,7 @@ export const allProducts = [
     "sizes": "XS - 2XL",
     "badge": "",
     "colors": [],
-    "price": 100,
+    "price": 0,
     "img": "/ladies-rigbi-logoed-car.png",
     "imgs": [
       "/ladies-rigbi-logoed-car.png"
@@ -64,47 +64,19 @@ export const allProducts = [
     "details": "Eco-friendly polyblend doubleknit fabric, Global Recycled Standard Certified, Breathable and moisture-wicking, Anti-pill, UPF 40+ protection, Self-fabric waistband and cuffs, Shaped seams for a better fit"
   },
   {
-    "sku": "CAR-29",
-    "name": "Men's Full Zip Alpine Fleece",
-    "category": "Jackets",
-    "sizes": "XS - 4XL",
-    "badge": "",
-    "colors": [],
-    "price": 100,
-    "img": "",
-    "imgs": [],
-    "material": "60% Cotton / 40% Acrylic",
-    "details": "Heavyweight cuffs hem, and stand up collar, Long-sleeve, FW zipper pull, Even hem"
-  },
-  {
-    "sku": "CAR-30",
-    "name": "Women's Full Zip Alpine Fleece",
-    "category": "Jackets",
-    "sizes": "S - 4XL",
-    "badge": "",
-    "colors": [],
-    "price": 100,
-    "img": "/womens-fleece.png",
-    "imgs": [
-      "/womens-fleece.png"
-    ],
-    "material": "60% Cotton / 40% Acrylic",
-    "details": "Heavyweight cuffs hem, and stand up collar, Long-sleeve, FW zipper pull, Even hem"
-  },
-  {
     "sku": "CAR-31",
     "name": "Men's Roots Fleece",
     "category": "Jackets",
     "sizes": "S - 3XL",
     "badge": "",
     "colors": [],
-    "price": 100,
+    "price": 110,
     "img": "/mens-roots-fleece.png",
     "imgs": [
       "/mens-roots-fleece.png"
     ],
     "material": "75% Recycled Polyester 25% Polyester anti-pill microfleece, 270 g/m² (8.0 oz/yd²), Contrast: 60% Polyester 40% Recycled Polyester 240T woven interior collar & zipper flap. 100% Recycled polyester brushed tricot knit pocket bags",
-    "details": "Anti-pill microfleece, Global Recycled Standard (GRS) Certified"
+    "details": "Anti-pill microfleece, Global Recycled Standard (GRS) Certified #18194"
   },
   {
     "sku": "CAR-32",
@@ -113,13 +85,13 @@ export const allProducts = [
     "sizes": "XS - 2XL",
     "badge": "",
     "colors": [],
-    "price": 100,
+    "price": 110,
     "img": "/womens-roots-fleece.png",
     "imgs": [
       "/womens-roots-fleece.png"
     ],
     "material": "",
-    "details": ""
+    "details": "#98194"
   },
   {
     "sku": "CAR-3",
@@ -128,7 +100,7 @@ export const allProducts = [
     "sizes": "S - 4XL",
     "badge": "",
     "colors": [],
-    "price": 100,
+    "price": 0,
     "img": "/uapolo/car1.png",
     "imgs": [
       "/uapolo/car1.png"
@@ -143,7 +115,7 @@ export const allProducts = [
     "sizes": "S - 4XL",
     "badge": "",
     "colors": [],
-    "price": 100,
+    "price": 0,
     "img": "/sku/car18.png",
     "imgs": [
       "/sku/car18.png"
@@ -158,7 +130,7 @@ export const allProducts = [
     "sizes": "XS - 2XL",
     "badge": "",
     "colors": [],
-    "price": 100,
+    "price": 0,
     "img": "/wuapb.png",
     "imgs": [
       "/wuapb.png"
@@ -173,7 +145,7 @@ export const allProducts = [
     "sizes": "XS - 2XL",
     "badge": "",
     "colors": [],
-    "price": 100,
+    "price": 0,
     "img": "/uapolo/womens-white.png",
     "imgs": [
       "/uapolo/womens-white.png"
@@ -188,7 +160,7 @@ export const allProducts = [
     "sizes": "S - 4XL",
     "badge": "",
     "colors": [],
-    "price": 100,
+    "price": 0,
     "img": "/sku/car19.png",
     "imgs": [
       "/sku/car19.png"
@@ -203,7 +175,7 @@ export const allProducts = [
     "sizes": "S - 4XL",
     "badge": "",
     "colors": [],
-    "price": 100,
+    "price": 0,
     "img": "/sku/car20.png",
     "imgs": [
       "/sku/car20.png"
@@ -218,7 +190,7 @@ export const allProducts = [
     "sizes": "XS-6XL",
     "badge": "",
     "colors": [],
-    "price": 100,
+    "price": 0,
     "img": "/s455-mens-green.png",
     "imgs": [
       "/s455-mens-green.png"
@@ -233,7 +205,7 @@ export const allProducts = [
     "sizes": "S - 4XL",
     "badge": "",
     "colors": [],
-    "price": 100,
+    "price": 0,
     "img": "/wpb.png",
     "imgs": [
       "/wpb.png"
@@ -248,7 +220,7 @@ export const allProducts = [
     "sizes": "S - 4XL",
     "badge": "",
     "colors": [],
-    "price": 100,
+    "price": 0,
     "img": "/wpg.png",
     "imgs": [
       "/wpg.png"
@@ -263,7 +235,7 @@ export const allProducts = [
     "sizes": "XS - 4XL",
     "badge": "",
     "colors": [],
-    "price": 100,
+    "price": 0,
     "img": "/golf/green.png",
     "imgs": [
       "/golf/green.png"
@@ -278,7 +250,7 @@ export const allProducts = [
     "sizes": "XS - 3XL",
     "badge": "",
     "colors": [],
-    "price": 100,
+    "price": 0,
     "img": "/m265w-womens-harriton.png",
     "imgs": [
       "/m265w-womens-harriton.png"
@@ -293,13 +265,13 @@ export const allProducts = [
     "sizes": "One Size",
     "badge": "Popular",
     "colors": [],
-    "price": 100,
+    "price": 28.5,
     "img": "/hat/30109107PS2_FRONT.JPG",
     "imgs": [
       "/hat/30109107PS2_FRONT.JPG"
     ],
     "material": "Poly/Spandex with Performance Mesh",
-    "details": "Structured mid profile 6 panel Flexfit 110®, Shapeable pre-curved visor, Plastic snap back closure, UV protection, Moisture wicking, Contrasting grey undervisor, Flat embroidery with embroidered patch"
+    "details": "Structured mid profile 6 panel Flexfit 110®, Shapeable pre-curved visor, Plastic snap back closure, UV protection, Moisture wicking, Contrasting grey undervisor, Flat embroidery with embroidered patch #I8502"
   },
   {
     "sku": "CAR-18",
@@ -308,7 +280,7 @@ export const allProducts = [
     "sizes": "One Size",
     "badge": "",
     "colors": [],
-    "price": 100,
+    "price": 16.5,
     "img": "/beanie/1.png",
     "imgs": [
       "/beanie/1.png"
@@ -323,7 +295,7 @@ export const allProducts = [
     "sizes": "S - 5XL",
     "badge": "",
     "colors": [],
-    "price": 100,
+    "price": 260,
     "img": "/sku/_INSULATED-VIKING-frj3957frj-_1_.png",
     "imgs": [
       "/sku/_INSULATED-VIKING-frj3957frj-_1_.png"
@@ -338,7 +310,7 @@ export const allProducts = [
     "sizes": "S - 4XL",
     "badge": "",
     "colors": [],
-    "price": 100,
+    "price": 85,
     "img": "/sku/viking-3907FRWP.png",
     "imgs": [
       "/sku/viking-3907FRWP.png"
@@ -353,7 +325,7 @@ export const allProducts = [
     "sizes": "S - 4XL",
     "badge": "",
     "colors": [],
-    "price": 100,
+    "price": 135,
     "img": "/sku/FRS-160-CARHARTT-SHIRT-_2_.png",
     "imgs": [
       "/sku/FRS-160-CARHARTT-SHIRT-_2_.png"
@@ -368,7 +340,7 @@ export const allProducts = [
     "sizes": " ",
     "badge": "",
     "colors": [],
-    "price": 100,
+    "price": 160,
     "img": "/sku/carhartt-104204.png",
     "imgs": [
       "/sku/carhartt-104204.png"
@@ -383,7 +355,7 @@ export const allProducts = [
     "sizes": "S - 5XL",
     "badge": "",
     "colors": [],
-    "price": 100,
+    "price": 120,
     "img": "/sku/jacket-logoed-3307J.png",
     "imgs": [
       "/sku/jacket-logoed-3307J.png"
@@ -413,7 +385,7 @@ export const allProducts = [
     "sizes": "XS - 7XL",
     "badge": "",
     "colors": [],
-    "price": 100,
+    "price": 176,
     "img": "/sku/carmicheal-337-logo.png",
     "imgs": [
       "/sku/carmicheal-337-logo.png"
@@ -428,7 +400,7 @@ export const allProducts = [
     "sizes": "M - 3XL",
     "badge": "",
     "colors": [],
-    "price": 100,
+    "price": 250,
     "img": "/sku/MENS-CLASSIC-LONG-SLEEVE-SMP2.png",
     "imgs": [
       "/sku/MENS-CLASSIC-LONG-SLEEVE-SMP2.png"
@@ -443,7 +415,7 @@ export const allProducts = [
     "sizes": "XS - 7XL",
     "badge": "",
     "colors": [],
-    "price": 100,
+    "price": 200,
     "img": "/sku/Coverall-FlaME-1072GR.png",
     "imgs": [
       "/sku/Coverall-FlaME-1072GR.png"
