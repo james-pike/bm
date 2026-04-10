@@ -135,8 +135,8 @@ export const useSubmitOrder = routeAction$(
     </tr>`
   ).join("");
 
-  const fromAddress = env.get("RESEND_FROM") || "Carmichael Apparel <onboarding@resend.dev>";
-  const toAddress = env.get("ORDER_NOTIFY_TO") || "cs@safetyhouse.ca";
+  const fromAddress = env.get("RESEND_FROM") || env.get("VITE_RESEND_FROM") || "Carmichael Apparel <onboarding@resend.dev>";
+  const toAddress = env.get("ORDER_NOTIFY_TO") || env.get("VITE_ORDER_NOTIFY_TO") || "cs@safetyhouse.ca";
 
   const html = `
     <div style="font-family:sans-serif;max-width:600px;margin:0 auto">
