@@ -218,7 +218,7 @@ export default component$(() => {
             )}
           </div>
           <div class="product-modal__breadcrumb">
-            <span class="breadcrumb__link" onClick$={() => nav(`/apparel/?category=${p.category}`)}>
+            <span class="breadcrumb__link" onClick$={() => nav(`/apparel/#${p.category.toLowerCase().replace(/\s+/g, "-")}`)}>
               {categoryLabel(p.category, locale.value)}
             </span>
             <span class="breadcrumb__sep">/</span>

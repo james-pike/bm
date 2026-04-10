@@ -11,6 +11,8 @@ export default component$(() => {
   const heroIndex = useSignal(0);
   const bentoIndex = useSignal(0);
   const carouselPaused = useSignal(false);
+  const touchStartX = useSignal(0);
+  const touchStartY = useSignal(0);
 
   // eslint-disable-next-line qwik/no-use-visible-task
   useVisibleTask$(({ cleanup }) => {
@@ -102,15 +104,32 @@ export default component$(() => {
                 <img src="/logo3.png" alt="Carmichael" class="hero__title-img" width="408" height="61" loading="eager" decoding="sync" />
                 <span class="hero__title-apparel">{t("logo.apparel", locale.value)}</span>
                 <p class="hero__subtitle-inline">{t("hero.subtitle", locale.value)}</p>
+                <div class="hero__logo-spacer hero__logo-spacer--mobile">
+                  <img src="/carmichael-services/canada2.png" alt="Proudly Canadian" class="hero__logo-spacer-canada" loading="eager" />
+                </div>
                 <div class="hero__logo-spacer">
                   <img src="/carmichael-services/canada2.png" alt="Proudly Canadian" class="hero__logo-spacer-canada" loading="eager" />
                 </div>
               </div>
-              <div class="hero__logo-spacer hero__logo-spacer--mobile">
-                <img src="/carmichael-services/canada2.png" alt="Proudly Canadian" class="hero__logo-spacer-canada" loading="eager" />
-              </div>
               <Carousel.Root class="hero-carousel dot-pattern dot-pattern--light" bind:selectedIndex={heroIndex} align="start" draggable={false} rewind>
-                <Carousel.Scroller class="hero-carousel__scroller" onClick$={() => { carouselPaused.value = true; heroIndex.value = (heroIndex.value + 1) % 2; }}>
+                <Carousel.Scroller
+                  class="hero-carousel__scroller"
+                  onClick$={() => { carouselPaused.value = true; heroIndex.value = (heroIndex.value + 1) % 2; }}
+                  onTouchStart$={(e) => {
+                    if (e.touches.length !== 1) return;
+                    touchStartX.value = e.touches[0].clientX;
+                    touchStartY.value = e.touches[0].clientY;
+                  }}
+                  onTouchEnd$={(e) => {
+                    const t = e.changedTouches[0];
+                    const dx = t.clientX - touchStartX.value;
+                    const dy = t.clientY - touchStartY.value;
+                    if (Math.abs(dx) < 40 || Math.abs(dy) > Math.abs(dx)) return;
+                    carouselPaused.value = true;
+                    heroIndex.value = (heroIndex.value + 1) % 2;
+                    bentoIndex.value = (bentoIndex.value + 1) % 2;
+                  }}
+                >
                   <Carousel.Slide class="hero-carousel__slide">
                     <img src="/carmichael-services/van-building.jpeg" alt="Carmichael van" loading="eager" />
                   </Carousel.Slide>
@@ -125,8 +144,25 @@ export default component$(() => {
               </Carousel.Root>
               <div class="hero-bento">
                 <Carousel.Root class="hero-bento-carousel dot-pattern dot-pattern--light" bind:selectedIndex={bentoIndex} align="start" draggable={false} rewind>
-                  <Carousel.Scroller class="hero-bento-carousel__scroller" onClick$={() => { carouselPaused.value = true; bentoIndex.value = (bentoIndex.value + 1) % 2; }}>
-                    <Carousel.Slide class="hero-bento-carousel__slide">
+                  <Carousel.Scroller
+                    class="hero-bento-carousel__scroller"
+                    onClick$={() => { carouselPaused.value = true; bentoIndex.value = (bentoIndex.value + 1) % 2; }}
+                    onTouchStart$={(e) => {
+                      if (e.touches.length !== 1) return;
+                      touchStartX.value = e.touches[0].clientX;
+                      touchStartY.value = e.touches[0].clientY;
+                    }}
+                    onTouchEnd$={(e) => {
+                      const t = e.changedTouches[0];
+                      const dx = t.clientX - touchStartX.value;
+                      const dy = t.clientY - touchStartY.value;
+                      if (Math.abs(dx) < 40 || Math.abs(dy) > Math.abs(dx)) return;
+                      carouselPaused.value = true;
+                      bentoIndex.value = (bentoIndex.value + 1) % 2;
+                      heroIndex.value = (heroIndex.value + 1) % 2;
+                    }}
+                  >
+                    <Carousel.Slide class="hero-bento-carousel__slide hero-bento-carousel__slide--van">
                       <img src="/carmichael-services/van-building.jpeg" alt="Carmichael van" loading="eager" />
                     </Carousel.Slide>
                     <Carousel.Slide class="hero-bento-carousel__slide hero-bento-carousel__slide--transparent hero-bento-carousel__slide--white">
