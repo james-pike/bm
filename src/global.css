@@ -5093,7 +5093,7 @@ details[open] > .cart-drawer__checkout-title::after {
   .teaser-card-section { margin: 0 16px; }
   .hero { padding-bottom: 1rem; }
   .product-detail { max-width: 100%; }
-  .product-modal__layout { grid-template-columns: 1fr 1fr; grid-template-rows: auto 1fr; column-gap: 0.2rem; row-gap: 0; }
+  .product-modal__layout { grid-template-columns: 1fr 1fr; grid-template-rows: auto 1fr; column-gap: 0.2rem; row-gap: 0.1rem; }
   .product-detail .product-modal__details { padding: 1.25rem 1rem 1rem; background: var(--ce-white); border-radius: var(--radius-sm); box-shadow: none; border: none; grid-column: 2; grid-row: 2; margin-right: 0.1rem; }
   .product-detail .product-modal__details::after { display: none; }
   .product-detail .product-modal__details::before { display: none; }
