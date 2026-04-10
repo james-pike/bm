@@ -60,9 +60,20 @@ export const ProductCatalog = component$<{ class?: string }>(({ "class": cls }) 
         history.replaceState(null, "", window.location.pathname);
       }
     };
+    const onSelectCategory = (e: Event) => {
+      const cat = (e as CustomEvent).detail;
+      if (cat) {
+        activeCat.value = cat;
+        searchQuery.value = "";
+      }
+    };
     applyHash();
     window.addEventListener("hashchange", applyHash);
-    cleanup(() => window.removeEventListener("hashchange", applyHash));
+    window.addEventListener("select-category", onSelectCategory);
+    cleanup(() => {
+      window.removeEventListener("hashchange", applyHash);
+      window.removeEventListener("select-category", onSelectCategory);
+    });
   });
 
   // When mobile/tablet search is open, close it on any click outside the
