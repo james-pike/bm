@@ -145,7 +145,7 @@ export const ProductCatalog = component$<{ class?: string }>(({ "class": cls }) 
                     const catalog = document.querySelector('.home-catalog');
                     const tabH = (document.querySelector('.home-catalog__header') as HTMLElement)?.offsetHeight || 34;
                     const catalogTop = catalog ? catalog.getBoundingClientRect().top + window.scrollY : 0;
-                    const stickyPos = catalogTop - headerH + tabH - 30;
+                    const stickyPos = catalogTop - headerH + tabH - 28;
                     window.scrollTo({ top: stickyPos, behavior: 'instant' });
                   }
                 }}

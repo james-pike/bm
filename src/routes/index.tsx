@@ -163,7 +163,10 @@ export default component$(() => {
                     }}
                   >
                     <Carousel.Slide class="hero-bento-carousel__slide hero-bento-carousel__slide--van">
-                      <img src="/carmichael-services/van-building.jpeg" alt="Carmichael van" loading="eager" />
+                      <picture>
+                        <source media="(max-width: 600px)" srcSet="/carmichael-services/van-building-mobile.jpeg" />
+                        <img src="/carmichael-services/van-building.jpeg" alt="Carmichael van" loading="eager" />
+                      </picture>
                     </Carousel.Slide>
                     <Carousel.Slide class="hero-bento-carousel__slide hero-bento-carousel__slide--transparent hero-bento-carousel__slide--white">
                       <img src="/carmichael.webp" alt="Carmichael vintage car" loading="eager" />
