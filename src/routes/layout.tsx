@@ -367,8 +367,16 @@ export default component$(() => {
     };
 
     // Send order via server action
-    const result = await orderAction.submit(orderData);
-    const v = result.value as any;
+    let result: any;
+    try {
+      result = await orderAction.submit(orderData);
+    } catch (err) {
+      console.error("Order submit threw:", err);
+      formError.value = (err as Error)?.message || "Network error placing order";
+      return;
+    }
+    console.log("Order submit result:", result);
+    const v = result?.value as any;
     if (v?.failed) {
       // Surface zod field errors, top-level form errors, or generic message
       let msg = v.message;
