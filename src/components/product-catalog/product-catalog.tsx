@@ -52,12 +52,17 @@ export const ProductCatalog = component$<{ class?: string }>(({ "class": cls }) 
   };
 
   // eslint-disable-next-line qwik/no-use-visible-task
-  useVisibleTask$(() => {
-    const hash = window.location.hash.replace("#", "");
-    if (hash && HASH_TO_CAT[hash]) {
-      activeCat.value = HASH_TO_CAT[hash];
-      history.replaceState(null, "", window.location.pathname);
-    }
+  useVisibleTask$(({ cleanup }) => {
+    const applyHash = () => {
+      const hash = window.location.hash.replace("#", "");
+      if (hash && HASH_TO_CAT[hash]) {
+        activeCat.value = HASH_TO_CAT[hash];
+        history.replaceState(null, "", window.location.pathname);
+      }
+    };
+    applyHash();
+    window.addEventListener("hashchange", applyHash);
+    cleanup(() => window.removeEventListener("hashchange", applyHash));
   });
 
   // When mobile/tablet search is open, close it on any click outside the
