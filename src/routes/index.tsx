@@ -112,7 +112,7 @@ export default component$(() => {
                     <img src="/carmichael-services/van-building.jpeg" alt="Carmichael van" loading="eager" />
                   </Carousel.Slide>
                   <Carousel.Slide class="hero-carousel__slide hero-carousel__slide--transparent hero-carousel__slide--white">
-                    <img src="/carmichael.png" alt="Carmichael vintage car" loading="eager" />
+                    <img src="/carmichael.webp" alt="Carmichael vintage car" loading="eager" />
                   </Carousel.Slide>
                 </Carousel.Scroller>
                 <Carousel.Pagination class="hero-carousel__dots" onClick$={() => { carouselPaused.value = true; }}>
@@ -127,7 +127,7 @@ export default component$(() => {
                       <img src="/carmichael-services/van-building.jpeg" alt="Carmichael van" loading="eager" />
                     </Carousel.Slide>
                     <Carousel.Slide class="hero-bento-carousel__slide hero-bento-carousel__slide--transparent hero-bento-carousel__slide--white">
-                      <img src="/carmichael.png" alt="Carmichael vintage car" loading="eager" />
+                      <img src="/carmichael.webp" alt="Carmichael vintage car" loading="eager" />
                     </Carousel.Slide>
                   </Carousel.Scroller>
                   <Carousel.Pagination class="hero-bento-carousel__dots" onClick$={() => { carouselPaused.value = true; }}>

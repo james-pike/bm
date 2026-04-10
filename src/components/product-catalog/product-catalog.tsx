@@ -42,7 +42,7 @@ export const ProductCatalog = component$<{ class?: string }>(({ "class": cls }) 
   const activeCat = useSignal("All");
   const searchQuery = useSignal("");
   const searchOpen = useSignal(false);
-  const tabletCols = useSignal(2);
+  const tabletCols = useSignal(3);
 
   const HASH_TO_CAT: Record<string, string> = {
     "work-wear": "Work Wear",
