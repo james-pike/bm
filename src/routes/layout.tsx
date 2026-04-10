@@ -196,14 +196,14 @@ export const useSubmitOrder = routeAction$(
       .array(
         z.object({
           name: z.string().min(1).max(200),
-          sku: z.string().max(40).optional(),
-          color: z.string().max(40),
-          size: z.string().max(40),
-          quantity: z.number().int().min(1).max(999),
-          price: z.number().nonnegative().max(100000),
-          waist: z.string().max(20).optional(),
-          length: z.string().max(20).optional(),
-          variant: z.string().max(40).optional(),
+          sku: z.string().max(40).optional().nullable(),
+          color: z.string().max(40).optional().nullable().default(""),
+          size: z.string().max(40).optional().nullable().default(""),
+          quantity: z.coerce.number().int().min(1).max(999),
+          price: z.coerce.number().nonnegative().max(100000),
+          waist: z.string().max(20).optional().nullable(),
+          length: z.string().max(20).optional().nullable(),
+          variant: z.string().max(40).optional().nullable(),
         }),
       )
       .min(1)
@@ -357,8 +357,12 @@ export default component$(() => {
     const orderData = {
       employee: { name: `${empFirstName.value} ${empLastName.value}`, email: empEmail.value, phone: empPhone.value, department: empDept.value },
       items: cart.items.map((i) => ({
-        name: i.name, sku: i.sku, color: i.color, size: i.size,
-        quantity: i.quantity, price: i.price,
+        name: i.name || "",
+        sku: i.sku || "",
+        color: i.color || "",
+        size: i.size || "",
+        quantity: Number(i.quantity) || 1,
+        price: Number(i.price) || 0,
         ...(i.waist ? { waist: i.waist } : {}),
         ...(i.length ? { length: i.length } : {}),
         ...(i.variant ? { variant: i.variant } : {}),
