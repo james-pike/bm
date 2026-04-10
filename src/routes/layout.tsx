@@ -36,11 +36,17 @@ export const useCartCountLoader = routeLoader$(({ cookie }) => {
 });
 
 export const useLogin = routeAction$(
-  ({ username, password }, { cookie, fail }) => {
-    if (username === "admin" && password === "CM26") {
+  ({ username, password }, { cookie, fail, env }) => {
+    const expectedUser = env.get("APP_USERNAME") || "admin";
+    const expectedPass = env.get("APP_PASSWORD");
+    if (!expectedPass) {
+      return fail(500, { message: "Login not configured" });
+    }
+    if (username === expectedUser && password === expectedPass) {
       cookie.set(AUTH_COOKIE, "authenticated", {
         path: "/",
         httpOnly: true,
+        secure: true,
         sameSite: "lax",
         maxAge: 60 * 60 * 24 * 3,
       });
@@ -49,8 +55,8 @@ export const useLogin = routeAction$(
     return fail(401, { message: "Invalid username or password" });
   },
   zod$({
-    username: z.string().min(1),
-    password: z.string().min(1),
+    username: z.string().min(1).max(64),
+    password: z.string().min(1).max(128),
   }),
 );
 
@@ -59,16 +65,27 @@ export const useLogout = routeAction$(async (_, { cookie }) => {
   return { success: true };
 });
 
-export const useSubmitOrder = routeAction$(async (data, { fail, env }) => {
-  const tursoUrl = env.get("TURSO_URL") || env.get("VITE_TURSO_URL") || import.meta.env.VITE_TURSO_URL;
-  const tursoToken = env.get("TURSO_AUTH_TOKEN") || env.get("VITE_TURSO_AUTH_TOKEN") || import.meta.env.VITE_TURSO_AUTH_TOKEN;
-  const apiKey = env.get("RESEND_API_KEY") || env.get("VITE_RESEND_API_KEY") || import.meta.env.VITE_RESEND_API_KEY;
+// HTML-escape user-provided strings before they go into the order email body
+function esc(s: string | undefined | null): string {
+  if (s == null) return "";
+  return String(s)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
 
-  const { employee, items, date } = data as {
-    employee: { name: string; email: string; phone: string; department: string };
-    items: { name: string; sku?: string; color: string; size: string; quantity: number; price: number; waist?: string; length?: string; variant?: string }[];
-    date: string;
-  };
+export const useSubmitOrder = routeAction$(
+  async (data, { fail, env, cookie }) => {
+    if (!isAuthenticated(cookie)) {
+      return fail(401, { message: "Not authenticated" });
+    }
+    const tursoUrl = env.get("TURSO_URL");
+    const tursoToken = env.get("TURSO_AUTH_TOKEN");
+    const apiKey = env.get("RESEND_API_KEY");
+
+    const { employee, items, date } = data;
 
   const colorMap: Record<string, string> = {
     "#00703c": "Green", "#1a1a18": "Black", "#ffffff": "White",
@@ -109,12 +126,15 @@ export const useSubmitOrder = routeAction$(async (data, { fail, env }) => {
 
   const itemRows = items.map((i) =>
     `<tr>
-      <td style="padding:6px 12px;border-bottom:1px solid #eee">${i.name}${i.sku ? ` <span style="color:#999;font-size:12px">(${i.sku})</span>` : ""}</td>
-      <td style="padding:6px 12px;border-bottom:1px solid #eee">${i.color ? cName(i.color) + " / " : ""}${i.size}${i.waist ? ` / W${i.waist} L${i.length}` : ""}</td>
+      <td style="padding:6px 12px;border-bottom:1px solid #eee">${esc(i.name)}${i.sku ? ` <span style="color:#999;font-size:12px">(${esc(i.sku)})</span>` : ""}</td>
+      <td style="padding:6px 12px;border-bottom:1px solid #eee">${i.color ? esc(cName(i.color)) + " / " : ""}${esc(i.size)}${i.waist ? ` / W${esc(i.waist)} L${esc(i.length)}` : ""}</td>
       <td style="padding:6px 12px;border-bottom:1px solid #eee;text-align:center">${i.quantity}</td>
       <td style="padding:6px 12px;border-bottom:1px solid #eee;text-align:right">$${(((Number(i.price) || 0) * i.quantity)).toFixed(2)}</td>
     </tr>`
   ).join("");
+
+  const fromAddress = env.get("RESEND_FROM") || "Carmichael Apparel <onboarding@resend.dev>";
+  const toAddress = env.get("ORDER_NOTIFY_TO") || "cs@safetyhouse.ca";
 
   const html = `
     <div style="font-family:sans-serif;max-width:600px;margin:0 auto">
@@ -122,10 +142,10 @@ export const useSubmitOrder = routeAction$(async (data, { fail, env }) => {
         <h1 style="color:#fff;margin:0;font-size:20px">Carmichael Apparel — Apparel Order</h1>
       </div>
       <div style="padding:24px;border:1px solid #e5e7eb;border-top:none;border-radius:0 0 8px 8px">
-        <p style="margin:0 0 4px"><strong>Date:</strong> ${date}</p>
-        <p style="margin:0 0 4px"><strong>Employee:</strong> ${employee.name}</p>
-        ${employee.phone ? `<p style="margin:0 0 4px"><strong>Phone:</strong> ${employee.phone}</p>` : ""}
-        ${employee.department ? `<p style="margin:0 0 4px"><strong>Location:</strong> ${employee.department}</p>` : ""}
+        <p style="margin:0 0 4px"><strong>Date:</strong> ${esc(date)}</p>
+        <p style="margin:0 0 4px"><strong>Employee:</strong> ${esc(employee.name)}</p>
+        ${employee.phone ? `<p style="margin:0 0 4px"><strong>Phone:</strong> ${esc(employee.phone)}</p>` : ""}
+        ${employee.department ? `<p style="margin:0 0 4px"><strong>Location:</strong> ${esc(employee.department)}</p>` : ""}
         <hr style="border:none;border-top:1px solid #e5e7eb;margin:16px 0">
         <table style="width:100%;border-collapse:collapse;font-size:14px">
           <thead>
@@ -151,8 +171,8 @@ export const useSubmitOrder = routeAction$(async (data, { fail, env }) => {
   try {
     const resend = new Resend(apiKey);
     await resend.emails.send({
-      from: "Carmichael Apparel <onboarding@resend.dev>", // TODO: change to orders@carmichaelengineering.com after domain verification
-      to: ["cs@safetyhouse.ca"],
+      from: fromAddress,
+      to: [toAddress],
       subject: `Apparel Order — ${employee.name} — ${date}`,
       html,
     });
@@ -162,7 +182,33 @@ export const useSubmitOrder = routeAction$(async (data, { fail, env }) => {
   }
 
   return { success: true };
-});
+  },
+  zod$({
+    employee: z.object({
+      name: z.string().min(1).max(120),
+      email: z.string().email().max(254).or(z.literal("")),
+      phone: z.string().max(40),
+      department: z.string().max(120),
+    }),
+    items: z
+      .array(
+        z.object({
+          name: z.string().min(1).max(200),
+          sku: z.string().max(40).optional(),
+          color: z.string().max(40),
+          size: z.string().max(40),
+          quantity: z.number().int().min(1).max(999),
+          price: z.number().nonnegative().max(100000),
+          waist: z.string().max(20).optional(),
+          length: z.string().max(20).optional(),
+          variant: z.string().max(40).optional(),
+        }),
+      )
+      .min(1)
+      .max(100),
+    date: z.string().min(1).max(40),
+  }),
+);
 
 interface CartItem {
   name: string;

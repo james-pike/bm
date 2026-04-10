@@ -1,9 +1,18 @@
 {
   "$schema": "https://json.schemastore.org/web-manifest-combined.json",
-  "name": "qwik-project-name",
-  "short_name": "Welcome to Qwik",
-  "start_url": ".",
+  "name": "Carmichael Apparel",
+  "short_name": "Carmichael",
+  "start_url": "/",
   "display": "standalone",
-  "background_color": "#fff",
-  "description": "A Qwik project app."
+  "background_color": "#1a3a28",
+  "theme_color": "#1a3a28",
+  "description": "Internal apparel ordering for Carmichael staff.",
+  "icons": [
+    {
+      "src": "/carmichael-logo.png",
+      "sizes": "200x200",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
 }
