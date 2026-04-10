@@ -106,6 +106,9 @@ export default component$(() => {
                   <img src="/carmichael-services/canada2.png" alt="Proudly Canadian" class="hero__logo-spacer-canada" loading="eager" />
                 </div>
               </div>
+              <div class="hero__logo-spacer hero__logo-spacer--mobile">
+                <img src="/carmichael-services/canada2.png" alt="Proudly Canadian" class="hero__logo-spacer-canada" loading="eager" />
+              </div>
               <Carousel.Root class="hero-carousel dot-pattern dot-pattern--light" bind:selectedIndex={heroIndex} align="start" draggable={false} rewind>
                 <Carousel.Scroller class="hero-carousel__scroller" onClick$={() => { carouselPaused.value = true; heroIndex.value = (heroIndex.value + 1) % 2; }}>
                   <Carousel.Slide class="hero-carousel__slide">
@@ -135,9 +138,6 @@ export default component$(() => {
                     <Carousel.Bullet class="hero-bento-carousel__dot" />
                   </Carousel.Pagination>
                 </Carousel.Root>
-              </div>
-              <div class="hero__logo-spacer hero__logo-spacer--mobile">
-                <img src="/carmichael-services/canada2.png" alt="Proudly Canadian" class="hero__logo-spacer-canada" loading="eager" />
               </div>
               <div class="hero-categories">
                 <a href="/apparel/#work-wear" class="category-card">

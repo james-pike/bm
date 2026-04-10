@@ -1,4 +1,4 @@
-import { component$, useSignal, useComputed$, useContext, $, useVisibleTask$ } from "@builder.io/qwik";
+import { component$, useSignal, useComputed$, useContext, $, useVisibleTask$, useOnDocument } from "@builder.io/qwik";
 import { LocaleContext, t } from "../../i18n";
 import { allProducts, categoryLabel } from "../../routes/apparel/products";
 import type { Product } from "../../routes/apparel/products";
@@ -60,29 +60,19 @@ export const ProductCatalog = component$<{ class?: string }>(({ "class": cls }) 
     }
   });
 
-  // When mobile/tablet search is open, intercept the next click anywhere outside
-  // the search bar — close the search and swallow that click so it doesn't
-  // navigate or trigger anything else.
-  // eslint-disable-next-line qwik/no-use-visible-task
-  useVisibleTask$(({ track, cleanup }) => {
-    track(() => searchOpen.value);
-    if (!searchOpen.value) return;
-    const onCapture = (e: MouseEvent | TouchEvent) => {
+  // When mobile/tablet search is open, close it on any click outside the
+  // search bar. Uses useOnDocument so the listener stays attached and is
+  // re-checked on every click — works for every open/close cycle.
+  useOnDocument(
+    'click',
+    $((e: Event) => {
+      if (!searchOpen.value) return;
       const target = e.target as HTMLElement | null;
       if (!target) return;
       if (target.closest('.apparel-titlebar__search--mobile')) return;
-      e.preventDefault();
-      e.stopPropagation();
-      doSearch(searchQuery.value);
       searchOpen.value = false;
-    };
-    document.addEventListener('click', onCapture, true);
-    document.addEventListener('touchstart', onCapture, true);
-    cleanup(() => {
-      document.removeEventListener('click', onCapture, true);
-      document.removeEventListener('touchstart', onCapture, true);
-    });
-  });
+    })
+  );
 
   const doSearch = $((query: string) => {
     if (query.trim()) {
