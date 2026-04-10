@@ -107,13 +107,14 @@ export const useSubmitOrder = routeAction$(
   try {
     const db = createClient({ url: tursoUrl, authToken: tursoToken });
     await db.execute({
-      sql: `INSERT INTO orders (vendor, emp_number, emp_name, emp_dept, items, total, status, created_at, updated_at)
-            VALUES (?, ?, ?, ?, ?, ?, 'pending', datetime('now'), datetime('now'))`,
+      sql: `INSERT INTO orders (vendor, emp_number, emp_name, emp_dept, po_number, items, total, status, created_at, updated_at)
+            VALUES (?, ?, ?, ?, ?, ?, ?, 'pending', datetime('now'), datetime('now'))`,
       args: [
         "carmichael",
         "",
         employee.name,
         employee.department,
+        employee.po || "",
         JSON.stringify(items),
         total,
       ],
@@ -152,6 +153,7 @@ export const useSubmitOrder = routeAction$(
         <p style="margin:0 0 4px"><strong>Employee:</strong> ${esc(employee.name)}</p>
         ${employee.phone ? `<p style="margin:0 0 4px"><strong>Phone:</strong> ${esc(employee.phone)}</p>` : ""}
         ${employee.department ? `<p style="margin:0 0 4px"><strong>Location:</strong> ${esc(employee.department)}</p>` : ""}
+        ${employee.po ? `<p style="margin:0 0 4px"><strong>PO #:</strong> ${esc(employee.po)}</p>` : ""}
         <hr style="border:none;border-top:1px solid #e5e7eb;margin:16px 0">
         <table style="width:100%;border-collapse:collapse;font-size:14px">
           <thead>
@@ -203,6 +205,7 @@ export const useSubmitOrder = routeAction$(
       email: z.string().email().max(254).or(z.literal("")),
       phone: z.string().max(40),
       department: z.string().max(120),
+      po: z.string().max(60).optional().default(""),
     }),
     items: z
       .array(
@@ -284,6 +287,7 @@ export default component$(() => {
   const empEmail = useSignal("");
   const empPhone = useSignal("");
   const empDept = useSignal("");
+  const empPO = useSignal("");
 
   const cartCount = useComputed$(() => {
     const count = cart.items.reduce((sum, i) => sum + i.quantity, 0);
@@ -361,7 +365,7 @@ export default component$(() => {
     formError.value = "";
 
     const orderData = {
-      employee: { name: `${empFirstName.value} ${empLastName.value}`, email: empEmail.value, phone: empPhone.value, department: empDept.value },
+      employee: { name: `${empFirstName.value} ${empLastName.value}`, email: empEmail.value, phone: empPhone.value, department: empDept.value, po: empPO.value },
       items: cart.items.map((i) => ({
         name: i.name || "",
         sku: i.sku || "",
@@ -415,6 +419,7 @@ export default component$(() => {
     empEmail.value = "";
     empPhone.value = "";
     empDept.value = "";
+    empPO.value = "";
     formTouched.value = false;
   });
 
@@ -872,6 +877,14 @@ export default component$(() => {
                         type="text"
                         value={empDept.value}
                         onInput$={(_, el) => (empDept.value = el.value)}
+                      />
+                    </div>
+                    <div class="checkout-modal__field">
+                      <label>{t("cart.po", locale.value)}</label>
+                      <input
+                        type="text"
+                        value={empPO.value}
+                        onInput$={(_, el) => (empPO.value = el.value)}
                       />
                     </div>
                   </div>
