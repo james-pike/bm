@@ -163,6 +163,8 @@ const translations = {
   "cart.error.number": { en: "Employee number is required", fr: "Le numéro d'employé est requis" },
   "cart.error.name": { en: "Full name is required", fr: "Le nom complet est requis" },
   "cart.error.required": { en: "Please complete required fields", fr: "Veuillez remplir les champs requis" },
+  "cart.error.email": { en: "Please enter a valid email address", fr: "Veuillez entrer une adresse courriel valide" },
+  "cart.error.phone": { en: "Please enter a valid phone number", fr: "Veuillez entrer un numéro de téléphone valide" },
   "cart.requiredfields": { en: "* required", fr: "* requis" },
 
   // Order confirmation

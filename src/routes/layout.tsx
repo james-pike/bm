@@ -338,6 +338,20 @@ export default component$(() => {
       checkoutOpen.value = true;
       return;
     }
+    // Email format check (basic RFC-ish — anything@anything.tld)
+    const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRe.test(empEmail.value.trim())) {
+      formError.value = t("cart.error.email", locale.value);
+      checkoutOpen.value = true;
+      return;
+    }
+    // Phone format check — at least 7 digits, allow +, spaces, dashes, parens
+    const phoneDigits = empPhone.value.replace(/[^\d]/g, "");
+    if (phoneDigits.length < 7 || phoneDigits.length > 15 || !/^[\d\s+()\-.]+$/.test(empPhone.value.trim())) {
+      formError.value = t("cart.error.phone", locale.value);
+      checkoutOpen.value = true;
+      return;
+    }
     formError.value = "";
 
     const orderData = {
