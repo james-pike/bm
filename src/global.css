@@ -202,7 +202,7 @@ img { max-width: 100%; display: block; }
   z-index: 9999;
   pointer-events: auto;
   background: var(--ce-white);
-  border-bottom: 2px solid var(--ce-gray-200);
+  border-bottom: none;
   height: 58px;
   margin-bottom: -1px;
 }
@@ -482,8 +482,8 @@ img { max-width: 100%; display: block; }
 }
 .hero-bento-carousel__slide--transparent.hero-bento-carousel__slide--white {
   background:
-    radial-gradient(ellipse 80% 70% at 50% 55%, rgba(255,255,255,0.55) 0%, transparent 75%),
-    linear-gradient(135deg, rgba(255,255,255,0.5) 0%, rgba(255,255,255,0.42) 50%, rgba(255,255,255,0.55) 100%);
+    radial-gradient(ellipse 80% 70% at 50% 55%, rgba(255,255,255,0.38) 0%, transparent 75%),
+    linear-gradient(135deg, rgba(255,255,255,0.34) 0%, rgba(255,255,255,0.28) 50%, rgba(255,255,255,0.38) 100%);
 }
 .hero-bento-carousel__slide--transparent img {
   position: absolute;
@@ -693,8 +693,8 @@ img { max-width: 100%; display: block; }
   /* Slide 3 — same car on a more white background */
   .hero-carousel__slide--transparent.hero-carousel__slide--white {
     background:
-      radial-gradient(ellipse 80% 70% at 50% 55%, rgba(255,255,255,0.55) 0%, transparent 75%),
-      linear-gradient(135deg, rgba(255,255,255,0.5) 0%, rgba(255,255,255,0.42) 50%, rgba(255,255,255,0.55) 100%);
+      radial-gradient(ellipse 80% 70% at 50% 55%, rgba(255,255,255,0.38) 0%, transparent 75%),
+      linear-gradient(135deg, rgba(255,255,255,0.34) 0%, rgba(255,255,255,0.28) 50%, rgba(255,255,255,0.38) 100%);
   }
   .hero-carousel__slide--transparent img {
     width: 100% !important;
@@ -1480,6 +1480,20 @@ img { max-width: 100%; display: block; }
   color: rgba(255,255,255,0.35);
   margin: 0;
   text-align: center;
+}
+.site-footer__contact {
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: rgba(255,255,255,0.6);
+  margin: 0;
+}
+.site-footer__contact a {
+  color: rgba(255,255,255,0.6);
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+.site-footer__contact a:hover {
+  color: var(--ce-white);
 }
 
 .home-catalog {
@@ -5172,7 +5186,7 @@ details[open] > .cart-drawer__checkout-title::after {
 @media (min-width: 768px) and (max-width: 1024px) {
   /* Site-header fixed at 58px on tablet (matches base, overrides mobile 49px) */
   html, body { margin: 0; padding: 0; }
-  .site-header { height: 58px; border-bottom: none !important; box-shadow: 0 1px 0 var(--ce-gray-200); }
+  .site-header { height: 58px; border-bottom: none !important; box-shadow: none; }
   .site-header__inner { height: 58px; padding: 0 0.6rem 0 1rem; }
   .site-header__nav { gap: 3px; margin-right: 0; }
   .hero { margin-top: 0; padding-top: 0; }
@@ -5201,7 +5215,7 @@ details[open] > .cart-drawer__checkout-title::after {
   .site-header--hero-hidden.site-header--hero-visible {
     background: var(--ce-white) !important;
     border-bottom: none !important;
-    box-shadow: 0 1px 0 var(--ce-gray-200);
+    box-shadow: none;
   }
   .site-header--hero-hidden.site-header--hero-visible .site-header__logo,
   .site-header--hero-hidden.site-header--hero-visible .site-header__logo-img,
@@ -5296,15 +5310,18 @@ details[open] > .cart-drawer__checkout-title::after {
   .site-header .locale-btn__full { display: inline !important; }
   .site-header .locale-btn__short { display: none !important; }
   .site-header .cart-btn__label { display: inline !important; }
-  .site-header__categories { display: flex !important; align-items: center; gap: 0.5rem; margin-right: 0.5rem; }
+  .site-header__categories { display: flex !important; align-items: center; gap: 0.5rem; margin-right: 0.5rem; align-self: center; }
   .site-header__categories a {
-    font-size: 0.78rem;
+    display: inline-flex;
+    align-items: center;
+    font-size: 0.9rem;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.03em;
     color: rgba(0,0,0,0.7);
     text-decoration: none;
-    padding: 4px 6px;
+    padding: 8px 10px;
+    line-height: 1;
   }
   .site-header__categories a:hover { color: var(--ce-gold); }
   .site-header__categories a.active { color: var(--ce-gold); }
@@ -5314,7 +5331,7 @@ details[open] > .cart-drawer__checkout-title::after {
     grid-column: 1;
     grid-row: 2;
     margin: 0;
-    padding: 1.4rem 1.5rem 1.5rem;
+    padding: 1.4rem 0.85rem;
     border: 1px solid rgba(0,0,0,0.15);
     border-radius: 8px;
     background:
@@ -5327,19 +5344,19 @@ details[open] > .cart-drawer__checkout-title::after {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    align-items: flex-start;
+    align-items: center;
     text-align: left;
     overflow: hidden;
     gap: 0;
   }
-  .hero__top-row { width: 92%; max-width: 100%; margin-left: 0; margin-right: auto; margin-bottom: -0.2rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: nowrap; gap: 0.25rem; }
+  .hero__top-row { width: 92%; max-width: 100%; margin-left: auto; margin-right: auto; margin-bottom: -0.2rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: nowrap; gap: 0.25rem; }
   .hero__top-row .hero__badge { flex-shrink: 0; white-space: nowrap; }
   .hero__top-row .hero__title-icon { flex-shrink: 1; min-width: 0; }
-  .hero__title-icon { width: 36%; max-width: none; }
-  .hero__title-img { width: 92%; max-width: 100%; margin-left: 0; margin-right: auto; }
-  .hero__title-apparel { font-size: clamp(1.4rem, 3.2vw, 2.2rem); margin-top: -0.1rem; margin-left: 0; align-self: flex-start; }
-  .hero__subtitle-inline { font-size: clamp(1.25rem, 2.6vw, 1.7rem); line-height: 1.3; letter-spacing: -0.03em; white-space: normal; text-align: left; align-self: stretch; margin: 0.6rem 0 0.85rem; padding: 0; }
-  .hero__badge { font-size: 0.72rem; padding: 5px 12px; position: static; transform: none; margin: 0; align-self: center; }
+  .hero__title-icon { width: 28%; max-width: none; margin-right: -2%; }
+  .hero__title-img { width: 92%; max-width: 100%; margin-left: auto; margin-right: auto; }
+  .hero__title-apparel { font-size: clamp(1.4rem, 3.2vw, 2.2rem); margin-top: -0.1rem; width: 92%; margin-left: auto; margin-right: auto; align-self: auto; text-align: left; }
+  .hero__subtitle-inline { font-size: clamp(1.25rem, 2.6vw, 1.7rem); line-height: 1.3; letter-spacing: -0.03em; white-space: normal; text-align: left; align-self: auto; width: 92%; margin: 0.7rem auto 0; padding: 0; }
+  .hero__badge { font-size: 0.78rem; padding: 5px 13px; position: static; transform: none; margin: 0; align-self: center; }
   .hero__badge-dot { width: 7px; height: 7px; }
 
   /* Canada logo inside the cluster, wrapped in a card-like container, full-width of the cluster, centered */
@@ -5348,8 +5365,8 @@ details[open] > .cart-drawer__checkout-title::after {
     align-items: center;
     justify-content: center;
     padding: 0.45rem 0;
-    margin: 0.6rem 0 0;
-    width: 100%;
+    margin: 1.3rem auto 0;
+    width: calc(100% - 1.3rem);
     background:
       radial-gradient(ellipse 80% 70% at 50% 55%, rgba(255,255,255,0.22) 0%, transparent 70%),
       linear-gradient(135deg, rgba(255,255,255,0.14) 0%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.16) 100%);
@@ -5393,8 +5410,8 @@ details[open] > .cart-drawer__checkout-title::after {
   /* Slide 3 — same vintage car on a more white background */
   .hero-carousel__slide--transparent.hero-carousel__slide--white {
     background:
-      radial-gradient(ellipse 80% 70% at 50% 55%, rgba(255,255,255,0.55) 0%, transparent 75%),
-      linear-gradient(135deg, rgba(255,255,255,0.5) 0%, rgba(255,255,255,0.42) 50%, rgba(255,255,255,0.55) 100%);
+      radial-gradient(ellipse 80% 70% at 50% 55%, rgba(255,255,255,0.38) 0%, transparent 75%),
+      linear-gradient(135deg, rgba(255,255,255,0.34) 0%, rgba(255,255,255,0.28) 50%, rgba(255,255,255,0.38) 100%);
   }
   .hero-carousel__slide--transparent img {
     position: absolute !important;

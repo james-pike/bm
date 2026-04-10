@@ -697,6 +697,7 @@ export default component$(() => {
             <Link href="/apparel/?category=Polos">{t("cat.Polos", locale.value)}</Link>
             <Link href="/apparel/?category=Hats">{t("cat.Hats", locale.value)}</Link>
           </nav>
+          <p class="site-footer__contact">Contact: <a href="mailto:info@carmichaelapparel.ca">info@carmichaelapparel.ca</a></p>
         </div>
       </footer>
 
