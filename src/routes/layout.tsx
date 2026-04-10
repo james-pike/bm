@@ -326,12 +326,6 @@ export default component$(() => {
     } catch { /* ignore */ }
   });
 
-  const removeFromCart = $(async (index: number) => {
-    cart.items = cart.items.filter((_, i) => i !== index);
-    await saveCart();
-    window.dispatchEvent(new CustomEvent("cart-updated"));
-  });
-
   const updateQty = $(async (index: number, delta: number) => {
     const newQty = cart.items[index].quantity + delta;
     if (newQty < 1) {
