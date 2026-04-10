@@ -163,10 +163,7 @@ export default component$(() => {
                     }}
                   >
                     <Carousel.Slide class="hero-bento-carousel__slide hero-bento-carousel__slide--van">
-                      <picture>
-                        <source media="(max-width: 600px)" srcSet="/carmichael-services/van-building-mobile.jpeg" />
-                        <img src="/carmichael-services/van-building.jpeg" alt="Carmichael van" loading="eager" />
-                      </picture>
+                      <img src="/carmichael-services/van-building.jpeg" alt="Carmichael van" loading="eager" />
                     </Carousel.Slide>
                     <Carousel.Slide class="hero-bento-carousel__slide hero-bento-carousel__slide--transparent hero-bento-carousel__slide--white">
                       <img src="/carmichael.webp" alt="Carmichael vintage car" loading="eager" />
@@ -181,7 +178,7 @@ export default component$(() => {
               <div class="hero-categories">
                 <a href="/apparel/#work-wear" class="category-card">
                   <img src="/carmichael-services/boiler-technicians.jpeg" alt="Work Wear" width="400" height="300" loading="lazy" />
-                  <span class="category-card__label">{categoryLabel("Work Wear", locale.value)}</span>
+                  <span class="category-card__label">{t("teaser.workwear.title", locale.value)}</span>
                 </a>
                 <a href="/apparel/#jackets" class="category-card">
                   <img src="/carmichael-services/careers.jpeg" alt="Jackets" width="400" height="300" loading="lazy" />
