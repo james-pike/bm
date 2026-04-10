@@ -100,7 +100,7 @@ export const useSubmitOrder = routeAction$(
 
   // Insert order into Turso database
   if (!tursoUrl || !tursoToken) {
-    return fail(500, { message: "Order database not configured" });
+    return fail(500, { message: "Order database not configured (missing env vars)" });
   }
   try {
     const db = createClient({ url: tursoUrl, authToken: tursoToken });
@@ -117,7 +117,8 @@ export const useSubmitOrder = routeAction$(
     });
   } catch (err) {
     console.error("Failed to save order to database:", err);
-    return fail(500, { message: "Failed to save order. Please try again." });
+    const msg = err instanceof Error ? err.message : String(err);
+    return fail(500, { message: `DB error: ${msg}` });
   }
 
   // Send order confirmation email
