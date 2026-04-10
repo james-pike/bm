@@ -5,8 +5,8 @@ import { writeFileSync } from "fs";
 config();
 
 const db = createClient({
-  url: process.env.VITE_TURSO_URL || "",
-  authToken: process.env.VITE_TURSO_AUTH_TOKEN || undefined,
+  url: process.env.TURSO_URL || process.env.VITE_TURSO_URL || "",
+  authToken: process.env.TURSO_AUTH_TOKEN || process.env.VITE_TURSO_AUTH_TOKEN || undefined,
 });
 
 async function fetchAndWrite() {
