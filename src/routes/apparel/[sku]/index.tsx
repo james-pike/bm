@@ -51,7 +51,6 @@ export default component$(() => {
 
   const addToCart = $(() => {
     const p = product.value;
-    console.log("addToCart called", { p: p?.name, size: selectedSize.value, color: selectedColor.value });
     if (!p || !selectedSize.value) return;
     if (p.colors.length > 0 && !selectedColor.value) return;
     if (waistLengthSkus.has(p.sku) && (!selectedWaist.value || !selectedLength.value)) return;
@@ -90,7 +89,6 @@ export default component$(() => {
         items.push(item);
       }
       localStorage.setItem("ce_cart", JSON.stringify(items));
-      console.log("cart saved, dispatching event", items.length, "items");
       window.dispatchEvent(new CustomEvent("cart-updated"));
     } catch (err) { console.error("addToCart error:", err); }
     addedInfo.value = selectedColor.value ? `${p.name} — ${colorName(selectedColor.value, "en")} / ${sizeVal}` : `${p.name} — ${sizeVal}`;

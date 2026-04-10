@@ -5,129 +5,6 @@ import { LocaleContext, t } from "../i18n";
 import { categoryLabel } from "./apparel/products";
 import { ProductCatalog } from "../components/product-catalog/product-catalog";
 
-
-/* eslint-disable @typescript-eslint/no-unused-vars */
-const _teasers = [
-  {
-    slug: "work-wear",
-    category: "Work Wear",
-    tagKey: "teaser.workwear.tag" as const,
-    titleKey: "teaser.workwear.title" as const,
-    textKey: "teaser.workwear.text" as const,
-    ctaKey: "teaser.workwear.cta" as const,
-    imgs: [
-      "/sku/_INSULATED_VIKING_frj3957frj_-removebg-preview.png",
-      "/sku/carmicheal-337-logo.png",
-    ],
-    skewed: true,
-  },
-  {
-    slug: "all",
-    category: "All",
-    tagKey: "teaser.all.tag" as const,
-    titleKey: "teaser.all.title" as const,
-    textKey: "teaser.all.text" as const,
-    ctaKey: "teaser.all.cta" as const,
-    imgs: [
-      "/hat/30109107PS2_FRONT.JPG",
-      "/softshell/j7603-soft-shell.png",
-    ],
-    skewed: true,
-  },
-  {
-    slug: "jackets",
-    category: "Jackets",
-    tagKey: "teaser.jackets.tag" as const,
-    titleKey: "teaser.jackets.title" as const,
-    textKey: "teaser.jackets.text" as const,
-    ctaKey: "teaser.jackets.cta" as const,
-    imgs: [
-      "/sku/j7603-soft-shell-removebg-preview.png",
-      "/womens-fleece.png",
-    ],
-    skewed: true,
-  },
-  {
-    slug: "polos",
-    category: "Polos",
-    tagKey: "teaser.polos.tag" as const,
-    titleKey: "teaser.polos.title" as const,
-    textKey: "teaser.polos.text" as const,
-    ctaKey: "teaser.polos.cta" as const,
-    imgs: [
-      "/sku/green-removebg-preview.png",
-      "/sku/car20.png",
-    ],
-    skewed: true,
-  },
-  {
-    slug: "hats",
-    category: "Hats",
-    tagKey: "teaser.hats.tag" as const,
-    titleKey: "teaser.hats.title" as const,
-    textKey: "teaser.hats.text" as const,
-    ctaKey: "teaser.hats.cta" as const,
-    imgs: [
-      "/hat/30109107PS2_FRONT.JPG",
-      "/beanie/1.png",
-    ],
-    skewed: true,
-  },
-];
-
-
-const TeaserCard = component$<{ t: typeof _teasers[0] }>(({ t: teaser }) => {
-  const locale = useContext(LocaleContext);
-  const imgIndex = useSignal(0);
-  const hovering = useSignal(false);
-
-  return (
-    <a
-      href={`/apparel/?category=${teaser.category}`}
-      class="teaser-card"
-      onMouseEnter$={() => (hovering.value = true)}
-      onMouseLeave$={() => (hovering.value = false)}
-    >
-      <div class={`teaser-card__image ${(teaser as any).skewed ? "teaser-card__image--skewed" : ""}`}>
-        {(teaser as any).skewed ? (
-          teaser.imgs.map((src, i) => (
-            <img
-              key={i}
-              src={src}
-              alt={t(teaser.titleKey, locale.value)}
-              width="600"
-              height="400"
-              loading="eager"
-              decoding="async"
-              class="teaser-card__skewed-img"
-            />
-          ))
-        ) : (
-          teaser.imgs.map((src, i) => (
-            <img
-              key={i}
-              src={src}
-              alt={t(teaser.titleKey, locale.value)}
-              width="600"
-              height="400"
-              loading="eager"
-              decoding="async"
-              class={`teaser-card__img ${imgIndex.value === i ? "active" : ""} ${(teaser as any).imgClass || ""}`}
-            />
-          ))
-        )}
-      </div>
-      <div class="teaser-card__dots" />
-      <div class="teaser-card__body">
-        <div class="featured-banner__tag">{t(teaser.tagKey, locale.value)}</div>
-        <h3 class="teaser-card__title">{t(teaser.titleKey, locale.value)}</h3>
-        <p class="teaser-card__text">{t(teaser.textKey, locale.value)}</p>
-        <span class="btn btn--primary btn--sm">{t(teaser.ctaKey, locale.value)}</span>
-      </div>
-    </a>
-  );
-});
-
 export default component$(() => {
   const locale = useContext(LocaleContext);
   const hasCartItems = useSignal(false);
@@ -297,9 +174,17 @@ export default component$(() => {
 export const head: DocumentHead = {
   title: "Carmichael Apparel",
   meta: [
-    {
-      name: "description",
-      content: "Carmichael Employee Apparel. Order branded jackets, polos, hats, and more.",
-    },
+    { name: "description", content: "Carmichael Employee Apparel. Order branded jackets, polos, hats, and more." },
+    { name: "robots", content: "noindex, nofollow" },
+    { name: "theme-color", content: "#1a3a28" },
+    { property: "og:title", content: "Carmichael Apparel" },
+    { property: "og:description", content: "Internal apparel ordering for Carmichael staff." },
+    { property: "og:type", content: "website" },
+    { property: "og:url", content: "https://carmichaelapparel.ca/" },
+    { property: "og:image", content: "https://carmichaelapparel.ca/carmichael-logo.png" },
+    { name: "twitter:card", content: "summary" },
+    { name: "twitter:title", content: "Carmichael Apparel" },
+    { name: "twitter:description", content: "Internal apparel ordering for Carmichael staff." },
+    { name: "twitter:image", content: "https://carmichaelapparel.ca/carmichael-logo.png" },
   ],
 };
