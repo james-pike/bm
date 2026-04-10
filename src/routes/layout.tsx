@@ -354,9 +354,22 @@ export default component$(() => {
 
     // Send order via server action
     const result = await orderAction.submit(orderData);
-
-    if (result.value?.failed) {
-      formError.value = (result.value as any).message || "Failed to place order. Please try again.";
+    const v = result.value as any;
+    if (v?.failed) {
+      // Surface zod field errors, top-level form errors, or generic message
+      let msg = v.message;
+      if (!msg && v.fieldErrors) {
+        const flat: string[] = [];
+        const walk = (obj: any) => {
+          if (Array.isArray(obj)) flat.push(...obj.map(String));
+          else if (obj && typeof obj === "object") Object.values(obj).forEach(walk);
+        };
+        walk(v.fieldErrors);
+        msg = flat.join(", ");
+      }
+      if (!msg && v.formErrors?.length) msg = v.formErrors.join(", ");
+      formError.value = msg || "Failed to place order. Please try again.";
+      console.error("Order submission failed:", v);
       return;
     }
 
@@ -815,6 +828,9 @@ export default component$(() => {
                     </div>
                   </div>
                 </div>
+                {formError.value && (
+                  <div class="cart-drawer__error" role="alert">{formError.value}</div>
+                )}
                 <div class="cart-drawer__footer">
                   <span class="cart-drawer__total">
                     {cartCount.value} {cartCount.value !== 1 ? t("cart.items", locale.value) : t("cart.item", locale.value)} — ${cart.items.reduce((sum, i) => sum + (Number(i.price) || 0) * i.quantity, 0).toFixed(2)}
