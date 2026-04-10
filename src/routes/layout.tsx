@@ -105,10 +105,11 @@ export const useSubmitOrder = routeAction$(
   try {
     const db = createClient({ url: tursoUrl, authToken: tursoToken });
     await db.execute({
-      sql: `INSERT INTO orders (vendor, emp_name, emp_dept, items, total, status, created_at, updated_at)
-            VALUES (?, ?, ?, ?, ?, 'pending', datetime('now'), datetime('now'))`,
+      sql: `INSERT INTO orders (vendor, emp_number, emp_name, emp_dept, items, total, status, created_at, updated_at)
+            VALUES (?, ?, ?, ?, ?, ?, 'pending', datetime('now'), datetime('now'))`,
       args: [
         "carmichael",
+        "",
         employee.name,
         employee.department,
         JSON.stringify(items),
