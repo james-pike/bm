@@ -205,7 +205,7 @@ export const useSubmitOrder = routeAction$(
       email: z.string().email().max(254).or(z.literal("")),
       phone: z.string().max(40),
       department: z.string().max(120),
-      po: z.string().max(60).optional().default(""),
+      po: z.string().min(1).max(60),
     }),
     items: z
       .array(
@@ -343,7 +343,7 @@ export default component$(() => {
 
   const submitOrder = $(async () => {
     formTouched.value = true;
-    if (!empFirstName.value || !empLastName.value || !empEmail.value || !empPhone.value || !empDept.value) {
+    if (!empFirstName.value || !empLastName.value || !empEmail.value || !empPhone.value || !empDept.value || !empPO.value) {
       formError.value = t("cart.error.required", locale.value);
       checkoutOpen.value = true;
       return;
@@ -879,7 +879,7 @@ export default component$(() => {
                         onInput$={(_, el) => (empDept.value = el.value)}
                       />
                     </div>
-                    <div class="checkout-modal__field">
+                    <div class={`checkout-modal__field ${formTouched.value && !empPO.value ? "checkout-modal__field--error" : ""}`}>
                       <label>{t("cart.po", locale.value)}</label>
                       <input
                         type="text"
