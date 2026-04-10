@@ -37,8 +37,8 @@ export const useCartCountLoader = routeLoader$(({ cookie }) => {
 
 export const useLogin = routeAction$(
   ({ username, password }, { cookie, fail, env }) => {
-    const expectedUser = env.get("APP_USERNAME") || "admin";
-    const expectedPass = env.get("APP_PASSWORD");
+    const expectedUser = env.get("APP_USERNAME") || env.get("VITE_APP_USERNAME") || "admin";
+    const expectedPass = env.get("APP_PASSWORD") || env.get("VITE_APP_PASSWORD");
     if (!expectedPass) {
       return fail(500, { message: "Login not configured" });
     }
@@ -81,9 +81,11 @@ export const useSubmitOrder = routeAction$(
     if (!isAuthenticated(cookie)) {
       return fail(401, { message: "Not authenticated" });
     }
-    const tursoUrl = env.get("TURSO_URL");
-    const tursoToken = env.get("TURSO_AUTH_TOKEN");
-    const apiKey = env.get("RESEND_API_KEY");
+    // Read from non-prefixed names first, fall back to VITE_* for backward compat.
+    // Both are safe at runtime — env.get() reads server env, never bundles.
+    const tursoUrl = env.get("TURSO_URL") || env.get("VITE_TURSO_URL");
+    const tursoToken = env.get("TURSO_AUTH_TOKEN") || env.get("VITE_TURSO_AUTH_TOKEN");
+    const apiKey = env.get("RESEND_API_KEY") || env.get("VITE_RESEND_API_KEY");
 
     const { employee, items, date } = data;
 
