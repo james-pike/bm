@@ -536,7 +536,7 @@ export default component$(() => {
                 {t("login.subtitle", locale.value)}
               </p>
             </div>
-            <Form action={loginAction} class="login-modal__form">
+            <Form action={loginAction} reloadDocument class="login-modal__form">
               {loginAction.value?.failed && (
                 <div class="login-modal__error">{loginAction.value.message}</div>
               )}
