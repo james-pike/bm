@@ -179,7 +179,7 @@ export default component$(() => {
               </div>
               <div class="hero-categories">
                 {isTech.value ? (<>
-                  <a href="/apparel/" class="category-card">
+                  <a href="/apparel/" class="category-card category-card--tech-primary">
                     <img src="/carmichael-services/boiler-technicians.jpeg" alt="Work Wear" width="400" height="300" loading="lazy" />
                     <span class="category-card__label">{t("teaser.workwear.title", locale.value)}</span>
                   </a>
