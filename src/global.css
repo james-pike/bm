@@ -206,6 +206,9 @@ img { max-width: 100%; display: block; }
   border-bottom: none;
   height: 58px;
   margin-bottom: -1px;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  will-change: transform;
 }
 
 .site-header--solid {
@@ -325,6 +328,9 @@ img { max-width: 100%; display: block; }
   background: linear-gradient(180deg, #e8f0eb 0%, #dce8e0 15%, #d0e2d6 30%, #c4dccb 50%, #d5e5da 70%, var(--ce-gray-200) 100%);
   padding-top: 8px;
   padding-bottom: 1.5rem;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  contain: layout style paint;
 }
 .hero::after {
   content: '';
@@ -444,6 +450,8 @@ img { max-width: 100%; display: block; }
   overflow: hidden;
   position: relative;
   border-radius: 8px;
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 .hero-bento-carousel__scroller {
   position: relative;
@@ -558,6 +566,9 @@ img { max-width: 100%; display: block; }
   aspect-ratio: 4/3;
   transition: filter 0.2s ease;
   border: 1px solid rgba(0,0,0,0.15);
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  contain: layout style paint;
 }
 .category-card::before {
   content: '';
@@ -635,6 +646,8 @@ img { max-width: 100%; display: block; }
   border-radius: 0 0 8px 8px;
   border: 2px solid rgba(255,255,255,0.06);
   border-top: none;
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 .hero-carousel::after {
   content: '';
@@ -1508,6 +1521,9 @@ img { max-width: 100%; display: block; }
   position: sticky;
   top: 58px;
   z-index: 50;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  will-change: transform;
 }
 .home-catalog__gender-section {
   display: none;
@@ -2167,6 +2183,9 @@ img { max-width: 100%; display: block; }
   transition: all var(--transition);
   position: relative;
   cursor: pointer;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  contain: layout style paint;
 }
 
 .product-card:hover {
@@ -2179,6 +2198,8 @@ img { max-width: 100%; display: block; }
   position: relative;
   overflow: hidden;
   background: var(--ce-white);
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 .product-card__image::after {
   content: '';
