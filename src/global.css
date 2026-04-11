@@ -5231,7 +5231,7 @@ details[open] > .cart-drawer__checkout-title::after {
   .hero-card-header__btn:first-child .hero-card-header__btn-label { display: none; }
   .hero-card-header__btn { padding: 10px; }
   .hero-card-header__nav { display: flex; align-items: center; gap: 0.5rem; margin-left: auto; margin-right: 0.5rem; }
-  .hero-card-header__nav-link { font-size: 0.78rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.03em; color: rgba(255,255,255,0.7); text-decoration: none; padding: 4px 6px; }
+  .hero-card-header__nav-link { font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.03em; color: rgba(255,255,255,0.7); text-decoration: none; padding: 4px 8px; }
   .hero-card-header__nav-link:hover { color: var(--ce-gold); }
   .hero-card-header__nav-link.active { color: var(--ce-gold); }
   .hero-card-header__actions .hero-card-header__btn:nth-child(3) { display: none; }
