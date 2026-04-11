@@ -548,6 +548,15 @@ img { max-width: 100%; display: block; }
   aspect-ratio: 4/3;
   contain: layout style;
 }
+/* Tech extra cards: no hover, no pointer */
+.category-card--tech-extra {
+  pointer-events: none;
+  cursor: default;
+}
+.category-card--tech-extra:hover {
+  filter: none;
+  box-shadow: none;
+}
 /* Mobile: only show the primary tech card, full width */
 @media (max-width: 900px) {
   .category-card--tech-extra {
@@ -562,12 +571,6 @@ img { max-width: 100%; display: block; }
 @media (min-width: 901px) and (max-width: 1024px) {
   .category-card--tech-desktop {
     display: none;
-  }
-}
-/* Desktop: all 4 cards in 2 columns */
-@media (min-width: 1025px) {
-  .hero-categories:has(.category-card--tech-primary) {
-    grid-template-columns: repeat(2, 1fr);
   }
 }
 
