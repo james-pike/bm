@@ -548,6 +548,14 @@ img { max-width: 100%; display: block; }
   aspect-ratio: 4/3;
   contain: layout style;
 }
+.hero-categories .category-card:only-child {
+  grid-column: 1 / -1;
+}
+@media (max-width: 900px) {
+  .category-card--tech-extra {
+    display: none;
+  }
+}
 
 /* Category row — 4 stock image cards */
 .category-row {
@@ -1498,6 +1506,17 @@ img { max-width: 100%; display: block; }
 }
 .site-footer__contact a:hover {
   color: var(--ce-white);
+}
+.site-footer__contact--stacked {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+}
+.site-footer__contact-label {
+  font-size: 0.72rem;
+  color: rgba(255,255,255,0.35);
+  font-weight: 500;
 }
 
 .home-catalog {

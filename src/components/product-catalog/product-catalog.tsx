@@ -140,7 +140,7 @@ export const ProductCatalog = component$<{ class?: string }>(({ "class": cls }) 
             />
           </div>
           <div class="home-catalog__tabs">
-            {(isTech.value ? [] : CLOTHING_CATEGORIES).map((cat) => (
+            {(isTech.value ? ["Work Wear"] : CLOTHING_CATEGORIES).map((cat) => (
               <button
                 key={cat}
                 class={`apparel-titlebar__tab ${activeCat.value === cat ? "active" : ""}`}

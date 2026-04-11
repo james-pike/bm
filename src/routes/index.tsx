@@ -178,12 +178,21 @@ export default component$(() => {
                 </Carousel.Root>
               </div>
               <div class="hero-categories">
-                {isTech.value ? (
+                {isTech.value ? (<>
                   <a href="/apparel/" class="category-card">
                     <img src="/carmichael-services/boiler-technicians.jpeg" alt="Work Wear" width="400" height="300" loading="lazy" />
                     <span class="category-card__label">{t("teaser.workwear.title", locale.value)}</span>
                   </a>
-                ) : (<>
+                  <a href="/apparel/" class="category-card category-card--tech-extra">
+                    <img src="/carmichael-services/careers.jpeg" alt="" width="400" height="300" loading="lazy" />
+                  </a>
+                  <a href="/apparel/" class="category-card category-card--tech-extra">
+                    <img src="/carmichael-services/hvac-retrofit.jpeg" alt="" width="400" height="300" loading="lazy" />
+                  </a>
+                  <a href="/apparel/" class="category-card category-card--tech-extra">
+                    <img src="/hat/30109107PS2_FRONT.JPG" alt="" width="400" height="300" loading="lazy" />
+                  </a>
+                </>) : (<>
                   <a href="/apparel/" class="category-card">
                     <img src="/carmichael-services/boiler-technicians.jpeg" alt="All Apparel" width="400" height="300" loading="lazy" />
                     <span class="category-card__label">{t("apparel.all.title", locale.value)}</span>

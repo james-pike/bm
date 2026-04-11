@@ -729,15 +729,23 @@ export default component$(() => {
               <span class="site-footer__apparel">{t("logo.apparel", locale.value)}</span>
             </div>
           </div>
+          {loginType.value !== "tech" && (
           <nav class="site-footer__links">
             <Link href="/">{t("nav.home", locale.value)}</Link>
-            <Link href="/apparel/">{t("nav.apparel", locale.value)}</Link>
-            <Link href="/apparel/?category=Work Wear">{t("cat.Work Wear", locale.value)}</Link>
-            <Link href="/apparel/?category=Jackets">{t("cat.Jackets", locale.value)}</Link>
-            <Link href="/apparel/?category=Polos">{t("cat.Polos", locale.value)}</Link>
-            <Link href="/apparel/?category=Hats">{t("cat.Hats", locale.value)}</Link>
+            <a href="/apparel/" onClick$={() => { window.dispatchEvent(new CustomEvent("select-category", { detail: "All" })); }}>{t("nav.apparel", locale.value)}</a>
+            <a href="/apparel/#jackets" onClick$={() => { window.dispatchEvent(new CustomEvent("select-category", { detail: "Jackets" })); }}>{t("cat.Jackets", locale.value)}</a>
+            <a href="/apparel/#polos" onClick$={() => { window.dispatchEvent(new CustomEvent("select-category", { detail: "Polos" })); }}>{t("cat.Polos", locale.value)}</a>
+            <a href="/apparel/#hats" onClick$={() => { window.dispatchEvent(new CustomEvent("select-category", { detail: "Hats" })); }}>{t("cat.Hats", locale.value)}</a>
           </nav>
-          <p class="site-footer__contact">Contact: <a href="mailto:info@carmichaelapparel.ca">info@carmichaelapparel.ca</a></p>
+          )}
+          {loginType.value === "tech" ? (
+            <div class="site-footer__contact site-footer__contact--stacked">
+              <span class="site-footer__contact-label">Contact</span>
+              <a href="mailto:info@carmichaelapparel.ca">info@carmichaelapparel.ca</a>
+            </div>
+          ) : (
+            <p class="site-footer__contact">Contact: <a href="mailto:info@carmichaelapparel.ca">info@carmichaelapparel.ca</a></p>
+          )}
         </div>
       </footer>
 
