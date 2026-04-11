@@ -3,7 +3,8 @@ import { routeLoader$, useLocation } from "@builder.io/qwik-city";
 import { ProductCatalog } from "../../components/product-catalog/product-catalog";
 
 export const useApparelAuthGuard = routeLoader$(({ cookie, redirect }) => {
-  if (cookie.get("ce_auth")?.value !== "authenticated") {
+  const val = cookie.get("ce_auth")?.value;
+  if (val !== "authenticated" && val !== "clothing" && val !== "tech") {
     throw redirect(302, "/?login=1");
   }
 });

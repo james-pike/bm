@@ -1,11 +1,14 @@
-import { component$, useSignal, useContext, useVisibleTask$ } from "@builder.io/qwik";
+import { component$, useSignal, useContext, useVisibleTask$, useComputed$ } from "@builder.io/qwik";
 import { Carousel } from "@qwik-ui/headless";
 import type { DocumentHead } from "@builder.io/qwik-city";
 import { LocaleContext, t } from "../i18n";
 import { ProductCatalog } from "../components/product-catalog/product-catalog";
+import { LoginTypeContext } from "./layout";
 
 export default component$(() => {
   const locale = useContext(LocaleContext);
+  const loginType = useContext(LoginTypeContext);
+  const isTech = useComputed$(() => loginType.value === "tech");
   const hasCartItems = useSignal(false);
   const heroIndex = useSignal(0);
   const bentoIndex = useSignal(0);
@@ -175,22 +178,29 @@ export default component$(() => {
                 </Carousel.Root>
               </div>
               <div class="hero-categories">
-                <a href="/apparel/#work-wear" class="category-card">
-                  <img src="/carmichael-services/boiler-technicians.jpeg" alt="Work Wear" width="400" height="300" loading="lazy" />
-                  <span class="category-card__label">{t("teaser.workwear.title", locale.value)}</span>
-                </a>
-                <a href="/apparel/#jackets" class="category-card">
-                  <img src="/carmichael-services/careers.jpeg" alt="Jackets" width="400" height="300" loading="lazy" />
-                  <span class="category-card__label">{t("teaser.jackets.title", locale.value)}</span>
-                </a>
-                <a href="/apparel/#polos" class="category-card">
-                  <img src="/carmichael-services/hvac-retrofit.jpeg" alt="Polos" width="400" height="300" loading="lazy" />
-                  <span class="category-card__label">{t("teaser.polos.title", locale.value)}</span>
-                </a>
-                <a href="/apparel/#hats" class="category-card">
-                  <img src="/hat/30109107PS2_FRONT.JPG" alt="Hats" width="400" height="300" loading="lazy" />
-                  <span class="category-card__label">{t("teaser.hats.title", locale.value)}</span>
-                </a>
+                {isTech.value ? (
+                  <a href="/apparel/" class="category-card">
+                    <img src="/carmichael-services/boiler-technicians.jpeg" alt="Work Wear" width="400" height="300" loading="lazy" />
+                    <span class="category-card__label">{t("teaser.workwear.title", locale.value)}</span>
+                  </a>
+                ) : (<>
+                  <a href="/apparel/" class="category-card">
+                    <img src="/carmichael-services/boiler-technicians.jpeg" alt="All Apparel" width="400" height="300" loading="lazy" />
+                    <span class="category-card__label">{t("apparel.all.title", locale.value)}</span>
+                  </a>
+                  <a href="/apparel/#jackets" class="category-card">
+                    <img src="/carmichael-services/careers.jpeg" alt="Jackets" width="400" height="300" loading="lazy" />
+                    <span class="category-card__label">{t("teaser.jackets.title", locale.value)}</span>
+                  </a>
+                  <a href="/apparel/#polos" class="category-card">
+                    <img src="/carmichael-services/hvac-retrofit.jpeg" alt="Polos" width="400" height="300" loading="lazy" />
+                    <span class="category-card__label">{t("teaser.polos.title", locale.value)}</span>
+                  </a>
+                  <a href="/apparel/#hats" class="category-card">
+                    <img src="/hat/30109107PS2_FRONT.JPG" alt="Hats" width="400" height="300" loading="lazy" />
+                    <span class="category-card__label">{t("teaser.hats.title", locale.value)}</span>
+                  </a>
+                </>)}
               </div>
             </div>
           </div>

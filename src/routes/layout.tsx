@@ -1,4 +1,5 @@
-import { component$, Slot, useSignal, useVisibleTask$, $, useContextProvider, useStore, useComputed$ } from "@builder.io/qwik";
+import { component$, Slot, useSignal, useVisibleTask$, $, useContextProvider, useStore, useComputed$, createContextId } from "@builder.io/qwik";
+import type { Signal } from "@builder.io/qwik";
 import { Modal, Collapsible } from '@qwik-ui/headless';
 import {
   Link,
@@ -18,17 +19,29 @@ import type { Locale, TranslationKey } from "../i18n";
 const AUTH_COOKIE = "ce_auth"; // v2: orders persist to db
 const LOCALE_COOKIE = "ce_locale";
 
+export const LoginTypeContext = createContextId<Signal<string>>("loginType");
+
 export const useLocaleLoader = routeLoader$(({ cookie }) => {
   const saved = cookie.get(LOCALE_COOKIE)?.value;
   return (saved === "fr" ? "fr" : "en") as Locale;
 });
 
+type LoginType = "clothing" | "tech" | null;
+
+function getLoginType(cookie: Cookie): LoginType {
+  const val = cookie.get(AUTH_COOKIE)?.value;
+  if (val === "clothing" || val === "tech") return val;
+  if (val === "authenticated") return "clothing"; // backward compat
+  return null;
+}
+
 function isAuthenticated(cookie: Cookie): boolean {
-  return cookie.get(AUTH_COOKIE)?.value === "authenticated";
+  return getLoginType(cookie) !== null;
 }
 
 export const useAuthCheck = routeLoader$(({ cookie }) => {
-  return { loggedIn: isAuthenticated(cookie) };
+  const loginType = getLoginType(cookie);
+  return { loggedIn: loginType !== null, loginType: loginType || "clothing" };
 });
 
 export const useCartCountLoader = routeLoader$(({ cookie }) => {
@@ -39,11 +52,27 @@ export const useLogin = routeAction$(
   ({ username, password }, { cookie, fail, env }) => {
     const expectedUser = env.get("APP_USERNAME") || env.get("VITE_APP_USERNAME") || "admin";
     const expectedPass = env.get("APP_PASSWORD") || env.get("VITE_APP_PASSWORD");
+    const techUser = env.get("TECH_USERNAME") || env.get("VITE_TECH_USERNAME") || "tech";
+    const techPass = env.get("TECH_PASSWORD") || env.get("VITE_TECH_PASSWORD");
+
+    // Check Tech login first
+    if (techPass && username === techUser && password === techPass) {
+      cookie.set(AUTH_COOKIE, "tech", {
+        path: "/",
+        httpOnly: true,
+        secure: true,
+        sameSite: "lax",
+        maxAge: 60 * 60 * 24 * 3,
+      });
+      return { success: true };
+    }
+
+    // Check Clothing login
     if (!expectedPass) {
       return fail(500, { message: "Login not configured" });
     }
     if (username === expectedUser && password === expectedPass) {
-      cookie.set(AUTH_COOKIE, "authenticated", {
+      cookie.set(AUTH_COOKIE, "clothing", {
         path: "/",
         httpOnly: true,
         secure: true,
@@ -81,6 +110,7 @@ export const useSubmitOrder = routeAction$(
     if (!isAuthenticated(cookie)) {
       return fail(401, { message: "Not authenticated" });
     }
+    const vendor = getLoginType(cookie) === "tech" ? "carmichael-tech" : "carmichael";
     // Read from non-prefixed names first, fall back to VITE_* for backward compat.
     // Both are safe at runtime — env.get() reads server env, never bundles.
     const tursoUrl = env.get("TURSO_URL") || env.get("VITE_TURSO_URL");
@@ -110,7 +140,7 @@ export const useSubmitOrder = routeAction$(
       sql: `INSERT INTO orders (vendor, emp_number, emp_name, emp_dept, po_number, items, total, status, created_at, updated_at)
             VALUES (?, ?, ?, ?, ?, ?, ?, 'pending', datetime('now'), datetime('now'))`,
       args: [
-        "carmichael",
+        vendor,
         "",
         employee.name,
         employee.department,
@@ -270,6 +300,9 @@ export default component$(() => {
   const locale = useSignal<Locale>(savedLocale.value);
 
   useContextProvider(LocaleContext, locale);
+
+  const loginType = useSignal(auth.value.loginType);
+  useContextProvider(LoginTypeContext, loginType);
 
   // Cart state
   const initialCartCount = useCartCountLoader();
@@ -607,7 +640,7 @@ export default component$(() => {
           </Link>
           <nav class="site-header__categories">
             <Link href="/" class={loc.url.pathname === "/" ? "active" : ""}>{t("nav.home", locale.value)}</Link>
-            <Link href="/apparel/" class={loc.url.pathname.startsWith("/apparel") ? "active" : ""}>{t("nav.apparel", locale.value)}</Link>
+            <Link href="/apparel/" class={loc.url.pathname.startsWith("/apparel") ? "active" : ""}>{loginType.value === "tech" ? t("cat.Work Wear", locale.value) : t("nav.apparel", locale.value)}</Link>
           </nav>
           <nav class="site-header__nav">
             <button class={`locale-btn ${cartOpen.value ? "locale-btn--cart-open" : ""}`} onClick$={toggleLocale} aria-label="Toggle language">
@@ -656,12 +689,9 @@ export default component$(() => {
               </a>
               <a href="/apparel/" class={`nav-drawer__link ${loc.url.pathname.startsWith("/apparel") ? "active" : ""}`} onClick$={() => { menuOpen.value = false; window.dispatchEvent(new CustomEvent("select-category", { detail: "All" })); }}>
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg>
-                {t("teaser.all.title", locale.value)}
+                {loginType.value === "tech" ? t("cat.Work Wear", locale.value) : t("teaser.all.title", locale.value)}
               </a>
-              <a href="/apparel/#work-wear" class="nav-drawer__link" onClick$={() => { menuOpen.value = false; window.dispatchEvent(new CustomEvent("select-category", { detail: "Work Wear" })); }}>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4M16 2v4M4 6h16v14a2 2 0 01-2 2H6a2 2 0 01-2-2V6z"/><path d="M4 6l-2 4v2h4V8"/><path d="M20 6l2 4v2h-4V8"/></svg>
-                {t("cat.Work Wear", locale.value)}
-              </a>
+              {loginType.value !== "tech" && <>
               <a href="/apparel/#jackets" class="nav-drawer__link" onClick$={() => { menuOpen.value = false; window.dispatchEvent(new CustomEvent("select-category", { detail: "Jackets" })); }}>
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2l5 6v12a2 2 0 01-2 2h-3V12h-6v10H6a2 2 0 01-2-2V8l5-6"/><path d="M9 2a3 3 0 006 0"/><line x1="12" y1="12" x2="12" y2="22"/></svg>
                 {t("cat.Jackets", locale.value)}
@@ -674,6 +704,7 @@ export default component$(() => {
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 00-7 7c0 3 2 5 3 6h8c1-1 3-3 3-6a7 7 0 00-7-7z"/><path d="M5 15h14"/><path d="M6 18h12"/></svg>
                 {t("cat.Hats", locale.value)}
               </a>
+              </>}
             </div>
             <div class="nav-drawer__footer">
               <button class="nav-drawer__locale" onClick$={() => { toggleLocale(); }}>

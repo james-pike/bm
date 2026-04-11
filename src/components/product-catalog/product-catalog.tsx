@@ -2,8 +2,9 @@ import { component$, useSignal, useComputed$, useContext, $, useVisibleTask$, us
 import { LocaleContext, t } from "../../i18n";
 import { allProducts, categoryLabel } from "../../routes/apparel/products";
 import type { Product } from "../../routes/apparel/products";
+import { LoginTypeContext } from "../../routes/layout";
 
-const CATEGORY_ORDER = ["All", "Work Wear", "Jackets", "Polos", "Hats"];
+const CLOTHING_CATEGORIES = ["All", "Jackets", "Polos", "Hats"];
 
 const CATEGORY_ICONS: Record<string, string> = {
   "All": '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>',
@@ -39,17 +40,16 @@ const ProductCard = component$<{ item: Product; sku: string }>(({ item, sku }) =
 
 export const ProductCatalog = component$<{ class?: string }>(({ "class": cls }) => {
   const locale = useContext(LocaleContext);
+  const loginType = useContext(LoginTypeContext);
+  const isTech = useComputed$(() => loginType.value === "tech");
   const activeCat = useSignal("All");
   const searchQuery = useSignal("");
   const searchOpen = useSignal(false);
   const tabletCols = useSignal(3);
 
-  const HASH_TO_CAT: Record<string, string> = {
-    "work-wear": "Work Wear",
-    "jackets": "Jackets",
-    "polos": "Polos",
-    "hats": "Hats",
-  };
+  const HASH_TO_CAT: Record<string, string> = isTech.value
+    ? {}
+    : { "jackets": "Jackets", "polos": "Polos", "hats": "Hats" };
 
   // eslint-disable-next-line qwik/no-use-visible-task
   useVisibleTask$(({ cleanup }) => {
@@ -99,28 +99,26 @@ export const ProductCatalog = component$<{ class?: string }>(({ "class": cls }) 
     }
   });
 
+  const baseProducts = useComputed$(() => {
+    if (isTech.value) return allProducts.filter((p) => p.category === "Work Wear");
+    return allProducts.filter((p) => p.category !== "Work Wear");
+  });
+
   const filtered = useComputed$(() => {
+    const products = baseProducts.value;
+
     if (searchQuery.value) {
       const q = searchQuery.value.toLowerCase();
-      return allProducts.filter((p) =>
+      return products.filter((p) =>
         p.name.toLowerCase().includes(q) || p.sku.toLowerCase().includes(q) || p.category.toLowerCase().includes(q)
       );
     }
 
     if (activeCat.value !== "All") {
-      return allProducts.filter((p) => p.category === activeCat.value);
+      return products.filter((p) => p.category === activeCat.value);
     }
 
-    // Interleave: alternate 1 work wear, 1 other
-    const workWear = allProducts.filter((p) => p.category === "Work Wear");
-    const other = allProducts.filter((p) => p.category !== "Work Wear");
-    const result: Product[] = [];
-    let w = 0, o = 0;
-    while (w < workWear.length || o < other.length) {
-      if (o < other.length) result.push(other[o++]);
-      if (w < workWear.length) result.push(workWear[w++]);
-    }
-    return result;
+    return products;
   });
 
   return (
@@ -142,7 +140,7 @@ export const ProductCatalog = component$<{ class?: string }>(({ "class": cls }) 
             />
           </div>
           <div class="home-catalog__tabs">
-            {CATEGORY_ORDER.map((cat) => (
+            {(isTech.value ? [] : CLOTHING_CATEGORIES).map((cat) => (
               <button
                 key={cat}
                 class={`apparel-titlebar__tab ${activeCat.value === cat ? "active" : ""}`}
