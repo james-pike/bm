@@ -180,7 +180,11 @@ export default component$(() => {
               <div class="hero-categories">
                 {isTech.value ? (<>
                   <a href="/apparel/" class="category-card category-card--tech-primary">
-                    <img src="/carmichael-services/boiler-technicians.jpeg" alt="Work Wear" width="400" height="300" loading="eager" decoding="async" />
+                    <picture>
+                      <source media="(max-width: 767px)" srcset="/carmichael-services/chiller-retrofit.jpeg" />
+                      <source media="(min-width: 768px) and (max-width: 1024px)" srcset="/carmichael-services/hvac-retrofit.jpeg" />
+                      <img src="/carmichael-services/boiler-technicians.jpeg" alt="Work Wear" width="400" height="300" loading="eager" decoding="async" />
+                    </picture>
                     <span class="category-card__label">{t("teaser.workwear.title", locale.value)}</span>
                   </a>
                   <a href="/apparel/" class="category-card category-card--tech-extra category-card--tech-desktop">

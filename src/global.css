@@ -568,6 +568,12 @@ img { max-width: 100%; display: block; }
     grid-column: 1 / -1;
     aspect-ratio: 16 / 9;
   }
+  .hero-categories .category-card--tech-primary .category-card__label {
+    font-size: 1.1rem;
+    bottom: 0.85rem;
+    left: 0.85rem;
+    padding: 0.4rem 0.8rem;
+  }
 }
 /* Tablet: show primary + tablet image, hide desktop-only extras */
 @media (min-width: 768px) and (max-width: 1024px) {
