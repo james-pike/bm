@@ -88,6 +88,13 @@ export default component$(() => {
                     <span class="hero-card-header__btn-label">{t("cart.mycart", locale.value)}</span>
                   </button>
                   <button class="hero-card-header__btn" onClick$={() => {
+                    const btn = document.querySelector('.logout-btn') as HTMLElement;
+                    btn?.click();
+                  }} aria-label={t("login.logout", locale.value)}>
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+                    <span class="hero-card-header__btn-label">{t("login.logout", locale.value)}</span>
+                  </button>
+                  <button class="hero-card-header__btn" onClick$={() => {
                     const btn = document.querySelector('.hamburger-btn') as HTMLElement;
                     btn?.click();
                   }} aria-label="Menu">
@@ -197,9 +204,9 @@ export default component$(() => {
                     <img src="/carmichael-services/chiller-retrofit.jpeg" alt="" width="400" height="300" loading="eager" decoding="sync" />
                   </a>
                 </>) : (<>
-                  <a href="/apparel/" class="category-card">
-                    <img src="/carmichael-services/boiler-technicians.jpeg" alt="All Apparel" width="400" height="300" loading="eager" decoding="sync" />
-                    <span class="category-card__label">{t("apparel.all.title", locale.value)}</span>
+                  <a href="/apparel/#work-wear" class="category-card">
+                    <img src="/carmichael-services/boiler-technicians.jpeg" alt="Work Wear" width="400" height="300" loading="eager" decoding="sync" />
+                    <span class="category-card__label">{t("teaser.workwear.title", locale.value)}</span>
                   </a>
                   <a href="/apparel/#jackets" class="category-card">
                     <img src="/carmichael-services/careers.jpeg" alt="Jackets" width="400" height="300" loading="eager" decoding="sync" />

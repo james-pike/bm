@@ -291,6 +291,7 @@ export default component$(() => {
   const loc = useLocation();
   const auth = useAuthCheck();
   const loginAction = useLogin();
+  const logoutAction = useLogout();
   const orderAction = useSubmitOrder();
 
   const showLogin = useSignal(false);
@@ -659,6 +660,12 @@ export default component$(() => {
                 </>
               )}
             </button>
+            <Form action={logoutAction} class="logout-form">
+              <button type="submit" class="logout-btn" aria-label={t("login.logout", locale.value)}>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+                <span class="logout-btn__label">{t("login.logout", locale.value)}</span>
+              </button>
+            </Form>
             <button class="hamburger-btn" onClick$={() => (menuOpen.value = !menuOpen.value)} aria-label="Menu">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h18"/><path d="M3 6h18"/><path d="M3 18h18"/></svg>
             </button>
@@ -687,9 +694,9 @@ export default component$(() => {
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
                 {t("nav.home", locale.value)}
               </a>
-              <a href="/apparel/" class={`nav-drawer__link ${loc.url.pathname.startsWith("/apparel") ? "active" : ""}`} onClick$={() => { menuOpen.value = false; window.dispatchEvent(new CustomEvent("select-category", { detail: "All" })); }}>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg>
-                {loginType.value === "tech" ? t("cat.Work Wear", locale.value) : t("teaser.all.title", locale.value)}
+              <a href={loginType.value === "tech" ? "/apparel/" : "/apparel/#work-wear"} class={`nav-drawer__link ${loc.url.pathname.startsWith("/apparel") ? "active" : ""}`} onClick$={() => { menuOpen.value = false; window.dispatchEvent(new CustomEvent("select-category", { detail: "Work Wear" })); }}>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4M16 2v4M4 6h16v14a2 2 0 01-2 2H6a2 2 0 01-2-2V6z"/><path d="M4 6l-2 4v2h4V8"/><path d="M20 6l2 4v2h-4V8"/></svg>
+                {t("cat.Work Wear", locale.value)}
               </a>
               {loginType.value !== "tech" && <>
               <a href="/apparel/#jackets" class="nav-drawer__link" onClick$={() => { menuOpen.value = false; window.dispatchEvent(new CustomEvent("select-category", { detail: "Jackets" })); }}>
@@ -711,6 +718,12 @@ export default component$(() => {
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
                 {locale.value === "en" ? "Français" : "English"}
               </button>
+              <Form action={logoutAction}>
+                <button type="submit" class="nav-drawer__locale">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+                  {t("login.logout", locale.value)}
+                </button>
+              </Form>
             </div>
           </nav>
         </div>
@@ -732,7 +745,7 @@ export default component$(() => {
           {loginType.value !== "tech" && (
           <nav class="site-footer__links">
             <Link href="/">{t("nav.home", locale.value)}</Link>
-            <a href="/apparel/" onClick$={(e) => { if (loc.url.pathname.startsWith("/apparel")) { e.preventDefault(); } window.dispatchEvent(new CustomEvent("select-category", { detail: "All" })); const headerH = window.innerWidth <= 900 ? 49 : 58; const grid = document.querySelector('.home-catalog .apparel-grid'); if (grid) { const top = grid.getBoundingClientRect().top + window.scrollY - headerH - 8; window.scrollTo({ top, behavior: 'instant' }); } }}>{t("nav.apparel", locale.value)}</a>
+            <a href="/apparel/#work-wear" onClick$={(e) => { if (loc.url.pathname.startsWith("/apparel")) { e.preventDefault(); } window.dispatchEvent(new CustomEvent("select-category", { detail: "Work Wear" })); const headerH = window.innerWidth <= 900 ? 49 : 58; const grid = document.querySelector('.home-catalog .apparel-grid'); if (grid) { const top = grid.getBoundingClientRect().top + window.scrollY - headerH - 8; window.scrollTo({ top, behavior: 'instant' }); } }}>{t("cat.Work Wear", locale.value)}</a>
             <a href="/apparel/#jackets" onClick$={(e) => { if (loc.url.pathname.startsWith("/apparel")) { e.preventDefault(); } window.dispatchEvent(new CustomEvent("select-category", { detail: "Jackets" })); const headerH = window.innerWidth <= 900 ? 49 : 58; const grid = document.querySelector('.home-catalog .apparel-grid'); if (grid) { const top = grid.getBoundingClientRect().top + window.scrollY - headerH - 8; window.scrollTo({ top, behavior: 'instant' }); } }}>{t("cat.Jackets", locale.value)}</a>
             <a href="/apparel/#polos" onClick$={(e) => { if (loc.url.pathname.startsWith("/apparel")) { e.preventDefault(); } window.dispatchEvent(new CustomEvent("select-category", { detail: "Polos" })); const headerH = window.innerWidth <= 900 ? 49 : 58; const grid = document.querySelector('.home-catalog .apparel-grid'); if (grid) { const top = grid.getBoundingClientRect().top + window.scrollY - headerH - 8; window.scrollTo({ top, behavior: 'instant' }); } }}>{t("cat.Polos", locale.value)}</a>
             <a href="/apparel/#hats" onClick$={(e) => { if (loc.url.pathname.startsWith("/apparel")) { e.preventDefault(); } window.dispatchEvent(new CustomEvent("select-category", { detail: "Hats" })); const headerH = window.innerWidth <= 900 ? 49 : 58; const grid = document.querySelector('.home-catalog .apparel-grid'); if (grid) { const top = grid.getBoundingClientRect().top + window.scrollY - headerH - 8; window.scrollTo({ top, behavior: 'instant' }); } }}>{t("cat.Hats", locale.value)}</a>

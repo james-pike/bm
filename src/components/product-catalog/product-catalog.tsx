@@ -4,7 +4,7 @@ import { allProducts, categoryLabel } from "../../routes/apparel/products";
 import type { Product } from "../../routes/apparel/products";
 import { LoginTypeContext } from "../../routes/layout";
 
-const CLOTHING_CATEGORIES = ["All", "Jackets", "Polos", "Hats"];
+const CLOTHING_CATEGORIES = ["Work Wear", "Jackets", "Polos", "Hats"];
 
 const CATEGORY_ICONS: Record<string, string> = {
   "All": '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>',
@@ -51,7 +51,7 @@ export const ProductCatalog = component$<{ class?: string }>(({ "class": cls }) 
 
   const HASH_TO_CAT: Record<string, string> = isTech.value
     ? {}
-    : { "jackets": "Jackets", "polos": "Polos", "hats": "Hats" };
+    : { "work-wear": "Work Wear", "jackets": "Jackets", "polos": "Polos", "hats": "Hats" };
 
   // eslint-disable-next-line qwik/no-use-visible-task
   useVisibleTask$(({ cleanup }) => {
@@ -103,7 +103,7 @@ export const ProductCatalog = component$<{ class?: string }>(({ "class": cls }) 
 
   const baseProducts = useComputed$(() => {
     if (isTech.value) return allProducts.filter((p) => p.category === "Work Wear");
-    return allProducts.filter((p) => p.category !== "Work Wear");
+    return allProducts;
   });
 
   const filtered = useComputed$(() => {
