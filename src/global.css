@@ -3171,24 +3171,27 @@ body:has(.apparel-page) .site-header .cart-btn svg { stroke: #92750a; }
   position: relative;
 }
 /* ===== Logout Button ===== */
-.logout-form { display: inline-flex; margin-left: 4px; }
+.logout-form { display: inline-flex; margin-left: 8px; }
 .logout-btn {
+  margin-left: 0;
   display: inline-flex;
   align-items: center;
   gap: 0.3rem;
-  padding: 7px 12px;
+  padding: 7px 16px;
   border-radius: 2px;
   border: 1px solid rgba(0,0,0,0.08);
   background: rgba(0,0,0,0.04);
-  font-size: 0.78rem;
+  font-size: 0.82rem;
   font-weight: 600;
   color: var(--ce-gray-700);
   cursor: pointer;
   font-family: var(--font-sans);
   transition: background var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast);
+  min-width: 90px;
+  justify-content: center;
   box-shadow: inset 0 1px 4px rgba(0,0,0,0.08), inset 0 0 6px rgba(0,0,0,0.04);
 }
-.logout-btn svg { stroke: var(--ce-gray-700); }
+.logout-btn svg { stroke: var(--ce-gray-700); width: 17px; height: 17px; }
 @media (hover: hover) {
   .logout-btn:hover { border-color: var(--ce-gold); background: #fdf8e8; color: #92750a; }
   .logout-btn:hover svg { stroke: #92750a; }
@@ -4579,9 +4582,8 @@ details[open] > .cart-drawer__checkout-title::after {
   .cart-btn__label { display: none; }
   .locale-btn--cart-open { display: none; }
   .cart-btn { padding: 10px; font-size: 0.78rem; min-width: auto; margin-right: 0; gap: 4px; border: 1px solid var(--ce-gray-200); background: rgba(0,0,0,0.04); border-radius: 2px; box-shadow: inset 0 1px 4px rgba(0,0,0,0.08), inset 0 0 6px rgba(0,0,0,0.04); }
-  .logout-btn { padding: 10px; min-width: auto; gap: 0; }
-  .logout-btn__label { display: none; }
-  .logout-btn svg { width: 22px; height: 22px; }
+  .logout-form { display: none; }
+  .hero-card-header__btn--logout { display: none; }
   .cart-btn svg { width: 22px; height: 22px; }
   .cart-btn--active { background: rgba(228,186,63,0.12) !important; border-color: rgba(228,186,63,0.45) !important; color: #92750a !important; box-shadow: inset 0 1px 4px rgba(146,117,10,0.12), inset 0 0 6px rgba(146,117,10,0.06) !important; }
   .cart-btn--active svg { stroke: #92750a !important; }
@@ -5286,7 +5288,7 @@ details[open] > .cart-drawer__checkout-title::after {
   .hero-card-header__nav-link { font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.03em; color: rgba(255,255,255,0.7); text-decoration: none; padding: 4px 8px; }
   .hero-card-header__nav-link:hover { color: var(--ce-gold); }
   .hero-card-header__nav-link.active { color: var(--ce-gold); }
-  .hero-card-header__actions .hero-card-header__btn:nth-child(3) { display: none; }
+  .hero-card-header__actions .hero-card-header__btn:last-child { display: none; }
 
   /* Hero carousel — shorter on tablet so it doesn't dominate */
   .hero-carousel__scroller { aspect-ratio: 3 / 1; }
