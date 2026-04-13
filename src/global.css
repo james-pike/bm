@@ -560,7 +560,7 @@ img { max-width: 100%; display: block; }
   box-shadow: none;
 }
 /* Mobile: only show the primary tech card, full width */
-@media (max-width: 900px) {
+@media (max-width: 767px) {
   .category-card--tech-extra {
     display: none;
   }
@@ -570,7 +570,7 @@ img { max-width: 100%; display: block; }
   }
 }
 /* Tablet: show primary + tablet image, hide desktop-only extras */
-@media (min-width: 901px) and (max-width: 1024px) {
+@media (min-width: 768px) and (max-width: 1024px) {
   .category-card--tech-desktop {
     display: none;
   }
@@ -4509,6 +4509,7 @@ details[open] > .cart-drawer__checkout-title::after {
   .apparel-titlebar__tab { padding: 4px 6px; font-size: clamp(0.82rem, 2.2vw, 1rem); }
   .home-catalog__tabs { overflow-x: hidden; container-type: inline-size; }
   .home-catalog__tabs .apparel-titlebar__tab { flex: 1; text-align: center; justify-content: center; font-size: clamp(0.72rem, 4.5cqi, 1.1rem); }
+  .home-catalog__tabs .apparel-titlebar__tab:only-child { flex: 0 0 auto; margin-right: auto; text-align: left; justify-content: flex-start; }
   .apparel-titlebar__tab:first-child, .home-catalog__tabs .apparel-titlebar__tab:first-child { display: flex; }
   .collection-hero { padding: 0; margin: 0 0.15rem 2px; margin-top: 0; }
   .collection-hero__viewport { aspect-ratio: 5/1; border-radius: 0 0 var(--radius-sm) var(--radius-sm); display: flex; }
