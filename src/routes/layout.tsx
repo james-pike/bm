@@ -779,7 +779,7 @@ export default component$(() => {
                       <tr>
                         <th class="cart-table__th-product">{t("cart.invoice.product", locale.value)}</th>
                         <th class="cart-table__th-qty">{t("cart.invoice.qty", locale.value)}</th>
-                        <th class="cart-table__th-total">{t("cart.invoice.total", locale.value)}</th>
+                        {loginType.value !== "tech" && <th class="cart-table__th-total">{t("cart.invoice.total", locale.value)}</th>}
                       </tr>
                     </thead>
                     <tbody>
@@ -803,29 +803,31 @@ export default component$(() => {
                               <button class="cart-table__qty-btn" aria-label={`Increase quantity of ${item.name}`} onClick$={() => updateQty(i, 1)}>+</button>
                             </div>
                           </td>
-                          <td class="cart-table__total">${(((Number(item.price) || 0) * item.quantity)).toFixed(2)}</td>
+                          {loginType.value !== "tech" && <td class="cart-table__total">${(((Number(item.price) || 0) * item.quantity)).toFixed(2)}</td>}
                         </tr>
                       ))}
                     </tbody>
-                    <tfoot>
-                      <tr>
-                        <td colSpan={2} class="cart-table__subtotal-label">{t("cart.invoice.subtotal", locale.value)}</td>
-                        <td class="cart-table__subtotal-val">${cart.items.reduce((sum, i) => sum + (Number(i.price) || 0) * i.quantity, 0).toFixed(2)}</td>
-                      </tr>
-                      <tr>
-                        <td colSpan={2} class="cart-table__subtotal-label">{t("cart.invoice.tax", locale.value)}</td>
-                        <td class="cart-table__subtotal-val">${(cart.items.reduce((sum, i) => sum + (Number(i.price) || 0) * i.quantity, 0) * 0.13).toFixed(2)}</td>
-                      </tr>
-                      <tr>
-                        <td colSpan={2} class="cart-table__subtotal-label" style={{ fontWeight: 700 }}>{t("cart.invoice.total", locale.value)}</td>
-                        <td class="cart-table__subtotal-val" style={{ fontWeight: 700 }}>${(cart.items.reduce((sum, i) => sum + (Number(i.price) || 0) * i.quantity, 0) * 1.13).toFixed(2)}</td>
-                      </tr>
-                    </tfoot>
+                    {loginType.value !== "tech" && (
+                      <tfoot>
+                        <tr>
+                          <td colSpan={2} class="cart-table__subtotal-label">{t("cart.invoice.subtotal", locale.value)}</td>
+                          <td class="cart-table__subtotal-val">${cart.items.reduce((sum, i) => sum + (Number(i.price) || 0) * i.quantity, 0).toFixed(2)}</td>
+                        </tr>
+                        <tr>
+                          <td colSpan={2} class="cart-table__subtotal-label">{t("cart.invoice.tax", locale.value)}</td>
+                          <td class="cart-table__subtotal-val">${(cart.items.reduce((sum, i) => sum + (Number(i.price) || 0) * i.quantity, 0) * 0.13).toFixed(2)}</td>
+                        </tr>
+                        <tr>
+                          <td colSpan={2} class="cart-table__subtotal-label" style={{ fontWeight: 700 }}>{t("cart.invoice.total", locale.value)}</td>
+                          <td class="cart-table__subtotal-val" style={{ fontWeight: 700 }}>${(cart.items.reduce((sum, i) => sum + (Number(i.price) || 0) * i.quantity, 0) * 1.13).toFixed(2)}</td>
+                        </tr>
+                      </tfoot>
+                    )}
                   </table>
                 </div>
                 <div class="cart-drawer__footer">
                   <span class="cart-drawer__total">
-                    {cartCount.value} {cartCount.value !== 1 ? t("cart.items", locale.value) : t("cart.item", locale.value)} — ${(cart.items.reduce((sum, i) => sum + (Number(i.price) || 0) * i.quantity, 0) * 1.13).toFixed(2)}
+                    {cartCount.value} {cartCount.value !== 1 ? t("cart.items", locale.value) : t("cart.item", locale.value)}{loginType.value !== "tech" && ` — $${(cart.items.reduce((sum, i) => sum + (Number(i.price) || 0) * i.quantity, 0) * 1.13).toFixed(2)}`}
                   </span>
                   <button
                     class="btn btn--primary cart-drawer__order-btn"
@@ -852,21 +854,25 @@ export default component$(() => {
                         {cart.items.map((item) => (
                           <div key={`${item.name}-${item.size}`} class="cart-drawer__summary-item">
                             <span>{item.quantity}x {item.name}</span>
-                            <span>${(((Number(item.price) || 0) * item.quantity)).toFixed(2)}</span>
+                            {loginType.value !== "tech" && <span>${(((Number(item.price) || 0) * item.quantity)).toFixed(2)}</span>}
                           </div>
                         ))}
-                        <div class="cart-drawer__summary-item cart-drawer__summary-total">
-                          <span>{t("cart.invoice.subtotal", locale.value)}</span>
-                          <span>${cart.items.reduce((sum, i) => sum + (Number(i.price) || 0) * i.quantity, 0).toFixed(2)}</span>
-                        </div>
-                        <div class="cart-drawer__summary-item">
-                          <span>{t("cart.invoice.tax", locale.value)}</span>
-                          <span>${(cart.items.reduce((sum, i) => sum + (Number(i.price) || 0) * i.quantity, 0) * 0.13).toFixed(2)}</span>
-                        </div>
-                        <div class="cart-drawer__summary-item cart-drawer__summary-total">
-                          <span>{t("cart.invoice.total", locale.value)}</span>
-                          <span>${(cart.items.reduce((sum, i) => sum + (Number(i.price) || 0) * i.quantity, 0) * 1.13).toFixed(2)}</span>
-                        </div>
+                        {loginType.value !== "tech" && (
+                          <>
+                            <div class="cart-drawer__summary-item cart-drawer__summary-total">
+                              <span>{t("cart.invoice.subtotal", locale.value)}</span>
+                              <span>${cart.items.reduce((sum, i) => sum + (Number(i.price) || 0) * i.quantity, 0).toFixed(2)}</span>
+                            </div>
+                            <div class="cart-drawer__summary-item">
+                              <span>{t("cart.invoice.tax", locale.value)}</span>
+                              <span>${(cart.items.reduce((sum, i) => sum + (Number(i.price) || 0) * i.quantity, 0) * 0.13).toFixed(2)}</span>
+                            </div>
+                            <div class="cart-drawer__summary-item cart-drawer__summary-total">
+                              <span>{t("cart.invoice.total", locale.value)}</span>
+                              <span>${(cart.items.reduce((sum, i) => sum + (Number(i.price) || 0) * i.quantity, 0) * 1.13).toFixed(2)}</span>
+                            </div>
+                          </>
+                        )}
                       </div>
                     </Collapsible.Content>
                   </Collapsible.Root>
@@ -929,7 +935,7 @@ export default component$(() => {
                 )}
                 <div class="cart-drawer__footer">
                   <span class="cart-drawer__total">
-                    {cartCount.value} {cartCount.value !== 1 ? t("cart.items", locale.value) : t("cart.item", locale.value)} — ${(cart.items.reduce((sum, i) => sum + (Number(i.price) || 0) * i.quantity, 0) * 1.13).toFixed(2)}
+                    {cartCount.value} {cartCount.value !== 1 ? t("cart.items", locale.value) : t("cart.item", locale.value)}{loginType.value !== "tech" && ` — $${(cart.items.reduce((sum, i) => sum + (Number(i.price) || 0) * i.quantity, 0) * 1.13).toFixed(2)}`}
                   </span>
                   <button
                     class="btn btn--primary cart-drawer__order-btn"

@@ -16,6 +16,8 @@ const CATEGORY_ICONS: Record<string, string> = {
 
 const ProductCard = component$<{ item: Product; sku: string }>(({ item, sku }) => {
   const locale = useContext(LocaleContext);
+  const loginType = useContext(LoginTypeContext);
+  const isTech = loginType.value === "tech";
 
   return (
     <a href={`/apparel/${sku}/`} class={`product-card product-card-link ${sku === "CAR-21" ? "product-card--cover" : ""}`}>
@@ -29,7 +31,7 @@ const ProductCard = component$<{ item: Product; sku: string }>(({ item, sku }) =
             <span class="product-card__name-code">{(item.name.match(/#\S+/) || [''])[0]}</span>
           </div>
           <div class="product-card__price-group">
-            <div class="product-card__price">${(Number(item.price) || 0).toFixed(2)}</div>
+            {!isTech && <div class="product-card__price">${(Number(item.price) || 0).toFixed(2)}</div>}
             <span class="product-card__sizes">{item.sizes === "One Size" ? t("modal.onesize", locale.value) : item.sizes}</span>
           </div>
         </div>
