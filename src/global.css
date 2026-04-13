@@ -982,7 +982,7 @@ img { max-width: 100%; display: block; }
     align-items: center;
     justify-content: flex-end;
     padding: 0;
-    margin-top: -2.2rem;
+    margin-top: -2.8rem;
     margin-right: -0.5rem;
   }
   .hero__logo-spacer--mobile {
@@ -4463,6 +4463,7 @@ details[open] > .cart-drawer__checkout-title::after {
   .product-carousel__slide:first-child { opacity: 1; }
   .dot-pattern::before { opacity: 0.5; }
   .dot-pattern--light::before { opacity: 0.25; }
+  .hero-card-header { margin-left: -1.45rem; margin-right: -1.45rem; padding-left: 0.7rem; padding-right: 0.7rem; border-top-left-radius: 0; border-top-right-radius: 0; }
   .hero__logo-group { border-top-left-radius: 0; border-top-right-radius: 0; }
   .hero { min-height: auto; padding-bottom: 0.6rem; }
   .hero__content { text-align: left; padding: 0; align-items: flex-start; grid-template-columns: 1fr; overflow: hidden; gap: 0; }
@@ -5273,7 +5274,7 @@ details[open] > .cart-drawer__checkout-title::after {
   .hero__logo-spacer--mobile .hero__logo-spacer-canada { width: 96px; max-width: 96px; }
 
   /* Hero card margin */
-  .hero__logo-group { margin-left: 0; margin-right: 0; width: 100%; border-top-left-radius: 0; border-top-right-radius: 0; }
+  .hero__logo-group { margin-left: 0; margin-right: 0; width: 100%; }
 
   /* Stats row */
   .stats-row { grid-template-columns: repeat(2, 1fr); padding: 0 1.5rem; }
@@ -5354,6 +5355,8 @@ details[open] > .cart-drawer__checkout-title::after {
     row-gap: 10px;
     padding: 0 10px 0.6rem;
     align-items: stretch;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
   }
 
   /* Show in-card header at top of green card; hide site-header on home page */
@@ -5364,6 +5367,8 @@ details[open] > .cart-drawer__checkout-title::after {
     margin: 0 -10px;
     padding: 0.2rem 0.5rem;
     position: relative;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
   }
   .hero-card-header.dot-pattern::before {
     left: 0;
