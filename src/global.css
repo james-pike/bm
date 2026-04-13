@@ -2924,6 +2924,13 @@ img { max-width: 100%; display: block; }
 .apparel-titlebar__tab:hover {
   color: var(--ce-gray-900);
 }
+.apparel-titlebar__tab:disabled {
+  cursor: default;
+  opacity: 1;
+}
+.apparel-titlebar__tab:disabled:hover {
+  color: var(--ce-green);
+}
 
 .apparel-titlebar__tab.active {
   color: var(--ce-green);

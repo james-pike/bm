@@ -145,8 +145,10 @@ export const ProductCatalog = component$<{ class?: string }>(({ "class": cls }) 
             {(isTech.value ? ["Work Wear"] : CLOTHING_CATEGORIES).map((cat) => (
               <button
                 key={cat}
-                class={`apparel-titlebar__tab ${activeCat.value === cat ? "active" : ""}`}
+                class={`apparel-titlebar__tab ${isTech.value || activeCat.value === cat ? "active" : ""}`}
+                disabled={isTech.value}
                 onClick$={() => {
+                  if (isTech.value) return;
                   if (activeCat.value === cat) { activeCat.value = "All"; return; }
                   activeCat.value = cat;
                   searchQuery.value = "";
