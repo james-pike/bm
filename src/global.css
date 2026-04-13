@@ -603,10 +603,8 @@ img { max-width: 100%; display: block; }
   -webkit-transform: translateZ(0);
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
-  contain: layout style paint size;
+  contain: layout paint;
   will-change: transform;
-  content-visibility: auto;
-  contain-intrinsic-size: auto 400px auto 300px;
 }
 .category-card::before {
   content: '';
@@ -630,11 +628,8 @@ img { max-width: 100%; display: block; }
   object-fit: cover;
   display: block;
   transition: transform 0.3s ease;
-  transform: translateZ(0);
-  -webkit-transform: translateZ(0);
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
-  will-change: transform;
 }
 .category-card:hover img {
   transform: none;
