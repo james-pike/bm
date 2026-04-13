@@ -5299,7 +5299,7 @@ details[open] > .cart-drawer__checkout-title::after {
   .site-header { height: 58px; border-bottom: none !important; box-shadow: none; }
   /* Apparel routes get the gray bottom line under the site header */
   body:has(.apparel-page) .site-header { box-shadow: 0 2px 0 var(--ce-gray-200); }
-  .site-header__inner { height: 58px; padding: 0 0.6rem 0 1rem; }
+  .site-header__inner { height: 58px; padding: 0 0.5rem; }
   .site-header__logo-img { height: 50px; }
   .site-header__logo-text { height: 25px; }
   .site-header__nav { gap: 3px; margin-right: 0; }

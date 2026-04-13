@@ -69,7 +69,7 @@ export default component$(() => {
                 </a>
                 <nav class="hero-card-header__nav">
                   <a href="/" class="hero-card-header__nav-link active">{t("nav.home", locale.value)}</a>
-                  <a href="/apparel/" class="hero-card-header__nav-link">{t("nav.apparel", locale.value)}</a>
+                  <a href="/apparel/" class="hero-card-header__nav-link">{isTech.value ? t("teaser.workwear.title", locale.value) : t("nav.apparel", locale.value)}</a>
                 </nav>
                 <div class="hero-card-header__actions">
                   <button class="hero-card-header__btn" onClick$={() => {
@@ -183,14 +183,14 @@ export default component$(() => {
                     <img src="/carmichael-services/boiler-technicians.jpeg" alt="Work Wear" width="400" height="300" loading="eager" decoding="async" />
                     <span class="category-card__label">{t("teaser.workwear.title", locale.value)}</span>
                   </a>
-                  <a href="/apparel/" class="category-card category-card--tech-extra category-card--tech-tablet">
+                  <a href="/apparel/" class="category-card category-card--tech-extra category-card--tech-desktop">
                     <img src="/carmichael-services/careers.jpeg" alt="" width="400" height="300" loading="eager" decoding="async" />
                   </a>
                   <a href="/apparel/" class="category-card category-card--tech-extra category-card--tech-desktop">
                     <img src="/carmichael-services/hvac-retrofit.jpeg" alt="" width="400" height="300" loading="eager" decoding="async" />
                   </a>
-                  <a href="/apparel/" class="category-card category-card--tech-extra category-card--tech-desktop">
-                    <img src="/carmichael-services/building-automation.jpeg" alt="" width="400" height="300" loading="eager" decoding="async" />
+                  <a href="/apparel/" class="category-card category-card--tech-extra category-card--tech-tablet">
+                    <img src="/carmichael-services/chiller-retrofit.jpeg" alt="" width="400" height="300" loading="eager" decoding="async" />
                   </a>
                 </>) : (<>
                   <a href="/apparel/" class="category-card">
