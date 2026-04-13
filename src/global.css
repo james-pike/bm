@@ -4463,7 +4463,7 @@ details[open] > .cart-drawer__checkout-title::after {
   .product-carousel__slide:not(:first-child) { display: none; }
   .product-carousel__slide:first-child { opacity: 1; }
   .dot-pattern::before { opacity: 0.5; }
-  .dot-pattern--light::before { background-image: radial-gradient(circle, rgba(255,255,255,0.33) 1.2px, transparent 1.2px); opacity: 0.25; }
+  .dot-pattern--light::before { opacity: 0.25; }
   .hero-card-header { margin-left: -1.45rem; margin-right: -1.45rem; padding-left: 0.7rem; padding-right: 0.7rem; border-top-left-radius: 0; border-top-right-radius: 0; }
   .hero__logo-group { border-top-left-radius: 0; border-top-right-radius: 0; }
   .hero { min-height: auto; padding-bottom: 0.6rem; }
