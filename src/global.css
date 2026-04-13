@@ -1391,8 +1391,7 @@ img { max-width: 100%; display: block; }
 }
 .btn--primary:hover {
   background: #d4a832;
-  transform: translateY(-2px);
-  box-shadow: 0 8px 30px rgba(236,106,16,0.35);
+  color: var(--ce-white);
 }
 
 .btn--ghost {
@@ -4578,6 +4577,7 @@ details[open] > .cart-drawer__checkout-title::after {
   .home-catalog__tabs .apparel-titlebar__tab { flex: 1; text-align: center; justify-content: center; font-size: clamp(0.72rem, 4.5cqi, 1.1rem); }
   .home-catalog__tabs .apparel-titlebar__tab:only-child { flex: 0 0 auto; margin-right: auto; text-align: left; justify-content: flex-start; padding-left: 0.75rem; }
   .apparel-titlebar__tab:first-child, .home-catalog__tabs .apparel-titlebar__tab:first-child { display: none; }
+  .home-catalog__tabs .apparel-titlebar__tab:only-child { display: flex; }
   .collection-hero { padding: 0; margin: 0 0.15rem 2px; margin-top: 0; }
   .collection-hero__viewport { aspect-ratio: 5/1; border-radius: 0 0 var(--radius-sm) var(--radius-sm); display: flex; }
   .collection-hero__slide { grid-template-columns: 1fr 1fr; gap: 2px; flex: 1; }
@@ -4635,7 +4635,7 @@ details[open] > .cart-drawer__checkout-title::after {
   html { font-size: 18px; }
   .site-header .cart-btn,
   .site-header .locale-btn,
-  .site-header .logout-btn { height: 40px; padding: 0 12px; min-width: auto; gap: 6px; font-size: 0.78rem; border-radius: 2px; box-shadow: inset 0 1px 4px rgba(0,0,0,0.08), inset 0 0 6px rgba(0,0,0,0.04); }
+  .site-header .logout-btn { height: 40px; padding: 0 12px; min-width: auto; gap: 6px; font-size: 0.78rem; border-radius: 4px; box-shadow: inset 0 1px 4px rgba(0,0,0,0.08), inset 0 0 6px rgba(0,0,0,0.04); }
   .site-header .cart-btn svg,
   .site-header .locale-btn svg,
   .site-header .logout-btn svg { width: 20px; height: 20px; }
@@ -4982,13 +4982,13 @@ details[open] > .cart-drawer__checkout-title::after {
   .site-header--hero-hidden .site-header__categories a.active { color: var(--ce-gold); }
   .site-header--hero-hidden .site-header__nav a:hover { color: var(--ce-gold); }
   .site-header--hero-hidden .site-header__nav a.active { color: var(--ce-gold); }
-  .site-header--hero-hidden .locale-btn { color: rgba(255,255,255,0.85); border-color: rgba(255,255,255,0.2); background: transparent; border-radius: 2px; }
+  .site-header--hero-hidden .locale-btn { color: rgba(255,255,255,0.85); border-color: rgba(255,255,255,0.2); background: transparent; border-radius: 4px; }
   .site-header--hero-hidden .locale-btn:hover { color: rgba(255,255,255,0.85); border-color: rgba(255,255,255,0.2); background: transparent; }
-  .site-header--hero-hidden .cart-btn { color: rgba(255,255,255,0.85); border-color: rgba(255,255,255,0.2); background: transparent; border-radius: 2px; }
+  .site-header--hero-hidden .cart-btn { color: rgba(255,255,255,0.85); border-color: rgba(255,255,255,0.2); background: transparent; border-radius: 4px; }
   .site-header--hero-hidden .cart-btn:hover { color: var(--ce-gold); border-color: var(--ce-gold); background: rgba(228,186,63,0.12); }
   .site-header--hero-hidden .cart-btn svg { stroke: rgba(255,255,255,0.85); }
   .site-header--hero-hidden .cart-btn:hover svg { stroke: var(--ce-gold); }
-  .site-header--hero-hidden .logout-btn { color: rgba(255,255,255,0.85); border-color: rgba(255,255,255,0.2); background: transparent; border-radius: 2px; }
+  .site-header--hero-hidden .logout-btn { color: rgba(255,255,255,0.85); border-color: rgba(255,255,255,0.2); background: transparent; border-radius: 4px; }
   .site-header--hero-hidden .logout-btn:hover { color: var(--ce-gold); border-color: var(--ce-gold); background: rgba(228,186,63,0.12); }
   .site-header--hero-hidden .logout-btn svg { stroke: rgba(255,255,255,0.85); }
   .site-header--hero-hidden .logout-btn:hover svg { stroke: var(--ce-gold); }
@@ -4999,9 +4999,9 @@ details[open] > .cart-drawer__checkout-title::after {
   }
   .site-header--hero-hidden.site-header--hero-visible .site-header__logo-brand { opacity: 1; }
   .site-header--hero-hidden.site-header--hero-visible .site-header__logo-apparel { color: var(--ce-gray-400); }
-  .site-header--hero-hidden.site-header--hero-visible .locale-btn { color: var(--ce-gray-700); background: rgba(0,0,0,0.03); border: 1px solid var(--ce-gray-200); border-radius: 2px; }
+  .site-header--hero-hidden.site-header--hero-visible .locale-btn { color: var(--ce-gray-700); background: rgba(0,0,0,0.03); border: 1px solid var(--ce-gray-200); border-radius: 4px; }
   .site-header--hero-hidden.site-header--hero-visible .locale-btn:hover { color: var(--ce-gray-700); background: rgba(0,0,0,0.03); border-color: var(--ce-gray-200); }
-  .site-header--hero-hidden.site-header--hero-visible .cart-btn { background: rgba(0,0,0,0.03); border: 1px solid var(--ce-gray-200); border-radius: 2px; color: var(--ce-gray-700); }
+  .site-header--hero-hidden.site-header--hero-visible .cart-btn { background: rgba(0,0,0,0.03); border: 1px solid var(--ce-gray-200); border-radius: 4px; color: var(--ce-gray-700); }
   .site-header--hero-hidden.site-header--hero-visible .cart-btn:hover { color: #92750a; background: #fdf8e8; border-color: var(--ce-gold); }
   .site-header--hero-hidden.site-header--hero-visible .cart-btn svg { stroke: var(--ce-gray-700); }
   .site-header--hero-hidden.site-header--hero-visible .cart-btn:hover svg { stroke: #92750a; }
@@ -5009,7 +5009,7 @@ details[open] > .cart-drawer__checkout-title::after {
   .site-header--hero-hidden.site-header--hero-visible .cart-btn.cart-btn--active:hover { background: #fdf8e8; border-color: var(--ce-gold); color: #92750a; }
   .site-header--hero-hidden.site-header--hero-visible .cart-btn.cart-btn--active svg { stroke: var(--ce-gray-900); }
   .site-header--hero-hidden.site-header--hero-visible .cart-btn.cart-btn--active:hover svg { stroke: #92750a; }
-  .site-header--hero-hidden.site-header--hero-visible .logout-btn { background: rgba(0,112,60,0.06); border: 1px solid rgba(0,112,60,0.25); border-radius: 2px; color: #00703c; box-shadow: inset 0 1px 4px rgba(0,112,60,0.08), inset 0 0 6px rgba(0,112,60,0.04); }
+  .site-header--hero-hidden.site-header--hero-visible .logout-btn { background: rgba(0,112,60,0.06); border: 1px solid rgba(0,112,60,0.25); border-radius: 4px; color: #00703c; box-shadow: inset 0 1px 4px rgba(0,112,60,0.08), inset 0 0 6px rgba(0,112,60,0.04); }
   .site-header--hero-hidden.site-header--hero-visible .logout-btn:hover { color: #00703c; background: rgba(0,112,60,0.12); border-color: #00703c; }
   .site-header--hero-hidden.site-header--hero-visible .logout-btn svg { stroke: #00703c; }
   .site-header--hero-hidden.site-header--hero-visible .logout-btn:hover svg { stroke: #00703c; }
