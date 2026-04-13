@@ -660,7 +660,7 @@ export default component$(() => {
                 </>
               )}
             </button>
-            <Form action={logoutAction} class="logout-form">
+            <Form action={logoutAction} reloadDocument class="logout-form">
               <button type="submit" class="logout-btn" aria-label={t("login.logout", locale.value)}>
                 <span class="logout-btn__label">{t("login.logout", locale.value)}</span>
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
@@ -718,8 +718,8 @@ export default component$(() => {
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
                 {locale.value === "en" ? "Français" : "English"}
               </button>
-              <Form action={logoutAction}>
-                <button type="submit" class="nav-drawer__locale">
+              <Form action={logoutAction} reloadDocument>
+                <button type="submit" class="nav-drawer__locale nav-drawer__logout">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
                   {t("login.logout", locale.value)}
                 </button>

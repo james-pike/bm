@@ -289,36 +289,6 @@ export const allProducts = [
     "details": "Traditional knit hat with cuff, One size fits most , DK24"
   },
   {
-    "sku": "CAR-9",
-    "name": "Viking Professional® Insulated Journeyman Jacket",
-    "category": "Work Wear",
-    "sizes": "S - 5XL",
-    "badge": "",
-    "colors": [],
-    "price": 260,
-    "img": "/sku/_INSULATED-VIKING-frj3957frj-_1_.png",
-    "imgs": [
-      "/sku/_INSULATED-VIKING-frj3957frj-_1_.png"
-    ],
-    "material": "",
-    "details": "Waterproof, Windproof, #3957FRJ"
-  },
-  {
-    "sku": "CAR-10",
-    "name": "Viking Professional® Insulated Journeyman Bib",
-    "category": "Work Wear",
-    "sizes": "S - 4XL",
-    "badge": "",
-    "colors": [],
-    "price": 85,
-    "img": "/sku/viking-3907FRWP.png",
-    "imgs": [
-      "/sku/viking-3907FRWP.png"
-    ],
-    "material": "",
-    "details": "Flame resistance, Self-extinguishing for momentary contact with open flame, #3957FRJ"
-  },
-  {
     "sku": "CAR-11",
     "name": "Flame-Resistant Classic Twill Shirt",
     "category": "Work Wear",
@@ -334,49 +304,19 @@ export const allProducts = [
     "details": "7-ounces, FR twill, #FRS160"
   },
   {
-    "sku": "CAR-12",
-    "name": "Flame-Resistant Relaxed Fit Canvas Work Pant Shadow",
+    "sku": "CAR-16",
+    "name": "Men's Classic Lightweight FR Long Sleeve Polo",
     "category": "Work Wear",
-    "sizes": " ",
+    "sizes": "M - 3XL",
     "badge": "",
     "colors": [],
-    "price": 160,
-    "img": "/sku/carhartt-104204.png",
+    "price": 250,
+    "img": "/sku/MENS-CLASSIC-LONG-SLEEVE-SMP2.png",
     "imgs": [
-      "/sku/carhartt-104204.png"
-    ],
-    "material": "98% cotton / 2% spandex canvas",
-    "details": "Flame resistant, 9-ounces, #104204"
-  },
-  {
-    "sku": "CAR-13",
-    "name": "Viking Journeyman® 420D Jacket",
-    "category": "Work Wear",
-    "sizes": "S - 5XL",
-    "badge": "",
-    "colors": [],
-    "price": 120,
-    "img": "/sku/jacket-logoed-3307J.png",
-    "imgs": [
-      "/sku/jacket-logoed-3307J.png"
-    ],
-    "material": "Heavy-duty 420 denier nylon with PVC backing",
-    "details": "100% Waterproof and windproof, Toughest fabric to resist punctures rips snags and abrasions, #3307J"
-  },
-  {
-    "sku": "CAR-14",
-    "name": "Viking Journeyman® 420D Bib Pants",
-    "category": "Work Wear",
-    "sizes": "S - 4XL",
-    "badge": "",
-    "colors": [],
-    "price": 100,
-    "img": "/sku/Viking-3307P.png",
-    "imgs": [
-      "/sku/Viking-3307P.png"
+      "/sku/MENS-CLASSIC-LONG-SLEEVE-SMP2.png"
     ],
     "material": "",
-    "details": "#3307P"
+    "details": "Flame resistant, 6.5 oz.(220 g/m²), Swiss Pique, Category 2 Protection, #SMP2"
   },
   {
     "sku": "CAR-15",
@@ -394,19 +334,79 @@ export const allProducts = [
     "details": "Durable material holds up to the toughest working conditions, Sewn with FR thread for flame resistance, Detachable snap hood, #337"
   },
   {
-    "sku": "CAR-16",
-    "name": "Men's Classic Lightweight FR Long Sleeve Polo",
+    "sku": "CAR-9",
+    "name": "Viking Professional® Insulated Journeyman Jacket",
     "category": "Work Wear",
-    "sizes": "M - 3XL",
+    "sizes": "S - 5XL",
     "badge": "",
     "colors": [],
-    "price": 250,
-    "img": "/sku/MENS-CLASSIC-LONG-SLEEVE-SMP2.png",
+    "price": 260,
+    "img": "/sku/_INSULATED-VIKING-frj3957frj-_1_.png",
     "imgs": [
-      "/sku/MENS-CLASSIC-LONG-SLEEVE-SMP2.png"
+      "/sku/_INSULATED-VIKING-frj3957frj-_1_.png"
     ],
     "material": "",
-    "details": "Flame resistant, 6.5 oz.(220 g/m²), Swiss Pique, Category 2 Protection, #SMP2"
+    "details": "Waterproof, Windproof, #3957FRJ"
+  },
+  {
+    "sku": "CAR-13",
+    "name": "Viking Journeyman® 420D Jacket",
+    "category": "Work Wear",
+    "sizes": "S - 5XL",
+    "badge": "",
+    "colors": [],
+    "price": 120,
+    "img": "/sku/jacket-logoed-3307J.png",
+    "imgs": [
+      "/sku/jacket-logoed-3307J.png"
+    ],
+    "material": "Heavy-duty 420 denier nylon with PVC backing",
+    "details": "100% Waterproof and windproof, Toughest fabric to resist punctures rips snags and abrasions, #3307J"
+  },
+  {
+    "sku": "CAR-12",
+    "name": "Flame-Resistant Relaxed Fit Canvas Work Pant Shadow",
+    "category": "Work Wear",
+    "sizes": " ",
+    "badge": "",
+    "colors": [],
+    "price": 160,
+    "img": "/sku/carhartt-104204.png",
+    "imgs": [
+      "/sku/carhartt-104204.png"
+    ],
+    "material": "98% cotton / 2% spandex canvas",
+    "details": "Flame resistant, 9-ounces, #104204"
+  },
+  {
+    "sku": "CAR-10",
+    "name": "Viking Professional® Insulated Journeyman Bib",
+    "category": "Work Wear",
+    "sizes": "S - 4XL",
+    "badge": "",
+    "colors": [],
+    "price": 85,
+    "img": "/sku/viking-3907FRWP.png",
+    "imgs": [
+      "/sku/viking-3907FRWP.png"
+    ],
+    "material": "",
+    "details": "Flame resistance, Self-extinguishing for momentary contact with open flame, #3957FRJ"
+  },
+  {
+    "sku": "CAR-14",
+    "name": "Viking Journeyman® 420D Bib Pants",
+    "category": "Work Wear",
+    "sizes": "S - 4XL",
+    "badge": "",
+    "colors": [],
+    "price": 100,
+    "img": "/sku/Viking-3307P.png",
+    "imgs": [
+      "/sku/Viking-3307P.png"
+    ],
+    "material": "",
+    "details": "#3307P"
   },
   {
     "sku": "CAR-17",
