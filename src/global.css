@@ -1773,31 +1773,33 @@ img { max-width: 100%; display: block; }
 .nav-drawer__footer {
   padding: 0.1rem 0.25rem 0.1rem 0.15rem;
   display: flex;
+  flex-direction: column;
   gap: 0.1rem;
 }
 .nav-drawer__footer > * {
-  flex: 1;
-  min-width: 0;
+  width: 100%;
 }
 .nav-drawer__footer form {
   display: flex;
+  width: 100%;
 }
 .nav-drawer__locale {
   width: 100%;
-  padding: 10px;
+  padding: 10px 12px;
   background: var(--ce-white);
   border: 1px solid rgba(228,186,63,0.28);
   border-radius: 2px;
-  font-size: 0.85rem;
-  font-weight: 500;
+  font-size: 1.05rem;
+  font-weight: 400;
   color: #92750a;
   cursor: pointer;
   font-family: inherit;
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 8px;
+  justify-content: flex-start;
+  gap: 28px;
 }
+.nav-drawer__locale svg { width: 20px; height: 20px; }
 .nav-drawer__locale svg { stroke: #92750a; }
 .nav-drawer__logout {
   background: var(--ce-white) !important;
