@@ -16,7 +16,7 @@ export const allProducts = [
       "/softshell/j7603-soft-shell.png"
     ],
     "material": "100% polyester with mechanical stretch, bonded micro fleece lining",
-    "details": "Water repellent, Wind resistant, Anti-pill, YKK zippers, 1000mm waterproof rating, Classic fit #J7603"
+    "details": "Water repellent, Wind resistant, Anti-pill, YKK zippers, 1000mm waterproof rating, Classic fit , #J7603"
   },
   {
     "sku": "CAR-2",
@@ -31,7 +31,7 @@ export const allProducts = [
       "/softshell/l7603-ladies-soft-shell.png"
     ],
     "material": "100% polyester with mechanical stretch, bonded micro fleece lining",
-    "details": "Water repellent, Wind resistant, Anti-pill, YKK zippers, 1000mm waterproof rating, Classic fit #L7603"
+    "details": "Water repellent, Wind resistant, Anti-pill, YKK zippers, 1000mm waterproof rating, Classic fit , #L7603"
   },
   {
     "sku": "CAR-25",
@@ -40,13 +40,13 @@ export const allProducts = [
     "sizes": "S - 3XL",
     "badge": "",
     "colors": [],
-    "price": 0,
+    "price": 88,
     "img": "/mens-rigi-car-logoed.png",
     "imgs": [
       "/mens-rigi-car-logoed.png"
     ],
     "material": "53% Cotton/ 47% Recycled Polyester textured doubleknit, 225 g/m² (7.5 oz/yd²)",
-    "details": "Eco-friendly polyblend doubleknit fabric, Global Recycled Standard Certified, Breathable and moisture-wicking, Anti-pill, UPF 40+ protection, Self-fabric waistband and cuffs"
+    "details": "Eco-friendly polyblend doubleknit fabric, Global Recycled Standard Certified, Breathable and moisture-wicking, Anti-pill, UPF 40+ protection, Self-fabric waistband and cuffs , #18157"
   },
   {
     "sku": "CAR-24",
@@ -55,13 +55,13 @@ export const allProducts = [
     "sizes": "XS - 2XL",
     "badge": "",
     "colors": [],
-    "price": 0,
+    "price": 88,
     "img": "/ladies-rigbi-logoed-car.png",
     "imgs": [
       "/ladies-rigbi-logoed-car.png"
     ],
     "material": "53% Cotton/ 47% Recycled Polyester textured doubleknit, 225 g/m² (7.5 oz/yd²)",
-    "details": "Eco-friendly polyblend doubleknit fabric, Global Recycled Standard Certified, Breathable and moisture-wicking, Anti-pill, UPF 40+ protection, Self-fabric waistband and cuffs, Shaped seams for a better fit"
+    "details": "Eco-friendly polyblend doubleknit fabric, Global Recycled Standard Certified, Breathable and moisture-wicking, Anti-pill, UPF 40+ protection, Self-fabric waistband and cuffs, Shaped seams for a better fit , #98157"
   },
   {
     "sku": "CAR-31",
@@ -76,7 +76,7 @@ export const allProducts = [
       "/mens-roots-fleece.png"
     ],
     "material": "75% Recycled Polyester 25% Polyester anti-pill microfleece, 270 g/m² (8.0 oz/yd²), Contrast: 60% Polyester 40% Recycled Polyester 240T woven interior collar & zipper flap. 100% Recycled polyester brushed tricot knit pocket bags",
-    "details": "Anti-pill microfleece, Global Recycled Standard (GRS) Certified #18194"
+    "details": "Anti-pill microfleece, Global Recycled Standard (GRS) Certified , #18194"
   },
   {
     "sku": "CAR-32",
@@ -100,13 +100,13 @@ export const allProducts = [
     "sizes": "S - 4XL",
     "badge": "",
     "colors": [],
-    "price": 0,
+    "price": 65,
     "img": "/uapolo/car1.png",
     "imgs": [
       "/uapolo/car1.png"
     ],
     "material": "100% polyester",
-    "details": "Moisture-wicking, Anti-odor technology, Textured soft & breathable fabric, Self-fabric collar, 3-button placket"
+    "details": "Moisture-wicking, Anti-odor technology, Textured soft & breathable fabric, Self-fabric collar, 3-button placket , #1370399"
   },
   {
     "sku": "CAR-8",
@@ -115,13 +115,13 @@ export const allProducts = [
     "sizes": "S - 4XL",
     "badge": "",
     "colors": [],
-    "price": 0,
+    "price": 65,
     "img": "/sku/car18.png",
     "imgs": [
       "/sku/car18.png"
     ],
     "material": "100% polyester ",
-    "details": "Moisture-wicking, Anti-odor technology, Textured soft & breathable fabric, Self-fabric collar, 3-button placket"
+    "details": "Moisture-wicking, Anti-odor technology, Textured soft & breathable fabric, Self-fabric collar, 3-button placket , #1370399"
   },
   {
     "sku": "CAR-27",
@@ -130,13 +130,13 @@ export const allProducts = [
     "sizes": "XS - 2XL",
     "badge": "",
     "colors": [],
-    "price": 0,
+    "price": 65,
     "img": "/wuapb.png",
     "imgs": [
       "/wuapb.png"
     ],
     "material": "100% polyester",
-    "details": "Moisture-wicking, Anti-odor technology, Textured soft & breathable fabric, Self-fabric collar, 4-button placket"
+    "details": "Moisture-wicking, Anti-odor technology, Textured soft & breathable fabric, Self-fabric collar, 4-button placket , #1370431"
   },
   {
     "sku": "CAR-4",
@@ -145,13 +145,13 @@ export const allProducts = [
     "sizes": "XS - 2XL",
     "badge": "",
     "colors": [],
-    "price": 0,
+    "price": 65,
     "img": "/uapolo/womens-white.png",
     "imgs": [
       "/uapolo/womens-white.png"
     ],
     "material": "100% polyester",
-    "details": "Moisture-wicking, Anti-odor technology, Textured soft & breathable fabric, Self-fabric collar, 4-button placket"
+    "details": "Moisture-wicking, Anti-odor technology, Textured soft & breathable fabric, Self-fabric collar, 4-button placket , #1370431"
   },
   {
     "sku": "CAR-19",
@@ -160,13 +160,13 @@ export const allProducts = [
     "sizes": "S - 4XL",
     "badge": "",
     "colors": [],
-    "price": 0,
+    "price": 37,
     "img": "/sku/car19.png",
     "imgs": [
       "/sku/car19.png"
     ],
     "material": "100% performance polyester flat tricot micropique",
-    "details": "6.3-oz, Rib knit collar, Moisture wicking, Snag resistant, Breathable, Tagless Classic fit"
+    "details": "6.3-oz, Rib knit collar, Moisture wicking, Snag resistant, Breathable, Tagless Classic fit , #S445"
   },
   {
     "sku": "CAR-20",
@@ -175,13 +175,13 @@ export const allProducts = [
     "sizes": "S - 4XL",
     "badge": "",
     "colors": [],
-    "price": 0,
+    "price": 37,
     "img": "/sku/car20.png",
     "imgs": [
       "/sku/car20.png"
     ],
     "material": "100% performance polyester flat tricot micropique",
-    "details": "6.3-oz, Rib knit collar, Moisture wicking, Snag resistant, Breathable, Tagless Classic fit"
+    "details": "6.3-oz, Rib knit collar, Moisture wicking, Snag resistant, Breathable, Tagless Classic fit , #S445"
   },
   {
     "sku": "CAR-22",
@@ -190,13 +190,13 @@ export const allProducts = [
     "sizes": "XS-6XL",
     "badge": "",
     "colors": [],
-    "price": 0,
+    "price": 37,
     "img": "/s455-mens-green.png",
     "imgs": [
       "/s455-mens-green.png"
     ],
     "material": "100% performance polyester flat tricot micropique",
-    "details": "6.3-oz, Rib knit collar, Moisture wicking, Snag resistant, Breathable, Tagless Classic fit"
+    "details": "6.3-oz, Rib knit collar, Moisture wicking, Snag resistant, Breathable, Tagless Classic fit , #S445"
   },
   {
     "sku": "CAR-7",
@@ -205,7 +205,7 @@ export const allProducts = [
     "sizes": "S - 4XL",
     "badge": "",
     "colors": [],
-    "price": 0,
+    "price": 37,
     "img": "/wpb.png",
     "imgs": [
       "/wpb.png"
@@ -220,7 +220,7 @@ export const allProducts = [
     "sizes": "S - 4XL",
     "badge": "",
     "colors": [],
-    "price": 0,
+    "price": 37,
     "img": "/wpg.png",
     "imgs": [
       "/wpg.png"
@@ -235,7 +235,7 @@ export const allProducts = [
     "sizes": "XS - 4XL",
     "badge": "",
     "colors": [],
-    "price": 0,
+    "price": 37,
     "img": "/golf/green.png",
     "imgs": [
       "/golf/green.png"
@@ -250,7 +250,7 @@ export const allProducts = [
     "sizes": "XS - 3XL",
     "badge": "",
     "colors": [],
-    "price": 0,
+    "price": 43,
     "img": "/m265w-womens-harriton.png",
     "imgs": [
       "/m265w-womens-harriton.png"
@@ -271,7 +271,7 @@ export const allProducts = [
       "/hat/30109107PS2_FRONT.JPG"
     ],
     "material": "Poly/Spandex with Performance Mesh",
-    "details": "Structured mid profile 6 panel Flexfit 110®, Shapeable pre-curved visor, Plastic snap back closure, UV protection, Moisture wicking, Contrasting grey undervisor, Flat embroidery with embroidered patch #I8502"
+    "details": "Structured mid profile 6 panel Flexfit 110®, Shapeable pre-curved visor, Plastic snap back closure, UV protection, Moisture wicking, Contrasting grey undervisor, Flat embroidery with embroidered patch ,  #I8502"
   },
   {
     "sku": "CAR-18",
@@ -280,13 +280,13 @@ export const allProducts = [
     "sizes": "One Size",
     "badge": "",
     "colors": [],
-    "price": 16.5,
+    "price": 18.5,
     "img": "/beanie/1.png",
     "imgs": [
       "/beanie/1.png"
     ],
     "material": "100% Acrylic",
-    "details": "Traditional knit hat with cuff, One size fits most"
+    "details": "Traditional knit hat with cuff, One size fits most , DK24"
   },
   {
     "sku": "CAR-9",
