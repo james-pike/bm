@@ -183,34 +183,34 @@ export default component$(() => {
                     <picture>
                       <source media="(max-width: 767px)" srcset="/carmichael-services/chiller-retrofit.jpeg" />
                       <source media="(min-width: 768px) and (max-width: 1024px)" srcset="/carmichael-services/hvac-retrofit.jpeg" />
-                      <img src="/carmichael-services/boiler-technicians.jpeg" alt="Work Wear" width="400" height="300" loading="eager" decoding="async" />
+                      <img src="/carmichael-services/boiler-technicians.jpeg" alt="Work Wear" width="400" height="300" loading="eager" decoding="sync" />
                     </picture>
                     <span class="category-card__label">{t("teaser.workwear.title", locale.value)}</span>
                   </a>
                   <a href="/apparel/" class="category-card category-card--tech-extra category-card--tech-desktop">
-                    <img src="/carmichael-services/careers.jpeg" alt="" width="400" height="300" loading="eager" decoding="async" />
+                    <img src="/carmichael-services/careers.jpeg" alt="" width="400" height="300" loading="eager" decoding="sync" />
                   </a>
                   <a href="/apparel/" class="category-card category-card--tech-extra category-card--tech-desktop">
-                    <img src="/carmichael-services/hvac-retrofit.jpeg" alt="" width="400" height="300" loading="eager" decoding="async" />
+                    <img src="/carmichael-services/hvac-retrofit.jpeg" alt="" width="400" height="300" loading="eager" decoding="sync" />
                   </a>
                   <a href="/apparel/" class="category-card category-card--tech-extra category-card--tech-tablet">
-                    <img src="/carmichael-services/chiller-retrofit.jpeg" alt="" width="400" height="300" loading="eager" decoding="async" />
+                    <img src="/carmichael-services/chiller-retrofit.jpeg" alt="" width="400" height="300" loading="eager" decoding="sync" />
                   </a>
                 </>) : (<>
                   <a href="/apparel/" class="category-card">
-                    <img src="/carmichael-services/boiler-technicians.jpeg" alt="All Apparel" width="400" height="300" loading="eager" decoding="async" />
+                    <img src="/carmichael-services/boiler-technicians.jpeg" alt="All Apparel" width="400" height="300" loading="eager" decoding="sync" />
                     <span class="category-card__label">{t("apparel.all.title", locale.value)}</span>
                   </a>
                   <a href="/apparel/#jackets" class="category-card">
-                    <img src="/carmichael-services/careers.jpeg" alt="Jackets" width="400" height="300" loading="eager" decoding="async" />
+                    <img src="/carmichael-services/careers.jpeg" alt="Jackets" width="400" height="300" loading="eager" decoding="sync" />
                     <span class="category-card__label">{t("teaser.jackets.title", locale.value)}</span>
                   </a>
                   <a href="/apparel/#polos" class="category-card">
-                    <img src="/carmichael-services/hvac-retrofit.jpeg" alt="Polos" width="400" height="300" loading="eager" decoding="async" />
+                    <img src="/carmichael-services/hvac-retrofit.jpeg" alt="Polos" width="400" height="300" loading="eager" decoding="sync" />
                     <span class="category-card__label">{t("teaser.polos.title", locale.value)}</span>
                   </a>
                   <a href="/apparel/#hats" class="category-card">
-                    <img src="/hat/30109107PS2_FRONT.JPG" alt="Hats" width="400" height="300" loading="eager" decoding="async" />
+                    <img src="/hat/30109107PS2_FRONT.JPG" alt="Hats" width="400" height="300" loading="eager" decoding="sync" />
                     <span class="category-card__label">{t("teaser.hats.title", locale.value)}</span>
                   </a>
                 </>)}
