@@ -4,14 +4,13 @@ import { allProducts, categoryLabel } from "../../routes/apparel/products";
 import type { Product } from "../../routes/apparel/products";
 import { LoginTypeContext } from "../../routes/layout";
 
-const CLOTHING_CATEGORIES = ["All", "Work Wear", "Jackets", "Polos", "Hats"];
+const CLOTHING_CATEGORIES = ["All", "Work Wear", "Jackets", "Accessories"];
 
 const CATEGORY_ICONS: Record<string, string> = {
   "All": '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>',
   "Work Wear": '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4M16 2v4M4 6h16v14a2 2 0 01-2 2H6a2 2 0 01-2-2V6z"/><path d="M4 6l-2 4v2h4V8"/><path d="M20 6l2 4v2h-4V8"/></svg>',
   "Jackets": '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2l5 6v12a2 2 0 01-2 2h-3V12h-6v10H6a2 2 0 01-2-2V8l5-6"/><path d="M9 2a3 3 0 006 0"/><line x1="12" y1="12" x2="12" y2="22"/></svg>',
-  "Polos": '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.38 3.46L16 2 12 5.5 8 2 3.62 3.46a2 2 0 00-1.34 1.93v15.12a2 2 0 001.34 1.93L8 24l4-3.5L16 24l4.38-1.46a2 2 0 001.34-1.93V5.39a2 2 0 00-1.34-1.93z"/></svg>',
-  "Hats": '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 00-7 7c0 3 2 5 3 6h8c1-1 3-3 3-6a7 7 0 00-7-7z"/><path d="M5 15h14"/><path d="M6 18h12"/></svg>',
+  "Accessories": '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7h-3a2 2 0 01-2-2V2"/><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V7z"/><path d="M12 11v6"/><path d="M9 14h6"/></svg>',
 };
 
 const ProductCard = component$<{ item: Product; sku: string }>(({ item, sku }) => {
@@ -31,7 +30,6 @@ const ProductCard = component$<{ item: Product; sku: string }>(({ item, sku }) =
             <span class="product-card__name-code">{(item.name.match(/#\S+/) || [''])[0]}</span>
           </div>
           <div class="product-card__price-group">
-            {!isTech && <div class="product-card__price">${(Number(item.price) || 0).toFixed(2)}</div>}
             <span class="product-card__sizes">{item.sizes === "One Size" ? t("modal.onesize", locale.value) : item.sizes}</span>
           </div>
         </div>
@@ -51,7 +49,7 @@ export const ProductCatalog = component$<{ class?: string }>(({ "class": cls }) 
 
   const HASH_TO_CAT: Record<string, string> = isTech.value
     ? {}
-    : { "work-wear": "Work Wear", "jackets": "Jackets", "polos": "Polos", "hats": "Hats" };
+    : { "work-wear": "Work Wear", "jackets": "Jackets", "accessories": "Accessories" };
 
   // eslint-disable-next-line qwik/no-use-visible-task
   useVisibleTask$(({ cleanup }) => {

@@ -110,7 +110,7 @@ export const useSubmitOrder = routeAction$(
     if (!isAuthenticated(cookie)) {
       return fail(401, { message: "Not authenticated" });
     }
-    const vendor = getLoginType(cookie) === "tech" ? "carmichael-tech" : "carmichael";
+    const vendor = getLoginType(cookie) === "tech" ? "blackmcdonald-tech" : "blackmcdonald";
     // Read from non-prefixed names first, fall back to VITE_* for backward compat.
     // Both are safe at runtime — env.get() reads server env, never bundles.
     const tursoUrl = env.get("TURSO_URL") || env.get("VITE_TURSO_URL");
@@ -170,13 +170,13 @@ export const useSubmitOrder = routeAction$(
     </tr>`
   ).join("");
 
-  const fromAddress = env.get("RESEND_FROM") || env.get("VITE_RESEND_FROM") || "Carmichael Apparel <onboarding@resend.dev>";
+  const fromAddress = env.get("RESEND_FROM") || env.get("VITE_RESEND_FROM") || "Black & McDonald Apparel <onboarding@resend.dev>";
   const toAddress = env.get("ORDER_NOTIFY_TO") || env.get("VITE_ORDER_NOTIFY_TO") || "cs@safetyhouse.ca";
 
   const html = `
     <div style="font-family:sans-serif;max-width:600px;margin:0 auto">
-      <div style="background:#1a3a28;padding:20px 24px;border-radius:8px 8px 0 0">
-        <h1 style="color:#fff;margin:0;font-size:20px">Carmichael Apparel — Apparel Order</h1>
+      <div style="background:#0a1a12;padding:20px 24px;border-radius:8px 8px 0 0">
+        <h1 style="color:#fff;margin:0;font-size:20px">Black & McDonald Apparel — Apparel Order</h1>
       </div>
       <div style="padding:24px;border:1px solid #e5e7eb;border-top:none;border-radius:0 0 8px 8px">
         <p style="margin:0 0 4px"><strong>Date:</strong> ${esc(date)}</p>
@@ -570,8 +570,8 @@ export default component$(() => {
             )}
             <div class="login-modal__header">
               <img
-                src="/carmichael-logo.png"
-                alt="Carmichael Apparel"
+                src="/bm-logo.png"
+                alt="Black & McDonald Apparel"
                 class="login-modal__logo"
               />
               <h2 class="login-modal__title">{t("login.title", locale.value)}</h2>
@@ -614,30 +614,19 @@ export default component$(() => {
       )}
 
       {(auth.value.loggedIn || (loginAction.value && !loginAction.value.failed)) && <>
-      <header class={`site-header site-header--white ${cartOpen.value ? "site-header--cart-open" : ""} ${loc.url.pathname === "/" && !cartOpen.value ? `site-header--hero-hidden ${headerScrolled.value ? "site-header--hero-visible" : ""}` : ""}`}>
+      <header class={`site-header site-header--white ${cartOpen.value ? "site-header--cart-open" : ""}`}>
         <div class="site-header__inner">
           <Link href="/" class="site-header__logo">
             <img
-              src="/carmichael-logo.png"
-              alt="Carmichael Apparel"
+              src="/bm-logo.png"
+              alt="Black & McDonald Apparel"
               class="site-header__logo-img"
-              width="200"
-              height="200"
+              width="214"
+              height="110"
               loading="eager"
               decoding="sync"
             />
-            <div class="site-header__logo-brand">
-              <img
-                src="/logo-carmichael.jpg"
-                alt="Carmichael Apparel"
-                class="site-header__logo-text"
-                width="408"
-                height="61"
-                loading="eager"
-                decoding="sync"
-              />
-              <span class="site-header__logo-apparel">{t("logo.apparel", locale.value)}</span>
-            </div>
+            <span class="site-header__logo-apparel">{t("logo.apparel", locale.value)}</span>
           </Link>
           <nav class="site-header__categories">
             <Link href="/" class={loc.url.pathname === "/" ? "active" : ""}>{t("nav.home", locale.value)}</Link>
@@ -679,11 +668,8 @@ export default component$(() => {
           <nav class="nav-drawer" onClick$={(e) => e.stopPropagation()}>
             <div class="nav-drawer__header">
               <div class="nav-drawer__brand">
-                <img src="/carmichael-logo.png" alt="Carmichael" class="nav-drawer__logo" width="48" height="48" />
-                <div class="nav-drawer__brand-text">
-                  <img src="/logo-carmichael.jpg" alt="Carmichael" class="nav-drawer__logo-text" />
-                  <span class="nav-drawer__apparel">{t("logo.apparel", locale.value)}</span>
-                </div>
+                <img src="/bm-logo.png" alt="Black & McDonald" class="nav-drawer__logo" width="48" height="48" />
+                <span class="nav-drawer__apparel">{t("logo.apparel", locale.value)}</span>
               </div>
               <button class="nav-drawer__close" onClick$={() => (menuOpen.value = false)} aria-label="Close">
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg>
@@ -703,13 +689,9 @@ export default component$(() => {
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2l5 6v12a2 2 0 01-2 2h-3V12h-6v10H6a2 2 0 01-2-2V8l5-6"/><path d="M9 2a3 3 0 006 0"/><line x1="12" y1="12" x2="12" y2="22"/></svg>
                 {t("cat.Jackets", locale.value)}
               </a>
-              <a href="/apparel/#polos" class="nav-drawer__link" onClick$={() => { menuOpen.value = false; window.dispatchEvent(new CustomEvent("select-category", { detail: "Polos" })); }}>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.38 3.46L16 2 12 5.5 8 2 3.62 3.46a2 2 0 00-1.34 1.93v15.12a2 2 0 001.34 1.93L8 24l4-3.5L16 24l4.38-1.46a2 2 0 001.34-1.93V5.39a2 2 0 00-1.34-1.93z"/></svg>
-                {t("cat.Polos", locale.value)}
-              </a>
-              <a href="/apparel/#hats" class="nav-drawer__link" onClick$={() => { menuOpen.value = false; window.dispatchEvent(new CustomEvent("select-category", { detail: "Hats" })); }}>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 00-7 7c0 3 2 5 3 6h8c1-1 3-3 3-6a7 7 0 00-7-7z"/><path d="M5 15h14"/><path d="M6 18h12"/></svg>
-                {t("cat.Hats", locale.value)}
+              <a href="/apparel/#accessories" class="nav-drawer__link" onClick$={() => { menuOpen.value = false; window.dispatchEvent(new CustomEvent("select-category", { detail: "Accessories" })); }}>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7h-3a2 2 0 01-2-2V2"/><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V7z"/><path d="M12 11v6"/><path d="M9 14h6"/></svg>
+                {t("cat.Accessories", locale.value)}
               </a>
               </>}
             </div>
@@ -736,24 +718,20 @@ export default component$(() => {
       <footer class="site-footer">
         <div class="site-footer__inner">
           <div class="site-footer__brand">
-            <img src="/carmichael-logo.png" alt="Carmichael" class="site-footer__logo" width="200" height="200" />
-            <div class="site-footer__brand-text">
-              <img src="/logo3.png" alt="Carmichael" class="site-footer__logo-text" width="408" height="61" />
-              <span class="site-footer__apparel">{t("logo.apparel", locale.value)}</span>
-            </div>
+            <img src="/bm-logo.png" alt="Black & McDonald" class="site-footer__logo" width="200" height="200" />
+            <span class="site-footer__apparel">{t("logo.apparel", locale.value)}</span>
           </div>
           {loginType.value !== "tech" && (
           <nav class="site-footer__links">
             <Link href="/">{t("nav.home", locale.value)}</Link>
             <a href="/apparel/#work-wear" onClick$={(e) => { if (loc.url.pathname.startsWith("/apparel")) { e.preventDefault(); } window.dispatchEvent(new CustomEvent("select-category", { detail: "Work Wear" })); const headerH = window.innerWidth <= 900 ? 49 : 58; const grid = document.querySelector('.home-catalog .apparel-grid'); if (grid) { const top = grid.getBoundingClientRect().top + window.scrollY - headerH - 8; window.scrollTo({ top, behavior: 'instant' }); } }}>{t("cat.Work Wear", locale.value)}</a>
             <a href="/apparel/#jackets" onClick$={(e) => { if (loc.url.pathname.startsWith("/apparel")) { e.preventDefault(); } window.dispatchEvent(new CustomEvent("select-category", { detail: "Jackets" })); const headerH = window.innerWidth <= 900 ? 49 : 58; const grid = document.querySelector('.home-catalog .apparel-grid'); if (grid) { const top = grid.getBoundingClientRect().top + window.scrollY - headerH - 8; window.scrollTo({ top, behavior: 'instant' }); } }}>{t("cat.Jackets", locale.value)}</a>
-            <a href="/apparel/#polos" onClick$={(e) => { if (loc.url.pathname.startsWith("/apparel")) { e.preventDefault(); } window.dispatchEvent(new CustomEvent("select-category", { detail: "Polos" })); const headerH = window.innerWidth <= 900 ? 49 : 58; const grid = document.querySelector('.home-catalog .apparel-grid'); if (grid) { const top = grid.getBoundingClientRect().top + window.scrollY - headerH - 8; window.scrollTo({ top, behavior: 'instant' }); } }}>{t("cat.Polos", locale.value)}</a>
-            <a href="/apparel/#hats" onClick$={(e) => { if (loc.url.pathname.startsWith("/apparel")) { e.preventDefault(); } window.dispatchEvent(new CustomEvent("select-category", { detail: "Hats" })); const headerH = window.innerWidth <= 900 ? 49 : 58; const grid = document.querySelector('.home-catalog .apparel-grid'); if (grid) { const top = grid.getBoundingClientRect().top + window.scrollY - headerH - 8; window.scrollTo({ top, behavior: 'instant' }); } }}>{t("cat.Hats", locale.value)}</a>
+            <a href="/apparel/#accessories" onClick$={(e) => { if (loc.url.pathname.startsWith("/apparel")) { e.preventDefault(); } window.dispatchEvent(new CustomEvent("select-category", { detail: "Accessories" })); const headerH = window.innerWidth <= 900 ? 49 : 58; const grid = document.querySelector('.home-catalog .apparel-grid'); if (grid) { const top = grid.getBoundingClientRect().top + window.scrollY - headerH - 8; window.scrollTo({ top, behavior: 'instant' }); } }}>{t("cat.Accessories", locale.value)}</a>
           </nav>
           )}
           <div class="site-footer__contact site-footer__contact--stacked">
             <span class="site-footer__contact-label">Contact</span>
-            <a href="mailto:info@carmichaelapparel.ca">info@carmichaelapparel.ca</a>
+            <a href="mailto:apparel@blackandmcdonald.com">apparel@blackandmcdonald.com</a>
           </div>
         </div>
       </footer>
@@ -764,8 +742,7 @@ export default component$(() => {
           <div class="drawer cart-drawer" onClick$={(e) => e.stopPropagation()}>
             <div class="cart-drawer__site-header">
               <Link href="/" class="site-header__logo">
-                <img src="/carmichael-logo.png" alt="Carmichael Apparel" class="site-header__logo-img" width="200" height="200" loading="eager" decoding="sync" />
-                <img src="/logo-carmichael.jpg" alt="Carmichael Apparel" class="site-header__logo-text" width="408" height="61" loading="eager" decoding="sync" />
+                <img src="/bm-logo.png" alt="Black & McDonald Apparel" class="site-header__logo-img" width="214" height="110" loading="eager" decoding="sync" />
                 <span class="site-header__logo-apparel">{t("logo.apparel", locale.value)}</span>
               </Link>
               <nav class="site-header__nav">
@@ -792,7 +769,6 @@ export default component$(() => {
                       <tr>
                         <th class="cart-table__th-product">{t("cart.invoice.product", locale.value)}</th>
                         <th class="cart-table__th-qty">{t("cart.invoice.qty", locale.value)}</th>
-                        {loginType.value !== "tech" && <th class="cart-table__th-total">{t("cart.invoice.total", locale.value)}</th>}
                       </tr>
                     </thead>
                     <tbody>
@@ -816,31 +792,14 @@ export default component$(() => {
                               <button class="cart-table__qty-btn" aria-label={`Increase quantity of ${item.name}`} onClick$={() => updateQty(i, 1)}>+</button>
                             </div>
                           </td>
-                          {loginType.value !== "tech" && <td class="cart-table__total">${(((Number(item.price) || 0) * item.quantity)).toFixed(2)}</td>}
                         </tr>
                       ))}
                     </tbody>
-                    {loginType.value !== "tech" && (
-                      <tfoot>
-                        <tr>
-                          <td colSpan={2} class="cart-table__subtotal-label">{t("cart.invoice.subtotal", locale.value)}</td>
-                          <td class="cart-table__subtotal-val">${cart.items.reduce((sum, i) => sum + (Number(i.price) || 0) * i.quantity, 0).toFixed(2)}</td>
-                        </tr>
-                        <tr>
-                          <td colSpan={2} class="cart-table__subtotal-label">{t("cart.invoice.tax", locale.value)}</td>
-                          <td class="cart-table__subtotal-val">${(cart.items.reduce((sum, i) => sum + (Number(i.price) || 0) * i.quantity, 0) * 0.13).toFixed(2)}</td>
-                        </tr>
-                        <tr>
-                          <td colSpan={2} class="cart-table__subtotal-label" style={{ fontWeight: 700 }}>{t("cart.invoice.total", locale.value)}</td>
-                          <td class="cart-table__subtotal-val" style={{ fontWeight: 700 }}>${(cart.items.reduce((sum, i) => sum + (Number(i.price) || 0) * i.quantity, 0) * 1.13).toFixed(2)}</td>
-                        </tr>
-                      </tfoot>
-                    )}
                   </table>
                 </div>
                 <div class="cart-drawer__footer">
                   <span class="cart-drawer__total">
-                    {cartCount.value} {cartCount.value !== 1 ? t("cart.items", locale.value) : t("cart.item", locale.value)}{loginType.value !== "tech" && ` — $${(cart.items.reduce((sum, i) => sum + (Number(i.price) || 0) * i.quantity, 0) * 1.13).toFixed(2)}`}
+                    {cartCount.value} {cartCount.value !== 1 ? t("cart.items", locale.value) : t("cart.item", locale.value)}
                   </span>
                   <button
                     class="btn btn--primary cart-drawer__order-btn"
@@ -867,25 +826,9 @@ export default component$(() => {
                         {cart.items.map((item) => (
                           <div key={`${item.name}-${item.size}`} class="cart-drawer__summary-item">
                             <span>{item.quantity}x {item.name}</span>
-                            {loginType.value !== "tech" && <span>${(((Number(item.price) || 0) * item.quantity)).toFixed(2)}</span>}
+
                           </div>
                         ))}
-                        {loginType.value !== "tech" && (
-                          <>
-                            <div class="cart-drawer__summary-item cart-drawer__summary-total">
-                              <span>{t("cart.invoice.subtotal", locale.value)}</span>
-                              <span>${cart.items.reduce((sum, i) => sum + (Number(i.price) || 0) * i.quantity, 0).toFixed(2)}</span>
-                            </div>
-                            <div class="cart-drawer__summary-item">
-                              <span>{t("cart.invoice.tax", locale.value)}</span>
-                              <span>${(cart.items.reduce((sum, i) => sum + (Number(i.price) || 0) * i.quantity, 0) * 0.13).toFixed(2)}</span>
-                            </div>
-                            <div class="cart-drawer__summary-item cart-drawer__summary-total">
-                              <span>{t("cart.invoice.total", locale.value)}</span>
-                              <span>${(cart.items.reduce((sum, i) => sum + (Number(i.price) || 0) * i.quantity, 0) * 1.13).toFixed(2)}</span>
-                            </div>
-                          </>
-                        )}
                       </div>
                     </Collapsible.Content>
                   </Collapsible.Root>
@@ -948,7 +891,7 @@ export default component$(() => {
                 )}
                 <div class="cart-drawer__footer">
                   <span class="cart-drawer__total">
-                    {cartCount.value} {cartCount.value !== 1 ? t("cart.items", locale.value) : t("cart.item", locale.value)}{loginType.value !== "tech" && ` — $${(cart.items.reduce((sum, i) => sum + (Number(i.price) || 0) * i.quantity, 0) * 1.13).toFixed(2)}`}
+                    {cartCount.value} {cartCount.value !== 1 ? t("cart.items", locale.value) : t("cart.item", locale.value)}
                   </span>
                   <button
                     class="btn btn--primary cart-drawer__order-btn"

@@ -51,7 +51,7 @@ const translations = {
   // Teaser cards
   "teaser.all.tag": { en: "Full Collection", fr: "Collection complète" },
   "teaser.all.title": { en: "All Apparel", fr: "Les Vêtements" },
-  "teaser.all.text": { en: "Browse the complete Carmichael branded collection.", fr: "Parcourez la collection complète Carmichael." },
+  "teaser.all.text": { en: "Browse the complete Black & McDonald branded collection.", fr: "Parcourez la collection complète Black & McDonald." },
   "teaser.all.cta": { en: "Browse Apparel", fr: "Parcourir les vêtements" },
   "teaser.jackets.tag": { en: "Cold Weather", fr: "Temps froid" },
   "teaser.jackets.title": { en: "Jackets & Fleeces", fr: "Manteaux et polaires" },
@@ -187,6 +187,8 @@ const translations = {
   "cat.Caps": { en: "Caps & Beanies", fr: "Casquettes" },
   "cat.Jackets": { en: "Jackets", fr: "Manteaux" },
   "cat.Work Wear": { en: "Work Wear", fr: "Travail" },
+  "cat.Accessories": { en: "Accessories", fr: "Accessoires" },
+  "teaser.accessories.title": { en: "Accessories", fr: "Accessoires" },
 
   // Product detail
   "product.taptoclose": { en: "Tap anywhere to close", fr: "Appuyez pour fermer" },

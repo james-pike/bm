@@ -1,17 +1,17 @@
 {
   "$schema": "https://json.schemastore.org/web-manifest-combined.json",
-  "name": "Carmichael Apparel",
-  "short_name": "Carmichael",
+  "name": "Black & McDonald Apparel",
+  "short_name": "B&M Apparel",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#1a3a28",
-  "theme_color": "#1a3a28",
-  "description": "Internal apparel ordering for Carmichael staff.",
+  "background_color": "#0a1a12",
+  "theme_color": "#0a1a12",
+  "description": "Internal apparel ordering for Black & McDonald staff.",
   "icons": [
     {
-      "src": "/carmichael-logo.png",
-      "sizes": "200x200",
-      "type": "image/png",
+      "src": "/bm-logo.gif",
+      "sizes": "214x110",
+      "type": "image/gif",
       "purpose": "any"
     }
   ]

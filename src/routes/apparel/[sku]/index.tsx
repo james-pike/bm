@@ -229,7 +229,6 @@ export default component$(() => {
           </div>
           <div class="product-modal__details">
             <h2 class="product-modal__name">{p.name}</h2>
-            {!isTech && <div class="product-modal__price">${(Number(p.price) || 0).toFixed(2)}</div>}
             {p.material && (
               <div class="product-modal__material">
                 <strong>{t("modal.material", locale.value)}:</strong> {p.material}
@@ -372,7 +371,6 @@ export default component$(() => {
                     <div class="product-card__name-row">
                       <div class="product-card__name">{item.name}</div>
                       <div class="product-card__price-group">
-                        {!isTech && <div class="product-card__price">${(Number(item.price) || 0).toFixed(2)}</div>}
                         <span class="product-card__sizes">{item.sizes === "One Size" ? t("modal.onesize", locale.value) : item.sizes}</span>
                       </div>
                     </div>
@@ -435,6 +433,6 @@ export default component$(() => {
 export const head: DocumentHead = ({ params }) => {
   const product = allProducts.find((p) => p.sku === params.sku);
   return {
-    title: product ? `${product.name} - Carmichael Apparel` : "Product - Carmichael Apparel",
+    title: product ? `${product.name} - Black & McDonald Apparel` : "Product - Black & McDonald Apparel",
   };
 };

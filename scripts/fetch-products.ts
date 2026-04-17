@@ -12,7 +12,7 @@ const db = createClient({
 async function fetchAndWrite() {
   try {
     const result = await db.execute(
-      "SELECT * FROM products WHERE vendor = 'carmichael' ORDER BY sort_order ASC"
+      "SELECT * FROM products WHERE vendor = 'blackmcdonald' ORDER BY sort_order ASC"
     );
 
     const products = result.rows.map((row: any) => ({
@@ -34,9 +34,9 @@ async function fetchAndWrite() {
 import { t } from "../../i18n";
 import type { Locale } from "../../i18n";
 
-export const allProducts = ${JSON.stringify(products, null, 2)};
+export interface Product { sku: string; name: string; category: string; sizes: string; badge: string; colors: string[]; price: number; img: string; imgs: string[]; material: string; details: string; pdf?: string; }
 
-export type Product = typeof allProducts[0];
+export const allProducts: Product[] = ${JSON.stringify(products, null, 2)};
 
 export const categories = ["All", ...Array.from(new Set(allProducts.map((p) => p.category)))];
 
@@ -51,7 +51,7 @@ const colorNames: Record<string, Record<string, string>> = {
   "#ffffff": { en: "White", fr: "Blanc" },
   "#2c3e50": { en: "Navy", fr: "Marine" },
   "#94a3b8": { en: "Silver", fr: "Argent" },
-  "#4a4a4a": { en: "Charcoal", fr: "Charbon" },
+  "#4a4a4a": { en: "Grey", fr: "Gris" },
 };
 export function colorName(hex: string, locale: Locale): string {
   return colorNames[hex]?.[locale] || hex;

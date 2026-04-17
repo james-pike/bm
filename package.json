@@ -1,6 +1,6 @@
 {
-  "name": "carmichael-apparel",
-  "description": "Internal apparel ordering app for Carmichael staff.",
+  "name": "blackmcdonald-apparel",
+  "description": "Internal apparel ordering app for Black & McDonald staff.",
   "engines": {
     "node": "^18.17.0 || ^20.3.0 || >=21.0.0"
   },
