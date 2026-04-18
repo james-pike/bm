@@ -1,27 +1,30 @@
-import { component$, useSignal, useContext, useVisibleTask$, useComputed$ } from "@builder.io/qwik";
+import { component$, useContext } from "@builder.io/qwik";
 import type { DocumentHead } from "@builder.io/qwik-city";
 import { LocaleContext, t } from "../i18n";
-import { ProductCatalog } from "../components/product-catalog/product-catalog";
-import { LoginTypeContext } from "./layout";
+import { allProducts } from "./apparel/products";
+
+const SKU_IMG_OVERRIDE: Record<string, string> = {
+  "BM-1": "/paxton-black.png",
+  "BM-2": "/paxton-grey.png",
+  "BM-4": "/gilliam-black.png",
+  "BM-5": "/duck-black.png",
+};
+
+const SKU_OBJECT_POSITION: Record<string, string> = {
+  "BM-1": "center 80%",
+  "BM-2": "center 80%",
+  "BM-4": "center 35%",
+  "BM-5": "center 35%",
+};
+
+const CATEGORY_FALLBACK_IMG: Record<string, string> = {
+  "Work Wear": "/CTA_en_OurServices_FS_Plumbing-1.webp",
+  "Jackets": "/accessories.webp",
+  "Accessories": "/CTA_en_OurServices_FS_MSNAD-1.webp",
+};
 
 export default component$(() => {
   const locale = useContext(LocaleContext);
-  const loginType = useContext(LoginTypeContext);
-  const isTech = useComputed$(() => loginType.value === "tech");
-  const hasCartItems = useSignal(false);
-
-  // eslint-disable-next-line qwik/no-use-visible-task
-  useVisibleTask$(({ cleanup }) => {
-    const check = () => {
-      try {
-        const cart = JSON.parse(localStorage.getItem("ce_cart") || "[]");
-        hasCartItems.value = cart.length > 0;
-      } catch { hasCartItems.value = false; }
-    };
-    check();
-    window.addEventListener("cart-updated", check);
-    cleanup(() => window.removeEventListener("cart-updated", check));
-  });
 
   return (
     <div class="home-page">
@@ -63,52 +66,18 @@ export default component$(() => {
                 </div>
               </div>
               <div class="hero-categories">
-                {isTech.value ? (<>
-                  <a href="/apparel/" class="category-card category-card--tech-primary">
-                    <picture>
-                      <source media="(max-width: 767px)" srcset="/carmichael-services/chiller-retrofit.jpeg" />
-                      <source media="(min-width: 768px) and (max-width: 1024px)" srcset="/carmichael-services/hvac-retrofit.jpeg" />
-                      <img src="/carmichael-services/boiler-technicians.jpeg" alt="Work Wear" width="400" height="300" loading="eager" decoding="sync" />
-                    </picture>
-                    <span class="category-card__label">{t("teaser.workwear.title", locale.value)}</span>
+                {allProducts.map((p) => (
+                  <a key={p.sku} href={`/apparel/${p.sku}/`} class="category-card">
+                    <img src={SKU_IMG_OVERRIDE[p.sku] || p.img || CATEGORY_FALLBACK_IMG[p.category] || "/truck2.webp"} alt={p.name} width="400" height="300" loading="eager" decoding="sync" style={SKU_OBJECT_POSITION[p.sku] ? { objectPosition: SKU_OBJECT_POSITION[p.sku] } : undefined} />
+                    <span class="category-card__label">{p.name}</span>
                   </a>
-                  <a href="/apparel/" class="category-card category-card--tech-extra category-card--tech-desktop">
-                    <img src="/carmichael-services/careers.jpeg" alt="" width="400" height="300" loading="eager" decoding="sync" />
-                  </a>
-                  <a href="/apparel/" class="category-card category-card--tech-extra category-card--tech-desktop">
-                    <img src="/carmichael-services/hvac-retrofit.jpeg" alt="" width="400" height="300" loading="eager" decoding="sync" />
-                  </a>
-                  <a href="/apparel/" class="category-card category-card--tech-extra category-card--tech-tablet">
-                    <img src="/carmichael-services/chiller-retrofit.jpeg" alt="" width="400" height="300" loading="eager" decoding="sync" />
-                  </a>
-                </>) : (<>
-                  <a href="/apparel/#work-wear" class="category-card">
-                    <img src="/CTA_en_OurServices_FS_Plumbing-1.webp" alt="Work Wear" width="400" height="300" loading="eager" decoding="sync" />
-                    <span class="category-card__label">{t("teaser.workwear.title", locale.value)}</span>
-                  </a>
-                  <a href="/apparel/#jackets" class="category-card">
-                    <img src="/accessories.webp" alt="Jackets" width="400" height="300" loading="eager" decoding="sync" />
-                    <span class="category-card__label">{t("teaser.jackets.title", locale.value)}</span>
-                  </a>
-                  <a href="/apparel/#accessories" class="category-card">
-                    <img src="/CTA_en_OurServices_FS_MSNAD-1.webp" alt="Accessories" width="400" height="300" loading="eager" decoding="sync" />
-                    <span class="category-card__label">{t("teaser.accessories.title", locale.value)}</span>
-                  </a>
-                  <div class="category-card category-card--visual">
-                    <img src="/truck2.webp" alt="Black & McDonald — Est. 1921" width="400" height="300" loading="eager" decoding="sync" />
-                  </div>
-                </>)}
+                ))}
               </div>
             </div>
           </div>
         </div>
 
       </section>
-
-
-
-      {/* Apparel Catalog */}
-      <ProductCatalog />
     </div>
   );
 });
