@@ -5439,18 +5439,18 @@ details[open] > .cart-drawer__checkout-title::after {
     transform: none;
     opacity: 1;
     pointer-events: auto;
-    background: transparent !important;
+    background: var(--ce-white) !important;
     border-bottom: none !important;
     transition: background 0.3s ease, border-bottom 0.3s ease;
   }
   .site-header--hero-hidden.site-header--white {
-    background: transparent !important;
+    background: var(--ce-white) !important;
     border-bottom: none !important;
   }
   .site-header--hero-hidden .site-header__logo,
   .site-header--hero-hidden .site-header__logo-img,
   .site-header--hero-hidden .site-header__logo-text,
-  .site-header--hero-hidden .site-header__logo-brand { opacity: 0 !important; transition: opacity 0.3s ease; }
+  .site-header--hero-hidden .site-header__logo-brand { opacity: 1 !important; transition: opacity 0.3s ease; }
   .site-header--hero-hidden.site-header--hero-visible {
     background: var(--ce-white) !important;
     border-bottom: none !important;
