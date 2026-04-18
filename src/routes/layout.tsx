@@ -618,11 +618,11 @@ export default component$(() => {
         <div class="site-header__inner">
           <Link href="/" class="site-header__logo">
             <img
-              src="/BlackMcDonald_Logo.webp"
-              alt="Black & McDonald Apparel"
+              src="/good-catch-logo-en.jpg"
+              alt="Good Catch Awards"
               class="site-header__logo-img"
-              width="1633"
-              height="844"
+              width="200"
+              height="200"
               loading="eager"
               decoding="sync"
             />
@@ -741,7 +741,7 @@ export default component$(() => {
           <div class="drawer cart-drawer" onClick$={(e) => e.stopPropagation()}>
             <div class="cart-drawer__site-header">
               <Link href="/" class="site-header__logo">
-                <img src="/BlackMcDonald_Logo.webp" alt="Black & McDonald Apparel" class="site-header__logo-img" width="1633" height="844" loading="eager" decoding="sync" />
+                <img src="/good-catch-logo-en.jpg" alt="Good Catch Awards" class="site-header__logo-img" width="200" height="200" loading="eager" decoding="sync" />
               </Link>
               <nav class="site-header__nav">
                 <button class="cart-btn" onClick$={() => (cartOpen.value = false)}>
