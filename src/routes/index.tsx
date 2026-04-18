@@ -91,7 +91,7 @@ export default component$(() => {
                     <span class="category-card__label">{t("teaser.jackets.title", locale.value)}</span>
                   </a>
                   <a href="/apparel/#accessories" class="category-card">
-                    <img src="/accessories.webp" alt="Accessories" width="400" height="300" loading="eager" decoding="sync" />
+                    <img src="/carmichael-services/boiler-technicians.jpeg" alt="Accessories" width="400" height="300" loading="eager" decoding="sync" />
                     <span class="category-card__label">{t("teaser.accessories.title", locale.value)}</span>
                   </a>
                   <div class="category-card category-card--visual">
