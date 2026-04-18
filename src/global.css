@@ -4668,7 +4668,7 @@ details[open] > .cart-drawer__checkout-title::after {
   .hamburger-btn:hover { background: #1a1a1a; border-color: #1a1a1a; }
   .hamburger-btn svg { stroke: #ffffff; }
   .hamburger-btn svg { width: 22px; height: 22px; }
-  .site-header__nav { gap: 4px; margin-right: 0.1rem; }
+  .site-header__nav { gap: 3px; margin-right: 0.1rem; }
   .site-header__nav-home { display: none; }
 }
 
@@ -5727,7 +5727,7 @@ details[open] > .cart-drawer__checkout-title::after {
   }
   .hero__middle-section { padding-bottom: 0; }
   /* Mobile frame: horizontal inset matches the site-header button inset (0.52rem) so the video and cards align with the hamburger; logo cluster is edge-to-edge since the logo image has its own built-in white sides */
-  .hero__logo-group { padding: 16px 0.52rem 4px; display: flex; flex-direction: column; gap: 0; }
+  .hero__logo-group { padding: 6px 0.52rem 4px; display: flex; flex-direction: column; gap: 0; }
   .hero__logo-group .hero-categories { margin-top: 0.52rem !important; }
   .hero__middle-section { padding: 0 !important; margin: 0 -0.52rem !important; }
   .hero__logo-stack { margin-top: 0 !important; }
