@@ -202,7 +202,9 @@ img { max-width: 100%; display: block; }
   top: 0;
   z-index: 9999;
   pointer-events: auto;
-  background: var(--ce-white);
+  background-color: #ffffff;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
   border-bottom: none;
   height: 58px;
   margin-bottom: -1px;

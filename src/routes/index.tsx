@@ -118,7 +118,7 @@ export const head: DocumentHead = {
   meta: [
     { name: "description", content: "Black & McDonald Employee Apparel. Order branded jackets, vests, work wear, and more." },
     { name: "robots", content: "noindex, nofollow" },
-    { name: "theme-color", content: "#0a1a12" },
+    { name: "theme-color", content: "#ffffff" },
     { property: "og:title", content: "Black & McDonald Apparel" },
     { property: "og:description", content: "Internal apparel ordering for Black & McDonald staff." },
     { property: "og:type", content: "website" },
