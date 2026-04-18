@@ -83,15 +83,15 @@ export default component$(() => {
                   </a>
                 </>) : (<>
                   <a href="/apparel/#work-wear" class="category-card">
-                    <img src="/carmichael-services/boiler-technicians.jpeg" alt="Work Wear" width="400" height="300" loading="eager" decoding="sync" />
+                    <img src="/CTA_en_OurServices_FS_Plumbing-1.webp" alt="Work Wear" width="400" height="300" loading="eager" decoding="sync" />
                     <span class="category-card__label">{t("teaser.workwear.title", locale.value)}</span>
                   </a>
                   <a href="/apparel/#jackets" class="category-card">
-                    <img src="/carmichael-services/careers.jpeg" alt="Jackets" width="400" height="300" loading="eager" decoding="sync" />
+                    <img src="/accessories.webp" alt="Jackets" width="400" height="300" loading="eager" decoding="sync" />
                     <span class="category-card__label">{t("teaser.jackets.title", locale.value)}</span>
                   </a>
                   <a href="/apparel/#accessories" class="category-card">
-                    <img src="/carmichael-services/boiler-technicians.jpeg" alt="Accessories" width="400" height="300" loading="eager" decoding="sync" />
+                    <img src="/CTA_en_OurServices_FS_MSNAD-1.webp" alt="Accessories" width="400" height="300" loading="eager" decoding="sync" />
                     <span class="category-card__label">{t("teaser.accessories.title", locale.value)}</span>
                   </a>
                   <div class="category-card category-card--visual">

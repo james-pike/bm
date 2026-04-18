@@ -618,15 +618,14 @@ export default component$(() => {
         <div class="site-header__inner">
           <Link href="/" class="site-header__logo">
             <img
-              src="/bm-logo.png"
+              src="/BlackMcDonald_Logo.webp"
               alt="Black & McDonald Apparel"
               class="site-header__logo-img"
-              width="214"
-              height="110"
+              width="1633"
+              height="844"
               loading="eager"
               decoding="sync"
             />
-            <span class="site-header__logo-apparel">{t("logo.apparel", locale.value)}</span>
           </Link>
           <nav class="site-header__categories">
             <Link href="/" class={loc.url.pathname === "/" ? "active" : ""}>{t("nav.home", locale.value)}</Link>
@@ -742,8 +741,7 @@ export default component$(() => {
           <div class="drawer cart-drawer" onClick$={(e) => e.stopPropagation()}>
             <div class="cart-drawer__site-header">
               <Link href="/" class="site-header__logo">
-                <img src="/bm-logo.png" alt="Black & McDonald Apparel" class="site-header__logo-img" width="214" height="110" loading="eager" decoding="sync" />
-                <span class="site-header__logo-apparel">{t("logo.apparel", locale.value)}</span>
+                <img src="/BlackMcDonald_Logo.webp" alt="Black & McDonald Apparel" class="site-header__logo-img" width="1633" height="844" loading="eager" decoding="sync" />
               </Link>
               <nav class="site-header__nav">
                 <button class="cart-btn" onClick$={() => (cartOpen.value = false)}>
