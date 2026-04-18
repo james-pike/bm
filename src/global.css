@@ -4792,7 +4792,7 @@ details[open] > .cart-drawer__checkout-title::after {
     max-width: 100%;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: 0px 2fr 1fr;
+    grid-template-rows: 0px auto auto;
     align-items: stretch;
     row-gap: 1px;
     column-gap: 4px;
@@ -4932,8 +4932,8 @@ details[open] > .cart-drawer__checkout-title::after {
     overflow: hidden;
     position: relative;
   }
-  .hero-bento .hero-bento-carousel { height: 100%; }
-  .hero-bento .hero-bento-carousel__scroller { aspect-ratio: auto; height: 100%; }
+  .hero-bento .hero-bento-carousel { height: auto; }
+  .hero-bento .hero-bento-carousel__scroller { aspect-ratio: 16/9; height: auto; }
   .hero-bento::after {
     content: '';
     position: absolute;
