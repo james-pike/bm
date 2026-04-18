@@ -34,12 +34,12 @@ export default component$(() => {
                 <div class="hero__top-row">
                 </div>
                 <div class="hero__logo-stack">
-                  <div class="hero__badge-row">
+                  {/* <div class="hero__badge-row">
                     <div class="hero__badge">
                       <span class="hero__badge-dot" />
                       {t("hero.badge", locale.value)}
                     </div>
-                  </div>
+                  </div> */}
                   <img src="/BlackMcDonald_Logo.webp" alt="Black & McDonald" class="hero__title-img" width="1633" height="844" loading="eager" decoding="sync" />
                   <div class="hero__apparel-row">
                     <span class="hero__title-apparel">{t("logo.apparel", locale.value)}</span>

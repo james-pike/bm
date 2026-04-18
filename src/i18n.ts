@@ -7,7 +7,7 @@ export const LocaleContext = createContextId<Signal<Locale>>("locale");
 
 const translations = {
   // Header nav
-  "logo.apparel": { en: "Apparel", fr: "Vêtements" },
+  "logo.apparel": { en: "Good Catch Awards", fr: "Prix Bonne Prise" },
   "nav.home": { en: "Home", fr: "Accueil" },
   "nav.apparel": { en: "Apparel", fr: "Vêtements" },
   "nav.shirts": { en: "Shirts", fr: "Chandails" },
