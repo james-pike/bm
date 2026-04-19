@@ -709,6 +709,12 @@ export default component$(() => {
                 {t("cat.Accessories", locale.value)}
               </a>
               </>}
+              {loginType.value !== "electrical" && (
+              <a href="/print/" class={`nav-drawer__link ${loc.url.pathname === "/print/" ? "active" : ""}`} onClick$={() => (menuOpen.value = false)}>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+                Download Catalog
+              </a>
+              )}
             </div>
             <div class="nav-drawer__footer">
               <button class="nav-drawer__locale" onClick$={() => { toggleLocale(); }}>
@@ -732,21 +738,21 @@ export default component$(() => {
 
       <footer class="site-footer">
         <div class="site-footer__inner">
-          <div class="site-footer__brand">
-            <img src="/bm-logo.png" alt="Black & McDonald" class="site-footer__logo" width="200" height="200" />
-            <span class="site-footer__apparel">{t("logo.apparel", locale.value)}</span>
-          </div>
-          {loginType.value !== "tech" && (
+          {loginType.value === "electrical" ? (
           <nav class="site-footer__links">
             <Link href="/">{t("nav.home", locale.value)}</Link>
             <a href="/apparel/#work-wear" onClick$={(e) => { if (loc.url.pathname.startsWith("/apparel")) { e.preventDefault(); } window.dispatchEvent(new CustomEvent("select-category", { detail: "Work Wear" })); const headerH = window.innerWidth <= 900 ? 49 : 58; const grid = document.querySelector('.home-catalog .apparel-grid'); if (grid) { const top = grid.getBoundingClientRect().top + window.scrollY - headerH - 8; window.scrollTo({ top, behavior: 'instant' }); } }}>{t("cat.Work Wear", locale.value)}</a>
             <a href="/apparel/#jackets" onClick$={(e) => { if (loc.url.pathname.startsWith("/apparel")) { e.preventDefault(); } window.dispatchEvent(new CustomEvent("select-category", { detail: "Jackets" })); const headerH = window.innerWidth <= 900 ? 49 : 58; const grid = document.querySelector('.home-catalog .apparel-grid'); if (grid) { const top = grid.getBoundingClientRect().top + window.scrollY - headerH - 8; window.scrollTo({ top, behavior: 'instant' }); } }}>{t("cat.Jackets", locale.value)}</a>
             <a href="/apparel/#accessories" onClick$={(e) => { if (loc.url.pathname.startsWith("/apparel")) { e.preventDefault(); } window.dispatchEvent(new CustomEvent("select-category", { detail: "Accessories" })); const headerH = window.innerWidth <= 900 ? 49 : 58; const grid = document.querySelector('.home-catalog .apparel-grid'); if (grid) { const top = grid.getBoundingClientRect().top + window.scrollY - headerH - 8; window.scrollTo({ top, behavior: 'instant' }); } }}>{t("cat.Accessories", locale.value)}</a>
           </nav>
+          ) : (
+          <nav class="site-footer__links">
+            <Link href="/print/">Download Printable Catalog</Link>
+          </nav>
           )}
           <div class="site-footer__contact site-footer__contact--stacked">
             <span class="site-footer__contact-label">Contact</span>
-            <a href="mailto:apparel@blackandmcdonald.com">apparel@blackandmcdonald.com</a>
+            <a href="mailto:info@blackandmcdonaldapparel.ca">info@blackandmcdonaldapparel.ca</a>
           </div>
         </div>
       </footer>

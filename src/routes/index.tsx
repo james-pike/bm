@@ -7,15 +7,23 @@ import { LoginTypeContext } from "./layout";
 const SKU_IMG_OVERRIDE: Record<string, string> = {
   "BM-1": "/paxton-black.png",
   "BM-2": "/paxton-grey.png",
+  "BM-3": "/gilliamjacket-black.png",
   "BM-4": "/gilliam-black.png",
   "BM-5": "/duck-black.png",
+  "BM-6": "/duckgrey.png",
+  "BM-7": "/cooler-black.png",
+  "BM-8": "/backpack-black.png",
 };
 
 const SKU_OBJECT_POSITION: Record<string, string> = {
   "BM-1": "center 80%",
   "BM-2": "center 80%",
+  "BM-3": "center 35%",
   "BM-4": "center 35%",
   "BM-5": "center 35%",
+  "BM-6": "center 35%",
+  "BM-7": "center 10%",
+  "BM-8": "center 10%",
 };
 
 const CATEGORY_FALLBACK_IMG: Record<string, string> = {
@@ -78,6 +86,9 @@ export default component$(() => {
                     </div>
                   );
                 })}
+              </div>
+              <div class="hero__print-cta">
+                <a href="/print/" class="hero__print-btn">Download / Print Catalog</a>
               </div>
             </div>
           </div>
