@@ -1,8 +1,14 @@
 import { component$ } from "@builder.io/qwik";
-import type { DocumentHead } from "@builder.io/qwik-city";
+import { type DocumentHead, routeLoader$ } from "@builder.io/qwik-city";
 
-// The ProductCatalog component is rendered by layout.tsx for the catalog view.
-// This file just provides the route entry point and document head.
+// Catalog index is electrical-only; other logged-in users only reach product detail pages.
+export const useCatalogGuard = routeLoader$(({ cookie, redirect }) => {
+  const val = cookie.get("ce_auth")?.value;
+  if (val !== "electrical") {
+    throw redirect(302, "/");
+  }
+});
+
 export default component$(() => {
   return <></>;
 });

@@ -7,6 +7,36 @@ import { allProducts, colorName, categoryLabel } from "../products";
 import { expandSizes } from "../utils";
 import { LoginTypeContext } from "../../layout";
 
+const SKU_IMG_OVERRIDE: Record<string, string> = {
+  "BM-1": "/paxton-black.png",
+  "BM-2": "/paxton-grey.png",
+  "BM-3": "/gilliamjacket-black.png",
+  "BM-4": "/gilliam-black.png",
+  "BM-5": "/duck-black.png",
+  "BM-6": "/duckgrey.png",
+  "BM-7": "/cooler-black.png",
+  "BM-8": "/backpack-black.png",
+};
+
+const CATEGORY_FALLBACK_IMG: Record<string, string> = {
+  "Work Wear": "/CTA_en_OurServices_FS_Plumbing-1.webp",
+  "Jackets": "/accessories.webp",
+  "Accessories": "/CTA_en_OurServices_FS_MSNAD-1.webp",
+};
+
+function resolveProductImg(sku: string, category: string, fallback: string) {
+  return SKU_IMG_OVERRIDE[sku] || fallback || CATEGORY_FALLBACK_IMG[category] || "/truck2.webp";
+}
+
+// Pairs of SKUs representing the same product in different colors. Clicking a swatch
+// navigates between them so the image/name/sku update without reloading the whole page.
+const SKU_SIBLING: Record<string, string> = {
+  "BM-1": "BM-2",
+  "BM-2": "BM-1",
+  "BM-5": "BM-6",
+  "BM-6": "BM-5",
+};
+
 export default component$(() => {
   const locale = useContext(LocaleContext);
   const loginType = useContext(LoginTypeContext);
@@ -14,8 +44,7 @@ export default component$(() => {
   const loc = useLocation();
   const nav = useNavigate();
 
-  const sku = loc.params.sku;
-  const product = useComputed$(() => allProducts.find((p) => p.sku === sku) || null);
+  const product = useComputed$(() => allProducts.find((p) => p.sku === loc.params.sku) || null);
 
   const imgIndex = useSignal(0);
   const touchStartX = useSignal(0);
@@ -31,7 +60,7 @@ export default component$(() => {
   const userSelectedImg = useSignal(false);
 
   // Set initial color once product is known
-  const colorInitialized = useSignal(false);
+  const colorInitialized = useSignal<string | boolean>(false);
 
   // Auto-advance carousel (stops when user selects an image)
   // eslint-disable-next-line qwik/no-use-visible-task
@@ -138,8 +167,8 @@ export default component$(() => {
     } catch { /* ignore */ }
   });
 
-  // Initialize color and auto-select default size (prefer L)
-  if (!colorInitialized.value && product.value) {
+  // Initialize color and auto-select default size (prefer L); re-run on SKU change.
+  if (product.value && colorInitialized.value !== product.value.sku) {
     selectedColor.value = product.value.colors[0];
     if (waistLengthSkus.has(product.value.sku)) {
       selectedSize.value = "W/L";
@@ -148,7 +177,8 @@ export default component$(() => {
       const lIdx = sizes.indexOf("L");
       selectedSize.value = lIdx !== -1 ? sizes[lIdx] : sizes[0];
     }
-    colorInitialized.value = true;
+    imgIndex.value = 0;
+    colorInitialized.value = product.value.sku;
   }
 
   if (!product.value) {
@@ -166,6 +196,8 @@ export default component$(() => {
 
   const p = product.value;
   const pdf = (p as any).pdf as string | undefined;
+  const overrideImg = SKU_IMG_OVERRIDE[p.sku];
+  const effectiveImgs = overrideImg ? [overrideImg] : (p.imgs && p.imgs.length ? p.imgs : [resolveProductImg(p.sku, p.category, p.img)]);
 
   return (
     <div class="apparel-catalog" id="products">
@@ -177,7 +209,7 @@ export default component$(() => {
               onTouchStart$={(e) => { touchStartX.value = e.touches[0].clientX; }}
               onTouchEnd$={(e) => {
                 const diff = touchStartX.value - e.changedTouches[0].clientX;
-                const imgs = p.imgs || [p.img];
+                const imgs = effectiveImgs;
                 if (Math.abs(diff) > 40) {
                   userSelectedImg.value = true;
                   if (diff > 0) {
@@ -189,7 +221,7 @@ export default component$(() => {
               }}
               onClick$={() => { if (window.innerWidth > 1024) imgFullscreen.value = true; }}
             >
-              {(p.imgs || [p.img]).map((src, i) => (
+              {effectiveImgs.map((src, i) => (
                 <img
                   key={i}
                   src={src}
@@ -206,9 +238,9 @@ export default component$(() => {
                 </a>
               )}
             </div>
-            {(p.imgs || [p.img]).length > 1 && (
+            {effectiveImgs.length > 1 && (
               <div class="product-thumbs product-thumbs--column">
-                {(p.imgs || [p.img]).map((src, i) => (
+                {effectiveImgs.map((src, i) => (
                   <button
                     key={i}
                     class={`product-thumbs__item ${imgIndex.value === i ? "active" : ""}`}
@@ -221,13 +253,13 @@ export default component$(() => {
             )}
           </div>
           <div class="product-modal__breadcrumb">
-            <span class="breadcrumb__link" onClick$={() => nav(`/apparel/#${p.category.toLowerCase().replace(/\s+/g, "-")}`)}>
-              {categoryLabel(p.category, locale.value)}
+            <span class="breadcrumb__link" onClick$={() => nav("/")}>
+              {t("nav.home", locale.value)}
             </span>
             <span class="breadcrumb__sep">/</span>
             <span class="breadcrumb__sku">{p.sku}</span>
           </div>
-          <div class="product-modal__details">
+          <div class="product-modal__details" key={`details-${p.sku}`}>
             <h2 class="product-modal__name">{p.name}</h2>
             {p.material && (
               <div class="product-modal__material">
@@ -237,7 +269,7 @@ export default component$(() => {
             {p.details && (
               <ul class={`product-modal__details-list ${p.details.split(",").length <= 2 ? "product-modal__details-list--single" : ""}`}>
                 {p.details.split(",").map((detail, i) => (
-                  <li key={i}>{detail.trim()}</li>
+                  <li key={`${p.sku}-${i}`}>{detail.trim()}</li>
                 ))}
               </ul>
             )}
@@ -304,23 +336,46 @@ export default component$(() => {
               </div>
             )}
             <div class="product-modal__field product-modal__color-qty-row">
-              {p.colors.length > 0 && (
-                <div class="product-modal__color-group">
-                  <label class="product-modal__label">{t("modal.color", locale.value)}{selectedColor.value && <span class="product-modal__color-inline"> — {colorName(selectedColor.value, locale.value)}</span>}</label>
-                  <div class="product-modal__options">
-                    {p.colors.map((color) => (
-                      <button
-                        key={color}
-                        class={`product-modal__color ${selectedColor.value === color ? "active" : ""}`}
-                        style={{ background: color }}
-                        onClick$={() => (selectedColor.value = color)}
-                        aria-label={colorName(color, locale.value)}
-                        title={colorName(color, locale.value)}
-                      />
-                    ))}
+              {(() => {
+                const siblingSku = SKU_SIBLING[p.sku];
+                const sibling = siblingSku ? allProducts.find((x) => x.sku === siblingSku) : null;
+                const siblingColors = sibling ? sibling.colors : [];
+                const COLOR_ORDER = ["#1a1a18", "#ffffff", "#4a4a4a", "#94a3b8", "#00703c", "#2c3e50", "#8d5f18"];
+                const combined = [...p.colors, ...siblingColors.filter((c) => !p.colors.includes(c))];
+                const allColors = combined.slice().sort((a, b) => {
+                  const ai = COLOR_ORDER.indexOf(a);
+                  const bi = COLOR_ORDER.indexOf(b);
+                  return (ai === -1 ? 999 : ai) - (bi === -1 ? 999 : bi);
+                });
+                if (allColors.length === 0) return null;
+                return (
+                  <div class="product-modal__color-group">
+                    <label class="product-modal__label">{t("modal.color", locale.value)}{selectedColor.value && <span class="product-modal__color-inline"> — {colorName(selectedColor.value, locale.value)}</span>}</label>
+                    <div class="product-modal__options">
+                      {allColors.map((color) => {
+                        const isOwn = p.colors.includes(color);
+                        const isActive = selectedColor.value === color;
+                        return (
+                          <button
+                            key={color}
+                            class={`product-modal__color ${isActive ? "active" : ""}`}
+                            style={{ background: color }}
+                            onClick$={() => {
+                              if (isOwn) {
+                                selectedColor.value = color;
+                              } else if (sibling) {
+                                nav(`/apparel/${sibling.sku}/`);
+                              }
+                            }}
+                            aria-label={colorName(color, locale.value)}
+                            title={colorName(color, locale.value)}
+                          />
+                        );
+                      })}
+                    </div>
                   </div>
-                </div>
-              )}
+                );
+              })()}
               <div class="product-modal__qty-group">
                 <label class="product-modal__label">{t("modal.quantity", locale.value)}</label>
                 <div class="product-modal__qty">
@@ -356,16 +411,18 @@ export default component$(() => {
         </div>
       </div>
       {(() => {
-        const related = allProducts.filter((r) => r.sku !== p.sku && r.sku !== "CAR-12" && r.category === p.category).slice(0, 8);
+        const sameCat = allProducts.filter((r) => r.sku !== p.sku && r.sku !== "CAR-12" && r.category === p.category);
+        const others = allProducts.filter((r) => r.sku !== p.sku && r.sku !== "CAR-12" && r.category !== p.category);
+        const related = (loginType.value === "electrical" ? sameCat : [...sameCat, ...others]).slice(0, 8);
         return (
           <div class="related-items">
-            <h3 class="related-items__title">{t("product.more", locale.value)} {categoryLabel(p.category, locale.value)}</h3>
+            <h3 class="related-items__title">{t("product.more", locale.value)} {loginType.value === "electrical" ? categoryLabel(p.category, locale.value) : (locale.value === "fr" ? "Bonne Prise" : "Good Catch")}</h3>
             {/* Desktop grid */}
             <div class="related-items__grid">
               {related.slice(0, 4).map((item) => (
                 <a key={item.sku} href={`/apparel/${item.sku}/`} class="product-card product-card-link">
                   <div class="product-card__image">
-                    <img src={item.img} alt={item.name} width="440" height="440" loading="eager" decoding="async" />
+                    <img src={resolveProductImg(item.sku, item.category, item.img)} alt={item.name} width="440" height="440" loading="eager" decoding="async" />
                   </div>
                   <div class="product-card__info">
                     <div class="product-card__name-row">
@@ -389,7 +446,7 @@ export default component$(() => {
                     <Carousel.Slide key={item.sku} class="related-carousel__slide">
                       <a href={`/apparel/${item.sku}/`} class="product-card product-card-link">
                         <div class="product-card__image">
-                          <img src={item.img} alt={item.name} width="440" height="440" loading="lazy" decoding="async" />
+                          <img src={resolveProductImg(item.sku, item.category, item.img)} alt={item.name} width="440" height="440" loading="lazy" decoding="async" />
                         </div>
                         <div class="product-card__info">
                           <div class="product-card__name-row">
@@ -419,7 +476,7 @@ export default component$(() => {
         <div class="product-fullscreen" onClick$={() => (imgFullscreen.value = false)}>
           <button class="product-fullscreen__close" aria-label="Close fullscreen" onClick$={(e) => { e.stopPropagation(); imgFullscreen.value = false; }}>&times;</button>
           <img
-            src={(p.imgs || [p.img])[imgIndex.value]}
+            src={effectiveImgs[imgIndex.value]}
             alt={p.name}
             class="product-fullscreen__img"
             onClick$={(e) => e.stopPropagation()}

@@ -683,7 +683,7 @@ export default component$(() => {
           <nav class="nav-drawer" onClick$={(e) => e.stopPropagation()}>
             <div class="nav-drawer__header">
               <div class="nav-drawer__brand">
-                <img src="/bm-logo.png" alt="Black & McDonald" class="nav-drawer__logo" width="48" height="48" />
+                <img src="/good-catch-logo-en.jpg" alt="Good Catch Awards" class="nav-drawer__logo" width="200" height="200" />
                 <span class="nav-drawer__apparel">{t("logo.apparel", locale.value)}</span>
               </div>
               <button class="nav-drawer__close" onClick$={() => (menuOpen.value = false)} aria-label="Close">
@@ -749,7 +749,7 @@ export default component$(() => {
           <nav class="site-footer__links site-footer__links--print">
             <Link href="/print/">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
-              Download Printable Catalog
+              Download / Print Catalog
             </Link>
           </nav>
           )}

@@ -73,32 +73,45 @@ export default component$(() => {
                   </div>
                 </div>
               </div>
-              <div class="hero-categories">
-                {allProducts.map((p) => {
-                  const imgStyle: Record<string, string> = {};
-                  if (SKU_OBJECT_POSITION[p.sku]) imgStyle.objectPosition = SKU_OBJECT_POSITION[p.sku];
-                  if (SKU_CONTAIN[p.sku]) { imgStyle.objectFit = "contain"; imgStyle.background = "#ffffff"; }
-                  const img = <img src={SKU_IMG_OVERRIDE[p.sku] || p.img || CATEGORY_FALLBACK_IMG[p.category] || "/truck2.webp"} alt={p.name} width="400" height="300" loading="eager" decoding="sync" style={Object.keys(imgStyle).length ? imgStyle : undefined} />;
-                  const label = <span class="category-card__label">{p.name}</span>;
-                  return loginType.value === "electrical" ? (
-                    <a key={p.sku} href={`/apparel/${p.sku}/`} class="category-card">
-                      {img}
-                      {label}
-                    </a>
-                  ) : (
-                    <div key={p.sku} class="category-card category-card--visual">
-                      {img}
-                      {label}
-                    </div>
-                  );
-                })}
-              </div>
-              <div class="hero__print-cta">
-                <a href="/print/" class="hero__print-btn">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
-                  Download / Print Catalog
-                </a>
-              </div>
+              {loginType.value === "electrical" ? (
+                <div class="hero-categories">
+                  <a href="/apparel/#work-wear" class="category-card">
+                    <img src="/CTA_en_OurServices_FS_Plumbing-1.webp" alt="Work Wear" width="400" height="300" loading="eager" decoding="sync" />
+                    <span class="category-card__label">{t("teaser.workwear.title", locale.value)}</span>
+                  </a>
+                  <a href="/apparel/#jackets" class="category-card">
+                    <img src="/jackets.webp" alt="Jackets" width="400" height="300" loading="eager" decoding="sync" />
+                    <span class="category-card__label">{t("teaser.jackets.title", locale.value)}</span>
+                  </a>
+                  <a href="/apparel/#accessories" class="category-card">
+                    <img src="/CTA_en_OurServices_FS_MSNAD-1.webp" alt="Accessories" width="400" height="300" loading="eager" decoding="sync" />
+                    <span class="category-card__label">{t("teaser.accessories.title", locale.value)}</span>
+                  </a>
+                  <div class="category-card category-card--visual">
+                    <img src="/truck2.webp" alt="Black & McDonald — Est. 1921" width="400" height="300" loading="eager" decoding="sync" />
+                  </div>
+                </div>
+              ) : (
+                <div class="hero-categories">
+                  {allProducts.map((p) => {
+                    const imgStyle: Record<string, string> = {};
+                    if (SKU_OBJECT_POSITION[p.sku]) imgStyle.objectPosition = SKU_OBJECT_POSITION[p.sku];
+                    if (SKU_CONTAIN[p.sku]) { imgStyle.objectFit = "contain"; imgStyle.background = "#ffffff"; }
+                    return (
+                      <a key={p.sku} href={`/apparel/${p.sku}/`} class="category-card">
+                        <img src={SKU_IMG_OVERRIDE[p.sku] || p.img || CATEGORY_FALLBACK_IMG[p.category] || "/truck2.webp"} alt={p.name} width="400" height="300" loading="eager" decoding="sync" style={Object.keys(imgStyle).length ? imgStyle : undefined} />
+                        <span class="category-card__label">{p.name}</span>
+                      </a>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
+            <div class="hero__print-cta">
+              <a href="/print/" class="hero__print-btn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+                Download / Print Catalog
+              </a>
             </div>
           </div>
         </div>
