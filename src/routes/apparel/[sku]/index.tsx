@@ -259,7 +259,7 @@ export default component$(() => {
             <span class="breadcrumb__sep">/</span>
             <span class="breadcrumb__sku">{p.sku}</span>
           </div>
-          <div class="product-modal__details" key={`details-${p.sku}`}>
+          <div class="product-modal__details">
             <h2 class="product-modal__name">{p.name}</h2>
             {p.material && (
               <div class="product-modal__material">
@@ -364,7 +364,7 @@ export default component$(() => {
                               if (isOwn) {
                                 selectedColor.value = color;
                               } else if (sibling) {
-                                nav(`/apparel/${sibling.sku}/`);
+                                nav(`/apparel/${sibling.sku}/`, { scroll: false, replaceState: true });
                               }
                             }}
                             aria-label={colorName(color, locale.value)}
