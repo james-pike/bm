@@ -746,8 +746,11 @@ export default component$(() => {
             <a href="/apparel/#accessories" onClick$={(e) => { if (loc.url.pathname.startsWith("/apparel")) { e.preventDefault(); } window.dispatchEvent(new CustomEvent("select-category", { detail: "Accessories" })); const headerH = window.innerWidth <= 900 ? 49 : 58; const grid = document.querySelector('.home-catalog .apparel-grid'); if (grid) { const top = grid.getBoundingClientRect().top + window.scrollY - headerH - 8; window.scrollTo({ top, behavior: 'instant' }); } }}>{t("cat.Accessories", locale.value)}</a>
           </nav>
           ) : (
-          <nav class="site-footer__links">
-            <Link href="/print/">Download Printable Catalog</Link>
+          <nav class="site-footer__links site-footer__links--print">
+            <Link href="/print/">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+              Download Printable Catalog
+            </Link>
           </nav>
           )}
           <div class="site-footer__contact site-footer__contact--stacked">

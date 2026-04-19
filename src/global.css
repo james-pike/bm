@@ -654,14 +654,15 @@ img { max-width: 100%; display: block; }
 }
 .category-card__label {
   position: absolute;
-  bottom: 0.5rem;
-  left: 0.5rem;
-  right: 0.5rem;
+  bottom: 0.4rem;
+  left: 0.4rem;
+  right: 0.4rem;
   color: var(--ce-white);
-  font-size: 0.78rem;
+  font-size: 0.68rem;
+  line-height: 1.2;
   font-weight: 700;
   z-index: 1;
-  padding: 0.3rem 0.6rem;
+  padding: 0.22rem 0.45rem;
   background: rgba(0,0,0,0.55);
   backdrop-filter: blur(4px);
   border-radius: 2px;
@@ -688,9 +689,11 @@ img { max-width: 100%; display: block; }
     padding: 0 2rem 1.5rem;
   }
   .category-card__label {
-    font-size: 1.1rem;
-    bottom: 1rem;
-    left: 1rem;
+    font-size: 0.85rem;
+    bottom: 0.5rem;
+    left: 0.5rem;
+    right: 0.5rem;
+    padding: 0.25rem 0.55rem;
   }
 }
 
@@ -1581,6 +1584,9 @@ img { max-width: 100%; display: block; }
   gap: 0.5rem 1rem;
 }
 .site-footer__links a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
   font-size: 0.82rem;
   font-weight: 500;
   color: rgba(255,255,255,0.6);
@@ -5742,16 +5748,18 @@ details[open] > .cart-drawer__checkout-title::after {
   /* Categories full-width row 3 — 2 per row makes a 2nd row of bigger cards */
   .hero-categories { grid-column: 1 / -1; grid-row: 3; grid-template-columns: repeat(2, 1fr); gap: 2px; padding-top: 0; margin: 2px 0 0; width: 100%; }
   .hero-categories .category-card__label {
-    font-size: 1.05rem;
-    bottom: 0.85rem;
-    left: 0.85rem;
-    padding: 0.4rem 0.8rem;
-    letter-spacing: 0.03em;
+    font-size: 0.8rem;
+    bottom: 0.45rem;
+    left: 0.45rem;
+    right: 0.45rem;
+    padding: 0.22rem 0.5rem;
+    letter-spacing: 0.02em;
   }
   .hero-categories .category-card { aspect-ratio: 16 / 9; }
 }
 
 @media (max-width: 600px) {
+  .site-footer__links--print { display: none; }
   .hero__logo-spacer--mobile {
     align-self: stretch;
     width: auto;

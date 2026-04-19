@@ -18,12 +18,15 @@ const SKU_IMG_OVERRIDE: Record<string, string> = {
 const SKU_OBJECT_POSITION: Record<string, string> = {
   "BM-1": "center 80%",
   "BM-2": "center 80%",
-  "BM-3": "center 35%",
   "BM-4": "center 35%",
   "BM-5": "center 35%",
   "BM-6": "center 35%",
-  "BM-7": "center 10%",
-  "BM-8": "center 10%",
+};
+
+const SKU_CONTAIN: Record<string, boolean> = {
+  "BM-3": true,
+  "BM-7": true,
+  "BM-8": true,
 };
 
 const CATEGORY_FALLBACK_IMG: Record<string, string> = {
@@ -72,7 +75,10 @@ export default component$(() => {
               </div>
               <div class="hero-categories">
                 {allProducts.map((p) => {
-                  const img = <img src={SKU_IMG_OVERRIDE[p.sku] || p.img || CATEGORY_FALLBACK_IMG[p.category] || "/truck2.webp"} alt={p.name} width="400" height="300" loading="eager" decoding="sync" style={SKU_OBJECT_POSITION[p.sku] ? { objectPosition: SKU_OBJECT_POSITION[p.sku] } : undefined} />;
+                  const imgStyle: Record<string, string> = {};
+                  if (SKU_OBJECT_POSITION[p.sku]) imgStyle.objectPosition = SKU_OBJECT_POSITION[p.sku];
+                  if (SKU_CONTAIN[p.sku]) { imgStyle.objectFit = "contain"; imgStyle.background = "#ffffff"; }
+                  const img = <img src={SKU_IMG_OVERRIDE[p.sku] || p.img || CATEGORY_FALLBACK_IMG[p.category] || "/truck2.webp"} alt={p.name} width="400" height="300" loading="eager" decoding="sync" style={Object.keys(imgStyle).length ? imgStyle : undefined} />;
                   const label = <span class="category-card__label">{p.name}</span>;
                   return loginType.value === "electrical" ? (
                     <a key={p.sku} href={`/apparel/${p.sku}/`} class="category-card">
@@ -88,7 +94,10 @@ export default component$(() => {
                 })}
               </div>
               <div class="hero__print-cta">
-                <a href="/print/" class="hero__print-btn">Download / Print Catalog</a>
+                <a href="/print/" class="hero__print-btn">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+                  Download / Print Catalog
+                </a>
               </div>
             </div>
           </div>
