@@ -262,12 +262,12 @@ export default component$(() => {
           <div class="product-modal__details">
             <h2 class="product-modal__name">{p.name}</h2>
             {p.material && (
-              <div class="product-modal__material">
+              <div class="product-modal__material" key={`material-${p.sku}`}>
                 <strong>{t("modal.material", locale.value)}:</strong> {p.material}
               </div>
             )}
             {p.details && (
-              <ul class={`product-modal__details-list ${p.details.split(",").length <= 2 ? "product-modal__details-list--single" : ""}`}>
+              <ul key={`details-${p.sku}`} class={`product-modal__details-list ${p.details.split(",").length <= 2 ? "product-modal__details-list--single" : ""}`}>
                 {p.details.split(",").map((detail, i) => (
                   <li key={`${p.sku}-${i}`}>{detail.trim()}</li>
                 ))}
