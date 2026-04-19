@@ -292,10 +292,9 @@ img { max-width: 100%; display: block; }
   display: flex;
   align-items: center;
 }
-.site-header__logo { display: flex; align-items: center; flex-shrink: 0; margin-right: auto; gap: 2px; overflow: hidden; }
-.site-header__logo-img { height: 40px; width: auto; flex-shrink: 0; transition: opacity 0.3s ease; transform: scale(1.3); transform-origin: center; }
-.site-header--hero-hidden .site-header__logo-img { opacity: 0; }
-.site-header--hero-hidden.site-header--hero-visible .site-header__logo-img { opacity: 1; }
+.site-header__logo { display: flex; align-items: center; flex-shrink: 0; margin-right: auto; gap: 2px; }
+.site-header__logo-img { height: 40px; width: auto; flex-shrink: 0; transition: opacity 0.3s ease; }
+.site-header--logo-hidden .site-header__logo-img { opacity: 0; }
 .site-header__logo-text { height: 24px; width: auto; flex-shrink: 0; }
 .site-header__logo-brand { display: flex; flex-direction: column; align-items: flex-start; transition: opacity 0.3s ease; }
 .site-header__logo-apparel { font-size: 0.62rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ce-gray-400); margin-top: -2px; }
@@ -1049,7 +1048,7 @@ img { max-width: 100%; display: block; }
   display: block;
 }
 .hero__title-apparel {
-  font-size: clamp(1.1rem, 2.5vw, 1.7rem);
+  font-size: clamp(1.1rem, 3.2vw, 2.4rem);
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -1063,7 +1062,7 @@ img { max-width: 100%; display: block; }
 }
 @media (max-width: 900px) {
   .hero__title-apparel {
-    font-size: clamp(1.3rem, 3.6vw, 2rem);
+    font-size: clamp(1.2rem, 4.2vw, 2.4rem);
     margin-top: -0.2rem;
     margin-left: 0;
   }
@@ -1107,18 +1106,37 @@ img { max-width: 100%; display: block; }
   width: 100%;
   margin-top: 1rem;
 }
+.hero__patch-img {
+  width: auto;
+  height: 3em;
+  display: block;
+  flex-shrink: 0;
+  border-radius: 50% !important;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.35);
+}
 .hero__logo-stack .hero__apparel-row {
   position: absolute;
   left: 0;
   right: 0;
-  top: 81%;
+  top: 80.5%;
   transform: translateY(-50%);
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0;
+  gap: 0.7em;
+  padding: 0 1.25rem;
   margin: 0;
   width: auto;
+  container-type: inline-size;
+  container-name: apparelrow;
+}
+.hero__logo-stack .hero__apparel-row .hero__title-apparel {
+  flex: 0 1 auto;
+  text-align: center;
+  min-width: 0;
+  font-size: clamp(1rem, 6.3cqi, 1.9rem) !important;
 }
 .hero__logo-stack .hero__badge-row {
   position: absolute;
@@ -4794,21 +4812,18 @@ details[open] > .cart-drawer__checkout-title::after {
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 0px auto auto;
     align-items: stretch;
-    row-gap: 1px;
-    column-gap: 4px;
-    padding: 0 5px 4px;
-    border-radius: 12px;
+    row-gap: 2px;
+    column-gap: 2px;
+    padding: 8px;
     overflow: hidden;
-    background:
-      radial-gradient(ellipse 60% 30% at 30% 0%, rgba(255,255,255,0.1) 0%, transparent 70%),
-      radial-gradient(ellipse 50% 25% at 70% 0%, rgba(255,255,255,0.08) 0%, transparent 70%),
-      #ffffff;
+    background: #ffffff;
+    border: 1px solid rgba(0,0,0,0.08);
     box-shadow:
-      0 0 12px 5px rgba(255,255,255,0.85),
-      0 0 30px 12px rgba(255,255,255,0.65),
-      0 0 60px 25px rgba(255,255,255,0.4),
-      0 0 100px 40px rgba(220,245,228,0.25),
-      0 0 150px 60px rgba(255,255,255,0.1);
+      0 1px 2px rgba(0,0,0,0.04),
+      0 4px 16px rgba(0,0,0,0.06),
+      0 12px 40px rgba(0,0,0,0.08),
+      0 0 0 4px rgba(255,255,255,0.9),
+      0 0 30px 8px rgba(0,133,48,0.08);
   }
   .hero-card-header.dot-pattern::before {
     opacity: 0.3;
@@ -4912,9 +4927,9 @@ details[open] > .cart-drawer__checkout-title::after {
     grid-column: 1 / -1;
     grid-row: 3;
     grid-template-columns: repeat(4, 1fr);
-    gap: 8px;
+    gap: 2px;
     padding-top: 0;
-    margin: 0;
+    margin: 2px 0 0;
     width: 100%;
   }
   .hero-categories .category-card {
@@ -4932,8 +4947,8 @@ details[open] > .cart-drawer__checkout-title::after {
     overflow: hidden;
     position: relative;
   }
-  .hero-bento .hero-bento-carousel { height: auto; }
-  .hero-bento .hero-bento-carousel__scroller { aspect-ratio: 16/9; height: auto; }
+  .hero-bento .hero-bento-carousel { height: 100%; }
+  .hero-bento .hero-bento-carousel__scroller { aspect-ratio: auto !important; height: 100% !important; }
   .hero-bento::after {
     content: '';
     position: absolute;
@@ -5021,7 +5036,7 @@ details[open] > .cart-drawer__checkout-title::after {
     object-fit: cover;
   }
   .hero__title-apparel {
-    font-size: clamp(1.45rem, 2.9vw, 2.3rem);
+    font-size: clamp(1.45rem, 2.6vw, 2.6rem);
     margin-top: -9%;
   }
   .hero { padding-bottom: 0.75rem; padding-top: 0; margin-top: 0; background: radial-gradient(ellipse 55% 70% at 50% 45%, #0d2118 0%, #13301f 25%, #1c4a30 50%, #3aa860 75%, var(--ce-gray-200) 100%); }
@@ -5491,9 +5506,9 @@ details[open] > .cart-drawer__checkout-title::after {
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: auto auto auto;
-    column-gap: 8px;
+    column-gap: 2px;
     row-gap: 2px;
-    padding: 0 10px 0.6rem;
+    padding: 6px 6px;
     align-items: stretch;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
@@ -5648,7 +5663,7 @@ details[open] > .cart-drawer__checkout-title::after {
   .hero__top-row .hero__title-icon { flex-shrink: 1; min-width: 0; }
   .hero__title-icon { width: 28%; max-width: none; margin-right: -2%; }
   .hero__title-img { width: 100%; max-width: 100%; margin-left: auto; margin-right: auto; }
-  .hero__title-apparel { font-size: clamp(1.25rem, 2.9vw, 1.8rem); margin-top: -9%; width: 92%; margin-left: auto; margin-right: auto; align-self: auto; text-align: left; }
+  .hero__title-apparel { font-size: clamp(1.25rem, 3.5vw, 2.2rem); margin-top: -9%; width: 92%; margin-left: auto; margin-right: auto; align-self: auto; text-align: left; }
   .hero__subtitle-inline { font-size: clamp(1.25rem, 2.6vw, 1.7rem); line-height: 1.3; letter-spacing: -0.03em; white-space: normal; text-align: left; align-self: auto; width: 92%; margin: 0.7rem auto 0; padding: 0; }
   .hero__badge { font-size: 0.78rem; padding: 5px 13px; position: static; transform: none; margin: 0; align-self: center; }
   .hero__badge-dot { width: 7px; height: 7px; }
@@ -5693,7 +5708,8 @@ details[open] > .cart-drawer__checkout-title::after {
   .hero-carousel__slide { position: absolute !important; inset: 0 !important; opacity: 0; transition: opacity 1.4s ease; transform: none !important; }
   .hero-carousel__slide[data-active] { position: absolute !important; opacity: 1 !important; z-index: 2; }
   .hero-carousel__slide img { width: 100% !important; height: 100% !important; object-fit: cover !important; object-position: 30% center; display: block; position: relative; z-index: 1; }
-  .hero-carousel { aspect-ratio: 16 / 11; }
+  .hero-carousel { aspect-ratio: auto; align-self: stretch; height: 100%; }
+  .hero-carousel .hero-carousel__scroller { aspect-ratio: auto !important; height: 100% !important; width: 100% !important; }
   /* Slide 2 — transparent PNG: locked to center, fade smoothly over slide 1 */
   .hero-carousel__slide--transparent {
     transform: none !important;
@@ -5724,7 +5740,7 @@ details[open] > .cart-drawer__checkout-title::after {
   .hero-bento { display: none; }
 
   /* Categories full-width row 3 — 2 per row makes a 2nd row of bigger cards */
-  .hero-categories { grid-column: 1 / -1; grid-row: 3; grid-template-columns: repeat(2, 1fr); gap: 8px; padding-top: 0; margin: 0; width: 100%; }
+  .hero-categories { grid-column: 1 / -1; grid-row: 3; grid-template-columns: repeat(2, 1fr); gap: 2px; padding-top: 0; margin: 2px 0 0; width: 100%; }
   .hero-categories .category-card__label {
     font-size: 1.05rem;
     bottom: 0.85rem;
@@ -5745,13 +5761,13 @@ details[open] > .cart-drawer__checkout-title::after {
   .hero__middle-section { padding-bottom: 0; }
   /* Mobile frame: horizontal inset matches the site-header button inset (0.52rem) so the video and cards align with the hamburger; logo cluster is edge-to-edge since the logo image has its own built-in white sides */
   .hero__logo-group { padding: 6px 0.52rem 4px; display: flex; flex-direction: column; gap: 0; }
-  .hero__logo-group .hero-categories { margin-top: 0.52rem !important; }
+  .hero__logo-group .hero-categories { margin-top: 6px !important; }
   .hero__middle-section { padding: 0 !important; margin: 0 -0.52rem !important; }
   .hero__logo-stack { margin-top: 0 !important; }
-  .hero-carousel { border-radius: 0; padding: 0; background: #ffffff; margin: 0; }
+  .hero-carousel { border-radius: 0; padding: 0; background: #ffffff; margin: -2px 0 0; }
   .hero-carousel::after { display: none; }
   .hero-carousel__video { border-radius: 0 !important; }
-  .hero-categories { padding: 0; margin: 0 !important; width: 100% !important; background: #ffffff; gap: 0.52rem !important; }
+  .hero-categories { padding: 0; margin: 0 !important; width: 100% !important; background: #ffffff; gap: 2px !important; }
   .hero-categories .category-card { border-radius: 0; }
   .hero-bento-carousel__slide--van img {
     object-fit: cover !important;

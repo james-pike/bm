@@ -2,6 +2,7 @@ import { component$, useContext } from "@builder.io/qwik";
 import type { DocumentHead } from "@builder.io/qwik-city";
 import { LocaleContext, t } from "../i18n";
 import { allProducts } from "./apparel/products";
+import { LoginTypeContext } from "./layout";
 
 const SKU_IMG_OVERRIDE: Record<string, string> = {
   "BM-1": "/paxton-black.png",
@@ -25,6 +26,7 @@ const CATEGORY_FALLBACK_IMG: Record<string, string> = {
 
 export default component$(() => {
   const locale = useContext(LocaleContext);
+  const loginType = useContext(LoginTypeContext);
 
   return (
     <div class="home-page">
@@ -37,15 +39,10 @@ export default component$(() => {
                 <div class="hero__top-row">
                 </div>
                 <div class="hero__logo-stack">
-                  {/* <div class="hero__badge-row">
-                    <div class="hero__badge">
-                      <span class="hero__badge-dot" />
-                      {t("hero.badge", locale.value)}
-                    </div>
-                  </div> */}
                   <img src="/BlackMcDonald_Logo.webp" alt="Black & McDonald" class="hero__title-img" width="1633" height="844" loading="eager" decoding="sync" />
                   <div class="hero__apparel-row">
                     <span class="hero__title-apparel">{t("logo.apparel", locale.value)}</span>
+                    <img src="/good-catch-logo-en.jpg" alt="Good Catch Awards" class="hero__patch-img" width="200" height="200" loading="eager" decoding="sync" />
                   </div>
                 </div>
               </div>
@@ -66,12 +63,21 @@ export default component$(() => {
                 </div>
               </div>
               <div class="hero-categories">
-                {allProducts.map((p) => (
-                  <a key={p.sku} href={`/apparel/${p.sku}/`} class="category-card">
-                    <img src={SKU_IMG_OVERRIDE[p.sku] || p.img || CATEGORY_FALLBACK_IMG[p.category] || "/truck2.webp"} alt={p.name} width="400" height="300" loading="eager" decoding="sync" style={SKU_OBJECT_POSITION[p.sku] ? { objectPosition: SKU_OBJECT_POSITION[p.sku] } : undefined} />
-                    <span class="category-card__label">{p.name}</span>
-                  </a>
-                ))}
+                {allProducts.map((p) => {
+                  const img = <img src={SKU_IMG_OVERRIDE[p.sku] || p.img || CATEGORY_FALLBACK_IMG[p.category] || "/truck2.webp"} alt={p.name} width="400" height="300" loading="eager" decoding="sync" style={SKU_OBJECT_POSITION[p.sku] ? { objectPosition: SKU_OBJECT_POSITION[p.sku] } : undefined} />;
+                  const label = <span class="category-card__label">{p.name}</span>;
+                  return loginType.value === "electrical" ? (
+                    <a key={p.sku} href={`/apparel/${p.sku}/`} class="category-card">
+                      {img}
+                      {label}
+                    </a>
+                  ) : (
+                    <div key={p.sku} class="category-card category-card--visual">
+                      {img}
+                      {label}
+                    </div>
+                  );
+                })}
               </div>
             </div>
           </div>

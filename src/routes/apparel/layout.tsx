@@ -4,8 +4,9 @@ import { ProductCatalog } from "../../components/product-catalog/product-catalog
 
 export const useApparelAuthGuard = routeLoader$(({ cookie, redirect }) => {
   const val = cookie.get("ce_auth")?.value;
-  if (val !== "authenticated" && val !== "clothing" && val !== "tech") {
-    throw redirect(302, "/?login=1");
+  // Only electrical users can access /apparel routes; everyone else is sent home.
+  if (val !== "electrical") {
+    throw redirect(302, "/");
   }
 });
 

@@ -26,11 +26,11 @@ export const useLocaleLoader = routeLoader$(({ cookie }) => {
   return (saved === "fr" ? "fr" : "en") as Locale;
 });
 
-type LoginType = "clothing" | "tech" | null;
+type LoginType = "clothing" | "tech" | "electrical" | null;
 
 function getLoginType(cookie: Cookie): LoginType {
   const val = cookie.get(AUTH_COOKIE)?.value;
-  if (val === "clothing" || val === "tech") return val;
+  if (val === "clothing" || val === "tech" || val === "electrical") return val;
   if (val === "authenticated") return "clothing"; // backward compat
   return null;
 }
@@ -54,8 +54,22 @@ export const useLogin = routeAction$(
     const expectedPass = env.get("APP_PASSWORD") || env.get("VITE_APP_PASSWORD");
     const techUser = env.get("TECH_USERNAME") || env.get("VITE_TECH_USERNAME") || "tech";
     const techPass = env.get("TECH_PASSWORD") || env.get("VITE_TECH_PASSWORD");
+    const electricalUser = env.get("ELECTRICAL_USERNAME") || env.get("VITE_ELECTRICAL_USERNAME") || "electrical";
+    const electricalPass = env.get("ELECTRICAL_PASSWORD") || env.get("VITE_ELECTRICAL_PASSWORD");
 
-    // Check Tech login first
+    // Check Electrical login
+    if (electricalPass && username === electricalUser && password === electricalPass) {
+      cookie.set(AUTH_COOKIE, "electrical", {
+        path: "/",
+        httpOnly: true,
+        secure: true,
+        sameSite: "lax",
+        maxAge: 60 * 60 * 24 * 3,
+      });
+      return { success: true };
+    }
+
+    // Check Tech login
     if (techPass && username === techUser && password === techPass) {
       cookie.set(AUTH_COOKIE, "tech", {
         path: "/",
@@ -614,7 +628,7 @@ export default component$(() => {
       )}
 
       {(auth.value.loggedIn || (loginAction.value && !loginAction.value.failed)) && <>
-      <header class={`site-header site-header--white ${cartOpen.value ? "site-header--cart-open" : ""}`}>
+      <header class={`site-header site-header--white ${cartOpen.value ? "site-header--cart-open" : ""} ${loc.url.pathname === "/" && !cartOpen.value && !headerScrolled.value ? "site-header--logo-hidden" : ""}`}>
         <div class="site-header__inner">
           <Link href="/" class="site-header__logo">
             <img
@@ -628,8 +642,10 @@ export default component$(() => {
             />
           </Link>
           <nav class="site-header__categories">
-            <Link href="/" class={loc.url.pathname === "/" ? "active" : ""}>{t("nav.home", locale.value)}</Link>
-            <Link href="/apparel/" class={loc.url.pathname.startsWith("/apparel") ? "active" : ""}>{loginType.value === "tech" ? t("cat.Work Wear", locale.value) : t("nav.apparel", locale.value)}</Link>
+            {loginType.value === "electrical" && <>
+              <Link href="/" class={loc.url.pathname === "/" ? "active" : ""}>{t("nav.home", locale.value)}</Link>
+              <Link href="/apparel/" class={loc.url.pathname.startsWith("/apparel") ? "active" : ""}>{t("nav.apparel", locale.value)}</Link>
+            </>}
           </nav>
           <nav class="site-header__nav">
             <button class={`locale-btn ${cartOpen.value ? "locale-btn--cart-open" : ""}`} onClick$={toggleLocale} aria-label="Toggle language">
@@ -679,11 +695,11 @@ export default component$(() => {
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
                 {t("nav.home", locale.value)}
               </a>
-              <a href={loginType.value === "tech" ? "/apparel/" : "/apparel/#work-wear"} class={`nav-drawer__link ${loc.url.pathname.startsWith("/apparel") ? "active" : ""}`} onClick$={() => { menuOpen.value = false; window.dispatchEvent(new CustomEvent("select-category", { detail: "Work Wear" })); }}>
+              {loginType.value === "electrical" && <>
+              <a href="/apparel/#work-wear" class={`nav-drawer__link ${loc.url.pathname.startsWith("/apparel") ? "active" : ""}`} onClick$={() => { menuOpen.value = false; window.dispatchEvent(new CustomEvent("select-category", { detail: "Work Wear" })); }}>
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4M16 2v4M4 6h16v14a2 2 0 01-2 2H6a2 2 0 01-2-2V6z"/><path d="M4 6l-2 4v2h4V8"/><path d="M20 6l2 4v2h-4V8"/></svg>
                 {t("cat.Work Wear", locale.value)}
               </a>
-              {loginType.value !== "tech" && <>
               <a href="/apparel/#jackets" class="nav-drawer__link" onClick$={() => { menuOpen.value = false; window.dispatchEvent(new CustomEvent("select-category", { detail: "Jackets" })); }}>
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2l5 6v12a2 2 0 01-2 2h-3V12h-6v10H6a2 2 0 01-2-2V8l5-6"/><path d="M9 2a3 3 0 006 0"/><line x1="12" y1="12" x2="12" y2="22"/></svg>
                 {t("cat.Jackets", locale.value)}
