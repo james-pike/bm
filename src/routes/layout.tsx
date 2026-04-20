@@ -19,6 +19,26 @@ import type { Locale, TranslationKey } from "../i18n";
 const AUTH_COOKIE = "ce_auth"; // v2: orders persist to db
 const LOCALE_COOKIE = "ce_locale";
 
+const CART_SKU_IMG: Record<string, string> = {
+  "BM-1": "/paxton-black.png",
+  "BM-2": "/paxton-grey.png",
+  "BM-3": "/gilliamjacket-black.png",
+  "BM-4": "/gilliam-black.png",
+  "BM-5": "/duck-black.png",
+  "BM-6": "/duckgrey.png",
+  "BM-7": "/cooler-black.png",
+  "BM-8": "/backpack-black.png",
+};
+function cartItemImg(sku: string | undefined, existing: string | undefined): string {
+  if (sku && CART_SKU_IMG[sku]) return CART_SKU_IMG[sku];
+  if (existing) return existing;
+  return "/truck2.webp";
+}
+function stripColorSuffix(name: string): string {
+  const i = name.lastIndexOf(" - ");
+  return i > -1 ? name.slice(0, i) : name;
+}
+
 export const LoginTypeContext = createContextId<Signal<string>>("loginType");
 
 export const useLocaleLoader = routeLoader$(({ cookie }) => {
@@ -746,12 +766,14 @@ export default component$(() => {
             <a href="/apparel/#accessories" onClick$={(e) => { if (loc.url.pathname.startsWith("/apparel")) { e.preventDefault(); } window.dispatchEvent(new CustomEvent("select-category", { detail: "Accessories" })); const headerH = window.innerWidth <= 900 ? 49 : 58; const grid = document.querySelector('.home-catalog .apparel-grid'); if (grid) { const top = grid.getBoundingClientRect().top + window.scrollY - headerH - 8; window.scrollTo({ top, behavior: 'instant' }); } }}>{t("cat.Accessories", locale.value)}</a>
           </nav>
           ) : (
+          !loc.url.pathname.startsWith("/print") && (
           <nav class="site-footer__links site-footer__links--print">
             <Link href="/print/">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
               Download / Print Catalog
             </Link>
           </nav>
+          )
           )}
           <div class="site-footer__contact site-footer__contact--stacked">
             <span class="site-footer__contact-label">Contact</span>
@@ -799,9 +821,9 @@ export default component$(() => {
                         <tr key={`${item.name}-${item.size}-${item.color}-${item.quantity}`}>
                           <td class="cart-table__product">
                             <div class="cart-table__product-row">
-                            <img src={item.img} alt={item.name} width="40" height="30" class="cart-table__img" />
+                            <img src={cartItemImg(item.sku, item.img)} alt={item.name} width="40" height="30" class="cart-table__img" />
                             <div>
-                            <Link href={item.sku ? `/apparel/${item.sku}/` : "/apparel/"} class="cart-table__name-link">{item.name}</Link>
+                            <Link href={item.sku ? `/apparel/${item.sku}/` : "/apparel/"} class="cart-table__name-link">{stripColorSuffix(item.name)}</Link>
                             <div class="cart-table__meta">
                               <span>{item.color ? `${colorName(item.color, locale.value)} / ` : ""}{item.size}{item.waist ? ` / W${item.waist} L${item.length}` : ""}</span>
                             </div>
@@ -848,7 +870,7 @@ export default component$(() => {
                       <div class="cart-drawer__summary-list">
                         {cart.items.map((item) => (
                           <div key={`${item.name}-${item.size}`} class="cart-drawer__summary-item">
-                            <span>{item.quantity}x {item.name}</span>
+                            <span>{item.quantity}x {stripColorSuffix(item.name)}</span>
 
                           </div>
                         ))}

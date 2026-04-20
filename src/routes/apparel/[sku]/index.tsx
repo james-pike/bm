@@ -123,7 +123,10 @@ export default component$(() => {
       localStorage.setItem("ce_cart", JSON.stringify(items));
       window.dispatchEvent(new CustomEvent("cart-updated"));
     } catch (err) { console.error("addToCart error:", err); }
-    addedInfo.value = selectedColor.value ? `${p.name} — ${colorName(selectedColor.value, "en")} / ${sizeVal}` : `${p.name} — ${sizeVal}`;
+    {
+      const baseName = p.name.replace(/\s*-\s*[A-Za-z ]+$/, "");
+      addedInfo.value = selectedColor.value ? `${baseName} — ${colorName(selectedColor.value, "en")} / ${sizeVal}` : `${baseName} — ${sizeVal}`;
+    }
     added.value = true;
     selectedQty.value = 1;
     setTimeout(() => { added.value = false; }, 3800);
