@@ -1897,11 +1897,28 @@ img { max-width: 100%; display: block; }
   color: #c44545 !important;
 }
 .nav-drawer__logout svg { stroke: #c44545; }
-.nav-drawer__logout:hover {
-  background: rgba(220,38,38,0.10) !important;
+@media (hover: hover) {
+  .nav-drawer__logout:hover {
+    background: rgba(220,38,38,0.10) !important;
+  }
+  .nav-drawer__locale:hover {
+    background: var(--ce-gray-200);
+  }
 }
-.nav-drawer__locale:hover {
-  background: var(--ce-gray-200);
+.nav-drawer__locale:focus,
+.nav-drawer__locale:active,
+.nav-drawer__logout:focus,
+.nav-drawer__logout:active {
+  outline: none;
+  background: var(--ce-white);
+}
+.nav-drawer__logout:focus,
+.nav-drawer__logout:active {
+  background: var(--ce-white) !important;
+}
+.nav-drawer__locale,
+.nav-drawer__logout {
+  -webkit-tap-highlight-color: transparent;
 }
 
 .btn--green {
@@ -6082,11 +6099,15 @@ details[open] > .cart-drawer__checkout-title::after {
   transition: background 0.15s ease;
 }
 .print-page__btn:hover { background: var(--ce-green-dark); border-color: var(--ce-green-dark); }
-.print-page__sheet {
-  width: min(8.5in, 100%);
+.print-page__sheet-wrap {
+  width: 100%;
   max-width: 8.5in;
-  aspect-ratio: 8.5 / 11;
-  min-height: auto;
+  display: flex;
+  justify-content: center;
+}
+.print-page__sheet {
+  width: 8.5in;
+  height: 11in;
   background: #ffffff;
   box-shadow: 0 4px 24px rgba(0,0,0,0.12), 0 1px 4px rgba(0,0,0,0.08);
   padding: 0.6in 0.5in 0.5in;
@@ -6096,18 +6117,24 @@ details[open] > .cart-drawer__checkout-title::after {
   font-family: var(--font-sans);
 }
 @media (max-width: 900px) {
-  .print-page__sheet {
-    width: 8.5in;
-    min-width: 8.5in;
-    height: 11in;
-    aspect-ratio: auto;
-    padding: 0.6in 0.5in 0.5in;
-    transform: scale(calc((100vw - 1rem) / (8.5 * 96)));
-    transform-origin: top center;
-    margin-bottom: calc(-11in * (1 - (100vw - 1rem) / (8.5 * 96)));
-    flex-shrink: 0;
-  }
   .print-page { overflow-x: hidden; padding: 0.5rem; }
+  .print-page__sheet-wrap {
+    width: 100%;
+    max-width: 100%;
+    aspect-ratio: 8.5 / 11;
+    position: relative;
+    overflow: hidden;
+    display: block;
+  }
+  .print-page__sheet {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 8.5in;
+    height: 11in;
+    transform-origin: top left;
+    transform: scale(calc((100vw - 1rem) / (8.5 * 96)));
+  }
 }
 .print-page__header {
   display: flex;

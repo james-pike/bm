@@ -27,6 +27,7 @@ export default component$(() => {
         <h1 class="print-page__heading">Good Catch Awards — Catalog</h1>
         <button class="print-page__btn" onClick$={onPrint}>Download / Print</button>
       </div>
+      <div class="print-page__sheet-wrap">
       <div class="print-page__sheet">
         <header class="print-page__header">
           <div class="print-page__cluster">
@@ -66,6 +67,7 @@ export default component$(() => {
           <span>Black &amp; McDonald — Good Catch Awards</span>
           <span>{new Date().getFullYear()}</span>
         </footer>
+      </div>
       </div>
     </div>
   );
