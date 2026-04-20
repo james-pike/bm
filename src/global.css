@@ -6283,10 +6283,42 @@ details[open] > .cart-drawer__checkout-title::after {
 
 @page { size: Letter; margin: 0; }
 @media print {
-  html, body { background: #ffffff; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  html, body {
+    background: #ffffff;
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 8.5in !important;
+    height: 11in !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
   *, *::before, *::after { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
   .site-header, .site-footer, .nav-drawer-overlay, .cart-drawer, .print-page__toolbar { display: none !important; }
-  .print-page { background: #ffffff; padding: 0; min-height: auto; gap: 0; }
-  .print-page__sheet { box-shadow: none; width: 8.5in; min-height: 11in; padding: 0.5in; }
+  .print-page { background: #ffffff; padding: 0 !important; min-height: auto !important; gap: 0; display: block !important; overflow: hidden !important; }
+  .print-page__sheet-wrap {
+    position: static !important;
+    width: 8.5in !important;
+    max-width: 8.5in !important;
+    height: 11in !important;
+    aspect-ratio: auto !important;
+    overflow: hidden !important;
+    display: block !important;
+    margin: 0 !important;
+  }
+  .print-page__sheet {
+    position: static !important;
+    transform: none !important;
+    box-shadow: none !important;
+    width: 8.5in !important;
+    height: 11in !important;
+    min-height: 0 !important;
+    max-height: 11in !important;
+    padding: 0.5in !important;
+    margin: 0 !important;
+    overflow: hidden !important;
+    page-break-after: avoid !important;
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
   .print-page__cluster-text { color: #ffffff !important; text-shadow: none !important; }
 }
