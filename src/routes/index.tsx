@@ -38,7 +38,7 @@ const CATEGORY_FALLBACK_IMG: Record<string, string> = {
 export default component$(() => {
   const locale = useContext(LocaleContext);
   const loginType = useContext(LoginTypeContext);
-  const cols = useSignal<1 | 2>(2);
+  const compact = useSignal<boolean>(false);
 
   return (
     <div class="home-page">
@@ -99,17 +99,17 @@ export default component$(() => {
                     <button
                       type="button"
                       class="hero__products-tab-toggle"
-                      aria-label={cols.value === 2 ? "Switch to 1 column" : "Switch to 2 columns"}
-                      onClick$={() => (cols.value = cols.value === 2 ? 1 : 2)}
+                      aria-label={compact.value ? "Switch to wider view" : "Switch to narrower view"}
+                      onClick$={() => (compact.value = !compact.value)}
                     >
-                      {cols.value === 2 ? (
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="1"/><line x1="4" y1="12" x2="20" y2="12"/></svg>
-                      ) : (
+                      {compact.value ? (
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="7" height="16" rx="1"/><rect x="13" y="4" width="7" height="16" rx="1"/></svg>
+                      ) : (
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="1"/><line x1="4" y1="12" x2="20" y2="12"/></svg>
                       )}
                     </button>
                   </div>
-                  <div class={`hero-categories hero-categories--cols-${cols.value}`}>
+                  <div class={`hero-categories ${compact.value ? "hero-categories--compact" : "hero-categories--wide"}`}>
                     {allProducts.map((p) => {
                       const imgStyle: Record<string, string> = {};
                       if (SKU_OBJECT_POSITION[p.sku]) imgStyle.objectPosition = SKU_OBJECT_POSITION[p.sku];

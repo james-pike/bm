@@ -24,7 +24,7 @@ export default component$(() => {
   return (
     <div class="print-page">
       <div class="print-page__toolbar">
-        <h1 class="print-page__heading">Good Catch Awards — Catalog</h1>
+        <h1 class="print-page__heading">Catalog</h1>
         <button class="print-page__btn" onClick$={onPrint}>Download / Print</button>
       </div>
       <div class="print-page__sheet-wrap">
@@ -54,7 +54,7 @@ export default component$(() => {
                 <div class="print-card__body">
                   <h3 class="print-card__name">{baseName}</h3>
                   <div class="print-card__meta">
-                    {color && <span class="print-card__cat">Color: {color}</span>}
+                    {color && <span class={`print-card__cat ${/grey|gray/i.test(color) ? "print-card__cat--grey" : ""}`}>Color: {color}</span>}
                     <span class="print-card__sizes">Sizes: {p.sizes}</span>
                   </div>
                   <p class="print-card__material">{p.material}</p>
