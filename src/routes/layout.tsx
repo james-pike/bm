@@ -15,6 +15,7 @@ import { Resend } from "resend";
 import { createClient } from "@libsql/client";
 import { LocaleContext, t } from "../i18n";
 import type { Locale, TranslationKey } from "../i18n";
+import { colorName } from "./apparel/products";
 
 const AUTH_COOKIE = "ce_auth"; // v2: orders persist to db
 const LOCALE_COOKIE = "ce_locale";
@@ -604,11 +605,12 @@ export default component$(() => {
             )}
             <div class="login-modal__header">
               <img
-                src="/bm-logo.png"
-                alt="Black & McDonald Apparel"
+                src="/good-catch-logo-en.jpg"
+                alt="Good Catch Awards"
                 class="login-modal__logo"
+                width="200"
+                height="200"
               />
-              <h2 class="login-modal__title">{t("login.title", locale.value)}</h2>
               <p class="login-modal__subtitle">
                 {t("login.subtitle", locale.value)}
               </p>

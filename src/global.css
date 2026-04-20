@@ -205,7 +205,7 @@ img { max-width: 100%; display: block; }
   background-color: #ffffff;
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
-  border-bottom: 4px solid #ffffff;
+  border-bottom: 2px solid #ffffff;
   height: 58px;
   margin-bottom: -1px;
   transform: translateZ(0);
@@ -3296,14 +3296,15 @@ body:has(.apparel-page) .site-header .cart-btn svg { stroke: #ffffff; }
 }
 /* Logout button in site-header gets a subtle green tint to match the other accented buttons */
 .site-header .logout-btn {
-  border: 1px solid rgba(0,0,0,0.2);
-  background: rgba(0,0,0,0.05);
-  color: #1a1a18;
-  box-shadow: inset 0 1px 4px rgba(0,0,0,0.06), inset 0 0 6px rgba(0,0,0,0.03);
+  border: 1px solid #000000;
+  background: #000000;
+  color: #ffffff;
+  box-shadow: inset 0 1px 4px rgba(0,0,0,0.5), inset 0 0 6px rgba(0,0,0,0.3);
 }
-.site-header .logout-btn svg { stroke: #1a1a18; }
+.site-header .logout-btn svg { stroke: #ffffff; }
 @media (hover: hover) {
-  .site-header .logout-btn:hover { border-color: #1a1a18; background: rgba(0,0,0,0.1); }
+  .site-header .logout-btn:hover { border-color: #1a1a1a; background: #1a1a1a; color: #ffffff; }
+  .site-header .logout-btn:hover svg { stroke: #ffffff; }
 }
 .cart-btn {
   position: relative;
@@ -4928,26 +4929,31 @@ details[open] > .cart-drawer__checkout-title::after {
     height: 8px;
   }
   .hero__middle-section {
+    position: relative;
     grid-column: 1;
     grid-row: 2;
-    padding: 0;
+    padding: 0 0 4vw;
     margin: 0;
-    border: 1px solid rgba(0,0,0,0.08);
-    border-radius: 8px;
-    background:
-      radial-gradient(ellipse 80% 70% at 60% 55%, rgba(255,245,230,0.06) 0%, transparent 70%),
-      linear-gradient(135deg, rgba(0,0,0,0.06) 0%, transparent 40%, rgba(255,245,225,0.04) 100%);
-    box-shadow:
-      inset 0 2px 6px rgba(0,0,0,0.15),
-      inset 0 1px 2px rgba(0,0,0,0.1),
-      0 1px 0 rgba(255,255,255,0.05);
+    border: none;
+    border-radius: 0;
+    background: #ffffff;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-self: start;
     aspect-ratio: auto;
-    overflow: hidden;
+    overflow: visible;
     gap: 0;
+  }
+  .hero__middle-section::after {
+    content: '';
+    position: absolute;
+    left: calc(0.6rem - 2px);
+    right: calc(0.6rem - 2px);
+    bottom: 0;
+    height: calc(4vw - 2px);
+    background: #9a9a9a;
+    pointer-events: none;
   }
   .hero__title-icon {
     width: 28%;
@@ -5140,10 +5146,10 @@ details[open] > .cart-drawer__checkout-title::after {
   .site-header--hero-hidden.site-header--hero-visible .cart-btn.cart-btn--active:hover { background: var(--ce-green-dark); border-color: var(--ce-green-dark); color: #ffffff; }
   .site-header--hero-hidden.site-header--hero-visible .cart-btn.cart-btn--active svg { stroke: #ffffff; }
   .site-header--hero-hidden.site-header--hero-visible .cart-btn.cart-btn--active:hover svg { stroke: #ffffff; }
-  .site-header--hero-hidden.site-header--hero-visible .logout-btn { background: rgba(0,0,0,0.05); border: 1px solid rgba(0,0,0,0.2); border-radius: 4px; color: #1a1a18; box-shadow: inset 0 1px 4px rgba(0,0,0,0.06), inset 0 0 6px rgba(0,0,0,0.03); }
-  .site-header--hero-hidden.site-header--hero-visible .logout-btn:hover { color: #000; background: rgba(0,0,0,0.1); border-color: #1a1a18; }
-  .site-header--hero-hidden.site-header--hero-visible .logout-btn svg { stroke: #1a1a18; }
-  .site-header--hero-hidden.site-header--hero-visible .logout-btn:hover svg { stroke: #000; }
+  .site-header--hero-hidden.site-header--hero-visible .logout-btn { background: #000000; border: 1px solid #000000; border-radius: 2px; color: #ffffff; box-shadow: inset 0 1px 4px rgba(0,0,0,0.5), inset 0 0 6px rgba(0,0,0,0.3); }
+  .site-header--hero-hidden.site-header--hero-visible .logout-btn:hover { color: #ffffff; background: #1a1a1a; border-color: #1a1a1a; }
+  .site-header--hero-hidden.site-header--hero-visible .logout-btn svg { stroke: #ffffff; }
+  .site-header--hero-hidden.site-header--hero-visible .logout-btn:hover svg { stroke: #ffffff; }
   .site-header--hero-hidden.site-header--hero-visible .site-header__categories a { color: var(--ce-gray-700); }
   .site-header--hero-hidden.site-header--hero-visible .site-header__categories a.active { color: var(--ce-green); }
   .home-catalog__inner {
@@ -5514,7 +5520,8 @@ details[open] > .cart-drawer__checkout-title::after {
   html, body { margin: 0; padding: 0; }
   .site-header { height: 58px; border-bottom: none !important; box-shadow: none; }
   /* Apparel routes get the gray bottom line under the site header */
-  body:has(.apparel-page) .site-header { box-shadow: 0 2px 0 var(--ce-gray-200); }
+  body:has(.apparel-page) .site-header { box-shadow: none; }
+  .site-header { margin-bottom: -4px; }
   .site-header__inner { height: 58px; padding: 0 1rem; }
   .site-header__logo-img { height: 50px; }
   .site-header__logo-text { height: 25px; }
@@ -5562,7 +5569,7 @@ details[open] > .cart-drawer__checkout-title::after {
     grid-template-rows: auto auto auto auto;
     column-gap: 2px;
     row-gap: 2px;
-    padding: 2px 6px 18px;
+    padding: 0 6px 18px;
     align-items: stretch;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
@@ -5625,14 +5632,12 @@ details[open] > .cart-drawer__checkout-title::after {
 
   /* Site-header on tablet — match the in-card hero header look:
      2 nav links (Home, Apparel) + locale + cart buttons in recessed dark style */
-  .site-header .locale-btn,
-  .site-header .cart-btn,
   .site-header .logout-btn {
-    background: linear-gradient(135deg, rgba(0,0,0,0.08) 0%, transparent 40%, rgba(255,245,225,0.03) 100%) !important;
-    border: 1px solid rgba(0,0,0,0.15) !important;
+    background: #000000 !important;
+    border: 1px solid #000000 !important;
     border-radius: 2px !important;
-    color: rgba(0,0,0,0.7) !important;
-    box-shadow: inset 0 2px 6px rgba(0,0,0,0.12), inset 0 1px 2px rgba(0,0,0,0.08) !important;
+    color: #ffffff !important;
+    box-shadow: inset 0 1px 4px rgba(0,0,0,0.5), inset 0 0 6px rgba(0,0,0,0.3) !important;
     height: 50px;
     padding: 0 14px;
   }
@@ -5653,14 +5658,14 @@ details[open] > .cart-drawer__checkout-title::after {
   }
   .site-header:not(.site-header--hero-hidden) .logout-btn,
   .site-header.site-header--hero-visible .logout-btn {
-    background: rgba(0,0,0,0.05) !important;
-    border-color: rgba(0,0,0,0.2) !important;
-    color: #1a1a18 !important;
-    box-shadow: inset 0 1px 4px rgba(0,0,0,0.06), inset 0 0 6px rgba(0,0,0,0.03) !important;
+    background: #000000 !important;
+    border-color: #000000 !important;
+    color: #ffffff !important;
+    box-shadow: inset 0 1px 4px rgba(0,0,0,0.5), inset 0 0 6px rgba(0,0,0,0.3) !important;
   }
   .site-header:not(.site-header--hero-hidden) .logout-btn svg,
   .site-header.site-header--hero-visible .logout-btn svg {
-    stroke: #1a1a18 !important;
+    stroke: #ffffff !important;
   }
   .site-header .hamburger-btn { display: none !important; }
   /* Show "All" tab on iPad/tablet apparel header (overrides mobile hide rule) */
