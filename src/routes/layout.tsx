@@ -15,7 +15,6 @@ import { Resend } from "resend";
 import { createClient } from "@libsql/client";
 import { LocaleContext, t } from "../i18n";
 import type { Locale, TranslationKey } from "../i18n";
-import { colorName } from "./apparel/products";
 
 const AUTH_COOKIE = "ce_auth"; // v2: orders persist to db
 const LOCALE_COOKIE = "ce_locale";

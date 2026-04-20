@@ -3,7 +3,7 @@ import { Carousel } from "@qwik-ui/headless";
 import { useLocation, useNavigate } from "@builder.io/qwik-city";
 import type { DocumentHead } from "@builder.io/qwik-city";
 import { LocaleContext, t } from "../../../i18n";
-import { allProducts, colorName, categoryLabel } from "../products";
+import { allProducts, colorName } from "../products";
 import { expandSizes } from "../utils";
 import { LoginTypeContext } from "../../layout";
 
