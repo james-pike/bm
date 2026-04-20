@@ -1,4 +1,4 @@
-import { component$, useContext } from "@builder.io/qwik";
+import { component$, useContext, useSignal } from "@builder.io/qwik";
 import type { DocumentHead } from "@builder.io/qwik-city";
 import { LocaleContext, t } from "../i18n";
 import { allProducts } from "./apparel/products";
@@ -16,11 +16,11 @@ const SKU_IMG_OVERRIDE: Record<string, string> = {
 };
 
 const SKU_OBJECT_POSITION: Record<string, string> = {
-  "BM-1": "center 80%",
-  "BM-2": "center 80%",
-  "BM-4": "center 35%",
-  "BM-5": "center 35%",
-  "BM-6": "center 35%",
+  "BM-1": "center 96%",
+  "BM-2": "center 96%",
+  "BM-4": "center 60%",
+  "BM-5": "center 60%",
+  "BM-6": "center 60%",
 };
 
 const SKU_CONTAIN: Record<string, boolean> = {
@@ -38,6 +38,7 @@ const CATEGORY_FALLBACK_IMG: Record<string, string> = {
 export default component$(() => {
   const locale = useContext(LocaleContext);
   const loginType = useContext(LoginTypeContext);
+  const cols = useSignal<1 | 2>(2);
 
   return (
     <div class="home-page">
@@ -92,19 +93,36 @@ export default component$(() => {
                   </div>
                 </div>
               ) : (
-                <div class="hero-categories">
-                  {allProducts.map((p) => {
-                    const imgStyle: Record<string, string> = {};
-                    if (SKU_OBJECT_POSITION[p.sku]) imgStyle.objectPosition = SKU_OBJECT_POSITION[p.sku];
-                    if (SKU_CONTAIN[p.sku]) { imgStyle.objectFit = "contain"; imgStyle.background = "#ffffff"; }
-                    return (
-                      <a key={p.sku} href={`/apparel/${p.sku}/`} class="category-card">
-                        <img src={SKU_IMG_OVERRIDE[p.sku] || p.img || CATEGORY_FALLBACK_IMG[p.category] || "/truck2.webp"} alt={p.name} width="400" height="300" loading="eager" decoding="sync" style={Object.keys(imgStyle).length ? imgStyle : undefined} />
-                        <span class="category-card__label">{p.name}</span>
-                      </a>
-                    );
-                  })}
-                </div>
+                <>
+                  <div class="hero__products-tab">
+                    <span class="hero__products-tab-label">Good Catch Apparel</span>
+                    <button
+                      type="button"
+                      class="hero__products-tab-toggle"
+                      aria-label={cols.value === 2 ? "Switch to 1 column" : "Switch to 2 columns"}
+                      onClick$={() => (cols.value = cols.value === 2 ? 1 : 2)}
+                    >
+                      {cols.value === 2 ? (
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="1"/><line x1="4" y1="12" x2="20" y2="12"/></svg>
+                      ) : (
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="7" height="16" rx="1"/><rect x="13" y="4" width="7" height="16" rx="1"/></svg>
+                      )}
+                    </button>
+                  </div>
+                  <div class={`hero-categories hero-categories--cols-${cols.value}`}>
+                    {allProducts.map((p) => {
+                      const imgStyle: Record<string, string> = {};
+                      if (SKU_OBJECT_POSITION[p.sku]) imgStyle.objectPosition = SKU_OBJECT_POSITION[p.sku];
+                      if (SKU_CONTAIN[p.sku]) { imgStyle.objectFit = "contain"; imgStyle.background = "#ffffff"; }
+                      return (
+                        <a key={p.sku} href={`/apparel/${p.sku}/`} class="category-card">
+                          <img src={SKU_IMG_OVERRIDE[p.sku] || p.img || CATEGORY_FALLBACK_IMG[p.category] || "/truck2.webp"} alt={p.name} width="400" height="300" loading="eager" decoding="sync" style={Object.keys(imgStyle).length ? imgStyle : undefined} />
+                          <span class="category-card__label">{p.name}</span>
+                        </a>
+                      );
+                    })}
+                  </div>
+                </>
               )}
             </div>
             <div class="hero__print-cta">
