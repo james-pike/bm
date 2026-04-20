@@ -41,21 +41,26 @@ export default component$(() => {
           </div>
         </header>
         <div class="print-page__grid">
-          {allProducts.map((p) => (
-            <article key={p.sku} class="print-card">
-              <div class="print-card__image">
-                <img src={SKU_IMG_OVERRIDE[p.sku] || p.img || CATEGORY_FALLBACK_IMG[p.category] || "/truck2.webp"} alt={p.name} />
-              </div>
-              <div class="print-card__body">
-                <h3 class="print-card__name">{p.name}</h3>
-                <div class="print-card__meta">
-                  <span class="print-card__cat">{p.category}</span>
-                  <span class="print-card__sizes">Sizes: {p.sizes}</span>
+          {allProducts.map((p) => {
+            const lastDash = p.name.lastIndexOf(" - ");
+            const baseName = lastDash > -1 ? p.name.slice(0, lastDash) : p.name;
+            const color = lastDash > -1 ? p.name.slice(lastDash + 3) : "";
+            return (
+              <article key={p.sku} class="print-card">
+                <div class="print-card__image">
+                  <img src={SKU_IMG_OVERRIDE[p.sku] || p.img || CATEGORY_FALLBACK_IMG[p.category] || "/truck2.webp"} alt={p.name} />
                 </div>
-                <p class="print-card__material">{p.material}</p>
-              </div>
-            </article>
-          ))}
+                <div class="print-card__body">
+                  <h3 class="print-card__name">{baseName}</h3>
+                  <div class="print-card__meta">
+                    {color && <span class="print-card__cat">Color: {color}</span>}
+                    <span class="print-card__sizes">Sizes: {p.sizes}</span>
+                  </div>
+                  <p class="print-card__material">{p.material}</p>
+                </div>
+              </article>
+            );
+          })}
         </div>
         <footer class="print-page__footer">
           <span>Black &amp; McDonald — Good Catch Awards</span>
