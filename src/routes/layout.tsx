@@ -605,11 +605,11 @@ export default component$(() => {
             )}
             <div class="login-modal__header">
               <img
-                src="/good-catch-logo-en.jpg"
-                alt="Good Catch Awards"
+                src="/BlackMcDonald_Logo.webp"
+                alt="Black & McDonald"
                 class="login-modal__logo"
-                width="200"
-                height="200"
+                width="1633"
+                height="844"
               />
               <p class="login-modal__subtitle">
                 {t("login.subtitle", locale.value)}
