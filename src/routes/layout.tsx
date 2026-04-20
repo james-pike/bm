@@ -311,7 +311,10 @@ const colorKeyMap: Record<string, string> = {
   "#ffffff": "color.white",
   "#2c3e50": "color.navy",
   "#94a3b8": "color.grey",
+  "#4a4a4a": "color.grey",
+  "#6b6b6b": "color.grey",
   "#E6570C": "color.orange",
+  "#ff6600": "color.orange",
   "#e4ba3f": "color.yellow",
 };
 
