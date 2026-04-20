@@ -8,14 +8,14 @@ import { expandSizes } from "../utils";
 import { LoginTypeContext } from "../../layout";
 
 const SKU_IMG_OVERRIDE: Record<string, string> = {
-  "BM-1": "/paxton-black.png",
-  "BM-2": "/paxton-grey.png",
-  "BM-3": "/gilliamjacket-black.png",
-  "BM-4": "/gilliam-black.png",
-  "BM-5": "/duck-black.png",
-  "BM-6": "/duckgrey.png",
-  "BM-7": "/cooler-black.png",
-  "BM-8": "/backpack-black.png",
+  "BMGC-1": "/paxton-black.png",
+  "BMGC-2": "/paxton-grey.png",
+  "BMGC-3": "/gilliamjacket-black.png",
+  "BMGC-4": "/gilliam-black.png",
+  "BMGC-5": "/duck-black.png",
+  "BMGC-6": "/duckgrey.png",
+  "BMGC-7": "/cooler-black.png",
+  "BMGC-8": "/backpack-black.png",
 };
 
 const CATEGORY_FALLBACK_IMG: Record<string, string> = {
@@ -31,10 +31,10 @@ function resolveProductImg(sku: string, category: string, fallback: string) {
 // Pairs of SKUs representing the same product in different colors. Clicking a swatch
 // navigates between them so the image/name/sku update without reloading the whole page.
 const SKU_SIBLING: Record<string, string> = {
-  "BM-1": "BM-2",
-  "BM-2": "BM-1",
-  "BM-5": "BM-6",
-  "BM-6": "BM-5",
+  "BMGC-1": "BMGC-2",
+  "BMGC-2": "BMGC-1",
+  "BMGC-5": "BMGC-6",
+  "BMGC-6": "BMGC-5",
 };
 
 export default component$(() => {
@@ -75,7 +75,7 @@ export default component$(() => {
     cleanup(() => clearInterval(interval));
   });
 
-  const waistLengthSkus = new Set(["CAR-12", "CAR-14"]);
+  const waistLengthSkus = new Set(["CAR-12", "CAR-14", "BMFR-5"]);
   const variantSkus = new Set(["CAR-11", "CAR-17"]);
   const variantOptions = ["Regular", "Tall"];
   const waistOptions = ["28", "29", "30", "31", "32", "33", "34", "35", "36", "38", "40", "42", "44", "46", "48", "50"];
@@ -414,12 +414,12 @@ export default component$(() => {
         </div>
       </div>
       {(() => {
-        const sameCat = allProducts.filter((r) => r.sku !== p.sku && r.sku !== "CAR-12" && r.category === p.category);
-        const others = allProducts.filter((r) => r.sku !== p.sku && r.sku !== "CAR-12" && r.category !== p.category);
-        const related = (loginType.value === "electrical" ? sameCat : [...sameCat, ...others]).slice(0, 8);
+        const isElectrical = loginType.value === "electrical";
+        const pool = allProducts.filter((r) => r.sku !== p.sku && r.sku !== "CAR-12" && (isElectrical ? r.category === "Electrical" : r.category !== "Electrical"));
+        const related = pool.slice(0, 8);
         return (
           <div class="related-items">
-            <h3 class="related-items__title">{t("product.more", locale.value)} {loginType.value === "electrical" ? categoryLabel(p.category, locale.value) : (locale.value === "fr" ? "Bonne Prise" : "Good Catch")}</h3>
+            <h3 class="related-items__title">{t("product.more", locale.value)} {loginType.value === "electrical" ? (locale.value === "fr" ? "Électrique" : "Electrical") : (locale.value === "fr" ? "Bonne Prise" : "Good Catch")}</h3>
             {/* Desktop grid */}
             <div class="related-items__grid">
               {related.slice(0, 4).map((item) => (

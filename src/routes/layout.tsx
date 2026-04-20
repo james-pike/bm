@@ -21,14 +21,14 @@ const AUTH_COOKIE = "ce_auth"; // v2: orders persist to db
 const LOCALE_COOKIE = "ce_locale";
 
 const CART_SKU_IMG: Record<string, string> = {
-  "BM-1": "/paxton-black.png",
-  "BM-2": "/paxton-grey.png",
-  "BM-3": "/gilliamjacket-black.png",
-  "BM-4": "/gilliam-black.png",
-  "BM-5": "/duck-black.png",
-  "BM-6": "/duckgrey.png",
-  "BM-7": "/cooler-black.png",
-  "BM-8": "/backpack-black.png",
+  "BMGC-1": "/paxton-black.png",
+  "BMGC-2": "/paxton-grey.png",
+  "BMGC-3": "/gilliamjacket-black.png",
+  "BMGC-4": "/gilliam-black.png",
+  "BMGC-5": "/duck-black.png",
+  "BMGC-6": "/duckgrey.png",
+  "BMGC-7": "/cooler-black.png",
+  "BMGC-8": "/backpack-black.png",
 };
 function cartItemImg(sku: string | undefined, existing: string | undefined): string {
   if (sku && CART_SKU_IMG[sku]) return CART_SKU_IMG[sku];
@@ -518,6 +518,15 @@ export default component$(() => {
 
   // Lock scroll when menu is open
   // eslint-disable-next-line qwik/no-use-visible-task
+  // eslint-disable-next-line qwik/no-use-visible-task
+  useVisibleTask$(({ track }) => {
+    track(() => loginType.value);
+    const title = loginType.value === "electrical"
+      ? "Electrical Apparel - Black & McDonald"
+      : "Good Catch Apparel - Black & McDonald";
+    if (typeof document !== "undefined") document.title = title;
+  });
+
   useVisibleTask$(({ track }) => {
     track(() => menuOpen.value);
     if (menuOpen.value) {
@@ -611,6 +620,7 @@ export default component$(() => {
                 width="1633"
                 height="844"
               />
+              <h2 class="login-modal__title">{t("login.title", locale.value)}</h2>
               <p class="login-modal__subtitle">
                 {t("login.subtitle", locale.value)}
               </p>

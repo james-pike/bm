@@ -5,28 +5,28 @@ import { allProducts } from "./apparel/products";
 import { LoginTypeContext } from "./layout";
 
 const SKU_IMG_OVERRIDE: Record<string, string> = {
-  "BM-1": "/paxton-black.png",
-  "BM-2": "/paxton-grey.png",
-  "BM-3": "/gilliamjacket-black.png",
-  "BM-4": "/gilliam-black.png",
-  "BM-5": "/duck-black.png",
-  "BM-6": "/duckgrey.png",
-  "BM-7": "/cooler-black.png",
-  "BM-8": "/backpack-black.png",
+  "BMGC-1": "/paxton-black.png",
+  "BMGC-2": "/paxton-grey.png",
+  "BMGC-3": "/gilliamjacket-black.png",
+  "BMGC-4": "/gilliam-black.png",
+  "BMGC-5": "/duck-black.png",
+  "BMGC-6": "/duckgrey.png",
+  "BMGC-7": "/cooler-black.png",
+  "BMGC-8": "/backpack-black.png",
 };
 
 const SKU_OBJECT_POSITION: Record<string, string> = {
-  "BM-1": "center 96%",
-  "BM-2": "center 96%",
-  "BM-4": "center 60%",
-  "BM-5": "center 60%",
-  "BM-6": "center 60%",
+  "BMGC-1": "center 96%",
+  "BMGC-2": "center 96%",
+  "BMGC-4": "center 60%",
+  "BMGC-5": "center 60%",
+  "BMGC-6": "center 60%",
 };
 
 const SKU_CONTAIN: Record<string, boolean> = {
-  "BM-3": true,
-  "BM-7": true,
-  "BM-8": true,
+  "BMGC-3": true,
+  "BMGC-7": true,
+  "BMGC-8": true,
 };
 
 const CATEGORY_FALLBACK_IMG: Record<string, string> = {
@@ -74,28 +74,15 @@ export default component$(() => {
                   </div>
                 </div>
               </div>
-              {loginType.value === "electrical" ? (
-                <div class="hero-categories">
-                  <a href="/apparel/#work-wear" class="category-card">
-                    <img src="/CTA_en_OurServices_FS_Plumbing-1.webp" alt="Work Wear" width="400" height="300" loading="eager" decoding="sync" />
-                    <span class="category-card__label">{t("teaser.workwear.title", locale.value)}</span>
-                  </a>
-                  <a href="/apparel/#jackets" class="category-card">
-                    <img src="/jackets.webp" alt="Jackets" width="400" height="300" loading="eager" decoding="sync" />
-                    <span class="category-card__label">{t("teaser.jackets.title", locale.value)}</span>
-                  </a>
-                  <a href="/apparel/#accessories" class="category-card">
-                    <img src="/CTA_en_OurServices_FS_MSNAD-1.webp" alt="Accessories" width="400" height="300" loading="eager" decoding="sync" />
-                    <span class="category-card__label">{t("teaser.accessories.title", locale.value)}</span>
-                  </a>
-                  <div class="category-card category-card--visual">
-                    <img src="/truck2.webp" alt="Black & McDonald — Est. 1921" width="400" height="300" loading="eager" decoding="sync" />
-                  </div>
-                </div>
-              ) : (
+              {(() => {
+                const isElectrical = loginType.value === "electrical";
+                const visibleProducts = isElectrical
+                  ? allProducts.filter((p) => p.category === "Electrical")
+                  : allProducts.filter((p) => p.category !== "Electrical");
+                return (
                 <>
                   <div class="hero__products-tab">
-                    <span class="hero__products-tab-label">Good Catch Apparel</span>
+                    <span class="hero__products-tab-label">{isElectrical ? "Electrical Apparel" : "Good Catch Apparel"}</span>
                     <button
                       type="button"
                       class="hero__products-tab-toggle"
@@ -110,7 +97,7 @@ export default component$(() => {
                     </button>
                   </div>
                   <div class={`hero-categories ${compact.value ? "hero-categories--compact" : "hero-categories--wide"}`}>
-                    {allProducts.map((p) => {
+                    {visibleProducts.map((p) => {
                       const imgStyle: Record<string, string> = {};
                       if (SKU_OBJECT_POSITION[p.sku]) imgStyle.objectPosition = SKU_OBJECT_POSITION[p.sku];
                       if (SKU_CONTAIN[p.sku]) { imgStyle.objectFit = "contain"; imgStyle.background = "#ffffff"; }
@@ -123,7 +110,8 @@ export default component$(() => {
                     })}
                   </div>
                 </>
-              )}
+                );
+              })()}
             </div>
             <div class="hero__print-cta">
               <a href="/print/" class="hero__print-btn">

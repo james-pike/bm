@@ -3,14 +3,14 @@ import type { DocumentHead } from "@builder.io/qwik-city";
 import { allProducts } from "../apparel/products";
 
 const SKU_IMG_OVERRIDE: Record<string, string> = {
-  "BM-1": "/paxton-black.png",
-  "BM-2": "/paxton-grey.png",
-  "BM-3": "/gilliamjacket-black.png",
-  "BM-4": "/gilliam-black.png",
-  "BM-5": "/duck-black.png",
-  "BM-6": "/duckgrey.png",
-  "BM-7": "/cooler-black.png",
-  "BM-8": "/backpack-black.png",
+  "BMGC-1": "/paxton-black.png",
+  "BMGC-2": "/paxton-grey.png",
+  "BMGC-3": "/gilliamjacket-black.png",
+  "BMGC-4": "/gilliam-black.png",
+  "BMGC-5": "/duck-black.png",
+  "BMGC-6": "/duckgrey.png",
+  "BMGC-7": "/cooler-black.png",
+  "BMGC-8": "/backpack-black.png",
 };
 
 const CATEGORY_FALLBACK_IMG: Record<string, string> = {
