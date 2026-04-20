@@ -42,7 +42,7 @@ export default component$(() => {
           </div>
         </header>
         <div class="print-page__grid">
-          {allProducts.map((p) => {
+          {allProducts.filter((p) => p.sku.startsWith("BMGC-")).map((p) => {
             const lastDash = p.name.lastIndexOf(" - ");
             const baseName = lastDash > -1 ? p.name.slice(0, lastDash) : p.name;
             const color = lastDash > -1 ? p.name.slice(lastDash + 3) : "";

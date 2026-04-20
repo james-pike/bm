@@ -331,7 +331,7 @@ export default component$(() => {
   const logoutAction = useLogout();
   const orderAction = useSubmitOrder();
 
-  const showLogin = useSignal(false);
+  const showLogin = useSignal(!auth.value.loggedIn);
   const overlayFading = useSignal(false);
   const menuOpen = useSignal(false);
   const savedLocale = useLocaleLoader();
