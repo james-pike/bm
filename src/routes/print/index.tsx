@@ -10,11 +10,11 @@ export const usePrintAuthGuard = routeLoader$(({ cookie, redirect }) => {
 });
 
 const SKU_IMG_OVERRIDE: Record<string, string> = {
-  "BMGC-1": "/paxton-black.png",
-  "BMGC-2": "/paxton-grey.png",
-  "BMGC-3": "/gilliamjacket-black.png",
-  "BMGC-4": "/gilliam-black.png",
-  "BMGC-5": "/duck-black.png",
+  "BMGC-1": "/100617_001_MF25_e_w.png",
+  "BMGC-2": "/100617_026_MS25_e.png",
+  "BMGC-3": "/102208_001_MF22_V2.png",
+  "BMGC-4": "/102286_001_MF22_e_1.png",
+  "BMGC-5": "/104277_BLK_MF22_e.png",
   "BMGC-6": "/duckgrey.png",
   "BMGC-7": "/cooler-black.png",
   "BMGC-8": "/backpack-black.png",

@@ -5,11 +5,11 @@ import { allProducts } from "./apparel/products";
 import { LoginTypeContext } from "./layout";
 
 const SKU_IMG_OVERRIDE: Record<string, string> = {
-  "BMGC-1": "/paxton-black.png",
-  "BMGC-2": "/paxton-grey.png",
-  "BMGC-3": "/gilliamjacket-black.png",
-  "BMGC-4": "/gilliam-black.png",
-  "BMGC-5": "/duck-black.png",
+  "BMGC-1": "/100617_001_MF25_e_w.png",
+  "BMGC-2": "/100617_026_MS25_e.png",
+  "BMGC-3": "/102208_001_MF22_V2.png",
+  "BMGC-4": "/102286_001_MF22_e_1.png",
+  "BMGC-5": "/104277_BLK_MF22_e.png",
   "BMGC-6": "/duckgrey.png",
   "BMGC-7": "/cooler-black.png",
   "BMGC-8": "/backpack-black.png",
@@ -29,17 +29,15 @@ const SKU_IMG_OVERRIDE: Record<string, string> = {
 };
 
 const SKU_OBJECT_POSITION: Record<string, string> = {
-  "BMGC-1": "center 96%",
-  "BMGC-2": "center 96%",
-  "BMGC-4": "center 60%",
-  "BMGC-5": "center 60%",
-  "BMGC-6": "center 60%",
 };
 
 const SKU_CONTAIN: Record<string, boolean> = {
-  "BMGC-3": true,
-  "BMGC-7": true,
-  "BMGC-8": true,
+  "BMGC-1": true, "BMGC-2": true, "BMGC-3": true, "BMGC-4": true,
+  "BMGC-5": true, "BMGC-6": true, "BMGC-7": true, "BMGC-8": true,
+  "BMFR-1": true, "BMFR-2": true, "BMFR-3": true, "BMFR-4": true,
+  "BMFR-5": true, "BMFR-6": true, "BMFR-7": true, "BMFR-8": true,
+  "BMFR-9": true, "BMFR-10": true, "BMFR-11": true, "BMFR-12": true,
+  "BMFR-13": true,
 };
 
 const CATEGORY_FALLBACK_IMG: Record<string, string> = {
