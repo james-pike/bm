@@ -52,6 +52,10 @@ const colorNames: Record<string, Record<string, string>> = {
   "#2c3e50": { en: "Navy", fr: "Marine" },
   "#94a3b8": { en: "Silver", fr: "Argent" },
   "#4a4a4a": { en: "Grey", fr: "Gris" },
+  "#6b6b6b": { en: "Grey", fr: "Gris" },
+  "#E6570C": { en: "Orange", fr: "Orange" },
+  "#ff6600": { en: "Orange", fr: "Orange" },
+  "#e4ba3f": { en: "Yellow", fr: "Jaune" },
 };
 export function colorName(hex: string, locale: Locale): string {
   return colorNames[hex]?.[locale] || hex;

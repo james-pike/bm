@@ -298,6 +298,23 @@ img { max-width: 100%; display: block; }
 .site-header__logo-text { height: 24px; width: auto; flex-shrink: 0; }
 .site-header__logo-brand { display: flex; flex-direction: column; align-items: flex-start; transition: opacity 0.3s ease; }
 .site-header__logo-apparel { font-size: 0.62rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ce-gray-400); margin-top: -2px; }
+.site-header__logo-stack { position: relative; display: inline-block; line-height: 0; container-type: inline-size; }
+.site-header__logo--bm .site-header__logo-img { height: 48px; }
+.site-header__logo-stack .site-header__logo-apparel {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 6%;
+  text-align: center;
+  color: #ffffff;
+  font-size: clamp(0.3rem, 5.2cqi, 0.7rem);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  margin-top: 0;
+  line-height: 1;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+  pointer-events: none;
+}
 
 .site-header__categories { display: flex; align-items: center; gap: 1.5rem; margin-right: 2rem; flex-shrink: 0; }
 .site-header__categories a {
@@ -1139,6 +1156,9 @@ img { max-width: 100%; display: block; }
   min-width: 0;
   font-size: clamp(1rem, 6.3cqi, 1.9rem) !important;
 }
+.hero__logo-stack .hero__apparel-row .hero__title-apparel--electrical {
+  font-size: clamp(1.3rem, 8.2cqi, 2.5rem) !important;
+}
 .hero__logo-stack .hero__badge-row {
   position: absolute;
   left: 0;
@@ -1779,6 +1799,24 @@ img { max-width: 100%; display: block; }
   text-transform: uppercase;
   color: var(--ce-gray-400);
   margin-top: -1px;
+}
+.nav-drawer__logo-stack { position: relative; display: inline-block; line-height: 0; container-type: inline-size; width: 120px; }
+.nav-drawer__bm-logo { width: 100%; height: auto; display: block; }
+.nav-drawer__logo-stack .nav-drawer__apparel {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 6%;
+  text-align: center;
+  color: #ffffff;
+  font-size: clamp(0.4rem, 6cqi, 0.85rem);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  margin-top: 0;
+  line-height: 1;
+  max-width: none;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+  pointer-events: none;
 }
 .nav-drawer__close {
   background: var(--ce-white);
