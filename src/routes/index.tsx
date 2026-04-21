@@ -1,4 +1,4 @@
-import { component$, useContext, useSignal } from "@builder.io/qwik";
+import { component$, useContext, useSignal, $ } from "@builder.io/qwik";
 import type { DocumentHead } from "@builder.io/qwik-city";
 import { LocaleContext, t } from "../i18n";
 import { allProducts } from "./apparel/products";
@@ -52,6 +52,19 @@ export default component$(() => {
   const locale = useContext(LocaleContext);
   const loginType = useContext(LoginTypeContext);
   const compact = useSignal<boolean>(false);
+  const videoPaused = useSignal<boolean>(false);
+
+  const toggleVideo = $((_: Event, el: HTMLElement) => {
+    const v = el.querySelector("video") as HTMLVideoElement | null;
+    if (!v) return;
+    if (v.paused) {
+      v.play().catch(() => {});
+      videoPaused.value = false;
+    } else {
+      v.pause();
+      videoPaused.value = true;
+    }
+  });
 
   return (
     <div class="home-page">
@@ -73,20 +86,34 @@ export default component$(() => {
                   </div>
                 </div>
               </div>
-              <div class="hero-carousel dot-pattern dot-pattern--light">
+              <div class="hero-carousel dot-pattern dot-pattern--light" onClick$={toggleVideo}>
                 <div class="hero-carousel__scroller">
                   <div class="hero-carousel__slide hero-carousel__slide--video" data-active>
                     <video src="/bm-herov2.mp4" autoplay muted loop playsInline preload="metadata" poster="/bm-hero-poster.webp" class="hero-carousel__video" />
                   </div>
                 </div>
+                <button type="button" class={`video-toggle ${videoPaused.value ? "video-toggle--paused" : ""}`} aria-label={videoPaused.value ? "Play video" : "Pause video"}>
+                  {videoPaused.value ? (
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                  ) : (
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M6 4h4v16H6zM14 4h4v16h-4z"/></svg>
+                  )}
+                </button>
               </div>
               <div class="hero-bento">
-                <div class="hero-bento-carousel dot-pattern dot-pattern--light">
+                <div class="hero-bento-carousel dot-pattern dot-pattern--light" onClick$={toggleVideo}>
                   <div class="hero-bento-carousel__scroller">
                     <div class="hero-bento-carousel__slide hero-bento-carousel__slide--video" data-active>
                       <video src="/bm-herov2.mp4" autoplay muted loop playsInline preload="metadata" poster="/bm-hero-poster.webp" class="hero-bento-carousel__video" />
                     </div>
                   </div>
+                  <button type="button" class={`video-toggle ${videoPaused.value ? "video-toggle--paused" : ""}`} aria-label={videoPaused.value ? "Play video" : "Pause video"}>
+                    {videoPaused.value ? (
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                    ) : (
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M6 4h4v16H6zM14 4h4v16h-4z"/></svg>
+                    )}
+                  </button>
                 </div>
               </div>
               {(() => {

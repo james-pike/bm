@@ -666,10 +666,7 @@ img { max-width: 100%; display: block; }
   pointer-events: none;
   transition: background 0.3s ease;
 }
-.category-card:hover::after {
-  background:
-    linear-gradient(to top, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.15) 35%, transparent 60%);
-}
+.category-card:hover::after { background: linear-gradient(to top, rgba(0,0,0,0.22) 0%, rgba(0,0,0,0.08) 35%, transparent 60%); }
 .category-card__label {
   position: absolute;
   bottom: 0.4rem;
@@ -5029,6 +5026,7 @@ details[open] > .cart-drawer__checkout-title::after {
   .hero-bento .hero-bento-carousel__scroller { aspect-ratio: auto !important; height: 100% !important; }
   .hero-bento::after { display: none; }
   .hero__logo-group .hero-bento { border: none; box-shadow: none; }
+  .video-toggle { bottom: 20px; left: 20px; }
   .hero-left-img {
     display: block;
     grid-column: 1;
@@ -6087,6 +6085,27 @@ details[open] > .cart-drawer__checkout-title::after {
   transition: background 0.15s ease;
 }
 .hero__print-btn:hover { background: var(--ce-green-dark); border-color: var(--ce-green-dark); }
+
+/* Video play/pause toggle */
+.video-toggle {
+  position: absolute;
+  bottom: 8px;
+  left: 8px;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,0.55);
+  color: #ffffff;
+  border: 1px solid rgba(255,255,255,0.25);
+  border-radius: 4px;
+  cursor: pointer;
+  z-index: 10;
+  transition: background 0.15s ease;
+}
+.video-toggle:hover { background: rgba(0,0,0,0.75); }
 
 /* ===== Print / Catalog Page ===== */
 .print-page {
