@@ -11,7 +11,7 @@ const translations = {
   "logo.electrical": { en: "Electrical Apparel", fr: "Vêtements Électriques" },
   "nav.flameresistant": { en: "Flame Resistant", fr: "Vêtements Ignifuges" },
   "tab.goodcatch": { en: "Good Catch Apparel", fr: "Vêtements Bonne Prise" },
-  "tab.flameresistant": { en: "Flame Resistant Apparel", fr: "Vêtements Ignifuges" },
+  "tab.flameresistant": { en: "Flame Resistant", fr: "Vêtements Ignifuges" },
   "nav.download.catalog": { en: "Download Catalog", fr: "Catalogue PDF" },
   "nav.download.print.catalog": { en: "Download / Print Catalog", fr: "Télécharger / Imprimer le catalogue" },
   "footer.contact": { en: "Contact", fr: "Contact" },
