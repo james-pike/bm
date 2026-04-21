@@ -619,7 +619,7 @@ img { max-width: 100%; display: block; }
   overflow: hidden;
   border-radius: 0;
   text-decoration: none;
-  aspect-ratio: 4/3;
+  aspect-ratio: 1/1;
   transition: filter 0.2s ease;
   border: 1px solid rgba(0,0,0,0.15);
   transform: translateZ(0);
@@ -5020,7 +5020,7 @@ details[open] > .cart-drawer__checkout-title::after {
     width: 100%;
   }
   .hero-categories .category-card {
-    aspect-ratio: 4/3;
+    aspect-ratio: 1/1;
   }
   .hero-bento {
     display: flex;
@@ -5507,7 +5507,7 @@ details[open] > .cart-drawer__checkout-title::after {
 
   /* Hero categories — 2 columns on tablet for more substantial cards (overridden by 768-1024 block below) */
   .hero-categories { grid-template-columns: repeat(2, 1fr); gap: 8px; width: 100%; margin: 0; padding-top: 0.5rem; }
-  .hero-categories .category-card { aspect-ratio: 16 / 9; }
+  .hero-categories .category-card { aspect-ratio: 4 / 3; }
 
   /* Hero logo spacer mobile */
   .hero__logo-spacer--mobile { padding: 0.95rem 0 0.5rem; }
@@ -5848,7 +5848,7 @@ details[open] > .cart-drawer__checkout-title::after {
     padding: 0.22rem 0.5rem;
     letter-spacing: 0.02em;
   }
-  .hero-categories .category-card { aspect-ratio: 16 / 9; }
+  .hero-categories .category-card { aspect-ratio: 4 / 3; }
 }
 
 @media (max-width: 600px) {
