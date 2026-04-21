@@ -176,7 +176,8 @@ export const useSubmitOrder = routeAction$(
   const colorMap: Record<string, string> = {
     "#00703c": "Green", "#1a1a18": "Black", "#ffffff": "White",
     "#2c3e50": "Navy", "#94a3b8": "Silver", "#4a4a4a": "Charcoal",
-    "#8d5f18": "Bronze",
+    "#6b6b6b": "Grey", "#8d5f18": "Bronze",
+    "#E6570C": "Orange", "#ff6600": "Orange", "#e4ba3f": "Yellow",
   };
   const cName = (hex: string) => colorMap[hex] || hex;
 
@@ -204,8 +205,14 @@ export const useSubmitOrder = routeAction$(
         total,
       ],
     });
-    if (result.lastInsertRowid != null) {
-      orderNumber = `BM-${String(result.lastInsertRowid).padStart(5, "0")}`;
+    const insertedId = result.lastInsertRowid;
+    if (insertedId != null) {
+      const seq = await db.execute({
+        sql: "SELECT COUNT(*) AS n FROM orders WHERE vendor LIKE 'blackmcdonald%' AND id <= ?",
+        args: [insertedId as any],
+      });
+      const n = Number((seq.rows[0] as any)?.n) || Number(insertedId);
+      orderNumber = `BM-${n}`;
     }
   } catch (err) {
     console.error("Failed to save order to database:", err);
