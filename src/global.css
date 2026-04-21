@@ -3499,7 +3499,7 @@ body:has(.apparel-page) .site-header .cart-btn svg { stroke: #ffffff; }
 .product-detail .product-carousel { border-radius: var(--radius-sm); aspect-ratio: 1/1; margin: 0; }
 .product-detail .product-modal__details { padding: 1.25rem 1rem 1rem; background: var(--ce-white); border-radius: var(--radius-sm); }
 .product-modal__name-row { display: flex; align-items: baseline; justify-content: space-between; gap: 0.5rem; }
-.apparel-catalog:has(.product-detail) { padding: 0.35rem 0.25rem 2rem; }
+.apparel-catalog:has(.product-detail) { padding: 0.35rem 1rem 2rem; }
 
 /* ===== Related Items ===== */
 .related-items {
@@ -4965,7 +4965,7 @@ details[open] > .cart-drawer__checkout-title::after {
     position: relative;
     grid-column: 1;
     grid-row: 2;
-    padding: 1.25rem 2rem 1.5rem;
+    padding: 0.75rem 0.9rem 1rem;
     margin: 0;
     display: flex;
     flex-direction: column;
