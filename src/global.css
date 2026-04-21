@@ -5109,7 +5109,7 @@ details[open] > .cart-drawer__checkout-title::after {
   }
   .hero__patch-img { height: 5em; }
   .hero__logo-stack .hero__apparel-row { gap: 2em; }
-  .hero { padding-bottom: 0; padding-top: 0; margin-top: 0; background: radial-gradient(ellipse 55% 70% at 50% 45%, #0d2118 0%, #13301f 25%, #1c4a30 50%, #3aa860 75%, var(--ce-gray-200) 100%); }
+  .hero { padding-bottom: 0; padding-top: 0; margin-top: 0; background: radial-gradient(ellipse 55% 70% at 50% 45%, #2e4236 0%, #4a5c4d 30%, #849082 60%, #bcc4bc 85%, var(--ce-gray-200) 100%); }
 
   /* Desktop transparent header over hero */
   .site-header--hero-hidden {
