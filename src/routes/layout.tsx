@@ -228,7 +228,7 @@ export const useSubmitOrder = routeAction$(
   const hasPrices = items.some((i) => Number(i.price) > 0);
   const itemRows = items.map((i: any) =>
     `<tr>
-      <td style="padding:6px 12px;border-bottom:1px solid #eee">${esc(i.name)}${i.sku ? ` <span style="color:#999;font-size:12px">(${esc(i.sku)})</span>` : ""}${i.code ? ` <span style="color:#999;font-size:12px">${esc(i.code)}</span>` : ""}</td>
+      <td style="padding:6px 12px;border-bottom:1px solid #eee">${esc(i.name)}${i.code ? ` <span style="color:#999;font-size:12px">${esc(i.code)}</span>` : i.sku ? ` <span style="color:#999;font-size:12px">(${esc(i.sku)})</span>` : ""}</td>
       <td style="padding:6px 12px;border-bottom:1px solid #eee">${i.color ? esc(cName(i.color)) + " / " : ""}${esc(i.size)}</td>
       <td style="padding:6px 12px;border-bottom:1px solid #eee;text-align:center">${i.quantity}</td>
       ${hasPrices ? `<td style="padding:6px 12px;border-bottom:1px solid #eee;text-align:right">$${(((Number(i.price) || 0) * i.quantity)).toFixed(2)}</td>` : ""}
