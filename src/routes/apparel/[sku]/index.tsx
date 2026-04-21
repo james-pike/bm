@@ -202,6 +202,11 @@ export default component$(() => {
       const lIdx = sizes.indexOf("L");
       selectedSize.value = lIdx !== -1 ? sizes[lIdx] : sizes[0];
     }
+    if (variantSkus.has(product.value.sku)) {
+      selectedVariant.value = "Regular";
+    } else {
+      selectedVariant.value = "";
+    }
     imgIndex.value = 0;
     colorInitialized.value = product.value.sku;
   }
