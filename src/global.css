@@ -5444,7 +5444,7 @@ details[open] > .cart-drawer__checkout-title::after {
   .product-detail .product-carousel { aspect-ratio: 1/1; }
   .product-modal__name { font-size: 1.35rem; }
   .product-modal__price { font-size: 1.15rem; }
-  .apparel-catalog:has(.product-detail) { padding: 14px 2px 2rem; }
+  .apparel-catalog:has(.product-detail) { padding: 5px 2px 2rem; }
   .apparel-grid { grid-template-columns: repeat(3, 1fr); gap: 0.35rem; }
   .related-items__grid { grid-template-columns: repeat(3, 1fr); }
   .related-items__grid > :nth-child(4) { display: none; }
