@@ -664,13 +664,13 @@ export default component$(() => {
       {(auth.value.loggedIn || (loginAction.value && !loginAction.value.failed)) && <>
       <header class={`site-header site-header--white ${cartOpen.value ? "site-header--cart-open" : ""} ${loc.url.pathname === "/" && !cartOpen.value && !headerScrolled.value ? "site-header--logo-hidden" : ""}`}>
         <div class="site-header__inner">
-          <Link href="/" class="site-header__logo">
+          <Link href="/" class={`site-header__logo ${loginType.value === "electrical" ? "site-header__logo--bm" : ""}`}>
             <img
-              src="/good-catch-logo-en.jpg"
-              alt="Good Catch Awards"
+              src={loginType.value === "electrical" ? "/BlackMcDonald_Logo.webp" : "/good-catch-logo-en.jpg"}
+              alt={loginType.value === "electrical" ? "Black & McDonald" : "Good Catch Awards"}
               class="site-header__logo-img"
-              width="200"
-              height="200"
+              width={loginType.value === "electrical" ? 1633 : 200}
+              height={loginType.value === "electrical" ? 844 : 200}
               loading="eager"
               decoding="sync"
             />
@@ -717,8 +717,10 @@ export default component$(() => {
           <nav class="nav-drawer" onClick$={(e) => e.stopPropagation()}>
             <div class="nav-drawer__header">
               <div class="nav-drawer__brand">
-                <img src="/good-catch-logo-en.jpg" alt="Good Catch Awards" class="nav-drawer__logo" width="200" height="200" />
-                <span class="nav-drawer__apparel">{t("logo.apparel", locale.value)}</span>
+                {loginType.value !== "electrical" && (
+                  <img src="/good-catch-logo-en.jpg" alt="Good Catch Awards" class="nav-drawer__logo" width="200" height="200" />
+                )}
+                <span class="nav-drawer__apparel">{loginType.value === "electrical" ? "Electrical Apparel" : t("logo.apparel", locale.value)}</span>
               </div>
               <button class="nav-drawer__close" onClick$={() => (menuOpen.value = false)} aria-label="Close">
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg>
@@ -801,8 +803,16 @@ export default component$(() => {
         <div class="modal-overlay" onClick$={() => (cartOpen.value = false)}>
           <div class="drawer cart-drawer" onClick$={(e) => e.stopPropagation()}>
             <div class="cart-drawer__site-header">
-              <Link href="/" class="site-header__logo">
-                <img src="/good-catch-logo-en.jpg" alt="Good Catch Awards" class="site-header__logo-img" width="200" height="200" loading="eager" decoding="sync" />
+              <Link href="/" class={`site-header__logo ${loginType.value === "electrical" ? "site-header__logo--bm" : ""}`}>
+                <img
+                  src={loginType.value === "electrical" ? "/BlackMcDonald_Logo.webp" : "/good-catch-logo-en.jpg"}
+                  alt={loginType.value === "electrical" ? "Black & McDonald" : "Good Catch Awards"}
+                  class="site-header__logo-img"
+                  width={loginType.value === "electrical" ? 1633 : 200}
+                  height={loginType.value === "electrical" ? 844 : 200}
+                  loading="eager"
+                  decoding="sync"
+                />
               </Link>
               <nav class="site-header__nav">
                 <button class="cart-btn" onClick$={() => (cartOpen.value = false)}>

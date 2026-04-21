@@ -53,8 +53,10 @@ export default component$(() => {
                 <div class="hero__logo-stack">
                   <img src="/BlackMcDonald_Logo.webp" alt="Black & McDonald" class="hero__title-img" width="1633" height="844" loading="eager" decoding="sync" />
                   <div class="hero__apparel-row">
-                    <span class="hero__title-apparel">{t("logo.apparel", locale.value)}</span>
-                    <img src="/good-catch-logo-en.jpg" alt="Good Catch Awards" class="hero__patch-img" width="200" height="200" loading="eager" decoding="sync" />
+                    <span class="hero__title-apparel">{loginType.value === "electrical" ? "Electrical Apparel" : t("logo.apparel", locale.value)}</span>
+                    {loginType.value !== "electrical" && (
+                      <img src="/good-catch-logo-en.jpg" alt="Good Catch Awards" class="hero__patch-img" width="200" height="200" loading="eager" decoding="sync" />
+                    )}
                   </div>
                 </div>
               </div>
