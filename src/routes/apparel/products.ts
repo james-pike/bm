@@ -126,6 +126,21 @@ export const allProducts: Product[] = [
     "details": "Large main compartment with dedicated 15-inch laptop sleeve, Front zippered compartment with organization, Reflective edge binding on sides, Reflective zipper puller, One side pocket, Comfort shoulder straps, Padded back panel, Dimensions 12 x 17.5 x 8 inches, #CB0280"
   },
   {
+    "sku": "BMFR-5",
+    "name": "Atlas Guardian FR/AR OHSA Hi Vis Pant",
+    "category": "Electrical",
+    "sizes": "W/L",
+    "badge": "",
+    "colors": [
+      "#2c3e50"
+    ],
+    "price": 0,
+    "img": "",
+    "imgs": [],
+    "material": "FR/AR Hi-Vis fabric, OHSA compliant",
+    "details": "UL Certified to NFPA 2112, #405NB"
+  },
+  {
     "sku": "BMFR-1",
     "name": "Atlas Guardian FR/AR OHSA Hi Vis Spring Jacket ",
     "category": "Electrical",
@@ -139,21 +154,6 @@ export const allProducts: Product[] = [
     "imgs": [],
     "material": "FR/AR Hi-Vis fabric, OHSA compliant, orange high-visibility",
     "details": "UL Certified to NFPA 2112, #5242OR"
-  },
-  {
-    "sku": "BMFR-2",
-    "name": "Atlas Guardian FR/AR OHSA Hi Vis Bomber Jacket",
-    "category": "Electrical",
-    "sizes": "XS - 7XL",
-    "badge": "",
-    "colors": [
-      "#ff6600"
-    ],
-    "price": 0,
-    "img": "",
-    "imgs": [],
-    "material": "FR/AR Hi-Vis fabric, OHSA compliant, orange high-visibility",
-    "details": "UL Certified to NFPA 2112, #2153OR"
   },
   {
     "sku": "BMFR-3",
@@ -184,21 +184,6 @@ export const allProducts: Product[] = [
     "imgs": [],
     "material": "FR/AR Hi-Vis fabric, OHSA compliant, orange high-visibility",
     "details": "UL Certified to NFPA 2112, #2152OR"
-  },
-  {
-    "sku": "BMFR-5",
-    "name": "Atlas Guardian FR/AR OHSA Hi Vis Pant",
-    "category": "Electrical",
-    "sizes": "W/L",
-    "badge": "",
-    "colors": [
-      "#2c3e50"
-    ],
-    "price": 0,
-    "img": "",
-    "imgs": [],
-    "material": "FR/AR Hi-Vis fabric, OHSA compliant",
-    "details": "UL Certified to NFPA 2112, #405NB"
   },
   {
     "sku": "BMFR-6",
@@ -319,6 +304,21 @@ export const allProducts: Product[] = [
     "imgs": [],
     "material": "FR/AR Hi-Vis fabric, OHSA compliant, orange high-visibility",
     "details": "UL Certified to NFPA 2112, #507OR"
+  },
+  {
+    "sku": "BMFR-2",
+    "name": "Atlas Guardian FR/AR OHSA Hi Vis Bomber Jacket",
+    "category": "Electrical",
+    "sizes": "XS - 7XL",
+    "badge": "",
+    "colors": [
+      "#ff6600"
+    ],
+    "price": 0,
+    "img": "",
+    "imgs": [],
+    "material": "FR/AR Hi-Vis fabric, OHSA compliant, orange high-visibility",
+    "details": "UL Certified to NFPA 2112, #2153OR"
   }
 ];
 

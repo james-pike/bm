@@ -188,9 +188,10 @@ export const useSubmitOrder = routeAction$(
   if (!tursoUrl || !tursoToken) {
     return fail(500, { message: "Order database not configured (missing env vars)" });
   }
+  let orderNumber = "";
   try {
     const db = createClient({ url: tursoUrl, authToken: tursoToken });
-    await db.execute({
+    const result = await db.execute({
       sql: `INSERT INTO orders (vendor, emp_number, emp_name, emp_dept, po_number, items, total, status, created_at, updated_at)
             VALUES (?, ?, ?, ?, ?, ?, ?, 'pending', datetime('now'), datetime('now'))`,
       args: [
@@ -203,6 +204,9 @@ export const useSubmitOrder = routeAction$(
         total,
       ],
     });
+    if (result.lastInsertRowid != null) {
+      orderNumber = `BM-${String(result.lastInsertRowid).padStart(5, "0")}`;
+    }
   } catch (err) {
     console.error("Failed to save order to database:", err);
     return fail(500, { message: "Order could not be saved. Please try again." });
@@ -215,9 +219,9 @@ export const useSubmitOrder = routeAction$(
   }
 
   const hasPrices = items.some((i) => Number(i.price) > 0);
-  const itemRows = items.map((i) =>
+  const itemRows = items.map((i: any) =>
     `<tr>
-      <td style="padding:6px 12px;border-bottom:1px solid #eee">${esc(i.name)}${i.sku ? ` <span style="color:#999;font-size:12px">(${esc(i.sku)})</span>` : ""}</td>
+      <td style="padding:6px 12px;border-bottom:1px solid #eee">${esc(i.name)}${i.sku ? ` <span style="color:#999;font-size:12px">(${esc(i.sku)})</span>` : ""}${i.code ? ` <span style="color:#999;font-size:12px">${esc(i.code)}</span>` : ""}</td>
       <td style="padding:6px 12px;border-bottom:1px solid #eee">${i.color ? esc(cName(i.color)) + " / " : ""}${esc(i.size)}</td>
       <td style="padding:6px 12px;border-bottom:1px solid #eee;text-align:center">${i.quantity}</td>
       ${hasPrices ? `<td style="padding:6px 12px;border-bottom:1px solid #eee;text-align:right">$${(((Number(i.price) || 0) * i.quantity)).toFixed(2)}</td>` : ""}
@@ -231,8 +235,10 @@ export const useSubmitOrder = routeAction$(
     <div style="font-family:sans-serif;max-width:600px;margin:0 auto">
       <div style="background:#0a1a12;padding:20px 24px;border-radius:8px 8px 0 0">
         <h1 style="color:#fff;margin:0;font-size:20px">Black & McDonald Apparel — Apparel Order</h1>
+        ${orderNumber ? `<p style="color:#cbd5c5;margin:6px 0 0;font-size:13px;letter-spacing:0.04em">Order ${esc(orderNumber)}</p>` : ""}
       </div>
       <div style="padding:24px;border:1px solid #e5e7eb;border-top:none;border-radius:0 0 8px 8px">
+        ${orderNumber ? `<p style="margin:0 0 4px"><strong>Order #:</strong> ${esc(orderNumber)}</p>` : ""}
         <p style="margin:0 0 4px"><strong>Date:</strong> ${esc(date)}</p>
         <p style="margin:0 0 4px"><strong>Employee:</strong> ${esc(employee.name)}</p>
         ${employee.phone ? `<p style="margin:0 0 4px"><strong>Phone:</strong> ${esc(employee.phone)}</p>` : ""}
@@ -274,7 +280,7 @@ export const useSubmitOrder = routeAction$(
     await resend.emails.send({
       from: fromAddress,
       to: [toAddress],
-      subject: `Apparel Order — ${employee.name} — ${date}`,
+      subject: `${orderNumber ? `${orderNumber} — ` : ""}Apparel Order — ${employee.name} — ${date}`,
       html,
     });
   } catch (err) {
@@ -304,6 +310,7 @@ export const useSubmitOrder = routeAction$(
           waist: z.string().max(20).optional().nullable(),
           length: z.string().max(20).optional().nullable(),
           variant: z.string().max(40).optional().nullable(),
+          code: z.string().max(40).optional().nullable(),
         }),
       )
       .min(1)

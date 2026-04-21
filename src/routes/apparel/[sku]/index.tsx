@@ -123,6 +123,7 @@ export default component$(() => {
       if (existing) {
         existing.quantity += selectedQty.value;
       } else {
+        const codeMatch = p.details?.match(/#[A-Za-z0-9]+/);
         const item: any = {
           name: p.name,
           sku: p.sku,
@@ -133,6 +134,7 @@ export default component$(() => {
           price: p.price,
           img: p.img,
         };
+        if (codeMatch) item.code = codeMatch[0];
         if (waistLengthSkus.has(p.sku)) {
           item.waist = selectedWaist.value;
           item.length = selectedLength.value;
@@ -168,6 +170,7 @@ export default component$(() => {
     try {
       const saved = localStorage.getItem(cartKey(loginType.value));
       const items = saved ? JSON.parse(saved) : [];
+      const codeMatch = p.details?.match(/#[A-Za-z0-9]+/);
       const item: any = {
         name: p.name,
         sku: p.sku,
@@ -178,6 +181,7 @@ export default component$(() => {
         price: p.price,
         img: p.img,
       };
+      if (codeMatch) item.code = codeMatch[0];
       if (waistLengthSkus.has(p.sku)) {
         item.waist = selectedWaist.value;
         item.length = selectedLength.value;
