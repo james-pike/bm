@@ -411,7 +411,7 @@ export default component$(() => {
   useVisibleTask$(
     ({ track, cleanup }) => {
     track(() => loginType.value);
-    const cartStorageKey = () => `ce_cart_${loginType.value || "clothing"}`;
+    const cartStorageKey = () => `ce_cart_bm_${loginType.value || "clothing"}`;
     const loadCart = () => {
       try {
         const saved = localStorage.getItem(cartStorageKey());
@@ -432,7 +432,7 @@ export default component$(() => {
 
   const saveCart = $(() => {
     try {
-      const key = `ce_cart_${loginType.value || "clothing"}`;
+      const key = `ce_cart_bm_${loginType.value || "clothing"}`;
       localStorage.setItem(key, JSON.stringify(cart.items));
       const count = cart.items.reduce((sum, i) => sum + i.quantity, 0);
       document.cookie = `ce_cart_count=${count};path=/;max-age=31536000`;

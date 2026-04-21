@@ -42,7 +42,7 @@ function resolveProductImg(sku: string, category: string, fallback: string) {
 }
 
 function cartKey(loginType: string): string {
-  return `ce_cart_${loginType || "clothing"}`;
+  return `ce_cart_bm_${loginType || "clothing"}`;
 }
 
 // Pairs of SKUs representing the same product in different colors. Clicking a swatch
