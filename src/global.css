@@ -294,20 +294,22 @@ img { max-width: 100%; display: block; }
 }
 .site-header__logo { display: flex; align-items: center; flex-shrink: 0; margin-right: auto; gap: 2px; }
 .site-header__logo-img { height: 40px; width: auto; flex-shrink: 0; transition: opacity 0.3s ease; }
-.site-header--logo-hidden .site-header__logo-img { opacity: 0; }
+.site-header--logo-hidden .site-header__logo-img,
+.site-header--logo-hidden .site-header__logo-stack { opacity: 0; }
 .site-header__logo-text { height: 24px; width: auto; flex-shrink: 0; }
 .site-header__logo-brand { display: flex; flex-direction: column; align-items: flex-start; transition: opacity 0.3s ease; }
 .site-header__logo-apparel { font-size: 0.62rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ce-gray-400); margin-top: -2px; }
-.site-header__logo-stack { position: relative; display: inline-block; line-height: 0; container-type: inline-size; }
+.site-header__logo-stack { position: relative; display: inline-block; line-height: 0; container-type: inline-size; flex-shrink: 0; transition: opacity 0.3s ease; }
 .site-header__logo--bm .site-header__logo-img { height: 48px; }
 .site-header__logo-stack .site-header__logo-apparel {
   position: absolute;
   left: 0;
   right: 0;
-  bottom: 6%;
+  top: 80.5%;
+  transform: translateY(-50%);
   text-align: center;
   color: #ffffff;
-  font-size: clamp(0.3rem, 5.2cqi, 0.7rem);
+  font-size: clamp(0.35rem, 5.8cqi, 0.75rem);
   font-weight: 600;
   letter-spacing: 0.08em;
   margin-top: 0;
@@ -1800,16 +1802,17 @@ img { max-width: 100%; display: block; }
   color: var(--ce-gray-400);
   margin-top: -1px;
 }
-.nav-drawer__logo-stack { position: relative; display: inline-block; line-height: 0; container-type: inline-size; width: 120px; }
+.nav-drawer__logo-stack { position: relative; display: inline-block; line-height: 0; container-type: inline-size; width: 150px; }
 .nav-drawer__bm-logo { width: 100%; height: auto; display: block; }
 .nav-drawer__logo-stack .nav-drawer__apparel {
   position: absolute;
   left: 0;
   right: 0;
-  bottom: 6%;
+  top: 80.5%;
+  transform: translateY(-50%);
   text-align: center;
   color: #ffffff;
-  font-size: clamp(0.4rem, 6cqi, 0.85rem);
+  font-size: clamp(0.6rem, 7.5cqi, 1.1rem);
   font-weight: 600;
   letter-spacing: 0.08em;
   margin-top: 0;

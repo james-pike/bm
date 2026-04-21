@@ -732,7 +732,7 @@ export default component$(() => {
                 {loginType.value === "electrical" ? (
                   <span class="nav-drawer__logo-stack">
                     <img src="/BlackMcDonald_Logo.webp" alt="Black & McDonald" class="nav-drawer__bm-logo" width="1633" height="844" />
-                    <span class="nav-drawer__apparel">Electrical Apparel</span>
+                    <span class="nav-drawer__apparel">{t("logo.electrical", locale.value)}</span>
                   </span>
                 ) : (
                   <>
@@ -753,13 +753,13 @@ export default component$(() => {
               {loginType.value === "electrical" && (
                 <a href="/#products" class="nav-drawer__link" onClick$={() => { menuOpen.value = false; const el = document.getElementById("products"); if (el) { const headerH = window.innerWidth <= 900 ? 49 : 58; const top = el.getBoundingClientRect().top + window.scrollY - headerH - 8; window.scrollTo({ top, behavior: "instant" }); } }}>
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h7l-1 8 10-12h-7l1-8z"/></svg>
-                  Flame Resistant
+                  {t("nav.flameresistant", locale.value)}
                 </a>
               )}
               {loginType.value !== "electrical" && (
               <a href="/print/" class={`nav-drawer__link ${loc.url.pathname === "/print/" ? "active" : ""}`} onClick$={() => (menuOpen.value = false)}>
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
-                Download Catalog
+                {t("nav.download.catalog", locale.value)}
               </a>
               )}
             </div>
@@ -789,12 +789,12 @@ export default component$(() => {
           <nav class="site-footer__links site-footer__links--print">
             <Link href="/print/">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
-              Download / Print Catalog
+              {t("nav.download.print.catalog", locale.value)}
             </Link>
           </nav>
           )}
           <div class="site-footer__contact site-footer__contact--stacked">
-            <span class="site-footer__contact-label">Contact</span>
+            <span class="site-footer__contact-label">{t("footer.contact", locale.value)}</span>
             <a href="mailto:info@blackandmcdonaldapparel.ca">info@blackandmcdonaldapparel.ca</a>
           </div>
         </div>
@@ -809,7 +809,7 @@ export default component$(() => {
                 {loginType.value === "electrical" ? (
                   <span class="site-header__logo-stack">
                     <img src="/BlackMcDonald_Logo.webp" alt="Black & McDonald" class="site-header__logo-img" width="1633" height="844" loading="eager" decoding="sync" />
-                    <span class="site-header__logo-apparel">Electrical Apparel</span>
+                    <span class="site-header__logo-apparel">{t("logo.electrical", locale.value)}</span>
                   </span>
                 ) : (
                   <img src="/good-catch-logo-en.jpg" alt="Good Catch Awards" class="site-header__logo-img" width="200" height="200" loading="eager" decoding="sync" />

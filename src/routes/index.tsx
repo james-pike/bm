@@ -66,7 +66,7 @@ export default component$(() => {
                 <div class="hero__logo-stack">
                   <img src="/BlackMcDonald_Logo.webp" alt="Black & McDonald" class="hero__title-img" width="1633" height="844" loading="eager" decoding="sync" />
                   <div class="hero__apparel-row">
-                    <span class={`hero__title-apparel ${loginType.value === "electrical" ? "hero__title-apparel--electrical" : ""}`}>{loginType.value === "electrical" ? "Electrical Apparel" : t("logo.apparel", locale.value)}</span>
+                    <span class={`hero__title-apparel ${loginType.value === "electrical" ? "hero__title-apparel--electrical" : ""}`}>{loginType.value === "electrical" ? t("logo.electrical", locale.value) : t("logo.apparel", locale.value)}</span>
                     {loginType.value !== "electrical" && (
                       <img src="/good-catch-logo-en.jpg" alt="Good Catch Awards" class="hero__patch-img" width="200" height="200" loading="eager" decoding="sync" />
                     )}
@@ -97,7 +97,7 @@ export default component$(() => {
                 return (
                 <>
                   <div class="hero__products-tab" id="products">
-                    <span class="hero__products-tab-label">{isElectrical ? "Flame Resistant" : "Good Catch Apparel"}</span>
+                    <span class="hero__products-tab-label">{isElectrical ? t("tab.flameresistant", locale.value) : t("tab.goodcatch", locale.value)}</span>
                     <button
                       type="button"
                       class="hero__products-tab-toggle"
@@ -132,7 +132,7 @@ export default component$(() => {
               <div class="hero__print-cta">
                 <a href="/print/" class="hero__print-btn">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
-                  Download / Print Catalog
+                  {t("nav.download.print.catalog", locale.value)}
                 </a>
               </div>
             )}

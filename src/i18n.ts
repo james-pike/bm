@@ -8,6 +8,13 @@ export const LocaleContext = createContextId<Signal<Locale>>("locale");
 const translations = {
   // Header nav
   "logo.apparel": { en: "Good Catch Awards", fr: "Prix Bonne Prise" },
+  "logo.electrical": { en: "Electrical Apparel", fr: "Vêtements Électriques" },
+  "nav.flameresistant": { en: "Flame Resistant", fr: "Ignifuge" },
+  "tab.goodcatch": { en: "Good Catch Apparel", fr: "Vêtements Bonne Prise" },
+  "tab.flameresistant": { en: "Flame Resistant", fr: "Ignifuge" },
+  "nav.download.catalog": { en: "Download Catalog", fr: "Télécharger le catalogue" },
+  "nav.download.print.catalog": { en: "Download / Print Catalog", fr: "Télécharger / Imprimer le catalogue" },
+  "footer.contact": { en: "Contact", fr: "Contact" },
   "nav.home": { en: "Home", fr: "Accueil" },
   "nav.apparel": { en: "Apparel", fr: "Vêtements" },
   "nav.shirts": { en: "Shirts", fr: "Chandails" },
