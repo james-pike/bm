@@ -675,7 +675,7 @@ export default component$(() => {
       )}
 
       {(auth.value.loggedIn || (loginAction.value && !loginAction.value.failed)) && <>
-      <header class={`site-header site-header--white ${cartOpen.value ? "site-header--cart-open" : ""} ${loc.url.pathname === "/" && !cartOpen.value && !headerScrolled.value && loginType.value !== "electrical" ? "site-header--logo-hidden" : ""}`}>
+      <header class={`site-header site-header--white ${cartOpen.value ? "site-header--cart-open" : ""} ${loc.url.pathname === "/" && !cartOpen.value && !headerScrolled.value ? "site-header--logo-hidden" : ""}`}>
         <div class="site-header__inner">
           <Link href="/" class={`site-header__logo ${loginType.value === "electrical" ? "site-header__logo--bm" : ""}`}>
             {loginType.value === "electrical" ? (
@@ -687,12 +687,8 @@ export default component$(() => {
               <img src="/good-catch-logo-en.jpg" alt="Good Catch Awards" class="site-header__logo-img" width="200" height="200" loading="eager" decoding="sync" />
             )}
           </Link>
-          <nav class="site-header__categories">
-            {loginType.value === "electrical" && <>
-              <Link href="/" class={loc.url.pathname === "/" ? "active" : ""}>{t("nav.home", locale.value)}</Link>
-              <Link href="/apparel/" class={loc.url.pathname.startsWith("/apparel") ? "active" : ""}>{t("nav.apparel", locale.value)}</Link>
-            </>}
-          </nav>
+          <nav class="site-header__categories" />
+
           <nav class="site-header__nav">
             <button class={`locale-btn ${cartOpen.value ? "locale-btn--cart-open" : ""}`} onClick$={toggleLocale} aria-label="Toggle language">
               <span class="locale-btn__full">{locale.value === "en" ? "Français" : "English"}</span>

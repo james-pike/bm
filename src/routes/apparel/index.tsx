@@ -1,10 +1,10 @@
 import { component$ } from "@builder.io/qwik";
 import { type DocumentHead, routeLoader$ } from "@builder.io/qwik-city";
 
-// Catalog index is electrical-only; other logged-in users only reach product detail pages.
+// Catalog index is tech-only; BM logins (clothing/electrical) only reach product detail pages.
 export const useCatalogGuard = routeLoader$(({ cookie, redirect }) => {
   const val = cookie.get("ce_auth")?.value;
-  if (val !== "electrical") {
+  if (val !== "tech") {
     throw redirect(302, "/");
   }
 });
