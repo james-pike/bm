@@ -81,17 +81,24 @@ export const useCartCountLoader = routeLoader$(({ cookie }) => {
   return parseInt(cookie.get("ce_cart_count")?.value || "0", 10);
 });
 
+function timingSafeEq(a: string, b: string): boolean {
+  if (a.length !== b.length) return false;
+  let diff = 0;
+  for (let i = 0; i < a.length; i++) diff |= a.charCodeAt(i) ^ b.charCodeAt(i);
+  return diff === 0;
+}
+
 export const useLogin = routeAction$(
   ({ username, password }, { cookie, fail, env }) => {
-    const expectedUser = env.get("APP_USERNAME") || env.get("VITE_APP_USERNAME") || "admin";
-    const expectedPass = env.get("APP_PASSWORD") || env.get("VITE_APP_PASSWORD");
-    const techUser = env.get("TECH_USERNAME") || env.get("VITE_TECH_USERNAME") || "tech";
-    const techPass = env.get("TECH_PASSWORD") || env.get("VITE_TECH_PASSWORD");
-    const electricalUser = env.get("ELECTRICAL_USERNAME") || env.get("VITE_ELECTRICAL_USERNAME") || "electrical";
-    const electricalPass = env.get("ELECTRICAL_PASSWORD") || env.get("VITE_ELECTRICAL_PASSWORD");
+    const expectedUser = env.get("APP_USERNAME") || "admin";
+    const expectedPass = env.get("APP_PASSWORD");
+    const techUser = env.get("TECH_USERNAME") || "tech";
+    const techPass = env.get("TECH_PASSWORD");
+    const electricalUser = env.get("ELECTRICAL_USERNAME") || "electrical";
+    const electricalPass = env.get("ELECTRICAL_PASSWORD");
 
     // Check Electrical login
-    if (electricalPass && username === electricalUser && password === electricalPass) {
+    if (electricalPass && timingSafeEq(username, electricalUser) && timingSafeEq(password, electricalPass)) {
       cookie.set(AUTH_COOKIE, "electrical", {
         path: "/",
         httpOnly: true,
@@ -103,7 +110,7 @@ export const useLogin = routeAction$(
     }
 
     // Check Tech login
-    if (techPass && username === techUser && password === techPass) {
+    if (techPass && timingSafeEq(username, techUser) && timingSafeEq(password, techPass)) {
       cookie.set(AUTH_COOKIE, "tech", {
         path: "/",
         httpOnly: true,
@@ -118,7 +125,7 @@ export const useLogin = routeAction$(
     if (!expectedPass) {
       return fail(500, { message: "Login not configured" });
     }
-    if (username === expectedUser && password === expectedPass) {
+    if (timingSafeEq(username, expectedUser) && timingSafeEq(password, expectedPass)) {
       cookie.set(AUTH_COOKIE, "clothing", {
         path: "/",
         httpOnly: true,
@@ -198,8 +205,7 @@ export const useSubmitOrder = routeAction$(
     });
   } catch (err) {
     console.error("Failed to save order to database:", err);
-    const msg = err instanceof Error ? err.message : String(err);
-    return fail(500, { message: `DB error: ${msg}` });
+    return fail(500, { message: "Order could not be saved. Please try again." });
   }
 
   // Send order confirmation email
@@ -536,9 +542,10 @@ export default component$(() => {
   // eslint-disable-next-line qwik/no-use-visible-task
   useVisibleTask$(({ track }) => {
     track(() => loginType.value);
+    track(() => locale.value);
     const title = loginType.value === "electrical"
-      ? "Electrical Apparel - Black & McDonald"
-      : "Good Catch Apparel - Black & McDonald";
+      ? `${t("logo.electrical", locale.value)} - Black & McDonald`
+      : `${t("tab.goodcatch", locale.value)} - Black & McDonald`;
     if (typeof document !== "undefined") document.title = title;
   });
 
@@ -681,7 +688,7 @@ export default component$(() => {
             {loginType.value === "electrical" ? (
               <span class="site-header__logo-stack">
                 <img src="/BlackMcDonald_Logo.webp" alt="Black & McDonald" class="site-header__logo-img" width="1633" height="844" loading="eager" decoding="sync" />
-                <span class="site-header__logo-apparel">Electrical Apparel</span>
+                <span class="site-header__logo-apparel">{t("logo.electrical", locale.value)}</span>
               </span>
             ) : (
               <img src="/good-catch-logo-en.jpg" alt="Good Catch Awards" class="site-header__logo-img" width="200" height="200" loading="eager" decoding="sync" />

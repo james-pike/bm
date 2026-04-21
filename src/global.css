@@ -299,7 +299,7 @@ img { max-width: 100%; display: block; }
 .site-header__logo-text { height: 24px; width: auto; flex-shrink: 0; }
 .site-header__logo-brand { display: flex; flex-direction: column; align-items: flex-start; transition: opacity 0.3s ease; }
 .site-header__logo-apparel { font-size: 0.62rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ce-gray-400); margin-top: -2px; }
-.site-header__logo-stack { position: relative; display: inline-block; line-height: 0; container-type: inline-size; flex-shrink: 0; width: 90px; transition: opacity 0.3s ease; }
+.site-header__logo-stack { position: relative; display: inline-block; line-height: 0; container-type: inline-size; flex-shrink: 0; width: 100px; transition: opacity 0.3s ease; }
 .site-header__logo--bm .site-header__logo-img { width: 100%; height: auto; }
 .site-header__logo-stack .site-header__logo-apparel {
   position: absolute;
@@ -1160,7 +1160,10 @@ img { max-width: 100%; display: block; }
   font-size: clamp(1rem, 6.3cqi, 1.9rem) !important;
 }
 .hero__logo-stack .hero__apparel-row .hero__title-apparel--electrical {
-  font-size: clamp(1.3rem, 8.2cqi, 2.5rem) !important;
+  font-size: clamp(1rem, 6.6cqi, 1.9rem) !important;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: clip;
 }
 .hero__logo-stack .hero__badge-row {
   position: absolute;
@@ -1803,7 +1806,8 @@ img { max-width: 100%; display: block; }
   color: var(--ce-gray-400);
   margin-top: -1px;
 }
-.nav-drawer__logo-stack { position: relative; display: inline-block; line-height: 0; container-type: inline-size; width: 150px; }
+.nav-drawer__logo-stack { position: relative; display: inline-block; line-height: 0; container-type: inline-size; width: 95px; }
+.nav-drawer__brand--electrical .nav-drawer__logo-stack { margin-left: -2px; }
 .nav-drawer__bm-logo { width: 100%; height: auto; display: block; }
 .nav-drawer__logo-stack .nav-drawer__apparel {
   position: absolute;
@@ -1813,12 +1817,13 @@ img { max-width: 100%; display: block; }
   transform: translateY(-50%);
   text-align: center;
   color: #ffffff;
-  font-size: clamp(0.55rem, 6.3cqi, 0.92rem);
+  font-size: clamp(0.38rem, 5.2cqi, 0.68rem);
   font-weight: 600;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.04em;
   margin-top: 0;
   line-height: 1;
-  max-width: none;
+  max-width: 100%;
+  overflow: hidden;
   text-shadow: 0 1px 2px rgba(0,0,0,0.3);
   pointer-events: none;
   white-space: nowrap;
@@ -4810,21 +4815,10 @@ details[open] > .cart-drawer__checkout-title::after {
   .site-header__categories { display: flex; align-items: center; gap: 0.5rem; margin-left: auto; margin-right: 0.5rem; }
   .site-header__categories a { font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.03em; color: var(--ce-gray-600); text-decoration: none; padding: 4px 8px; }
   .site-header__categories a.active { color: var(--ce-green); }
-  .site-header__nav { gap: 2px; }
+  .site-header__nav { gap: 2px; margin-right: -1rem; }
+  .site-header__logo { margin-left: -1rem; }
   .site-header { overflow: hidden; }
-  .site-header::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    z-index: 1;
-    pointer-events: none;
-    background-image: radial-gradient(circle, rgba(0,0,0,0.06) 1.2px, transparent 1.2px);
-    background-size: 12px 12px;
-    opacity: 0.5;
-  }
+  .site-header::before { content: none; }
   .site-header__inner { position: relative; z-index: 2; }
   .collection-hero__slide {
     grid-template-columns: 1fr 1fr;
@@ -4899,7 +4893,7 @@ details[open] > .cart-drawer__checkout-title::after {
     background:
       radial-gradient(ellipse 60% 30% at 30% 0%, rgba(255,255,255,0.1) 0%, transparent 70%),
       radial-gradient(ellipse 50% 25% at 70% 0%, rgba(255,255,255,0.08) 0%, transparent 70%),
-      linear-gradient(165deg, #132e1e 0%, #1a3d28 20%, #3a7a52 45%, #3a7a52 55%, #1a3d28 80%, #132e1e 100%);
+      linear-gradient(165deg, #8a8a8a 0%, #9e9e9e 20%, #c4c4c4 45%, #c4c4c4 55%, #9e9e9e 80%, #8a8a8a 100%);
     border: 1px solid rgba(255,255,255,0.12);
     box-shadow:
       0 0 12px 5px rgba(255,255,255,0.85),
@@ -5423,14 +5417,13 @@ details[open] > .cart-drawer__checkout-title::after {
   .product-modal__breadcrumb {
     grid-column: 1 / -1;
     grid-row: 1;
-    position: sticky;
-    top: 58px;
+    position: static;
     z-index: 50;
     height: 38px;
     display: flex;
     align-items: center;
     padding: 0 0 0 0.85rem;
-    margin: 0;
+    margin: 0 1px;
     background: var(--ce-white);
     border-radius: 0;
     border-bottom: 2px solid var(--ce-gray-200);
@@ -5444,7 +5437,7 @@ details[open] > .cart-drawer__checkout-title::after {
   .product-detail .product-carousel { aspect-ratio: 1/1; }
   .product-modal__name { font-size: 1.35rem; }
   .product-modal__price { font-size: 1.15rem; }
-  .apparel-catalog:has(.product-detail) { padding: 5px 2px 2rem; }
+  .apparel-catalog:has(.product-detail) { padding: 7px 2px 2rem; }
   .apparel-grid { grid-template-columns: repeat(3, 1fr); gap: 0.35rem; }
   .related-items__grid { grid-template-columns: repeat(3, 1fr); }
   .related-items__grid > :nth-child(4) { display: none; }
@@ -5728,7 +5721,7 @@ details[open] > .cart-drawer__checkout-title::after {
     position: relative;
     grid-column: 1;
     grid-row: 2;
-    margin: 0;
+    margin: -2px 0 0;
     padding: 0 0 8vw;
     border: none;
     border-radius: 0;
@@ -5751,8 +5744,8 @@ details[open] > .cart-drawer__checkout-title::after {
     position: absolute;
     left: calc(0.6rem - 2px);
     right: calc(0.6rem - 2px);
-    bottom: 0;
-    height: calc(8vw - 2px);
+    bottom: 1px;
+    height: calc(8vw - 4px);
     background: #9a9a9a;
     pointer-events: none;
   }
@@ -6060,8 +6053,8 @@ details[open] > .cart-drawer__checkout-title::after {
     grid-column: 1 / -1;
     grid-row: 3;
     align-self: start;
-    margin: 13px 0.55rem 0;
-    padding: 0.5rem 0.05rem 0.5rem 1rem;
+    margin: 8px 0.55rem 0;
+    padding: 0.35rem 0.05rem 0.35rem 1rem;
   }
   .hero__logo-group .hero__products-tab-toggle { display: inline-flex; }
   .hero__logo-group .hero-categories { grid-row: 4; margin-top: 11px; padding: 0 0.55rem; }

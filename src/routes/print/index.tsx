@@ -1,6 +1,13 @@
 import { component$, $ } from "@builder.io/qwik";
-import type { DocumentHead } from "@builder.io/qwik-city";
+import { type DocumentHead, routeLoader$ } from "@builder.io/qwik-city";
 import { allProducts } from "../apparel/products";
+
+export const usePrintAuthGuard = routeLoader$(({ cookie, redirect }) => {
+  const val = cookie.get("ce_auth")?.value;
+  if (val !== "clothing" && val !== "tech" && val !== "electrical" && val !== "authenticated") {
+    throw redirect(302, "/");
+  }
+});
 
 const SKU_IMG_OVERRIDE: Record<string, string> = {
   "BMGC-1": "/paxton-black.png",
