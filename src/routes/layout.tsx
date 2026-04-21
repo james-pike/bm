@@ -546,9 +546,12 @@ export default component$(() => {
   useVisibleTask$(({ track }) => {
     track(() => loginType.value);
     track(() => locale.value);
-    const title = loginType.value === "electrical"
-      ? `${t("logo.electrical", locale.value)} - Black & McDonald`
-      : `${t("tab.goodcatch", locale.value)} - Black & McDonald`;
+    track(() => auth.value.loggedIn);
+    const title = !auth.value.loggedIn
+      ? "Black & McDonald Apparel"
+      : loginType.value === "electrical"
+        ? `${t("logo.electrical", locale.value)} - Black & McDonald`
+        : `${t("tab.goodcatch", locale.value)} - Black & McDonald`;
     if (typeof document !== "undefined") document.title = title;
   });
 
