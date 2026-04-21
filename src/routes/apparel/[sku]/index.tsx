@@ -477,7 +477,7 @@ export default component$(() => {
                           <div class="product-card__name-row">
                             <div class="product-card__name">{item.name}</div>
                             <div class="product-card__price-group">
-                              {!isTech && <div class="product-card__price">${(Number(item.price) || 0).toFixed(2)}</div>}
+                              {isTech && item.price > 0 && <div class="product-card__price">${(Number(item.price) || 0).toFixed(2)}</div>}
                               <span class="product-card__sizes">{item.sizes === "One Size" ? t("modal.onesize", locale.value) : item.sizes}</span>
                             </div>
                           </div>

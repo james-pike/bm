@@ -53,13 +53,15 @@ export default component$(() => {
             const lastDash = p.name.lastIndexOf(" - ");
             const baseName = lastDash > -1 ? p.name.slice(0, lastDash) : p.name;
             const color = lastDash > -1 ? p.name.slice(lastDash + 3) : "";
+            const codeMatch = p.details.match(/#[A-Za-z0-9]+/);
+            const itemCode = codeMatch ? codeMatch[0] : "";
             return (
               <article key={p.sku} class="print-card">
                 <div class="print-card__image">
                   <img src={SKU_IMG_OVERRIDE[p.sku] || p.img || CATEGORY_FALLBACK_IMG[p.category] || "/truck2.webp"} alt={p.name} />
                 </div>
                 <div class="print-card__body">
-                  <h3 class="print-card__name">{baseName}</h3>
+                  <h3 class="print-card__name">{baseName}{itemCode && <span class="print-card__code"> {itemCode}</span>}</h3>
                   <div class="print-card__meta">
                     {color && <span class={`print-card__cat ${/grey|gray/i.test(color) ? "print-card__cat--grey" : ""}`}>Color: {color}</span>}
                     <span class="print-card__sizes">Sizes: {p.sizes}</span>

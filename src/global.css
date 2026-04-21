@@ -6305,6 +6305,7 @@ details[open] > .cart-drawer__checkout-title::after {
   line-height: 1.2;
   margin: 0;
 }
+.print-card__code { font-weight: 500; color: #999; font-size: 0.78rem; letter-spacing: 0.02em; }
 .print-card__meta {
   display: flex;
   flex-direction: column;

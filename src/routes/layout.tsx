@@ -214,12 +214,13 @@ export const useSubmitOrder = routeAction$(
     return { success: true };
   }
 
+  const hasPrices = items.some((i) => Number(i.price) > 0);
   const itemRows = items.map((i) =>
     `<tr>
       <td style="padding:6px 12px;border-bottom:1px solid #eee">${esc(i.name)}${i.sku ? ` <span style="color:#999;font-size:12px">(${esc(i.sku)})</span>` : ""}</td>
       <td style="padding:6px 12px;border-bottom:1px solid #eee">${i.color ? esc(cName(i.color)) + " / " : ""}${esc(i.size)}</td>
       <td style="padding:6px 12px;border-bottom:1px solid #eee;text-align:center">${i.quantity}</td>
-      <td style="padding:6px 12px;border-bottom:1px solid #eee;text-align:right">$${(((Number(i.price) || 0) * i.quantity)).toFixed(2)}</td>
+      ${hasPrices ? `<td style="padding:6px 12px;border-bottom:1px solid #eee;text-align:right">$${(((Number(i.price) || 0) * i.quantity)).toFixed(2)}</td>` : ""}
     </tr>`
   ).join("");
 
@@ -244,10 +245,11 @@ export const useSubmitOrder = routeAction$(
               <th style="padding:8px 12px;text-align:left">Product</th>
               <th style="padding:8px 12px;text-align:left">Details</th>
               <th style="padding:8px 12px;text-align:center">Qty</th>
-              <th style="padding:8px 12px;text-align:right">Total</th>
+              ${hasPrices ? `<th style="padding:8px 12px;text-align:right">Total</th>` : ""}
             </tr>
           </thead>
           <tbody>${itemRows}</tbody>
+          ${hasPrices ? `
           <tfoot>
             <tr>
               <td colspan="3" style="padding:6px 12px;text-align:right">Subtotal</td>
@@ -261,7 +263,7 @@ export const useSubmitOrder = routeAction$(
               <td colspan="3" style="padding:10px 12px;text-align:right;font-weight:700">Total</td>
               <td style="padding:10px 12px;text-align:right;font-weight:700;color:#00703c">$${total.toFixed(2)}</td>
             </tr>
-          </tfoot>
+          </tfoot>` : ""}
         </table>
       </div>
     </div>
