@@ -127,9 +127,9 @@ export const allProducts: Product[] = [
   },
   {
     "sku": "BMFR-1",
-    "name": "Atlas Guardian FR/AR OHSA Hi Vis Spring Jacket #5242OR",
+    "name": "Atlas Guardian FR/AR OHSA Hi Vis Spring Jacket ",
     "category": "Electrical",
-    "sizes": "S - 5XL",
+    "sizes": "XS - 7XL",
     "badge": "",
     "colors": [
       "#ff6600"
@@ -138,13 +138,13 @@ export const allProducts: Product[] = [
     "img": "",
     "imgs": [],
     "material": "FR/AR Hi-Vis fabric, OHSA compliant, orange high-visibility",
-    "details": "UL Certified to NFPA 2112, NFPA 70E, ASTM F1506, CAN/CGSB 155.20, CSA Z462, EN ISO 11611 Class 1"
+    "details": "UL Certified to NFPA 2112, #5242OR"
   },
   {
     "sku": "BMFR-2",
-    "name": "Atlas Guardian FR/AR OHSA Hi Vis Bomber Jacket #2153OR",
+    "name": "Atlas Guardian FR/AR OHSA Hi Vis Bomber Jacket",
     "category": "Electrical",
-    "sizes": "S - 5XL",
+    "sizes": "XS - 7XL",
     "badge": "",
     "colors": [
       "#ff6600"
@@ -153,13 +153,13 @@ export const allProducts: Product[] = [
     "img": "",
     "imgs": [],
     "material": "FR/AR Hi-Vis fabric, OHSA compliant, orange high-visibility",
-    "details": "UL Certified to NFPA 2112, NFPA 70E, ASTM F1506, CAN/CGSB 155.20, CSA Z462, EN ISO 11611 Class 1"
+    "details": "UL Certified to NFPA 2112, #2153OR"
   },
   {
     "sku": "BMFR-3",
-    "name": "Atlas Guardian FR/AR Hi Vis OHSA Parka #2151OR",
+    "name": "Atlas Guardian FR/AR Hi Vis OHSA Parka",
     "category": "Electrical",
-    "sizes": "S - 5XL",
+    "sizes": "XS - 7XL",
     "badge": "",
     "colors": [
       "#ff6600"
@@ -168,13 +168,13 @@ export const allProducts: Product[] = [
     "img": "",
     "imgs": [],
     "material": "FR/AR Hi-Vis fabric, OHSA compliant, orange high-visibility",
-    "details": "UL Certified to NFPA 2112, NFPA 70E, ASTM F1506, CAN/CGSB 155.20, CSA Z462, EN ISO 11611 Class 1"
+    "details": "UL Certified to NFPA 2112, #2151OR"
   },
   {
     "sku": "BMFR-4",
-    "name": "Atlas Guardian FR/AR OHSA Hi Vis Insulated Bibs #2152OR",
+    "name": "Atlas Guardian FR/AR OHSA Hi Vis Insulated Bibs",
     "category": "Electrical",
-    "sizes": "S - 5XL",
+    "sizes": "XS - 7XL",
     "badge": "",
     "colors": [
       "#ff6600"
@@ -183,11 +183,11 @@ export const allProducts: Product[] = [
     "img": "",
     "imgs": [],
     "material": "FR/AR Hi-Vis fabric, OHSA compliant, orange high-visibility",
-    "details": "UL Certified to NFPA 2112, NFPA 70E, ASTM F1506, CAN/CGSB 155.20, CSA Z462, EN ISO 11611 Class 1"
+    "details": "UL Certified to NFPA 2112, #2152OR"
   },
   {
     "sku": "BMFR-5",
-    "name": "Atlas Guardian FR/AR OHSA Hi Vis Pant #405NB",
+    "name": "Atlas Guardian FR/AR OHSA Hi Vis Pant",
     "category": "Electrical",
     "sizes": "W/L",
     "badge": "",
@@ -198,13 +198,13 @@ export const allProducts: Product[] = [
     "img": "",
     "imgs": [],
     "material": "FR/AR Hi-Vis fabric, OHSA compliant, orange high-visibility",
-    "details": "UL Certified to NFPA 2112, NFPA 70E, ASTM F1506, CAN/CGSB 155.20, CSA Z462, EN ISO 11611 Class 1"
+    "details": "UL Certified to NFPA 2112, #405NB"
   },
   {
     "sku": "BMFR-6",
-    "name": "Atlas Guardian FR/AR OHSA Hi Vis Coveralls #1052OR",
+    "name": "Atlas Guardian FR/AR OHSA Hi Vis Coveralls",
     "category": "Electrical",
-    "sizes": "S - 5XL",
+    "sizes": "XS - 7XL",
     "badge": "",
     "colors": [
       "#ff6600"
@@ -213,13 +213,13 @@ export const allProducts: Product[] = [
     "img": "",
     "imgs": [],
     "material": "FR/AR Hi-Vis fabric, OHSA compliant, orange high-visibility",
-    "details": "UL Certified to NFPA 2112, NFPA 70E, ASTM F1506, CAN/CGSB 155.20, CSA Z462, EN ISO 11611 Class 1"
+    "details": "UL Certified to NFPA 2112, #1052OR"
   },
   {
     "sku": "BMFR-7",
-    "name": "Atlas Guardian FR/AR OHSA Hi Vis Summer Bibs #3052O",
+    "name": "Atlas Guardian FR/AR OHSA Hi Vis Summer Bibs",
     "category": "Electrical",
-    "sizes": "S - 5XL",
+    "sizes": "XS - 7XL",
     "badge": "",
     "colors": [
       "#ff6600"
@@ -228,13 +228,13 @@ export const allProducts: Product[] = [
     "img": "",
     "imgs": [],
     "material": "FR/AR Hi-Vis fabric, OHSA compliant, orange high-visibility",
-    "details": "UL Certified to NFPA 2112, NFPA 70E, ASTM F1506, CAN/CGSB 155.20, CSA Z462, EN ISO 11611 Class 1"
+    "details": "UL Certified to NFPA 2112, #3052O"
   },
   {
     "sku": "BMFR-8",
-    "name": "Atlas Guardian FR/AR OHSA Hi Vis Pullover Hoodie #501OR",
+    "name": "Atlas Guardian FR/AR OHSA Hi Vis Pullover Hoodie",
     "category": "Electrical",
-    "sizes": "S - 5XL",
+    "sizes": "XS - 7XL",
     "badge": "",
     "colors": [
       "#ff6600"
@@ -243,13 +243,13 @@ export const allProducts: Product[] = [
     "img": "",
     "imgs": [],
     "material": "FR/AR Hi-Vis fabric, OHSA compliant, orange high-visibility",
-    "details": "UL Certified to NFPA 2112, NFPA 70E, ASTM F1506, CAN/CGSB 155.20, CSA Z462, EN ISO 11611 Class 1"
+    "details": "UL Certified to NFPA 2112, #501OR"
   },
   {
     "sku": "BMFR-9",
-    "name": "Atlas Guardian FR/AR OHSA Hi Vis Zip Up Hoodie #502OR",
+    "name": "Atlas Guardian FR/AR OHSA Hi Vis Zip Up Hoodie",
     "category": "Electrical",
-    "sizes": "S - 5XL",
+    "sizes": "XS - 7XL",
     "badge": "",
     "colors": [
       "#ff6600"
@@ -258,13 +258,13 @@ export const allProducts: Product[] = [
     "img": "",
     "imgs": [],
     "material": "FR/AR Hi-Vis fabric, OHSA compliant, orange high-visibility",
-    "details": "UL Certified to NFPA 2112, NFPA 70E, ASTM F1506, CAN/CGSB 155.20, CSA Z462, EN ISO 11611 Class 1"
+    "details": "UL Certified to NFPA 2112, #502OR"
   },
   {
     "sku": "BMFR-10",
-    "name": "Atlas Guardian FR/AR OHSA Hi Vis Henley Shirt #503OR",
+    "name": "Atlas Guardian FR/AR OHSA Hi Vis Henley Shirt",
     "category": "Electrical",
-    "sizes": "S - 5XL",
+    "sizes": "XS - 7XL",
     "badge": "",
     "colors": [
       "#ff6600"
@@ -273,13 +273,13 @@ export const allProducts: Product[] = [
     "img": "",
     "imgs": [],
     "material": "FR/AR Hi-Vis fabric, OHSA compliant, orange high-visibility",
-    "details": "UL Certified to NFPA 2112, NFPA 70E, ASTM F1506, CAN/CGSB 155.20, CSA Z462, EN ISO 11611 Class 1"
+    "details": "UL Certified to NFPA 2112, #503OR"
   },
   {
     "sku": "BMFR-11",
-    "name": "Atlas Guardian FR/AR OHSA Hi Vis Work Shirt #504OR",
+    "name": "Atlas Guardian FR/AR OHSA Hi Vis Work Shirt",
     "category": "Electrical",
-    "sizes": "S - 5XL",
+    "sizes": "XS - 7XL",
     "badge": "",
     "colors": [
       "#ff6600"
@@ -288,13 +288,13 @@ export const allProducts: Product[] = [
     "img": "",
     "imgs": [],
     "material": "FR/AR Hi-Vis fabric, OHSA compliant, orange high-visibility",
-    "details": "UL Certified to NFPA 2112, NFPA 70E, ASTM F1506, CAN/CGSB 155.20, CSA Z462, EN ISO 11611 Class 1"
+    "details": "UL Certified to NFPA 2112, #504OR"
   },
   {
     "sku": "BMFR-12",
-    "name": "Atlas Guardian FR/AR OHSA Hi Vis T-Shirt #506OR",
+    "name": "Atlas Guardian FR/AR OHSA Hi Vis T-Shirt",
     "category": "Electrical",
-    "sizes": "S - 5XL",
+    "sizes": "XS - 7XL",
     "badge": "",
     "colors": [
       "#ff6600"
@@ -303,13 +303,13 @@ export const allProducts: Product[] = [
     "img": "",
     "imgs": [],
     "material": "FR/AR Hi-Vis fabric, OHSA compliant, orange high-visibility",
-    "details": "UL Certified to NFPA 2112, NFPA 70E, ASTM F1506, CAN/CGSB 155.20, CSA Z462, EN ISO 11611 Class 1"
+    "details": "UL Certified to NFPA 2112, #506OR"
   },
   {
     "sku": "BMFR-13",
-    "name": "Atlas Guardian FR/AR OHSA Hi Vis Long Sleeve T-Shirt #507OR",
+    "name": "Atlas Guardian FR/AR OHSA Hi Vis Long Sleeve T-Shirt ",
     "category": "Electrical",
-    "sizes": "S - 5XL",
+    "sizes": "XS - 7XL",
     "badge": "",
     "colors": [
       "#ff6600"
@@ -318,7 +318,7 @@ export const allProducts: Product[] = [
     "img": "",
     "imgs": [],
     "material": "FR/AR Hi-Vis fabric, OHSA compliant, orange high-visibility",
-    "details": "UL Certified to NFPA 2112, NFPA 70E, ASTM F1506, CAN/CGSB 155.20, CSA Z462, EN ISO 11611 Class 1"
+    "details": "UL Certified to NFPA 2112, #507OR"
   }
 ];
 

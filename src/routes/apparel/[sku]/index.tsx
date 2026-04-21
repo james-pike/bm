@@ -16,6 +16,19 @@ const SKU_IMG_OVERRIDE: Record<string, string> = {
   "BMGC-6": "/duckgrey.png",
   "BMGC-7": "/cooler-black.png",
   "BMGC-8": "/backpack-black.png",
+  "BMFR-1": "/5242.png",
+  "BMFR-2": "/2153.png",
+  "BMFR-3": "/2151.png",
+  "BMFR-4": "/2152.png",
+  "BMFR-5": "/405nb.png",
+  "BMFR-6": "/1052.png",
+  "BMFR-7": "/3052.png",
+  "BMFR-8": "/501.png",
+  "BMFR-9": "/502.png",
+  "BMFR-10": "/503.png",
+  "BMFR-11": "/504.png",
+  "BMFR-12": "/506.png",
+  "BMFR-13": "/507.png",
 };
 
 const CATEGORY_FALLBACK_IMG: Record<string, string> = {
@@ -76,7 +89,12 @@ export default component$(() => {
   });
 
   const waistLengthSkus = new Set(["CAR-12", "CAR-14", "BMFR-5"]);
-  const variantSkus = new Set(["CAR-11", "CAR-17"]);
+  const variantSkus = new Set([
+    "CAR-11", "CAR-17",
+    "BMFR-1", "BMFR-2", "BMFR-3", "BMFR-4",
+    "BMFR-6", "BMFR-7",
+    "BMFR-10", "BMFR-11", "BMFR-12", "BMFR-13",
+  ]);
   const variantOptions = ["Regular", "Tall"];
   const waistOptions = ["28", "29", "30", "31", "32", "33", "34", "35", "36", "38", "40", "42", "44", "46", "48", "50"];
   const lengthOptions = ["30", "32", "34", "36"];

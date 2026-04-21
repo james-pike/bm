@@ -13,6 +13,19 @@ const SKU_IMG_OVERRIDE: Record<string, string> = {
   "BMGC-6": "/duckgrey.png",
   "BMGC-7": "/cooler-black.png",
   "BMGC-8": "/backpack-black.png",
+  "BMFR-1": "/5242.png",
+  "BMFR-2": "/2153.png",
+  "BMFR-3": "/2151.png",
+  "BMFR-4": "/2152.png",
+  "BMFR-5": "/405nb.png",
+  "BMFR-6": "/1052.png",
+  "BMFR-7": "/3052.png",
+  "BMFR-8": "/501.png",
+  "BMFR-9": "/502.png",
+  "BMFR-10": "/503.png",
+  "BMFR-11": "/504.png",
+  "BMFR-12": "/506.png",
+  "BMFR-13": "/507.png",
 };
 
 const SKU_OBJECT_POSITION: Record<string, string> = {
@@ -83,7 +96,7 @@ export default component$(() => {
                   : allProducts.filter((p) => p.category !== "Electrical");
                 return (
                 <>
-                  <div class="hero__products-tab">
+                  <div class="hero__products-tab" id="products">
                     <span class="hero__products-tab-label">{isElectrical ? "Electrical Apparel" : "Good Catch Apparel"}</span>
                     <button
                       type="button"
@@ -115,12 +128,14 @@ export default component$(() => {
                 );
               })()}
             </div>
-            <div class="hero__print-cta">
-              <a href="/print/" class="hero__print-btn">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
-                Download / Print Catalog
-              </a>
-            </div>
+            {loginType.value !== "electrical" && (
+              <div class="hero__print-cta">
+                <a href="/print/" class="hero__print-btn">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+                  Download / Print Catalog
+                </a>
+              </div>
+            )}
           </div>
         </div>
 

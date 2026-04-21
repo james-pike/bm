@@ -28,6 +28,19 @@ const CART_SKU_IMG: Record<string, string> = {
   "BMGC-6": "/duckgrey.png",
   "BMGC-7": "/cooler-black.png",
   "BMGC-8": "/backpack-black.png",
+  "BMFR-1": "/5242.png",
+  "BMFR-2": "/2153.png",
+  "BMFR-3": "/2151.png",
+  "BMFR-4": "/2152.png",
+  "BMFR-5": "/405nb.png",
+  "BMFR-6": "/1052.png",
+  "BMFR-7": "/3052.png",
+  "BMFR-8": "/501.png",
+  "BMFR-9": "/502.png",
+  "BMFR-10": "/503.png",
+  "BMFR-11": "/504.png",
+  "BMFR-12": "/506.png",
+  "BMFR-13": "/507.png",
 };
 function cartItemImg(sku: string | undefined, existing: string | undefined): string {
   if (sku && CART_SKU_IMG[sku]) return CART_SKU_IMG[sku];
@@ -731,20 +744,12 @@ export default component$(() => {
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
                 {t("nav.home", locale.value)}
               </a>
-              {loginType.value === "electrical" && <>
-              <a href="/apparel/#work-wear" class={`nav-drawer__link ${loc.url.pathname.startsWith("/apparel") ? "active" : ""}`} onClick$={() => { menuOpen.value = false; window.dispatchEvent(new CustomEvent("select-category", { detail: "Work Wear" })); }}>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4M16 2v4M4 6h16v14a2 2 0 01-2 2H6a2 2 0 01-2-2V6z"/><path d="M4 6l-2 4v2h4V8"/><path d="M20 6l2 4v2h-4V8"/></svg>
-                {t("cat.Work Wear", locale.value)}
-              </a>
-              <a href="/apparel/#jackets" class="nav-drawer__link" onClick$={() => { menuOpen.value = false; window.dispatchEvent(new CustomEvent("select-category", { detail: "Jackets" })); }}>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2l5 6v12a2 2 0 01-2 2h-3V12h-6v10H6a2 2 0 01-2-2V8l5-6"/><path d="M9 2a3 3 0 006 0"/><line x1="12" y1="12" x2="12" y2="22"/></svg>
-                {t("cat.Jackets", locale.value)}
-              </a>
-              <a href="/apparel/#accessories" class="nav-drawer__link" onClick$={() => { menuOpen.value = false; window.dispatchEvent(new CustomEvent("select-category", { detail: "Accessories" })); }}>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7h-3a2 2 0 01-2-2V2"/><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V7z"/><path d="M12 11v6"/><path d="M9 14h6"/></svg>
-                {t("cat.Accessories", locale.value)}
-              </a>
-              </>}
+              {loginType.value === "electrical" && (
+                <a href="/#products" class="nav-drawer__link" onClick$={() => { menuOpen.value = false; const el = document.getElementById("products"); if (el) { const headerH = window.innerWidth <= 900 ? 49 : 58; const top = el.getBoundingClientRect().top + window.scrollY - headerH - 8; window.scrollTo({ top, behavior: "instant" }); } }}>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h7l-1 8 10-12h-7l1-8z"/></svg>
+                  Flame Resistant
+                </a>
+              )}
               {loginType.value !== "electrical" && (
               <a href="/print/" class={`nav-drawer__link ${loc.url.pathname === "/print/" ? "active" : ""}`} onClick$={() => (menuOpen.value = false)}>
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
@@ -774,22 +779,13 @@ export default component$(() => {
 
       <footer class="site-footer">
         <div class="site-footer__inner">
-          {loginType.value === "electrical" ? (
-          <nav class="site-footer__links">
-            <Link href="/">{t("nav.home", locale.value)}</Link>
-            <a href="/apparel/#work-wear" onClick$={(e) => { if (loc.url.pathname.startsWith("/apparel")) { e.preventDefault(); } window.dispatchEvent(new CustomEvent("select-category", { detail: "Work Wear" })); const headerH = window.innerWidth <= 900 ? 49 : 58; const grid = document.querySelector('.home-catalog .apparel-grid'); if (grid) { const top = grid.getBoundingClientRect().top + window.scrollY - headerH - 8; window.scrollTo({ top, behavior: 'instant' }); } }}>{t("cat.Work Wear", locale.value)}</a>
-            <a href="/apparel/#jackets" onClick$={(e) => { if (loc.url.pathname.startsWith("/apparel")) { e.preventDefault(); } window.dispatchEvent(new CustomEvent("select-category", { detail: "Jackets" })); const headerH = window.innerWidth <= 900 ? 49 : 58; const grid = document.querySelector('.home-catalog .apparel-grid'); if (grid) { const top = grid.getBoundingClientRect().top + window.scrollY - headerH - 8; window.scrollTo({ top, behavior: 'instant' }); } }}>{t("cat.Jackets", locale.value)}</a>
-            <a href="/apparel/#accessories" onClick$={(e) => { if (loc.url.pathname.startsWith("/apparel")) { e.preventDefault(); } window.dispatchEvent(new CustomEvent("select-category", { detail: "Accessories" })); const headerH = window.innerWidth <= 900 ? 49 : 58; const grid = document.querySelector('.home-catalog .apparel-grid'); if (grid) { const top = grid.getBoundingClientRect().top + window.scrollY - headerH - 8; window.scrollTo({ top, behavior: 'instant' }); } }}>{t("cat.Accessories", locale.value)}</a>
-          </nav>
-          ) : (
-          !loc.url.pathname.startsWith("/print") && (
+          {loginType.value !== "electrical" && !loc.url.pathname.startsWith("/print") && (
           <nav class="site-footer__links site-footer__links--print">
             <Link href="/print/">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
               Download / Print Catalog
             </Link>
           </nav>
-          )
           )}
           <div class="site-footer__contact site-footer__contact--stacked">
             <span class="site-footer__contact-label">Contact</span>
