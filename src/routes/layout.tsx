@@ -217,7 +217,7 @@ export const useSubmitOrder = routeAction$(
   const itemRows = items.map((i) =>
     `<tr>
       <td style="padding:6px 12px;border-bottom:1px solid #eee">${esc(i.name)}${i.sku ? ` <span style="color:#999;font-size:12px">(${esc(i.sku)})</span>` : ""}</td>
-      <td style="padding:6px 12px;border-bottom:1px solid #eee">${i.color ? esc(cName(i.color)) + " / " : ""}${esc(i.size)}${i.waist ? ` / W${esc(i.waist)} L${esc(i.length)}` : ""}</td>
+      <td style="padding:6px 12px;border-bottom:1px solid #eee">${i.color ? esc(cName(i.color)) + " / " : ""}${esc(i.size)}</td>
       <td style="padding:6px 12px;border-bottom:1px solid #eee;text-align:center">${i.quantity}</td>
       <td style="padding:6px 12px;border-bottom:1px solid #eee;text-align:right">$${(((Number(i.price) || 0) * i.quantity)).toFixed(2)}</td>
     </tr>`
@@ -856,7 +856,7 @@ export default component$(() => {
                             <div>
                             <Link href={item.sku ? `/apparel/${item.sku}/` : "/apparel/"} class="cart-table__name-link">{stripColorSuffix(item.name)}</Link>
                             <div class="cart-table__meta">
-                              <span>{item.color ? `${colorName(item.color, locale.value)} / ` : ""}{item.size}{item.waist ? ` / W${item.waist} L${item.length}` : ""}</span>
+                              <span>{item.color ? `${colorName(item.color, locale.value)} / ` : ""}{item.size}</span>
                             </div>
                             </div>
                             </div>
@@ -901,8 +901,7 @@ export default component$(() => {
                       <div class="cart-drawer__summary-list">
                         {cart.items.map((item) => (
                           <div key={`${item.name}-${item.size}`} class="cart-drawer__summary-item">
-                            <span>{item.quantity}x {stripColorSuffix(item.name)}</span>
-
+                            <span>{item.quantity}x {stripColorSuffix(item.name)}{(item.color || item.size) ? ` — ${item.color ? colorName(item.color, locale.value) : ""}${item.color && item.size ? " / " : ""}${item.size || ""}` : ""}</span>
                           </div>
                         ))}
                       </div>
