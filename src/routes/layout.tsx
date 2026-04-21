@@ -875,6 +875,7 @@ export default component$(() => {
                             <div>
                             <Link href={item.sku ? `/apparel/${item.sku}/` : "/apparel/"} class="cart-table__name-link">{stripColorSuffix(item.name)}</Link>
                             <div class="cart-table__meta">
+                              {item.color && <span class="cart-table__swatch" style={{ background: item.color }} aria-hidden="true" />}
                               <span>{item.color ? `${colorName(item.color, locale.value)} / ` : ""}{item.size}</span>
                             </div>
                             </div>
@@ -920,7 +921,10 @@ export default component$(() => {
                       <div class="cart-drawer__summary-list">
                         {cart.items.map((item) => (
                           <div key={`${item.name}-${item.size}`} class="cart-drawer__summary-item">
-                            <span>{item.quantity}x {stripColorSuffix(item.name)}{(item.color || item.size) ? ` — ${item.color ? colorName(item.color, locale.value) : ""}${item.color && item.size ? " / " : ""}${item.size || ""}` : ""}</span>
+                            <span>
+                              {item.color && <span class="cart-drawer__summary-swatch" style={{ background: item.color }} aria-hidden="true" />}
+                              {item.quantity}x {stripColorSuffix(item.name)}{(item.color || item.size) ? ` — ${item.color ? colorName(item.color, locale.value) : ""}${item.color && item.size ? " / " : ""}${item.size || ""}` : ""}
+                            </span>
                           </div>
                         ))}
                       </div>

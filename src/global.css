@@ -4270,6 +4270,8 @@ body:has(.apparel-page) .site-header .cart-btn svg { stroke: #ffffff; }
   align-items: center;
   gap: 0.4rem;
 }
+.cart-table__swatch { display: inline-block; width: 12px; height: 12px; border-radius: 2px; border: 1px solid rgba(0,0,0,0.15); flex-shrink: 0; }
+.cart-drawer__summary-swatch { display: inline-block; width: 10px; height: 10px; border-radius: 2px; border: 1px solid rgba(0,0,0,0.15); margin-right: 6px; vertical-align: -1px; }
 .cart-table__remove {
   background: var(--ce-gray-100);
   border: none;
