@@ -5929,7 +5929,8 @@ details[open] > .cart-drawer__checkout-title::after {
   .product-modal__actions { flex-direction: row; }
   .cart-drawer__header { display: none; }
   .cart-drawer__close-desktop { display: none; }
-  .cart-drawer__items { padding: 0.4rem 0.75rem; margin: 2px 0; border-radius: 0; }
+  .cart-drawer__back-btn { padding-top: 0.9rem; }
+  .cart-drawer__items { padding: 0.75rem 0.75rem 0.4rem; margin: 0.35rem 0.1rem 2px; border-radius: 0; }
   .cart-drawer__summary { margin: 2px 0; border-radius: 0; }
   .checkout-modal__form { margin: 2px 0; border-radius: 0; }
   .cart-item { padding: 0.5rem 0; gap: 0.5rem; }
