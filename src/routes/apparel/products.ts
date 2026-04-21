@@ -192,12 +192,12 @@ export const allProducts: Product[] = [
     "sizes": "W/L",
     "badge": "",
     "colors": [
-      "#ff6600"
+      "#2c3e50"
     ],
     "price": 0,
     "img": "",
     "imgs": [],
-    "material": "FR/AR Hi-Vis fabric, OHSA compliant, orange high-visibility",
+    "material": "FR/AR Hi-Vis fabric, OHSA compliant",
     "details": "UL Certified to NFPA 2112, #405NB"
   },
   {
