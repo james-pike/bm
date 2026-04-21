@@ -41,6 +41,10 @@ function resolveProductImg(sku: string, category: string, fallback: string) {
   return SKU_IMG_OVERRIDE[sku] || fallback || CATEGORY_FALLBACK_IMG[category] || "/truck2.webp";
 }
 
+function cartKey(loginType: string): string {
+  return `ce_cart_${loginType || "clothing"}`;
+}
+
 // Pairs of SKUs representing the same product in different colors. Clicking a swatch
 // navigates between them so the image/name/sku update without reloading the whole page.
 const SKU_SIBLING: Record<string, string> = {
@@ -111,7 +115,7 @@ export default component$(() => {
         ? `${selectedSize.value} ${selectedVariant.value}`
         : selectedSize.value;
     try {
-      const saved = localStorage.getItem("ce_cart");
+      const saved = localStorage.getItem(cartKey(loginType.value));
       const items = saved ? JSON.parse(saved) : [];
       const existing = items.find(
         (i: any) => i.name === p.name && i.size === sizeVal && i.color === selectedColor.value
@@ -138,7 +142,7 @@ export default component$(() => {
         }
         items.push(item);
       }
-      localStorage.setItem("ce_cart", JSON.stringify(items));
+      localStorage.setItem(cartKey(loginType.value), JSON.stringify(items));
       window.dispatchEvent(new CustomEvent("cart-updated"));
     } catch (err) { console.error("addToCart error:", err); }
     {
@@ -162,7 +166,7 @@ export default component$(() => {
         ? `${selectedSize.value} ${selectedVariant.value}`
         : selectedSize.value;
     try {
-      const saved = localStorage.getItem("ce_cart");
+      const saved = localStorage.getItem(cartKey(loginType.value));
       const items = saved ? JSON.parse(saved) : [];
       const item: any = {
         name: p.name,
@@ -182,7 +186,7 @@ export default component$(() => {
         item.variant = selectedVariant.value;
       }
       items.push(item);
-      localStorage.setItem("ce_cart", JSON.stringify(items));
+      localStorage.setItem(cartKey(loginType.value), JSON.stringify(items));
       window.dispatchEvent(new CustomEvent("cart-updated"));
       window.dispatchEvent(new CustomEvent("open-cart"));
     } catch { /* ignore */ }

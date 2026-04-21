@@ -393,10 +393,12 @@ export default component$(() => {
   // Load cart from localStorage — eager strategy to ensure it runs immediately
   // eslint-disable-next-line qwik/no-use-visible-task
   useVisibleTask$(
-    ({ cleanup }) => {
+    ({ track, cleanup }) => {
+    track(() => loginType.value);
+    const cartStorageKey = () => `ce_cart_${loginType.value || "clothing"}`;
     const loadCart = () => {
       try {
-        const saved = localStorage.getItem("ce_cart");
+        const saved = localStorage.getItem(cartStorageKey());
         if (saved) {
           cart.items = JSON.parse(saved) as CartItem[];
         } else {
@@ -414,7 +416,8 @@ export default component$(() => {
 
   const saveCart = $(() => {
     try {
-      localStorage.setItem("ce_cart", JSON.stringify(cart.items));
+      const key = `ce_cart_${loginType.value || "clothing"}`;
+      localStorage.setItem(key, JSON.stringify(cart.items));
       const count = cart.items.reduce((sum, i) => sum + i.quantity, 0);
       document.cookie = `ce_cart_count=${count};path=/;max-age=31536000`;
     } catch { /* ignore */ }
