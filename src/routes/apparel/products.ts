@@ -7,7 +7,7 @@ export interface Product { sku: string; name: string; category: string; sizes: s
 export const allProducts: Product[] = [
   {
     "sku": "BMGC-1",
-    "name": "Paxton 1/4 Zip Sweatshirt - Black",
+    "name": "Paxton 1/4-Zip Sweatshirt - Black",
     "category": "Good Catch",
     "sizes": "S - 4XL",
     "badge": "New",
@@ -22,7 +22,7 @@ export const allProducts: Product[] = [
   },
   {
     "sku": "BMGC-2",
-    "name": "Paxton 1/4 Zip Sweatshirt - Grey",
+    "name": "Paxton 1/4-Zip Sweatshirt - Grey",
     "category": "Good Catch",
     "sizes": "S - 4XL",
     "badge": "New",
@@ -97,18 +97,18 @@ export const allProducts: Product[] = [
   },
   {
     "sku": "BMGC-7",
-    "name": "Insulated 12 Can Lunch Cooler - Black",
+    "name": "Marquette 1/4-Zip Mock Neck Sweatshirt - Black",
     "category": "Good Catch",
-    "sizes": "One Size",
-    "badge": "",
+    "sizes": "S - 4XL",
+    "badge": "New",
     "colors": [
       "#1a1a18"
     ],
-    "price": 42.99,
+    "price": 0,
     "img": "",
     "imgs": [],
-    "material": "600-denier polyester with Rain Defender durable water repellent, PEVA liner",
-    "details": "Fully insulated main compartment keeps contents cool up to 8 hours, Insulated top compartment for food separation, Front velcro pocket for condiments and utensils, Adjustable shoulder strap and top handle, Dimensions 10.5 x 9 x 6.5 inches, #B0000546"
+    "material": "10.5-ounce, 59% cotton / 41% polyester blend",
+    "details": "Mock neck collar, Quarter-length zipper with storm flap, Front handwarmer pocket, Stretchable spandex-reinforced rib-knit cuffs and waistband, Carhartt label sewn on pocket, Imported, #105294"
   },
   {
     "sku": "BMGC-8",
@@ -141,6 +141,21 @@ export const allProducts: Product[] = [
     "details": "UL Certified to NFPA 2112, #405NB"
   },
   {
+    "sku": "BMGC-9",
+    "name": "Insulated 12 Can Lunch Cooler - Black",
+    "category": "Good Catch",
+    "sizes": "One Size",
+    "badge": "",
+    "colors": [
+      "#1a1a18"
+    ],
+    "price": 42.99,
+    "img": "",
+    "imgs": [],
+    "material": "600-denier polyester with Rain Defender durable water repellent, PEVA liner",
+    "details": "Fully insulated main compartment keeps contents cool up to 8 hours, Insulated top compartment for food separation, Front velcro pocket for condiments and utensils, Adjustable shoulder strap and top handle, Dimensions 10.5 x 9 x 6.5 inches, #B0000546"
+  },
+  {
     "sku": "BMFR-1",
     "name": "Atlas Guardian FR/AR OHSA Hi Vis Spring Jacket ",
     "category": "Electrical",
@@ -154,21 +169,6 @@ export const allProducts: Product[] = [
     "imgs": [],
     "material": "FR/AR Hi-Vis fabric, OHSA compliant, orange high-visibility",
     "details": "UL Certified to NFPA 2112, #5242OR"
-  },
-  {
-    "sku": "BMGC-9",
-    "name": "Marquette 1/4-Zip Mock-Neck Sweatshirt - Black",
-    "category": "Good Catch",
-    "sizes": "S - 4XL",
-    "badge": "New",
-    "colors": [
-      "#1a1a18"
-    ],
-    "price": 0,
-    "img": "",
-    "imgs": [],
-    "material": "10.5-ounce, 59% cotton / 41% polyester blend (Heather Gray: 70% cotton / 30% polyester)",
-    "details": "Mock neck collar, Quarter-length zipper with storm flap, Front handwarmer pocket, Stretchable spandex-reinforced rib-knit cuffs and waistband, Carhartt label sewn on pocket, Imported, #105294"
   },
   {
     "sku": "BMFR-3",
