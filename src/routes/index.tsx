@@ -13,6 +13,7 @@ const SKU_IMG_OVERRIDE: Record<string, string> = {
   "BMGC-6": "/duckgrey.png",
   "BMGC-7": "/cooler-black.png",
   "BMGC-8": "/backpack-black.png",
+  "BMGC-9": "/105294_BLK_MF22_e.png",
   "BMFR-1": "/5242.png",
   "BMFR-2": "/2153.png",
   "BMFR-3": "/2151.png",
@@ -33,7 +34,7 @@ const SKU_OBJECT_POSITION: Record<string, string> = {
 
 const SKU_CONTAIN: Record<string, boolean> = {
   "BMGC-1": true, "BMGC-2": true, "BMGC-3": true, "BMGC-4": true,
-  "BMGC-5": true, "BMGC-6": true, "BMGC-7": true, "BMGC-8": true,
+  "BMGC-5": true, "BMGC-6": true, "BMGC-7": true, "BMGC-8": true, "BMGC-9": true,
   "BMFR-1": true, "BMFR-2": true, "BMFR-3": true, "BMFR-4": true,
   "BMFR-5": true, "BMFR-6": true, "BMFR-7": true, "BMFR-8": true,
   "BMFR-9": true, "BMFR-10": true, "BMFR-11": true, "BMFR-12": true,

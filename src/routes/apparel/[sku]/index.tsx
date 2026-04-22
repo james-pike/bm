@@ -16,6 +16,7 @@ const SKU_IMG_OVERRIDE: Record<string, string> = {
   "BMGC-6": "/duckgrey.png",
   "BMGC-7": "/cooler-black.png",
   "BMGC-8": "/backpack-black.png",
+  "BMGC-9": "/105294_BLK_MF22_e.png",
   "BMFR-1": "/5242.png",
   "BMFR-2": "/2153.png",
   "BMFR-3": "/2151.png",
@@ -95,6 +96,7 @@ export default component$(() => {
   const waistLengthSkus = new Set(["CAR-12", "CAR-14", "BMFR-5"]);
   const variantSkus = new Set([
     "CAR-11", "CAR-17",
+    "BMGC-9",
     "BMFR-1", "BMFR-2", "BMFR-3", "BMFR-4",
     "BMFR-6", "BMFR-7",
     "BMFR-10", "BMFR-11", "BMFR-12", "BMFR-13",

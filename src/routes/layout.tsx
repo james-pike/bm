@@ -28,6 +28,7 @@ const CART_SKU_IMG: Record<string, string> = {
   "BMGC-6": "/duckgrey.png",
   "BMGC-7": "/cooler-black.png",
   "BMGC-8": "/backpack-black.png",
+  "BMGC-9": "/105294_BLK_MF22_e.png",
   "BMFR-1": "/5242.png",
   "BMFR-2": "/2153.png",
   "BMFR-3": "/2151.png",

@@ -18,6 +18,7 @@ const SKU_IMG_OVERRIDE: Record<string, string> = {
   "BMGC-6": "/duckgrey.png",
   "BMGC-7": "/cooler-black.png",
   "BMGC-8": "/backpack-black.png",
+  "BMGC-9": "/105294_BLK_MF22_e.png",
 };
 
 const CATEGORY_FALLBACK_IMG: Record<string, string> = {

@@ -156,6 +156,21 @@ export const allProducts: Product[] = [
     "details": "UL Certified to NFPA 2112, #5242OR"
   },
   {
+    "sku": "BMGC-9",
+    "name": "Marquette 1/4-Zip Mock-Neck Sweatshirt - Black",
+    "category": "Good Catch",
+    "sizes": "S - 4XL",
+    "badge": "New",
+    "colors": [
+      "#1a1a18"
+    ],
+    "price": 0,
+    "img": "",
+    "imgs": [],
+    "material": "10.5-ounce, 59% cotton / 41% polyester blend (Heather Gray: 70% cotton / 30% polyester)",
+    "details": "Mock neck collar, Quarter-length zipper with storm flap, Front handwarmer pocket, Stretchable spandex-reinforced rib-knit cuffs and waistband, Carhartt label sewn on pocket, Imported, #105294"
+  },
+  {
     "sku": "BMFR-3",
     "name": "Atlas Guardian FR/AR Hi Vis OHSA Parka",
     "category": "Electrical",
