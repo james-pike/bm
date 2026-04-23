@@ -776,12 +776,6 @@ export default component$(() => {
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
                 {t("nav.home", locale.value)}
               </a>
-              {loginType.value === "electrical" && (
-                <a href="/#products" class="nav-drawer__link" onClick$={() => { menuOpen.value = false; const el = document.getElementById("products"); if (el) { const headerH = window.innerWidth <= 900 ? 49 : 58; const top = el.getBoundingClientRect().top + window.scrollY - headerH - 8; window.scrollTo({ top, behavior: "instant" }); } }}>
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h7l-1 8 10-12h-7l1-8z"/></svg>
-                  {t("nav.flameresistant", locale.value)}
-                </a>
-              )}
             </div>
             <div class="nav-drawer__footer">
               <button class="nav-drawer__locale" onClick$={() => { toggleLocale(); }}>
