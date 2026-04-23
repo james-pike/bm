@@ -4884,8 +4884,8 @@ details[open] > .cart-drawer__checkout-title::after {
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 0px auto auto;
     align-items: stretch;
-    row-gap: 10px;
-    column-gap: 9px;
+    row-gap: 9px;
+    column-gap: 8px;
     padding: 0 10px 8px;
     border-radius: 12px;
     overflow: hidden;
@@ -5539,6 +5539,13 @@ details[open] > .cart-drawer__checkout-title::after {
   .logout-form { display: inline-flex; }
   .hero-card-header__btn--logout { display: inline-flex; }
   .hero { margin-top: 0; padding-top: 0; }
+  .site-header { height: 64px; }
+  .site-header__inner { height: 64px; }
+  .site-header__nav { gap: 8px !important; }
+  .site-header .cart-btn,
+  .site-header .locale-btn,
+  .site-header .logout-btn,
+  .site-header .hamburger-btn { border-radius: 0 !important; }
   .home-catalog__header { top: 58px; margin-top: 0; }
   .apparel-titlebar { top: 58px; margin-top: 0; }
 
@@ -5831,8 +5838,8 @@ details[open] > .cart-drawer__checkout-title::after {
   .hero-categories .category-card { aspect-ratio: 4 / 3; }
 }
 
+.site-footer__links--print { display: none; }
 @media (max-width: 600px) {
-  .site-footer__links--print { display: none; }
   .hero__logo-spacer--mobile {
     align-self: stretch;
     width: auto;
@@ -6022,8 +6029,9 @@ details[open] > .cart-drawer__checkout-title::after {
   align-items: center;
   justify-content: center;
   background: transparent;
-  border: 1px solid rgba(0,0,0,0.15);
-  padding: 0 12px;
+  border: 1px solid rgba(0,0,0,0.12);
+  padding: 0;
+  width: 34px;
   height: 34px;
   cursor: pointer;
   color: var(--ce-gray-700);
@@ -6036,8 +6044,8 @@ details[open] > .cart-drawer__checkout-title::after {
   display: none;
   align-items: center;
   gap: 6px;
-  background: #ffffff;
-  border: 1px solid rgba(0,0,0,0.15);
+  background: var(--ce-gray-100);
+  border: 1px solid rgba(0,0,0,0.06);
   padding: 7px 14px;
   margin-left: 8px;
   color: var(--ce-gray-700);
@@ -6049,9 +6057,18 @@ details[open] > .cart-drawer__checkout-title::after {
   transition: background 0.15s ease, color 0.15s ease;
 }
 .hero__products-tab-print svg { color: var(--ce-green); stroke: var(--ce-green); }
-.hero__products-tab-print:hover { background: #fbfbfa; color: var(--ce-gray-900); border-color: var(--ce-green); }
-@media (min-width: 768px) {
+.hero__products-tab-print:hover { background: var(--ce-gray-200); color: var(--ce-gray-900); border-color: rgba(0,0,0,0.08); }
+.hero__products-tab-print-short { display: none; }
+@media (max-width: 600px) {
+  .hero__products-tab-print-full { display: none; }
+  .hero__products-tab-print-short { display: inline; }
+}
+@media (min-width: 601px) {
   .hero__logo-group .hero__products-tab-print { display: inline-flex; }
+}
+@media (max-width: 600px) {
+  .hero__products-tab .hero__products-tab-print { display: inline-flex; padding: 6px 10px; font-size: 0.72rem; }
+  .hero__products-tab-label { letter-spacing: 0.02em; }
 }
 @media (max-width: 600px) {
   .hero__products-tab { display: flex; margin: 8px -0.52rem 0; }
@@ -6066,7 +6083,7 @@ details[open] > .cart-drawer__checkout-title::after {
     grid-row: 3;
     align-self: start;
     margin: 8px 0.55rem 0;
-    padding: 0.35rem 0.05rem 0.35rem 1rem;
+    padding: 0.55rem 0.05rem 0.55rem 1rem;
     border-top: 1px solid rgba(0,0,0,0.25);
   }
   .hero__logo-group .hero__products-tab-toggle { display: inline-flex; }
@@ -6080,8 +6097,9 @@ details[open] > .cart-drawer__checkout-title::after {
     grid-column: 1 / -1;
     grid-row: 3;
     align-self: start;
-    padding: 0.5rem 0.52rem 0.3rem 1rem;
-    margin-bottom: -4px;
+    padding: 0.4rem 0.52rem 0.4rem 1rem;
+    margin-bottom: -3px;
+    align-items: center;
   }
   .hero__logo-group .hero__products-tab-toggle { display: none; }
   .hero__logo-group .hero-categories { grid-row: 4; }
@@ -6169,7 +6187,7 @@ details[open] > .cart-drawer__checkout-title::after {
   gap: 6px;
   background: #ffffff;
   color: var(--ce-gray-700);
-  border: 1px solid rgba(0,0,0,0.15);
+  border: 1px solid rgba(0,0,0,0.06);
   padding: 7px 10px;
   font-size: 0.78rem;
   font-weight: 600;
@@ -6179,7 +6197,7 @@ details[open] > .cart-drawer__checkout-title::after {
   transition: background 0.15s ease, color 0.15s ease;
 }
 .print-page__btn svg { color: var(--ce-green); stroke: var(--ce-green); }
-.print-page__btn:hover { background: #fbfbfa; color: var(--ce-gray-900); border-color: var(--ce-green); }
+.print-page__btn:hover { background: #fbfbfa; color: var(--ce-gray-900); border-color: rgba(0,0,0,0.08); }
 .print-page__sheet-wrap {
   width: 100%;
   max-width: 8.5in;

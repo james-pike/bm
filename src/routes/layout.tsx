@@ -782,12 +782,6 @@ export default component$(() => {
                   {t("nav.flameresistant", locale.value)}
                 </a>
               )}
-              {loginType.value !== "electrical" && (
-              <a href="/print/" class={`nav-drawer__link ${loc.url.pathname === "/print/" ? "active" : ""}`} onClick$={() => (menuOpen.value = false)}>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
-                {t("nav.download.catalog", locale.value)}
-              </a>
-              )}
             </div>
             <div class="nav-drawer__footer">
               <button class="nav-drawer__locale" onClick$={() => { toggleLocale(); }}>

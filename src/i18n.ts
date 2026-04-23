@@ -13,6 +13,7 @@ const translations = {
   "tab.goodcatch": { en: "Good Catch Apparel", fr: "Vêtements Bonne Prise" },
   "tab.flameresistant": { en: "Flame Resistant", fr: "Vêtements Ignifuges" },
   "nav.download.catalog": { en: "Download Catalog", fr: "Catalogue PDF" },
+  "nav.catalog": { en: "Catalog", fr: "Catalogue" },
   "nav.download.print.catalog": { en: "Print / Download Catalog", fr: "Imprimer / Télécharger le catalogue" },
   "footer.contact": { en: "Contact", fr: "Contact" },
   "nav.home": { en: "Home", fr: "Accueil" },
