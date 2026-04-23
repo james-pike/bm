@@ -6067,6 +6067,7 @@ details[open] > .cart-drawer__checkout-title::after {
     align-self: start;
     margin: 8px 0.55rem 0;
     padding: 0.35rem 0.05rem 0.35rem 1rem;
+    border-top: 1px solid rgba(0,0,0,0.25);
   }
   .hero__logo-group .hero__products-tab-toggle { display: inline-flex; }
   .hero__logo-group .hero-categories { grid-row: 4; margin-top: 8px; padding: 0 0.55rem; }
