@@ -96,14 +96,44 @@ export default component$(() => {
   const waistLengthSkus = new Set(["CAR-12", "CAR-14", "BMFR-5"]);
   const variantSkus = new Set([
     "CAR-11", "CAR-17",
-    "BMGC-7",
+    "BMGC-1", "BMGC-2", "BMGC-3", "BMGC-4", "BMGC-5", "BMGC-6", "BMGC-7",
     "BMFR-1", "BMFR-2", "BMFR-3", "BMFR-4",
     "BMFR-6", "BMFR-7",
     "BMFR-10", "BMFR-11", "BMFR-12", "BMFR-13",
   ]);
+  const TALL_SIZES: Record<string, string> = {
+    "BMGC-1": "L - 3XL",
+    "BMGC-2": "L - 3XL",
+    "BMGC-3": "L - 2XL",
+    "BMGC-4": "L - 2XL",
+    "BMGC-5": "M - 4XL",
+    "BMGC-6": "L - 4XL",
+    "BMGC-7": "L - 3XL",
+  };
   const variantOptions = ["Regular", "Tall"];
   const waistOptions = ["28", "29", "30", "31", "32", "33", "34", "35", "36", "38", "40", "42", "44", "46", "48", "50"];
   const lengthOptions = ["30", "32", "34", "36"];
+
+  const availableSizes = useComputed$(() => {
+    const p = product.value;
+    if (!p) return [] as string[];
+    if (selectedVariant.value === "Tall" && TALL_SIZES[p.sku]) {
+      return expandSizes(TALL_SIZES[p.sku]);
+    }
+    return expandSizes(p.sizes);
+  });
+
+  // Reset selected size if it falls outside the variant's range
+  // eslint-disable-next-line qwik/no-use-visible-task
+  useVisibleTask$(({ track }) => {
+    track(() => selectedVariant.value);
+    track(() => product.value?.sku);
+    const sizes = availableSizes.value;
+    if (sizes.length > 0 && selectedSize.value && !sizes.includes(selectedSize.value)) {
+      const lIdx = sizes.indexOf("L");
+      selectedSize.value = lIdx !== -1 ? sizes[lIdx] : sizes[0];
+    }
+  });
 
   const addToCart = $(() => {
     const p = product.value;
@@ -313,7 +343,7 @@ export default component$(() => {
             <div class="product-modal__field">
               <label class="product-modal__label">{t("modal.size", locale.value)}</label>
               <div class="product-modal__options">
-                {expandSizes(p.sizes).map((size) => (
+                {availableSizes.value.map((size) => (
                   <button
                     key={size}
                     class={`product-modal__option ${selectedSize.value === size ? "active" : ""}`}

@@ -6029,6 +6029,26 @@ details[open] > .cart-drawer__checkout-title::after {
   transition: background 0.15s ease, color 0.15s ease;
 }
 .hero__products-tab-toggle:hover { background: rgba(0,0,0,0.04); color: var(--ce-gray-900); }
+.hero__products-tab-print {
+  display: none;
+  align-items: center;
+  gap: 6px;
+  background: var(--ce-gray-100);
+  border: 1px solid rgba(0,0,0,0.15);
+  padding: 6px 14px;
+  margin-left: auto;
+  color: var(--ce-gray-700);
+  text-decoration: none;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+.hero__products-tab-print:hover { background: var(--ce-gray-200); color: var(--ce-gray-900); }
+@media (min-width: 1025px) {
+  .hero__logo-group .hero__products-tab-print { display: inline-flex; }
+}
 @media (max-width: 600px) {
   .hero__products-tab { display: flex; margin: 8px -0.52rem 0; }
   .hero__logo-group .hero-categories { margin-top: 8px !important; }
@@ -6163,7 +6183,7 @@ details[open] > .cart-drawer__checkout-title::after {
   height: 11in;
   background: #ffffff;
   box-shadow: 0 4px 24px rgba(0,0,0,0.12), 0 1px 4px rgba(0,0,0,0.08);
-  padding: 0.6in 0.5in 0.5in;
+  padding: 0.55in 0.45in 0.4in;
   display: flex;
   flex-direction: column;
   color: #0a0a0a;
@@ -6195,10 +6215,10 @@ details[open] > .cart-drawer__checkout-title::after {
 .print-page__header {
   display: flex;
   align-items: center;
-  gap: 1rem;
-  border-bottom: 3px solid var(--ce-green);
-  padding-bottom: 0.6rem;
-  margin-bottom: 0.8rem;
+  gap: 0.85rem;
+  border-bottom: 2px solid var(--ce-green);
+  padding-bottom: 0.45rem;
+  margin-bottom: 0.6rem;
 }
 .print-page__brand {
   height: 56px;
@@ -6207,9 +6227,9 @@ details[open] > .cart-drawer__checkout-title::after {
 }
 .print-page__cluster {
   position: relative;
-  width: 180px;
+  width: 150px;
   flex-shrink: 0;
-  font-size: 0.55rem;
+  font-size: 0.5rem;
 }
 .print-page__cluster-img {
   width: 100%;
@@ -6249,11 +6269,11 @@ details[open] > .cart-drawer__checkout-title::after {
 }
 .print-page__title-block { flex: 1; min-width: 0; }
 .print-page__title {
-  font-size: 1.6rem;
+  font-size: 1.35rem;
   font-weight: 700;
   letter-spacing: 0.04em;
   text-transform: uppercase;
-  margin: 0 0 0.15rem;
+  margin: 0;
 }
 .print-page__subtitle {
   font-size: 0.85rem;
@@ -6261,11 +6281,11 @@ details[open] > .cart-drawer__checkout-title::after {
   margin: 0;
 }
 .print-page__grid {
-  flex: 0 1 88%;
+  flex: 1 1 auto;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-auto-rows: 1fr;
-  gap: 0.18in;
+  gap: 0.1in;
   align-content: stretch;
 }
 .print-card {
@@ -6296,44 +6316,44 @@ details[open] > .cart-drawer__checkout-title::after {
   display: block;
 }
 .print-card__body {
-  padding: 0.35rem 0.5rem 0.4rem;
+  padding: 0.3rem 0.45rem 0.35rem;
   display: flex;
   flex-direction: column;
-  gap: 0.15rem;
+  gap: 0.12rem;
 }
 .print-card__name {
-  font-size: 0.78rem;
+  font-size: 0.72rem;
   font-weight: 700;
   line-height: 1.2;
   margin: 0;
 }
-.print-card__code { font-weight: 500; color: #999; font-size: 0.68rem; letter-spacing: 0.02em; }
+.print-card__code { font-weight: 500; color: #999; font-size: 0.62rem; letter-spacing: 0.02em; }
 .print-card__meta {
   display: flex;
   flex-direction: column;
-  gap: 0.1rem;
-  font-size: 0.64rem;
+  gap: 0.08rem;
+  font-size: 0.58rem;
   color: var(--ce-gray-700);
 }
 .print-card__cat { font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; color: var(--ce-gray-700); }
 .print-card__cat--grey { color: #6b6b6b; }
 .print-card__material {
-  font-size: 0.58rem;
+  font-size: 0.52rem;
   line-height: 1.3;
   color: var(--ce-gray-600);
-  margin: 0.1rem 0 0;
+  margin: 0.06rem 0 0;
   display: -webkit-box;
-  -webkit-line-clamp: 3;
+  -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
 .print-page__footer {
   display: flex;
   justify-content: space-between;
-  padding-top: 0.8rem;
-  margin-top: 0.8rem;
+  padding-top: 0.4rem;
+  margin-top: 0.4rem;
   border-top: 1px solid rgba(0,0,0,0.1);
-  font-size: 0.7rem;
+  font-size: 0.62rem;
   color: var(--ce-gray-600);
   letter-spacing: 0.04em;
   text-transform: uppercase;

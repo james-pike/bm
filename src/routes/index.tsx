@@ -136,6 +136,12 @@ export default component$(() => {
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="1"/><line x1="4" y1="12" x2="20" y2="12"/></svg>
                       )}
                     </button>
+                    {!isElectrical && (
+                      <a href="/print/" class="hero__products-tab-print">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+                        {t("nav.download.catalog", locale.value)}
+                      </a>
+                    )}
                   </div>
                   <div class={`hero-categories ${compact.value ? "hero-categories--compact" : "hero-categories--wide"}`}>
                     {visibleProducts.map((p) => {

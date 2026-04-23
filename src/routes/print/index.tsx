@@ -27,6 +27,16 @@ const CATEGORY_FALLBACK_IMG: Record<string, string> = {
   "Accessories": "/CTA_en_OurServices_FS_MSNAD-1.webp",
 };
 
+const TALL_SIZES: Record<string, string> = {
+  "BMGC-1": "L - 3XL",
+  "BMGC-2": "L - 3XL",
+  "BMGC-3": "L - 2XL",
+  "BMGC-4": "L - 2XL",
+  "BMGC-5": "M - 4XL",
+  "BMGC-6": "L - 4XL",
+  "BMGC-7": "L - 3XL",
+};
+
 export default component$(() => {
   const onPrint = $(() => window.print());
   return (
@@ -65,7 +75,14 @@ export default component$(() => {
                   <h3 class="print-card__name">{baseName}{itemCode && <span class="print-card__code"> {itemCode}</span>}</h3>
                   <div class="print-card__meta">
                     {color && <span class={`print-card__cat ${/grey|gray/i.test(color) ? "print-card__cat--grey" : ""}`}>Color: {color}</span>}
-                    <span class="print-card__sizes">Sizes: {p.sizes}</span>
+                    {TALL_SIZES[p.sku] ? (
+                      <>
+                        <span class="print-card__sizes">Regular: {p.sizes}</span>
+                        <span class="print-card__sizes">Tall: {TALL_SIZES[p.sku]}</span>
+                      </>
+                    ) : (
+                      <span class="print-card__sizes">Sizes: {p.sizes}</span>
+                    )}
                   </div>
                   <p class="print-card__material">{p.material}</p>
                 </div>
