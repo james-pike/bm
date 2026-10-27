@@ -8,7 +8,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "prebuild": "npx tsx scripts/fetch-products.ts",
+    "prebuild": "npx tsx scripts/fetch-products.ts && npx tsx scripts/optimize-images.ts",
     "build": "qwik build",
     "build.client": "vite build",
     "build.preview": "vite build --ssr src/entry.preview.tsx",

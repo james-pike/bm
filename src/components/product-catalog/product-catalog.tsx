@@ -1,53 +1,751 @@
-import { component$, useSignal, useComputed$, useContext, $, useVisibleTask$, useOnDocument } from "@builder.io/qwik";
+import { component$, useSignal, useComputed$, useContext, $, useTask$, useVisibleTask$, useOnDocument, Slot, type QRL } from "@builder.io/qwik";
+import { useLocation, useNavigate } from "@builder.io/qwik-city";
 import { LocaleContext, t } from "../../i18n";
-import { allProducts, categoryLabel } from "../../routes/apparel/products";
+import { allProducts, categoryLabel, colorName } from "../../routes/apparel/products";
+import { CLOTHING_CATEGORIES, CATEGORY_ICONS } from "../../lib/categories";
 import type { Product } from "../../routes/apparel/products";
-import { LoginTypeContext } from "../../routes/layout";
+import { sizeGroups, sortColorsWhiteLast } from "../../routes/apparel/utils";
+import { stickyTop, LoginTypeContext } from "../../routes/layout";
+import { SecondaryBarContext } from "../../context/secondary-bar";
+import { getLogoConfig } from "../../data/logo-placements";
 
-const CLOTHING_CATEGORIES = ["All", "Work Wear", "Jackets", "Accessories"];
+// Category list + glyphs live in a shared leaf module so the shell's menu drawer
+// uses the exact same source (see src/lib/categories.ts). Re-exported here for
+// any consumer that still imports them from the catalog.
+export { CLOTHING_CATEGORIES, CATEGORY_ICONS };
 
-const CATEGORY_ICONS: Record<string, string> = {
-  "All": '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>',
-  "Work Wear": '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4M16 2v4M4 6h16v14a2 2 0 01-2 2H6a2 2 0 01-2-2V6z"/><path d="M4 6l-2 4v2h4V8"/><path d="M20 6l2 4v2h-4V8"/></svg>',
-  "Jackets": '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2l5 6v12a2 2 0 01-2 2h-3V12h-6v10H6a2 2 0 01-2-2V8l5-6"/><path d="M9 2a3 3 0 006 0"/><line x1="12" y1="12" x2="12" y2="22"/></svg>',
-  "Accessories": '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7h-3a2 2 0 01-2-2V2"/><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V7z"/><path d="M12 11v6"/><path d="M9 14h6"/></svg>',
+// FIT (gender) sidebar facet — Black & McDonald products are unisex, so off.
+const SHOW_FIT_FACET = false;
+
+// Card colour preview: resolve a colour to the gallery image that depicts it,
+// using the same name→filename rule the PDP applies (see product-detail's
+// imgNorm), so multi-image-per-colour SKUs — e.g. the FootJoy / Travis Mathew
+// polos that carry front + side + back per colour — pick the right photo rather
+// than a positional imgs[i] guess. Falls back to the primary image.
+const CARD_IMG_NAME_ALIAS: Record<string, string> = {
+  "#ca7988": "heatherscooter",
+  "#1e40af": "royal",
+};
+const cardImgNorm = (color: string) =>
+  (CARD_IMG_NAME_ALIAS[color.toLowerCase()] ?? colorName(color, "en"))
+    .toLowerCase()
+    .replace(/[^a-z0-9]/g, "");
+export function imageForColor(item: Product, color: string): string {
+  const imgs = (item.imgs && item.imgs.length ? item.imgs : [item.img]) as string[];
+  const colors = (item.colors || []) as string[];
+  // colors[] and imgs[] are parallel (folded products), so map by index first.
+  // Substring matching alone is wrong when one colour's filename contains another
+  // colour's name — e.g. the grey blank "…csgreylightheatherwhite" contains
+  // "white", so clicking White would otherwise return the grey image.
+  if (colors.length === imgs.length) {
+    const i = colors.indexOf(color);
+    if (i >= 0) return imgs[i];
+  }
+  const norm = cardImgNorm(color);
+  if (norm) {
+    const hit = imgs.find((src) => src.toLowerCase().replace(/[^a-z0-9]/g, "").includes(norm));
+    if (hit) return hit;
+  }
+  return item.img;
+}
+
+// Canonical swatch DISPLAY order, independent of which colour is the default
+// image: neutrals first (black, navy, greys), then blues, greens, warm/unique
+// colours, and white always last. Keeps the swatch row consistent even when a
+// product defaults to a less-common colour (e.g. Roasted Cashew) — the default
+// only drives the card image, never the swatch order.
+const SWATCH_PRIORITY = [
+  "black",
+  "navy",
+  "charcoal", "graphite", "storm", "microchip", "grey", "gray", "silver",
+  "indigo", "eclipse", "copen", "royal", "cobalt", "sapphire", "teal", "sky", "blue",
+  "forest", "balsam", "olive", "sage", "green",
+  "khaki", "sand", "tan", "brown", "cashew", "camel",
+  "cardinal", "scooter", "red", "orange", "pink", "mauve", "purple", "yellow", "gold",
+];
+function swatchRank(color: string): number {
+  const name = (color.startsWith("#") ? colorName(color, "en") : color).toLowerCase();
+  if (name.includes("white")) return 9999;
+  for (let i = 0; i < SWATCH_PRIORITY.length; i++) {
+    if (name.includes(SWATCH_PRIORITY[i])) return i;
+  }
+  return SWATCH_PRIORITY.length; // unknown colours: after the knowns, before white
+}
+export function swatchOrder(colors: readonly string[]): string[] {
+  return [...colors]
+    .map((c, i) => [c, i] as const)
+    .sort((a, b) => swatchRank(a[0]) - swatchRank(b[0]) || a[1] - b[1])
+    .map(([c]) => c);
+}
+
+// Per-login lineups. Black & McDonald: the Good Catch login sees the BMGC-
+// products, the Electrical login the flame-resistant BMFR- products, and the
+// Tech login only Work Wear. Lineup membership is by SKU prefix.
+export const ELECTRICAL_SKUS: string[] = [];
+const ELECTRICAL_SKU_SET = new Set(ELECTRICAL_SKUS);
+const isElectricalSku = (sku: string) => sku.startsWith("BMFR-");
+const isGoodCatchSku = (sku: string) => sku.startsWith("BMGC-");
+
+const SAFETY_SKUS = new Set<string>();
+export const SAFETY_CATEGORIES = ["All"];
+export const SAFETY_SKU_ORDER: string[] = [];
+export const isSafetyProduct = (sku: string) => SAFETY_SKUS.has(sku);
+
+// Is a SKU part of the given login's catalogue lineup? Mirrors `baseProducts`
+// below, but as a pure function so the server-side route guard can reuse it —
+// keeping direct-URL access in lockstep with what each login can browse.
+export const isSkuInLineup = (
+  loginType: string | null,
+  product: { sku: string; category: string; portals?: string[] },
+): boolean => {
+  const { sku, category } = product;
+  if (loginType === "electrical") return isElectricalSku(sku);
+  if (loginType === "tech") return category === "Work Wear";
+  // Good Catch (clothing) login.
+  return isGoodCatchSku(sku);
 };
 
-const ProductCard = component$<{ item: Product; sku: string }>(({ item, sku }) => {
+// Colors hidden from catalog-card swatches (still visible on product detail page).
+const CARD_HIDDEN_COLORS = new Set(["#c0392b", "#1e40af", "#6b3fa0"]);
+// SKUs exempt from CARD_HIDDEN_COLORS: products where a normally-decluttered
+// accent colour (e.g. red) is a first-class option and must show on the card.
+const CARD_SHOW_ALL_COLORS = new Set<string>();
+const EMPTY_COLOR_SET = new Set<string>();
+
+// Longer category names shown ONLY in the desktop sidebar column; mobile/tablet
+// tabs keep the short cat.* labels (see the --short/--full spans + CSS).
+export const FULL_CAT_KEYS: Record<string, string> = {};
+
+// Search matcher for name/sku/category, with a simple plural fallback so
+// "boots" still hits "Safety Boot" (names are singular, and the footwear
+// categories are remapped to "Footwear" in the clothing catalog).
+function matchesQuery(p: Product, q: string): boolean {
+  const hay = `${p.name} ${p.sku} ${p.category}`.toLowerCase();
+  if (hay.includes(q)) return true;
+  return q.length > 3 && q.endsWith("s") && hay.includes(q.slice(0, -1));
+}
+
+// Return the category of the FIRST product that matches the search, so its tab
+// can be highlighted as active. "All" if nothing
+// matches or the query is empty.
+function categoryForQuery(query: string, products: Product[]): string {
+  const q = query.trim().toLowerCase();
+  if (!q) return "All";
+  const match = products.find((p) => matchesQuery(p, q));
+  return match ? match.category : "All";
+}
+
+// ---- Filter-sidebar facets (desktop) ----
+// The data has no explicit gender/fit field, so derive it from the name.
+// Check "women"/"ladies" first: "women's" contains "men's" as a substring.
+export function genderOf(p: Product): string {
+  const n = p.name.toLowerCase();
+  if (/\bwomen['’]?s?\b|ladies/.test(n)) return "Women";
+  if (/\bmen['’]?s?\b/.test(n)) return "Men";
+  return "Unisex";
+}
+const GENDER_ORDER = ["Men", "Women", "Unisex"];
+// Letter sizes in range order; products store ranges like "S - 4XL".
+const SIZE_ORDER = ["XS", "S", "M", "L", "XL", "2XL", "3XL", "4XL", "5XL"];
+function sizeSpanOf(p: Product): string[] {
+  const parts = p.sizes.split("-").map((s) => s.trim().toUpperCase().replace(/^(LADIES|UK)\s+/, ""));
+  const a = SIZE_ORDER.indexOf(parts[0]);
+  const b = SIZE_ORDER.indexOf(parts[1] ?? parts[0]);
+  if (a !== -1 && b !== -1) return SIZE_ORDER.slice(a, b + 1);
+  // Footwear ranges are numeric ("6 - 10", "UK 5 - 13"): enumerate whole sizes.
+  // Suffixed ranges like "28 - 46 waist" parse as NaN and stay excluded.
+  const lo = Number(parts[0]);
+  const hi = Number(parts[1] ?? parts[0]);
+  if (Number.isInteger(lo) && Number.isInteger(hi) && lo <= hi) {
+    return Array.from({ length: hi - lo + 1 }, (_, i) => String(lo + i));
+  }
+  return [];
+}
+// Sizes for facets/filtering. Falls back to a "One Size" chip when the size
+// string doesn't parse into a range — so one-size categories (hats, accessories)
+// still show a Size filter group rather than an empty sidebar.
+function sizesOf(p: Product): string[] {
+  const s = sizeSpanOf(p);
+  if (s.length) return s;
+  return p.sizes === "One Size" ? ["One Size"] : [];
+}
+// Brands carried, in sidebar display order. A brand must be listed here to show
+// up as a filter (the facet list is BRAND_LIST ∩ brands-present).
+const BRAND_LIST = ["Carhartt", "Atlas"];
+// Brand overrides (garmentBrand from the SKU-manager data) for
+// products whose brand isn't in the display name. Everything else is matched by
+// name against BRAND_LIST (e.g. Coal Harbour, Roots, Viking, Gildan, Harriton,
+// Atlas, Srixon, Wilson, Nomad, Survivor all carry the brand in the name).
+const BRAND_BY_SKU: Record<string, string> = {};
+// Shorter titles shown on the GALLERY CARD only (the PDP keeps the full name).
+const CARD_TITLE_OVERRIDE: Record<string, string> = {};
+function brandOf(p: Product): string | null {
+  if (BRAND_BY_SKU[p.sku]) return BRAND_BY_SKU[p.sku];
+  // Good Catch garments are Carhartt; the FR line is Atlas Guardian.
+  if (p.sku.startsWith("BMGC-")) return "Carhartt";
+  if (p.sku.startsWith("BMFR-")) return "Atlas";
+  const n = p.name.toLowerCase();
+  for (const b of BRAND_LIST) if (n.includes(b.toLowerCase())) return b;
+  return null;
+}
+// Scroll the product grid up so it pins just below the sticky tab bar, so the
+// first results aren't hidden under it. Used by the category tabs and by search
+// (auto-position).
+function scrollProductsBelowBar() {
+  const isDesktop = window.innerWidth > 1024;
+  const headerH = stickyTop();
+  if (isDesktop) {
+    const grid = document.querySelector('.home-catalog .apparel-grid');
+    // The grid must clear BOTH sticky bars: the site header and the category
+    // tab bar pinned beneath it. Offsetting only past the site header tucked
+    // the first product row behind the tab bar on every tab switch.
+    // MEASURED, not hardcoded: these heights are set in CSS and have changed
+    // more than once. A stale constant here doesn't fail loudly — it just
+    // parks the grid a few px under the tab bar, which reads as the bar
+    // getting shorter on every tab switch.
+    // Pin the grid to the tab bar's REAL pinned bottom = its own resolved `top`
+    // plus its height. The bar pins at var(--wt-header-pin) - 1px on the home
+    // route (a 1px seam overlap with the header), which is 1px ABOVE stickyTop()
+    // (the header's bottom edge). Reconstructing barsBottom from stickyTop()
+    // overshot by that 1px, landing the scroll a hair short of the pin — so the
+    // bar un-stuck a fraction on every tab click (the visible desktop shift).
+    // Reading the bar's own top absorbs the seam no matter how it's set.
+    const bar = document.querySelector('.home-catalog__header') as HTMLElement | null;
+    const barPin = bar ? (parseFloat(getComputedStyle(bar).top) || headerH) : headerH;
+    const barsBottom = barPin + (bar?.offsetHeight ?? 50);
+    const gridTop = grid ? grid.getBoundingClientRect().top + window.scrollY - barsBottom : 0;
+    const needsScrollUp = gridTop < window.scrollY;
+    window.scrollTo({ top: gridTop, behavior: needsScrollUp ? 'instant' : 'smooth' });
+  } else {
+    const catalog = document.querySelector('.home-catalog');
+    const catalogTop = catalog ? catalog.getBoundingClientRect().top + window.scrollY : 0;
+    // No extra offset — land exactly at the catalog's pinned top so there's no
+    // few-px downward shift versus the initial (unscrolled) position.
+    const stickyPos = catalogTop - headerH;
+    window.scrollTo({ top: stickyPos, behavior: 'instant' });
+  }
+}
+
+// Cards in the first visible rows are fetched eagerly so the first screen isn't
+// waiting on the lazy loader (which, on a slower production network, makes those
+// images visibly pop into their reserved squares one-by-one). 8 covers ~2 rows
+// on the desktop grid and ~4 rows on a 2-up phone. Everything past this still
+// lazy-loads on scroll — the "All" tab is 80+ products, and eager-loading all of
+// them would mean 80+ requests / megabytes of photos on first paint.
+const EAGER_CARDS = 8;
+
+export const ProductCard = component$<{ item: Product; sku: string; index: number; onSelect$?: QRL<(sku: string) => void> }>(({ item, sku, index, onSelect$ }) => {
   const locale = useContext(LocaleContext);
+  const loginType = useContext(LoginTypeContext);
+  const isTech = loginType.value === "tech";
+  const eager = index < EAGER_CARDS;
+
+  // Card-level colour preview: clicking a swatch swaps the card image to that
+  // colour's photo (matched by name via imageForColor) without leaving the
+  // gallery. Reset to the primary image if a colour has no dedicated image.
+  const activeImg = useSignal(item.img);
+  // Colour currently shown on the card — the colour whose image is the default
+  // (item.img), or whatever swatch the user clicks. Passed to the PDP on navigate
+  // so it opens on the same colour the card was displaying.
+  const activeColor = useSignal(
+    (() => {
+      const idx = (item.imgs || []).indexOf(item.img);
+      return idx >= 0 ? (item.colors?.[idx] ?? "") : "";
+    })(),
+  );
+  // The colour actually SHOWN (base image + logo overlay), updated only after the
+  // new image has decoded. `activeColor` flips immediately for the swatch
+  // highlight, but for logo products the card image derives from the shown
+  // colour, so gating it on decode keeps the logo and garment in sync.
+  const shownColor = useSignal("");
+  // Logo-overlay products (FootJoy / Travis Mathew): the card shows the pre-baked
+  // front image with the default chest logo composited, following the shown
+  // colour (the baked TM fronts are logo-free).
+  const logoCfg = getLogoConfig(sku);
+  const cardLogoColor = useComputed$(() => {
+    if (!logoCfg) return null;
+    const key = (shownColor.value || sortColorsWhiteLast(item.colors || [])[0] || "").toLowerCase();
+    return logoCfg.colors[key] ?? null;
+  });
+  // Resolved name of the swatch being hovered — shown inline just right of the
+  // swatches (overlaid so it doesn't shift layout), matching the reference storefront.
+  const hoverColorName = useSignal("");
+  const nav = useNavigate();
+
+  // Warm the browser cache and fully decode a colour's photo BEFORE it's shown,
+  // so the first swatch swap doesn't flash a half-painted image (after that the
+  // HTTP cache makes every swap instant). The <picture> serves the .webp
+  // sibling, so that's what we preload — called on hover to pre-warm, and
+  // awaited on click so the image only changes once the new one is ready.
+  const preload = $((src: string) => {
+    const im = new Image();
+    im.src = src.replace(/\.(jpe?g|png)$/i, ".webp");
+    return im.decode().catch(() => {});
+  });
+
+  // Fit-to-one-line: keep the title at its full size, but scale it down just
+  // enough to avoid wrapping to a second line. If it still can't fit even at the
+  // floor, fall back to wrapping rather than clipping.
+  const nameRef = useSignal<HTMLElement>();
+  // eslint-disable-next-line qwik/no-use-visible-task
+  useVisibleTask$(({ cleanup }) => {
+    const el = nameRef.value;
+    if (!el) return;
+    const fit = () => {
+      // The title is visible from first paint (as in production); this pass only
+      // fine-tunes its size. It is never hidden, so it can't appear after the
+      // rest of the card.
+      // Phones and the narrower (tab-bar) tablet tier (<=999px): the title wraps
+      // to (up to) two lines (see .product-card__name-text in global.css). If it
+      // would spill onto a third line, scale the font down a touch so it always
+      // fits in two rows rather than truncating. At 3 columns the tablet cards
+      // are too narrow to hold long titles on one line without shrinking the
+      // text uncomfortably small, so they wrap here like the phone cards.
+      // Re-runs on resize; clear inline styles first.
+      if (window.matchMedia("(max-width: 1100px)").matches) {
+        el.style.whiteSpace = "";
+        el.style.overflow = "";
+        el.style.fontSize = "";
+        const textEl = (el.querySelector(".product-card__name-text") as HTMLElement) || el;
+        const base = parseFloat(getComputedStyle(el).fontSize);
+        let px = base;
+        // On narrow phones the cards are tiny, so a long title would otherwise
+        // shrink down to ~10–11px to fit two lines. Hold a higher floor there so
+        // titles read a bit larger; the very longest then clip at two lines
+        // (the clamp cap) instead of shrinking further. Wider phones/tablets keep
+        // the gentler floor so their (roomier) cards still show full titles.
+        const min = base * (window.innerWidth <= 400 ? 0.84 : 0.72);
+        let guard = 0;
+        while (textEl.scrollHeight > textEl.clientHeight + 1 && px > min && guard++ < 40) {
+          px -= 0.5;
+          el.style.fontSize = `${px}px`;
+        }
+        return;
+      }
+      el.style.fontSize = "";
+      el.style.whiteSpace = "nowrap";
+      el.style.overflow = "hidden";
+      const base = parseFloat(getComputedStyle(el).fontSize);
+      let px = base;
+      const min = base * 0.62;
+      let guard = 0;
+      while (el.scrollWidth > el.clientWidth + 0.5 && px > min && guard++ < 40) {
+        px -= 0.5;
+        el.style.fontSize = `${px}px`;
+      }
+      // Tablet (601–1024px): the cards are wide and the price sits inline, so
+      // grow the title to fill the space left in its slot (the row width minus
+      // the inline price) instead of leaving a small title with a lot of empty
+      // row. Capped so it stays proportionate. The name is content-sized, so we
+      // measure the available slot from the row rather than el.clientWidth.
+      if (window.matchMedia("(min-width: 601px) and (max-width: 1024px)").matches) {
+        const row = el.closest(".product-card__name-row") as HTMLElement | null;
+        const price = row ? (row.querySelector(".product-card__price-group") as HTMLElement | null) : null;
+        const gap = row ? (parseFloat(getComputedStyle(row).columnGap) || 8) : 8;
+        const avail = row ? row.clientWidth - (price ? price.offsetWidth : 0) - gap : el.clientWidth;
+        const max = base * 1.2;
+        while (el.scrollWidth <= avail - 2 && px < max && guard++ < 80) {
+          px += 0.5;
+          el.style.fontSize = `${px}px`;
+        }
+        if (el.scrollWidth > avail) {
+          px -= 0.5;
+          el.style.fontSize = `${px}px`;
+        }
+      }
+      if (el.scrollWidth > el.clientWidth + 0.5) {
+        el.style.whiteSpace = "";
+        el.style.overflow = "";
+        el.style.fontSize = "";
+      }
+    };
+    // Size and reveal synchronously on mount so the title paints at its final
+    // size in the same frame as the rest of the card. The old code only ran fit
+    // after two rAFs, so the title (opacity:0 by default) stayed blank for a
+    // couple of frames and visibly appeared after the card on every category/tab
+    // change. A single fit() call flips opacity 0→1 within one synchronous pass
+    // (no paint in between, so never a visible blank). The deferred run + the
+    // fonts.ready pass below re-measure to correct the first-load case where web
+    // fonts hadn't finished loading when this first ran.
+    const run = () => requestAnimationFrame(() => requestAnimationFrame(fit));
+    fit();
+    run();
+    if ((document as any).fonts?.ready) (document as any).fonts.ready.then(run);
+    // Only re-fit when the card's own width actually changes. On mobile,
+    // scrolling shows/hides the URL bar and fires `resize` with the width
+    // unchanged — re-fitting on those would make the title flicker (it is
+    // briefly hidden at the top of every pass) for no layout reason.
+    let lastWidth = el.clientWidth;
+    const onResize = () => {
+      const w = el.clientWidth;
+      if (w !== lastWidth) {
+        lastWidth = w;
+        run();
+      }
+    };
+    window.addEventListener("resize", onResize);
+    cleanup(() => window.removeEventListener("resize", onResize));
+  });
+
+  // Effective hidden-colour set for THIS product — empty when the SKU is exempt
+  // (so all its colours render), otherwise the global declutter set.
+  const hiddenColors = CARD_SHOW_ALL_COLORS.has(sku) ? EMPTY_COLOR_SET : CARD_HIDDEN_COLORS;
+
+  const allColors = item.colors || [];
+  const shownColors = allColors.filter((c) => !hiddenColors.has(c));
+  const visibleColors = sortColorsWhiteLast(shownColors.length ? shownColors : allColors);
+  const singleColorName =
+    visibleColors.length === 1
+      ? (visibleColors[0].startsWith("#") ? colorName(visibleColors[0], locale.value) : visibleColors[0])
+      : null;
+  // The product name is authored in English, so strip the trailing "- Colour"
+  // using the ENGLISH label — singleColorName may be localized (e.g. French),
+  // which wouldn't match the English suffix and left the colour on the title.
+  const singleColorEn =
+    visibleColors.length === 1
+      ? (visibleColors[0].startsWith("#") ? colorName(visibleColors[0], "en") : visibleColors[0])
+      : null;
+  // Card title (gallery cards only — the PDP keeps the full authored name):
+  // drop the model code and the gender word anywhere (Women's/Ladies show on the
+  // sizes row below instead), abbreviate Long/Short Sleeve, and — when there's a
+  // single colour — drop the trailing "- Colour" (shown beside the swatch).
+  // A few SKUs show a shorter name on the CARD than on the PDP (e.g. without
+  // "Classic"/"Insulated") — the PDP keeps item.name in full.
+  let displayName = (CARD_TITLE_OVERRIDE[item.sku] ?? item.name)
+    .replace(/#\S+/g, "")
+    .replace(/\b(?:men|women|ladies|unisex)['’]?s?\s+/gi, "")
+    .replace(/\bLong[-\s]Sleeve\b/gi, "LS")
+    .replace(/\bShort[-\s]Sleeve\b/gi, "SS")
+    .replace(/\s{2,}/g, " ");
+  if (singleColorEn) {
+    displayName = displayName.replace(new RegExp(`\\s*[-–]\\s*${singleColorEn.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\s*$`, "i"), "");
+  }
+  displayName = displayName.trim();
 
   return (
-    <a href={`/apparel/${sku}/`} class={`product-card product-card-link ${sku === "CAR-21" ? "product-card--cover" : ""}`}>
+    <div
+      role="link"
+      tabIndex={0}
+      style={{ cursor: "pointer" }}
+      class="product-card product-card-link"
+      onClick$={() => { try { sessionStorage.setItem("pdp-initial-color", JSON.stringify({ sku, color: activeColor.value })); } catch { /* ignore */ } if (onSelect$) onSelect$(sku); else nav(`/${sku}/`); }}
+      onKeyDown$={(e) => { if (e.key === "Enter") { try { sessionStorage.setItem("pdp-initial-color", JSON.stringify({ sku, color: activeColor.value })); } catch { /* ignore */ } if (onSelect$) onSelect$(sku); else nav(`/${sku}/`); } }}
+    >
       <div class="product-card__image">
-        <img src={item.img} alt={item.name} width="440" height="440" />
+        {cardLogoColor.value ? (() => {
+          // Logo product: show the STATIC pre-baked card image (front with the
+          // default chest logo already composited — scripts/bake-card-logos.ts),
+          // not a live overlay. The logo is always on the garment and never pops
+          // in after a colour switch. Keyed by src so a colour swap repaints the
+          // already-decoded image in place (the swatch handler decodes first).
+          const cardSrc = cardLogoColor.value.views.front.src.replace(/\.webp$/i, "-logo.webp");
+          return (
+            <picture key={cardSrc}>
+              <img
+                src={cardSrc}
+                alt={item.name}
+                width={440}
+                height={440}
+                loading={eager ? "eager" : "lazy"}
+                fetchPriority={index < 4 ? "high" : "auto"}
+                decoding="async"
+              />
+            </picture>
+          );
+        })() : (
+          /* Bound directly to the activeImg signal so a swatch click updates the
+             src in place (a nested component wouldn't react to the prop change). */
+          <picture>
+            {activeImg.value.replace(/\.(jpe?g|png)$/i, ".webp") !== activeImg.value && (
+              <source srcset={activeImg.value.replace(/\.(jpe?g|png)$/i, ".webp")} type="image/webp" />
+            )}
+            <img
+              src={activeImg.value}
+              alt={item.name}
+              width={440}
+              height={440}
+              loading={eager ? "eager" : "lazy"}
+              fetchPriority={index < 4 ? "high" : "auto"}
+              decoding="async"
+            />
+          </picture>
+        )}
       </div>
       <div class="product-card__info">
         <div class="product-card__name-row">
-          <div class="product-card__name">
-            <span class="product-card__name-text">{item.name.replace(/#\S+/g, '').trim()}</span>
+          <div class="product-card__name" ref={nameRef}>
+            {/* Gender moved off the title into the sizes row ("Women's XS - 3XL"). */}
+            <span class="product-card__name-text">{displayName}</span>
             <span class="product-card__name-code">{(item.name.match(/#\S+/) || [''])[0]}</span>
           </div>
           <div class="product-card__price-group">
-            <span class="product-card__sizes">{item.sizes === "One Size" ? t("modal.onesize", locale.value) : item.sizes}</span>
+            {/* No price on $0 items (the company-supplied FR line), as on the
+                original Black & McDonald catalog. */}
+            {!isTech && (Number(item.price) || 0) > 0 && (() => {
+              const p = Number(item.price) || 0;
+              const dollars = Math.floor(p);
+              const cents = Math.round((p - dollars) * 100).toString().padStart(2, "0");
+              return (
+                <div class="product-card__price">
+                  ${dollars}
+                  {cents !== "00" && (
+                    <span class="product-card__price-cents">.{cents}</span>
+                  )}
+                </div>
+              );
+            })()}
           </div>
         </div>
+        {item.name === "New Hire Kit" ? (
+          // The bundle: no colour/size, so use that gray text area to list the
+          // kit's contents (same size/colour as the sizes text).
+          <div class="product-card__color-size-row">
+            <span class="product-card__sizes product-card__kit-items">
+              {item.details.split(",").map((it, i) => (
+                <span key={i}>{it.trim()}</span>
+              ))}
+            </span>
+          </div>
+        ) : (
+          <div class="product-card__color-size-row">
+            {(() => {
+              const all = item.colors || [];
+              // Show the SKU's actual colours as swatches (no declutter filter), in
+              // the canonical swatch order (neutrals first, white last) regardless
+              // of which colour is the default image.
+              const visible = swatchOrder(all);
+              // Cap the swatches at 4; beyond that a "+N" chip stands in for the
+              // rest, so a product with many colours doesn't spill a long row of
+              // dots across the card.
+              const MAX_DOTS = 4;
+              let dots = visible.slice(0, MAX_DOTS);
+              // Keep white visible: if the cap cut it off, show it as the last dot
+              // (replacing the last other colour) instead of hiding it in the "+N".
+              const white = visible.find((c) => c.toLowerCase() === "#ffffff");
+              if (white && !dots.includes(white)) dots = [...visible.slice(0, MAX_DOTS - 1), white];
+              const extra = all.length - dots.length;
+              return visible.length > 0 ? (
+                <div class="product-card__colors">
+                  {dots.map((c) => (
+                    <span
+                      key={c}
+                      class={`product-card__color-dot${c.toLowerCase() === "#ffffff" ? " product-card__color-dot--white" : ""}${activeColor.value === c ? " active" : ""}`}
+                      style={{ background: c, cursor: "pointer" }}
+                      role="button"
+                      // aria-label (not title) — a native title tooltip double-ups
+                      // with the inline colour-name label below.
+                      aria-label={c.startsWith("#") ? colorName(c, locale.value) : c}
+                      // Stop the click synchronously (during the native event) so it
+                      // never bubbles to the card's navigate handler. An imperative
+                      // e.stopPropagation() in the async onClick$ below runs too late
+                      // (Qwik resolves handlers lazily), which was opening the PDP.
+                      stoppropagation:click
+                      onMouseEnter$={() => {
+                        hoverColorName.value = c.startsWith("#") ? colorName(c, locale.value) : c;
+                        // Pre-warm the image the card actually shows: the pre-baked
+                        // logo card image for logo products, else the colour's photo.
+                        const cc = logoCfg?.colors[c.toLowerCase()];
+                        preload(cc ? cc.views.front.src.replace(/\.webp$/i, "-logo.webp") : imageForColor(item, c));
+                      }}
+                      onMouseLeave$={() => { hoverColorName.value = ""; }}
+                      onClick$={async (e) => {
+                        e.stopPropagation();
+                        const cc = logoCfg?.colors[c.toLowerCase()];
+                        // The flat image shown for this colour: baked logo card image
+                        // (logo products) or the plain colour photo.
+                        const src = cc ? cc.views.front.src.replace(/\.webp$/i, "-logo.webp") : imageForColor(item, c);
+                        activeColor.value = c; // immediate: swatch highlight
+                        // Decode before swapping so it paints at once; capped so a
+                        // slow/uncached decode can't block the swap.
+                        await Promise.race([preload(src), new Promise((r) => setTimeout(r, 400))]);
+                        shownColor.value = c; // drives the logo card image
+                        activeImg.value = src;
+                      }}
+                    />
+                  ))}
+                  {extra > 0 && (
+                    <span class="product-card__color-more" aria-label={`+${extra} more colours`}>+{extra}</span>
+                  )}
+                  {(hoverColorName.value || singleColorName) && (
+                    // Use the hover overlay whenever a swatch is hovered — including
+                    // single-colour products — so the colour label shows on hover
+                    // there too (the persistent single-colour label is non-overlay).
+                    <span class={`product-card__color-name${hoverColorName.value ? " product-card__color-name--overlay" : ""}`}>{hoverColorName.value || singleColorName}</span>
+                  )}
+                </div>
+              ) : <span />;
+            })()}
+            {/* Fits shown beside each other on one line — regular plus any extra
+                variant (Tall/Short) the SKU carries. The " / " separator between
+                lines comes from CSS (.product-card__sizes-line + …::before).
+                The gender is prefixed here (e.g. "Women's XS - 3XL"). */}
+            <span class="product-card__sizes">
+              {(() => {
+                const g = genderOf(item);
+                return g === "Men" || g === "Women" ? (
+                  <span class="product-card__sizes-gender">{t(g === "Men" ? "gender.mens" : "gender.womens", locale.value)}{" "}</span>
+                ) : null;
+              })()}
+              {(item.sizes === "One Size" ? [t("modal.onesize", locale.value)] : sizeGroups(item.sizes)).map((g) => (
+                <span key={g} class="product-card__sizes-line">{g}</span>
+              ))}
+            </span>
+            {/* Colour names as text. Hidden in every mode but desktop Catalog,
+                where the wide horizontal card leaves the bottom-right corner
+                empty and swatches would be lost against the small thumbnail. */}
+            {(() => {
+              const all = item.colors || [];
+              const shown = all.filter((c) => !hiddenColors.has(c));
+              const visible = sortColorsWhiteLast(shown.length ? shown : all);
+              if (!visible.length) return null;
+              // List up to 4 colour names; if there are more, a ", +N" indicator
+              // stands in for the rest rather than a truncated run-on list.
+              const MAX_NAMES = 4;
+              const names = visible
+                .slice(0, MAX_NAMES)
+                .map((c) => (c.startsWith("#") ? colorName(c, locale.value) : c));
+              const extra = visible.length - MAX_NAMES;
+              return (
+                <span class="product-card__colors-text">
+                  {names.join(", ")}{extra > 0 ? `, +${extra}` : ""}
+                </span>
+              );
+            })()}
+          </div>
+        )}
       </div>
-    </a>
+    </div>
   );
 });
 
 export const ProductCatalog = component$<{ class?: string }>(({ "class": cls }) => {
   const locale = useContext(LocaleContext);
+  const loc = useLocation();
+  const nav = useNavigate();
+  // On a product route (/<sku>/) the shared shell shows the routed product
+  // detail (<Slot/>) in the main column instead of the grid. The catalog is "/";
+  // any deeper path under this (shop) layout is a product page. The sidebar +
+  // header stay mounted, so there is no shift between the catalog and PDP.
+  const isPdp = useComputed$(() => loc.url.pathname.replace(/\/+$/, "") !== "");
+  // The public /toque page is a single-SKU showcase: no search, no category tabs,
+  // no "more products" carousel — just that one product.
+  const isToque = useComputed$(() => loc.url.pathname.replace(/^\/+|\/+$/g, "") === "toque");
+  // On a product page, clicking the empty page margins / gutters around the detail
+  // panel (any of the structural background layers, never the header/panel/links)
+  // returns to the catalog. A document listener is used because a per-element
+  // handler on the huge section doesn't fire reliably in Qwik's dev delegation.
+  useOnDocument(
+    "click",
+    $((ev: Event) => {
+      if (!isPdp.value) return;
+      // The public /toque page is a standalone showcase — clicking the margins
+      // must NOT bounce out to the (login-gated) catalog.
+      if (isToque.value) return;
+      const tg = ev.target as HTMLElement | null;
+      if (!tg || !tg.classList) return;
+      const bg = ["home-catalog", "home-catalog__inner", "home-catalog__pdp-main", "apparel-catalog", "apparel-page", "dot-pattern"];
+      if (bg.some((c) => tg.classList.contains(c))) nav("/");
+    }),
+  );
   const loginType = useContext(LoginTypeContext);
   const isTech = useComputed$(() => loginType.value === "tech");
-  const activeCat = useSignal("All");
-  const searchQuery = useSignal("");
-  const searchOpen = useSignal(false);
-  const tabletCols = useSignal(3);
+  const isSafety = useComputed$(() => loginType.value === "safety");
+  const isElectrical = useComputed$(() => loginType.value === "electrical");
+  const isSingleCat = useComputed$(() => isTech.value);
+  // Tab/search state is owned by the shell (SecondaryBarContext) so the unified
+  // secondary bar and this catalog stay in lockstep. These are the same signals,
+  // just provided one level up — every read/write below is unchanged.
+  const { activeCat, searchQuery, searchOpen, visibleCategories: publishedCats } = useContext(SecondaryBarContext);
+  // Mobile tab strip: true once scrolled to the end (flips the chevron cue).
+  const tabsAtEnd = useSignal(false);
+  // Center the active category tab in the scrollable strip. The double rAF
+  // waits out the render that applies the .active class after a signal change.
+  const centerActiveTab = $(() => {
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      document
+        .querySelector(".home-catalog__tabs .apparel-titlebar__tab.active")
+        ?.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
+    }));
+  });
+  // searchOpen now comes from SecondaryBarContext (declared above).
+  const tabletCols = useSignal<number | "list">(3);
+  // Desktop grid density: false = default (5 per row), true = Catalog view (8 per
+  // row). Toggled from the sidebar; ignored on mobile/tablet.
+  const denseGrid = useSignal(false);
+  // Persist the density choice (shared with the PDP sidebar's toggle) so it
+  // survives navigation between the catalog and the product pages.
+  const densityLoaded = useSignal(false);
+  // eslint-disable-next-line qwik/no-use-visible-task
+  useVisibleTask$(({ track }) => {
+    const v = track(() => denseGrid.value);
+    if (!densityLoaded.value) {
+      densityLoaded.value = true;
+      try { const s = localStorage.getItem("ce_grid_density"); if (s) denseGrid.value = s === "catalog"; } catch { /* ignore */ }
+      return;
+    }
+    try { localStorage.setItem("ce_grid_density", v ? "catalog" : "standard"); } catch { /* ignore */ }
+  });
 
-  const HASH_TO_CAT: Record<string, string> = isTech.value
+  const HASH_TO_CAT: Record<string, string> = isSingleCat.value
     ? {}
-    : { "work-wear": "Work Wear", "jackets": "Jackets", "accessories": "Accessories" };
+    : isSafety.value
+      ? { "shirts": "Shirts", "hats": "Hats", "fr": "Flame Resistant" }
+      // Derive from the tab list so EVERY clothing category (Polos, Sweaters, …)
+      // is reachable by hash — the old hardcoded map omitted Polos/Sweaters, so
+      // the breadcrumb crumb (#polos) found no match and fell back to All. Keyed
+      // exactly the way the crumb builds its hash: lower-case, spaces → hyphens.
+      : Object.fromEntries(
+          CLOTHING_CATEGORIES
+            .filter((c) => c !== "All")
+            .map((c) => [c.toLowerCase().replace(/\s+/g, "-"), c])
+        );
+
+  const baseProducts = useComputed$(() => {
+    if (isElectrical.value) {
+      // Electrical membership is DB-driven (products.portals includes
+      // "electrical"), falling back to the legacy hardcoded ELECTRICAL_SKUS so
+      // nothing breaks until every row is backfilled. Order: legacy SKUs keep
+      // their curated ELECTRICAL_SKUS order first; DB-only additions follow in
+      // sort_order (their order in allProducts).
+      const inElectrical = (p: (typeof allProducts)[number]) =>
+        isElectricalSku(p.sku) || ELECTRICAL_SKU_SET.has(p.sku);
+      const rank = (sku: string) => {
+        const i = ELECTRICAL_SKUS.indexOf(sku);
+        return i === -1 ? ELECTRICAL_SKUS.length : i;
+      };
+      return allProducts
+        .filter(inElectrical)
+        .slice()
+        .sort((a, b) => rank(a.sku) - rank(b.sku));
+    }
+    if (isTech.value) return allProducts.filter((p) => p.category === "Work Wear");
+    if (isSafety.value) {
+      const rank = (sku: string) => {
+        const i = SAFETY_SKU_ORDER.indexOf(sku);
+        return i === -1 ? SAFETY_SKU_ORDER.length : i;
+      };
+      return allProducts
+        .filter((p) => isSafetyProduct(p.sku))
+        .slice()
+        .sort((a, b) => rank(a.sku) - rank(b.sku));
+    }
+    // Clothing catalog: group the footwear products (safety boots + shoes) under
+    // the "Footwear" tab so they show when it's selected.
+    const isFootwear = (c: string) => c === "Safety Boots" || c === "Safety Shoes" || c === "Footwear";
+    const clothing = allProducts
+      // The Good Catch lineup.
+      .filter((p) => isGoodCatchSku(p.sku))
+      .map((p) => (isFootwear(p.category) ? { ...p, category: "Footwear" } : p));
+    // Order the "All" grid to follow the sidebar/tab category order, so the
+    // display matches the sidebar. Stable sort keeps each category's products in
+    // their existing (products.ts) order; unknown categories fall to the end.
+    const catRank = (c: string) => {
+      const i = CLOTHING_CATEGORIES.indexOf(c);
+      return i === -1 ? CLOTHING_CATEGORIES.length : i;
+    };
+    const ordered = [...clothing].sort((a, b) => catRank(a.category) - catRank(b.category));
+    return ordered;
+  });
 
   // eslint-disable-next-line qwik/no-use-visible-task
   useVisibleTask$(({ cleanup }) => {
@@ -56,6 +754,7 @@ export const ProductCatalog = component$<{ class?: string }>(({ "class": cls }) 
       if (hash && HASH_TO_CAT[hash]) {
         activeCat.value = HASH_TO_CAT[hash];
         history.replaceState(null, "", window.location.pathname);
+        centerActiveTab();
       }
     };
     const onSelectCategory = (e: Event) => {
@@ -63,67 +762,230 @@ export const ProductCatalog = component$<{ class?: string }>(({ "class": cls }) 
       if (cat) {
         activeCat.value = cat;
         searchQuery.value = "";
+        centerActiveTab();
+      }
+    };
+    // The phone search input lives in the site header (layout.tsx); it relays
+    // keystrokes here via this event. Mirrors the desktop input: live filter +
+    // highlight the tab of the first matching result.
+    const onExternalSearch = (e: Event) => {
+      const q = ((e as CustomEvent).detail ?? "") as string;
+      searchQuery.value = q;
+      activeCat.value = categoryForQuery(q, baseProducts.value);
+      // Reposition the catalog under the tabs on every keystroke so results stay
+      // at the right scroll height while search is active. Safe now that the
+      // header is pinned to the visual viewport during search.
+      if (q.trim()) scrollProductsBelowBar();
+    };
+    // Opening the search (header icon) scrolls the catalog up so the sticky tab
+    // bar pins under the header and products sit right below the search bar —
+    // important on the home/hero route where search may be opened from the
+    // hero cover before the catalog has scrolled into its sticky position.
+    const onSearchOpen = () => {
+      // Only needed when search is opened from ABOVE the catalog (e.g. the hero
+      // cover): scroll down so the sticky tab bar pins under the header. If the
+      // catalog is already scrolled into its sticky position, do nothing —
+      // re-scrolling while the keyboard opens leaves a gap above the tabs.
+      const catalog = document.querySelector(".home-catalog") as HTMLElement | null;
+      if (!catalog) return;
+      const headerH = window.innerWidth < 601 ? 64 : window.innerWidth <= 1024 ? 67 : 66;
+      const stickyPos = catalog.getBoundingClientRect().top + window.scrollY - headerH;
+      // Only scroll for a MEANINGFUL gap (the hero case). The hardcoded headerH
+      // drifts a few px from the catalog's real pinned top, so the old +2 fudge
+      // and 1px threshold nudged the page ~5px on every open on /apparel/, where
+      // the strip is already pinned. An 8px threshold absorbs that drift; the
+      // genuine hero reposition is far larger and still fires.
+      if (window.scrollY < stickyPos - 8) {
+        requestAnimationFrame(() => requestAnimationFrame(() => window.scrollTo({ top: stickyPos, behavior: "instant" })));
+      }
+    };
+    // Header search Enter: the committed query's tab may be off-screen in the
+    // scrollable strip — center it now (live keystrokes deliberately don't).
+    const onSearchCommit = () => { centerActiveTab(); };
+    // A search relayed from another route (e.g. the header search on a product
+    // page) arrives as ?q=. Apply it once on mount, then strip it from the URL
+    // so a later refresh doesn't re-pin the filter.
+    const applyQuery = () => {
+      const q = new URLSearchParams(window.location.search).get("q");
+      if (q) {
+        searchQuery.value = q;
+        activeCat.value = categoryForQuery(q, baseProducts.value);
+        history.replaceState(null, "", window.location.pathname);
+        centerActiveTab();
+        scrollProductsBelowBar();
       }
     };
     applyHash();
+    applyQuery();
     window.addEventListener("hashchange", applyHash);
     window.addEventListener("select-category", onSelectCategory);
+    window.addEventListener("apparel-search", onExternalSearch);
+    window.addEventListener("apparel-search-commit", onSearchCommit);
+    window.addEventListener("apparel-search-open", onSearchOpen);
     cleanup(() => {
       window.removeEventListener("hashchange", applyHash);
       window.removeEventListener("select-category", onSelectCategory);
+      window.removeEventListener("apparel-search", onExternalSearch);
+      window.removeEventListener("apparel-search-commit", onSearchCommit);
+      window.removeEventListener("apparel-search-open", onSearchOpen);
     });
   });
 
-  // When mobile/tablet search is open, close it on any click outside the
-  // search bar. Uses useOnDocument so the listener stays attached and is
-  // re-checked on every click — works for every open/close cycle.
-  useOnDocument(
-    'click',
-    $((e: Event) => {
-      if (!searchOpen.value) return;
-      const target = e.target as HTMLElement | null;
-      if (!target) return;
-      if (target.closest('.apparel-titlebar__search--mobile')) return;
-      searchOpen.value = false;
-    })
-  );
+  // This component also renders the PDP route (see `isPdp`), so navigating back
+  // from a product to /#<category> does NOT remount it: the mount-time applyHash()
+  // above runs only once, and no `hashchange` fires on a path change — so the
+  // breadcrumb's category was ignored and the grid stayed on "All" (with the
+  // active pill stuck on the All tab). Apply the hash REACTIVELY by tracking the
+  // location, so every SPA navigation that lands on the grid with a #category hash
+  // selects and highlights exactly that category. Guarded to a #category hash, so
+  // normal grid/search navigation never triggers it.
+  // eslint-disable-next-line qwik/no-use-visible-task
+  useVisibleTask$(({ track }) => {
+    const hash = track(() => loc.url.hash).replace("#", "");
+    if (hash && HASH_TO_CAT[hash]) {
+      activeCat.value = HASH_TO_CAT[hash];
+      history.replaceState(null, "", loc.url.pathname);
+      centerActiveTab();
+    }
+  });
 
   const doSearch = $((query: string) => {
     if (query.trim()) {
-      activeCat.value = "All";
+      activeCat.value = categoryForQuery(query, baseProducts.value);
       searchQuery.value = query.trim();
+      scrollProductsBelowBar();
+      // Committed search: bring the highlighted category's tab into view.
+      centerActiveTab();
     } else {
       searchQuery.value = "";
     }
   });
 
-  const baseProducts = useComputed$(() => {
-    if (isTech.value) return allProducts.filter((p) => p.category === "Work Wear");
-    return allProducts;
+  // "New Hire Kit" is always shown even before any products are tagged into it.
+  const ALWAYS_SHOW = new Set(["All", "New Hire Kit"]);
+
+  const visibleCategories = useComputed$(() => {
+    // The public /toque page shows a single "Headwear" entry in the sidebar nav
+    // (the tab strip there is the breadcrumb, so this only affects the sidebar).
+    if (isToque.value) return ["Hats"];
+    if (isTech.value) return ["Work Wear"];
+    // Electrical: show every category its products actually span (not limited to
+    // the standard clothing tabs).
+    if (isElectrical.value) {
+      const order = ["Jackets", "Bibs & Pants", "Coveralls", "Hoodies", "Shirts"];
+      const present = new Set(baseProducts.value.map((p) => p.category));
+      const cats = order.filter((c) => present.has(c));
+      for (const c of present) if (!cats.includes(c)) cats.push(c);
+      return ["All", ...cats];
+    }
+    // Safety still hides empty categories; the clothing catalog shows its full
+    // curated tab list regardless of current stock.
+    if (isSafety.value) {
+      const present = new Set(baseProducts.value.map((p) => p.category));
+      return SAFETY_CATEGORIES.filter((c) => ALWAYS_SHOW.has(c) || present.has(c));
+    }
+    return CLOTHING_CATEGORIES;
+  });
+
+  // Publish the login-aware category list to the shell (SecondaryBarContext) so
+  // the menu drawer's links stay in lockstep with the tab bar, with no second
+  // hand-maintained list to fall out of sync.
+  useTask$(({ track }) => {
+    publishedCats.value = track(() => visibleCategories.value);
+  });
+
+  // SKU count per category (from the unfiltered base set) for the sidebar
+  // count pills; "All" is the total.
+  const categoryCounts = useComputed$(() => {
+    const counts: Record<string, number> = { All: baseProducts.value.length };
+    for (const p of baseProducts.value) counts[p.category] = (counts[p.category] ?? 0) + 1;
+    return counts;
+  });
+
+  // Select a category from the desktop sidebar nav (no tab-strip centering — the
+  // vertical list is always fully visible). Mirrors the horizontal tab onClick.
+  const selectCat = $(async (cat: string) => {
+    if (isSingleCat.value) return;
+    window.dispatchEvent(new CustomEvent("apparel-search-clear"));
+    searchOpen.value = false;
+    searchQuery.value = "";
+    if (isPdp.value) {
+      // On a product page the grid isn't shown. Go to the catalog filtered to
+      // this category — ProductCatalog stays mounted (shared shell), so setting
+      // activeCat here carries the selection over to the grid.
+      activeCat.value = cat;
+      await nav("/");
+      return;
+    }
+    if (activeCat.value === cat) { activeCat.value = "All"; scrollProductsBelowBar(); return; }
+    activeCat.value = cat;
+    scrollProductsBelowBar();
+  });
+
+
+  // Sidebar filters, tagged with the category they were set for — switching
+  // category makes them stale (ignored) without needing a reset hook.
+  const filters = useSignal<{ cat: string; genders: string[]; sizes: string[]; brands: string[] }>(
+    { cat: "All", genders: [], sizes: [], brands: [] },
+  );
+  const effFilters = useComputed$(() =>
+    filters.value.cat === activeCat.value
+      ? filters.value
+      : { cat: activeCat.value, genders: [], sizes: [], brands: [] },
+  );
+  // Facet options offered by the sidebar, from the selected category's
+  // products (pre-filter, so picking one option doesn't hide its siblings).
+  const facetOptions = useComputed$(() => {
+    const inCat = activeCat.value === "All"
+      ? baseProducts.value
+      : baseProducts.value.filter((p) => p.category === activeCat.value);
+    const genders = new Set(inCat.map(genderOf));
+    const sizes = new Set(inCat.flatMap((p) => sizesOf(p)));
+    const brands = new Set(inCat.map(brandOf).filter(Boolean) as string[]);
+    // Letter sizes first (in range order), then numeric shoe sizes ascending.
+    const shoeSizes = [...sizes]
+      .filter((s) => !SIZE_ORDER.includes(s))
+      .sort((x, y) => Number(x) - Number(y));
+    // Headwear (Hats) and the Office/New Hire Kit have no gendered fit, so the
+    // Fit facet is suppressed for those categories.
+    const NO_FIT_CATS = new Set(["Hats", "New Hire Kit"]);
+    return {
+      genders: NO_FIT_CATS.has(activeCat.value) ? [] : GENDER_ORDER.filter((g) => genders.has(g)),
+      sizes: [...SIZE_ORDER.filter((s) => sizes.has(s)), ...shoeSizes],
+      brands: BRAND_LIST.filter((b) => brands.has(b)).sort((a, b) => a.localeCompare(b)),
+    };
   });
 
   const filtered = useComputed$(() => {
     const products = baseProducts.value;
+    const f = effFilters.value;
+    const applyFacets = (list: Product[]) => {
+      let out = list;
+      if (f.genders.length) out = out.filter((p) => f.genders.includes(genderOf(p)));
+      if (f.sizes.length) out = out.filter((p) => sizesOf(p).some((s) => f.sizes.includes(s)));
+      if (f.brands.length) out = out.filter((p) => f.brands.includes(brandOf(p) || ""));
+      return out;
+    };
 
     if (searchQuery.value) {
       const q = searchQuery.value.toLowerCase();
-      return products.filter((p) =>
-        p.name.toLowerCase().includes(q) || p.sku.toLowerCase().includes(q) || p.category.toLowerCase().includes(q)
-      );
+      return applyFacets(products.filter((p) => matchesQuery(p, q)));
     }
 
     if (activeCat.value !== "All") {
-      return products.filter((p) => p.category === activeCat.value);
+      return applyFacets(products.filter((p) => p.category === activeCat.value));
     }
 
-    return products;
+    return applyFacets(products);
   });
 
   return (
-    <section class={`home-catalog ${cls || ""}`}>
+    <section class={`home-catalog ${isElectrical.value ? "home-catalog--electrical" : ""} ${cls || ""}`}>
       <div class="home-catalog__inner">
-        <div class="home-catalog__header">
+        <div class={`home-catalog__header ${tabsAtEnd.value ? "home-catalog__header--tabs-end" : ""}`}>
           <h2 class="home-catalog__title">{t("nav.apparel", locale.value)}</h2>
+          {/* Catalog/list view mode removed — the gallery grid only. */}
+          {!isToque.value && (
           <div class="home-catalog__sidebar-search">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
             <input
@@ -132,42 +994,51 @@ export const ProductCatalog = component$<{ class?: string }>(({ "class": cls }) 
               placeholder=""
               aria-label="Search apparel"
               value={searchQuery.value}
-              onInput$={(_, el) => { searchQuery.value = el.value; }}
+              onInput$={(_, el) => { searchQuery.value = el.value; activeCat.value = categoryForQuery(el.value, baseProducts.value); }}
               onKeyDown$={(e) => { if (e.key === "Enter") doSearch(searchQuery.value); }}
               onBlur$={() => doSearch(searchQuery.value)}
             />
           </div>
-          <div class="home-catalog__tabs">
-            {(isTech.value ? ["Work Wear"] : CLOTHING_CATEGORIES).map((cat) => (
+          )}
+          <div
+            class="home-catalog__tabs"
+            onScroll$={(_, el) => {
+              tabsAtEnd.value = el.scrollLeft + el.clientWidth >= el.scrollWidth - 4;
+            }}
+          >
+            {visibleCategories.value.map((cat) => (
               <button
                 key={cat}
-                class={`apparel-titlebar__tab ${isTech.value || activeCat.value === cat ? "active" : ""}`}
-                onClick$={() => {
-                  if (isTech.value) return;
-                  if (activeCat.value === cat) { activeCat.value = "All"; return; }
+                class={`apparel-titlebar__tab ${isSingleCat.value || activeCat.value === cat ? "active" : ""}`}
+                onClick$={(_, el) => {
+                  if (isSingleCat.value) return;
+                  // Center the tapped tab in the scrollable strip so an
+                  // edge tap reveals the neighboring categories (no-op when
+                  // the strip doesn't overflow, e.g. desktop).
+                  el.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
+                  // Changing category clears + exits the search (header + tab bar).
+                  window.dispatchEvent(new CustomEvent("apparel-search-clear"));
+                  searchOpen.value = false;
+                  if (activeCat.value === cat) { activeCat.value = "All"; searchQuery.value = ""; scrollProductsBelowBar(); return; }
                   activeCat.value = cat;
                   searchQuery.value = "";
-                  const isDesktop = window.innerWidth > 1024;
-                  const headerH = window.innerWidth <= 900 ? 49 : 58;
-                  if (isDesktop) {
-                    const grid = document.querySelector('.home-catalog .apparel-grid');
-                    const gridTop = grid ? grid.getBoundingClientRect().top + window.scrollY - headerH - 8 : 0;
-                    const needsScrollUp = gridTop < window.scrollY;
-                    window.scrollTo({ top: gridTop, behavior: needsScrollUp ? 'instant' : 'smooth' });
-                  } else {
-                    const catalog = document.querySelector('.home-catalog');
-                    const tabH = (document.querySelector('.home-catalog__header') as HTMLElement)?.offsetHeight || 34;
-                    const catalogTop = catalog ? catalog.getBoundingClientRect().top + window.scrollY : 0;
-                    const stickyPos = catalogTop - headerH + tabH - 28;
-                    window.scrollTo({ top: stickyPos, behavior: 'instant' });
-                  }
+                  scrollProductsBelowBar();
                 }}
               >
                 <span class="apparel-titlebar__tab-icon" dangerouslySetInnerHTML={CATEGORY_ICONS[cat]} />
-                {cat === "All" ? t("apparel.all", locale.value) : categoryLabel(cat, locale.value)}
+                {cat === "All" ? t("apparel.all", locale.value) : (
+                  <>
+                    <span class="apparel-titlebar__tab-short">{categoryLabel(cat, locale.value)}</span>
+                    {/* Tablet-only label: shorter for "New Hire Kit" (Office Kit)
+                        so it fits the tablet tab row; same as short elsewhere. */}
+                    <span class="apparel-titlebar__tab-tablet">{categoryLabel(cat, locale.value)}</span>
+                    <span class="apparel-titlebar__tab-full">{FULL_CAT_KEYS[cat] ? t(FULL_CAT_KEYS[cat] as any, locale.value) : categoryLabel(cat, locale.value)}</span>
+                  </>
+                )}
               </button>
             ))}
           </div>
+          {!isToque.value && (
           <div class="home-catalog__right">
             <div class="apparel-titlebar__search home-catalog__search-desktop">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
@@ -177,54 +1048,158 @@ export const ProductCatalog = component$<{ class?: string }>(({ "class": cls }) 
                 placeholder=""
                 aria-label="Search apparel"
                 value={searchQuery.value}
-                onInput$={(_, el) => { searchQuery.value = el.value; }}
+                onInput$={(_, el) => { searchQuery.value = el.value; activeCat.value = categoryForQuery(el.value, baseProducts.value); }}
                 onKeyDown$={(e) => { if (e.key === "Enter") doSearch(searchQuery.value); }}
                 onBlur$={() => doSearch(searchQuery.value)}
               />
             </div>
-            {searchOpen.value ? (
-              <div class="apparel-titlebar__search apparel-titlebar__search--mobile">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
-                <input
-                  type="text"
-                  class="apparel-titlebar__search-input"
-                  placeholder=""
-                  aria-label="Search apparel"
-                  autoFocus
-                  value={searchQuery.value}
-                  onInput$={(_, el) => { searchQuery.value = el.value; }}
-                  onKeyDown$={(e) => { if (e.key === "Enter") { doSearch(searchQuery.value); searchOpen.value = false; } if (e.key === "Escape") { searchQuery.value = ""; searchOpen.value = false; } }}
-                  onBlur$={() => { doSearch(searchQuery.value); searchOpen.value = false; }}
-                />
-                <button class="apparel-titlebar__action" aria-label="Close search" onClick$={() => { doSearch(searchQuery.value); searchOpen.value = false; }} style="padding:2px;">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg>
-                </button>
-              </div>
-            ) : (
-              <>
-                <button
-                  class="apparel-titlebar__action apparel-titlebar__action--tablet-cols"
-                  aria-label={`Show ${tabletCols.value === 2 ? 3 : 2} per row`}
-                  onClick$={() => { tabletCols.value = tabletCols.value === 2 ? 3 : 2; }}
-                >
-                  {tabletCols.value === 2 ? (
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="5" height="18"/><rect x="9.5" y="3" width="5" height="18"/><rect x="16" y="3" width="5" height="18"/></svg>
-                  ) : (
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="8" height="18"/><rect x="13" y="3" width="8" height="18"/></svg>
-                  )}
-                </button>
-                <button class="apparel-titlebar__action apparel-titlebar__action--mobile-search" aria-label="Search" onClick$={() => (searchOpen.value = true)}>
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
-                </button>
-              </>
-            )}
+            {/* Tablet column-count toggle. The mobile/tablet search input now
+                lives in the site header (see layout.tsx) so it no longer
+                crowds the category tab strip. */}
+            {/* Tablet list/catalog view toggle removed — gallery grid only. */}
+            {/* Tablet: search icon opens a field over the tab bar, so search no
+                longer needs a slot in the site header. */}
+            <button class="apparel-titlebar__action apparel-titlebar__action--tabbar-search" aria-label="Search" onClick$={() => (searchOpen.value = true)}>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+            </button>
           </div>
+          )}
+          {!isToque.value && searchOpen.value && (
+            <div class="home-catalog__tabbar-search">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+              <input
+                type="text"
+                class="apparel-titlebar__search-input"
+                placeholder=""
+                aria-label="Search apparel"
+                value={searchQuery.value}
+                onInput$={(_, el) => { searchQuery.value = el.value; activeCat.value = categoryForQuery(el.value, baseProducts.value); }}
+                onKeyDown$={(e) => { if (e.key === "Enter") doSearch(searchQuery.value); if (e.key === "Escape") { searchQuery.value = ""; searchOpen.value = false; } }}
+              />
+              <button class="home-catalog__tabbar-search-close" aria-label="Close search" onClick$={() => { doSearch(searchQuery.value); searchOpen.value = false; }}>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg>
+              </button>
+            </div>
+          )}
+          {/* Mobile/tablet: the white stroke cut across the sign at the tab
+              bar's bottom edge, matching the one under the header bar. Both of
+              this element's pseudos are taken by the scroll cue, so the stroke
+              needs its own node. */}
+          <span class="home-catalog__seam" aria-hidden="true" />
         </div>
-        <div class={`apparel-grid apparel-grid--cols-${tabletCols.value}`}>
-          {filtered.value.map((item) => (
-            <ProductCard key={item.sku} item={item} sku={item.sku} />
-          ))}
-        </div>
+        <aside
+          class={`home-catalog__filters${isPdp.value ? " home-catalog__filters--pdp-back" : ""}`}
+          aria-label="Filter products"
+          onClick$={() => {
+            // On a product page the sidebar has no grid to filter, so any click
+            // in it returns to the catalog (SPA nav keeps the shell mounted) —
+            // except on the standalone /toque page, which must stay put.
+            if (isPdp.value && !isToque.value) nav("/");
+          }}
+        >
+          {/* Desktop category nav — the collection titles moved out of the
+              horizontal tab strip into a vertical sidebar list (sm-style), each
+              with a SKU count pill. The tab strip stays for mobile/tablet. */}
+          {!isSingleCat.value && (
+            <nav class="home-catalog__catnav" aria-label="Collections">
+              <div class="home-catalog__catnav-head">
+                <div class="home-catalog__catnav-title">{isElectrical.value ? t("login.portal.electrical", locale.value) : t("filter.collections", locale.value)}</div>
+              </div>
+              {visibleCategories.value.map((cat) => (
+                <button
+                  key={cat}
+                  class={`home-catalog__catnav-item ${activeCat.value === cat || isToque.value ? "active" : ""}`}
+                  onClick$={() => { if (isToque.value) return; selectCat(cat); }}
+                >
+                  <span class="home-catalog__catnav-icon" dangerouslySetInnerHTML={CATEGORY_ICONS[cat]} />
+                  <span class="home-catalog__catnav-label">
+                    {cat === "All"
+                      ? t("apparel.all", locale.value)
+                      : (FULL_CAT_KEYS[cat] ? t(FULL_CAT_KEYS[cat] as any, locale.value) : categoryLabel(cat, locale.value))}
+                  </span>
+                  <span class="home-catalog__catnav-count">{isToque.value ? 1 : (categoryCounts.value[cat] ?? 0)}</span>
+                </button>
+              ))}
+            </nav>
+          )}
+          {SHOW_FIT_FACET && !isPdp.value && !isElectrical.value && facetOptions.value.genders.length >= 1 && (
+            <div class="home-catalog__filter-group">
+              <div class="home-catalog__filter-title">{t("filter.fit", locale.value)}</div>
+              {facetOptions.value.genders.map((g) => (
+                <button
+                  key={g}
+                  class={`home-catalog__filter-opt ${effFilters.value.genders.includes(g) ? "active" : ""}`}
+                  onClick$={() => {
+                    const f = effFilters.value;
+                    filters.value = {
+                      ...f,
+                      genders: f.genders.includes(g) ? f.genders.filter((x) => x !== g) : [...f.genders, g],
+                    };
+                    scrollProductsBelowBar();
+                  }}
+                >
+                  <span class="home-catalog__filter-check" />
+                  {t(`fit.${g.toLowerCase()}` as any, locale.value)}
+                </button>
+              ))}
+            </div>
+          )}
+          {!isPdp.value && facetOptions.value.brands.length >= 2 && (
+            <div class="home-catalog__filter-group">
+              <div class="home-catalog__filter-title">{t("filter.brand", locale.value)}</div>
+              {facetOptions.value.brands.map((b) => (
+                <button
+                  key={b}
+                  class={`home-catalog__filter-opt ${effFilters.value.brands.includes(b) ? "active" : ""}`}
+                  onClick$={() => {
+                    const f = effFilters.value;
+                    filters.value = {
+                      ...f,
+                      brands: f.brands.includes(b) ? f.brands.filter((x) => x !== b) : [...f.brands, b],
+                    };
+                    scrollProductsBelowBar();
+                  }}
+                >
+                  <span class="home-catalog__filter-check" />
+                  {b}
+                </button>
+              ))}
+            </div>
+          )}
+          {!isPdp.value && (effFilters.value.genders.length > 0 || effFilters.value.sizes.length > 0 || effFilters.value.brands.length > 0) && (
+            <button
+              class="home-catalog__filter-clear"
+              onClick$={() => {
+                filters.value = { cat: activeCat.value, genders: [], sizes: [], brands: [] };
+                scrollProductsBelowBar();
+              }}
+            >
+              {t("filter.clear", locale.value)}
+            </button>
+          )}
+        </aside>
+        {isPdp.value ? (
+          <div
+            class="home-catalog__pdp-main"
+            onClick$={(e, el) => {
+              // Clicking the empty gutter/margin around the detail panel returns
+              // to the catalog. Only the structural containers' own areas count
+              // (this column's gutter, or the .apparel-catalog padding/backdrop),
+              // never the panel content, breadcrumb, or related-item links inside.
+              if (isToque.value) return; // standalone page — don't bounce out
+              const t = e.target as HTMLElement;
+              if (t === el || t.classList.contains("apparel-catalog")) nav("/");
+            }}
+          >
+            <Slot />
+          </div>
+        ) : (
+          <div class={`apparel-grid ${denseGrid.value ? "apparel-grid--dense" : ""} ${tabletCols.value === "list" ? "apparel-grid--list" : `apparel-grid--cols-${tabletCols.value}`}`}>
+            {filtered.value.map((item, i) => (
+              <ProductCard key={item.sku} item={item} sku={item.sku} index={i} />
+            ))}
+          </div>
+        )}
       </div>
     </section>
   );

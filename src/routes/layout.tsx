@@ -1,56 +1,72 @@
-import { component$, Slot, useSignal, useVisibleTask$, $, useContextProvider, useStore, useComputed$, createContextId } from "@builder.io/qwik";
+import { component$, Slot, useSignal, useTask$, useVisibleTask$, $, useContextProvider, useStore, useComputed$, createContextId, isBrowser } from "@builder.io/qwik";
 import type { Signal } from "@builder.io/qwik";
-import { Modal, Collapsible } from '@qwik-ui/headless';
+import { Modal, Accordion } from '@qwik-ui/headless';
 import {
   Link,
   routeAction$,
   routeLoader$,
   useLocation,
+  useNavigate,
   Form,
   z,
   zod$,
 } from "@builder.io/qwik-city";
 import type { Cookie } from "@builder.io/qwik-city";
-import { Resend } from "resend";
 import { createClient } from "@libsql/client";
 import { LocaleContext, t } from "../i18n";
-import type { Locale, TranslationKey } from "../i18n";
+import { SecondaryBarContext } from "../context/secondary-bar";
+import type { Locale } from "../i18n";
+import { allProducts, colorName, categoryLabel } from "./apparel/products";
+import { sortColorsWhiteLast } from "./apparel/utils";
+import { CATEGORY_ICONS } from "../lib/categories";
+import { moqForSku } from "../moq";
+import { sendConfirmationEmail } from "../lib/orders";
+import type { OrderEmailData } from "../lib/orders";
 
 const AUTH_COOKIE = "ce_auth"; // v2: orders persist to db
 const LOCALE_COOKIE = "ce_locale";
 
-const CART_SKU_IMG: Record<string, string> = {
-  "BMGC-1": "/100617_001_MF25_e_w.png",
-  "BMGC-2": "/100617_026_MS25_e.png",
-  "BMGC-3": "/102208_001_MF22_V2.png",
-  "BMGC-4": "/102286_001_MF22_e_1.png",
-  "BMGC-5": "/104277_BLK_MF22_e.png",
-  "BMGC-6": "/duckgrey.png",
-  "BMGC-7": "/105294_BLK_MF22_e.png",
-  "BMGC-8": "/backpack-black.png",
-  "BMGC-9": "/cooler-black.png",
-  "BMFR-1": "/5242.png",
-  "BMFR-2": "/2153.png",
-  "BMFR-3": "/2151.png",
-  "BMFR-4": "/2152.png",
-  "BMFR-5": "/405nb.png",
-  "BMFR-6": "/1052.png",
-  "BMFR-7": "/3052.png",
-  "BMFR-8": "/501.png",
-  "BMFR-9": "/502.png",
-  "BMFR-10": "/503.png",
-  "BMFR-11": "/504.png",
-  "BMFR-12": "/506.png",
-  "BMFR-13": "/507.png",
+// The home hero has been removed — "/" is now the catalog itself, so the header
+// must always be visible (solid, with its logo) exactly like every other route,
+// including the product pages. Hero slide-in mode is therefore OFF.
+
+// Canadian provincial sales tax rates (combined GST/HST/PST/QST)
+const PROVINCE_TAX: Record<string, number> = {
+  AB: 0.05, BC: 0.12, MB: 0.12, NB: 0.15, NL: 0.15,
+  NS: 0.14, ON: 0.13, PE: 0.15, QC: 0.14975, SK: 0.11,
 };
-function cartItemImg(sku: string | undefined, existing: string | undefined): string {
-  if (sku && CART_SKU_IMG[sku]) return CART_SKU_IMG[sku];
-  if (existing) return existing;
-  return "/truck2.webp";
-}
-function stripColorSuffix(name: string): string {
-  const i = name.lastIndexOf(" - ");
-  return i > -1 ? name.slice(0, i) : name;
+const PROVINCE_NAMES: Record<string, string> = {
+  AB: "Alberta", BC: "British Columbia", MB: "Manitoba",
+  NB: "New Brunswick", NL: "Newfoundland and Labrador",
+  NS: "Nova Scotia", ON: "Ontario", PE: "Prince Edward Island",
+  QC: "Quebec", SK: "Saskatchewan",
+};
+const taxRateFor = (code: string): number | undefined => PROVINCE_TAX[code];
+
+// The header's height drives every scroll offset in the app: the sticky strips
+// (catalog tabs, apparel titlebar, product breadcrumb) pin directly beneath it,
+// so anything scrolling content "to just below the bars" has to know it. This
+// used to be a hardcoded `innerWidth < 601 ? 64 : (<= 1024 ? 67 : 58)` chain,
+// copied into a dozen call sites — and it silently desynced from the CSS every
+// time a bar height changed, parking content a few px under the header.
+// Measure the element instead; fall back to the CSS custom property that sets
+// the same height, and only then to a literal.
+// NB this is the header's BOTTOM EDGE once pinned, not its height. On desktop
+// the header is pinned 4px down from the viewport top (a strip of the greige
+// surround shows above the card), so bottom = 4 + height. Using the height
+// alone puts content 4px too high — under the header — which is what made the
+// tab bar and breadcrumb look short after a tab click.
+export function stickyTop(): number {
+  const el = document.querySelector(".site-header") as HTMLElement | null;
+  if (el) {
+    const rect = el.getBoundingClientRect();
+    if (rect.height > 0) {
+      const cs = getComputedStyle(el);
+      const offset = cs.position === "sticky" || cs.position === "fixed" ? parseFloat(cs.top) || 0 : 0;
+      return Math.round(offset + rect.height);
+    }
+  }
+  return 64;
 }
 
 export const LoginTypeContext = createContextId<Signal<string>>("loginType");
@@ -60,9 +76,12 @@ export const useLocaleLoader = routeLoader$(({ cookie }) => {
   return (saved === "fr" ? "fr" : "en") as Locale;
 });
 
-type LoginType = "clothing" | "tech" | "electrical" | null;
+// Black & McDonald logins: the Good Catch catalog ("clothing"), Tech
+// ("tech", Work Wear) and Electrical ("electrical", the FR line). Each is a
+// username + password pair from the environment.
+export type LoginType = "clothing" | "tech" | "electrical" | null;
 
-function getLoginType(cookie: Cookie): LoginType {
+export function getLoginType(cookie: Cookie): LoginType {
   const val = cookie.get(AUTH_COOKIE)?.value;
   if (val === "clothing" || val === "tech" || val === "electrical") return val;
   if (val === "authenticated") return "clothing"; // backward compat
@@ -91,52 +110,26 @@ function timingSafeEq(a: string, b: string): boolean {
 
 export const useLogin = routeAction$(
   ({ username, password }, { cookie, fail, env }) => {
-    const expectedUser = env.get("APP_USERNAME") || "admin";
-    const expectedPass = env.get("APP_PASSWORD");
-    const techUser = env.get("TECH_USERNAME") || "tech";
-    const techPass = env.get("TECH_PASSWORD");
-    const electricalUser = env.get("ELECTRICAL_USERNAME") || "electrical";
-    const electricalPass = env.get("ELECTRICAL_PASSWORD");
-
-    // Check Electrical login
-    if (electricalPass && timingSafeEq(username, electricalUser) && timingSafeEq(password, electricalPass)) {
-      cookie.set(AUTH_COOKIE, "electrical", {
-        path: "/",
-        httpOnly: true,
-        secure: true,
-        sameSite: "lax",
-        maxAge: 60 * 60 * 24 * 3,
-      });
-      return { success: true };
-    }
-
-    // Check Tech login
-    if (techPass && timingSafeEq(username, techUser) && timingSafeEq(password, techPass)) {
-      cookie.set(AUTH_COOKIE, "tech", {
-        path: "/",
-        httpOnly: true,
-        secure: true,
-        sameSite: "lax",
-        maxAge: 60 * 60 * 24 * 3,
-      });
-      return { success: true };
-    }
-
-    // Check Clothing login
-    if (!expectedPass) {
+    const accounts: { type: Exclude<LoginType, null>; user: string; pass: string | undefined }[] = [
+      { type: "electrical", user: env.get("ELECTRICAL_USERNAME") || "electrical", pass: env.get("ELECTRICAL_PASSWORD") },
+      { type: "tech", user: env.get("TECH_USERNAME") || "tech", pass: env.get("TECH_PASSWORD") },
+      { type: "clothing", user: env.get("APP_USERNAME") || "admin", pass: env.get("APP_PASSWORD") || env.get("VITE_APP_PASSWORD") },
+    ];
+    if (!accounts.some((a) => a.pass)) {
       return fail(500, { message: "Login not configured" });
     }
-    if (timingSafeEq(username, expectedUser) && timingSafeEq(password, expectedPass)) {
-      cookie.set(AUTH_COOKIE, "clothing", {
-        path: "/",
-        httpOnly: true,
-        secure: true,
-        sameSite: "lax",
-        maxAge: 60 * 60 * 24 * 3,
-      });
-      return { success: true };
+    const match = accounts.find((a) => a.pass && timingSafeEq(username, a.user) && timingSafeEq(password, a.pass));
+    if (!match) {
+      return fail(401, { message: "Invalid username or password" });
     }
-    return fail(401, { message: "Invalid username or password" });
+    cookie.set(AUTH_COOKIE, match.type, {
+      path: "/",
+      httpOnly: true,
+      secure: true,
+      sameSite: "none",
+      maxAge: 60 * 60 * 24 * 3,
+    });
+    return { success: true };
   },
   zod$({
     username: z.string().min(1).max(64),
@@ -149,162 +142,219 @@ export const useLogout = routeAction$(async (_, { cookie }) => {
   return { success: true };
 });
 
-// HTML-escape user-provided strings before they go into the order email body
-function esc(s: string | undefined | null): string {
-  if (s == null) return "";
-  return String(s)
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#039;");
-}
-
 export const useSubmitOrder = routeAction$(
-  async (data, { fail, env, cookie }) => {
+  async (data, { fail, env, cookie, url }) => {
     if (!isAuthenticated(cookie)) {
       return fail(401, { message: "Not authenticated" });
     }
-    const vendor = getLoginType(cookie) === "tech" ? "blackmcdonald-tech" : "blackmcdonald";
+    const lt = getLoginType(cookie);
+    // Tech orders go to their own vendor bucket; Good Catch and Electrical use
+    // the main Black & McDonald vendor (as on the original BM site).
+    const vendor = lt === "tech" ? "blackmcdonald-tech" : "blackmcdonald";
     // Read from non-prefixed names first, fall back to VITE_* for backward compat.
     // Both are safe at runtime — env.get() reads server env, never bundles.
     const tursoUrl = env.get("TURSO_URL") || env.get("VITE_TURSO_URL");
     const tursoToken = env.get("TURSO_AUTH_TOKEN") || env.get("VITE_TURSO_AUTH_TOKEN");
     const apiKey = env.get("RESEND_API_KEY") || env.get("VITE_RESEND_API_KEY");
 
-    const { employee, items, date } = data;
+    const { employee, items, date, idempotencyKey } = data;
+    // Black & McDonald is purchase-order / invoice only — no Stripe or gift-card
+    // payment. The column is kept for the admin, always stamped "po".
+    const paymentMethod = "po";
 
-  const colorMap: Record<string, string> = {
-    "#00703c": "Green", "#1a1a18": "Black", "#ffffff": "White",
-    "#2c3e50": "Navy", "#94a3b8": "Silver", "#4a4a4a": "Charcoal",
-    "#6b6b6b": "Grey", "#8d5f18": "Bronze",
-    "#E6570C": "Orange", "#ff6600": "Orange", "#e4ba3f": "Yellow",
-  };
-  const cName = (hex: string) => colorMap[hex] || hex;
+    const province = employee.province;
+    if (!province || !PROVINCE_TAX[province]) {
+      return fail(400, { message: "Please select a province before submitting the order." });
+    }
+    if (!employee.address1?.trim() || !employee.city?.trim() || !employee.postal?.trim()) {
+      return fail(400, { message: "A full shipping address (street, city, postal code) is required." });
+    }
+    if (paymentMethod === "po" && !employee.po) {
+      return fail(400, { message: "A PO number is required for purchase-order checkout." });
+    }
+    // Test PO: an order placed with this PO number is saved to the DB exactly
+    // like a real order (so the round-trip to cm-admin can be verified) but
+    // sends NO confirmation / staff-notification email. Lets us test that an
+    // order reaches the admin without emailing anyone. The sentinel is matched
+    // trimmed + case-insensitively; it can be overridden with TEST_NO_EMAIL_PO.
+    const testNoEmailPo = (env.get("TEST_NO_EMAIL_PO") || env.get("VITE_TEST_NO_EMAIL_PO") || "TEST-NOEMAIL").trim().toUpperCase();
+    const skipEmail = !!testNoEmailPo && (employee.po || "").trim().toUpperCase() === testNoEmailPo;
+    const taxRate = PROVINCE_TAX[province];
+    const taxPct = +(taxRate * 100).toFixed(3);
+    const subtotal = items.reduce((sum, i) => sum + (Number(i.price) || 0) * i.quantity, 0);
+    const tax = subtotal * taxRate;
+    const total = +(subtotal + tax).toFixed(2);
 
-  const subtotal = items.reduce((sum, i) => sum + (Number(i.price) || 0) * i.quantity, 0);
-  const tax = subtotal * 0.13;
-  const total = subtotal + tax;
+    // Dry-run / test mode (local .env only — never set in production). Runs the
+    // full validation + UI flow but skips the Turso write, gift/Stripe, and email:
+    //   ORDER_TEST_MODE=1|true|yes  -> simulate SUCCESS (no DB, no email)
+    //   ORDER_TEST_MODE=fail        -> simulate the real DB-failure response
+    const testModeVal = (env.get("ORDER_TEST_MODE") || env.get("VITE_ORDER_TEST_MODE") || "").trim().toLowerCase();
+    if (testModeVal === "fail") {
+      console.warn("[ORDER_TEST_MODE=fail] Simulating a failed order (no DB, no email).");
+      return fail(500, { message: "Order could not be saved. Please try again." });
+    }
+    if (/^(1|true|yes)$/.test(testModeVal)) {
+      console.warn("[ORDER_TEST_MODE] Skipping DB insert + email. Simulated order.", { vendor, total });
+      return { success: true, orderNumber: "BM-TEST" };
+    }
 
-  // Insert order into Turso database
-  if (!tursoUrl || !tursoToken) {
-    return fail(500, { message: "Order database not configured (missing env vars)" });
-  }
-  let orderNumber = "";
-  try {
+    if (!tursoUrl || !tursoToken) {
+      return fail(500, { message: "Order database not configured (missing env vars)" });
+    }
     const db = createClient({ url: tursoUrl, authToken: tursoToken });
-    const result = await db.execute({
-      sql: `INSERT INTO orders (vendor, emp_number, emp_name, emp_dept, po_number, items, total, status, created_at, updated_at)
-            VALUES (?, ?, ?, ?, ?, ?, ?, 'pending', datetime('now'), datetime('now'))`,
-      args: [
-        vendor,
-        "",
-        employee.name,
-        employee.department,
-        employee.po || "",
-        JSON.stringify(items),
-        total,
-      ],
-    });
-    const insertedId = result.lastInsertRowid;
-    if (insertedId != null) {
+
+    // ---- Persist the order (PO / invoice, settled offline) ----
+    const status = "pending";
+    let orderNumber = "";
+    let orderId: bigint | number | null = null;
+    // Empty string must become NULL so orders without a key don't collide on the
+    // unique index (SQLite treats NULLs as distinct, empty strings not).
+    const idemKey = (idempotencyKey || "").trim() || null;
+    try {
+      // Warm up the connection before writing. Turso databases on low-traffic
+      // apps can be cold, and the first request after idle can fail or be slow.
+      // Retry a harmless SELECT a few times (with backoff) to wake it. We retry
+      // only this read — never the INSERT — so a cold start can't create a
+      // duplicate order. The INSERT below then runs once on a live connection.
+      const WARMUP_TRIES = 3;
+      let warmErr: unknown = null;
+      for (let attempt = 1; attempt <= WARMUP_TRIES; attempt++) {
+        try {
+          await db.execute("SELECT 1");
+          warmErr = null;
+          break;
+        } catch (err) {
+          warmErr = err;
+          console.warn(`Turso warmup attempt ${attempt}/${WARMUP_TRIES} failed:`, err);
+          if (attempt < WARMUP_TRIES) await new Promise((r) => setTimeout(r, 600 * attempt));
+        }
+      }
+      if (warmErr) throw warmErr;
+
+      try {
+        const result = await db.execute({
+          sql: `INSERT INTO orders (vendor, emp_number, emp_name, emp_dept, province, ship_address, ship_city, ship_postal, po_number, items, total, status, payment_method, gift_card_code, gift_amount, card_amount, device, idempotency_key, created_at, updated_at)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, datetime('now'), datetime('now'))`,
+          args: [
+            vendor,
+            "",
+            // The name IS stored (so the admin knows who ordered); email/phone are
+            // NOT — for card orders they travel through Stripe metadata to the
+            // webhook, never a column here. See the privacy policy.
+            employee.name || "",
+            employee.department || "",
+            // Shipping destination — the admin ships to this address. These columns
+            // were accidentally dropped from the INSERT in the Oct-8 rebrand, which
+            // left every new order with a blank address in the admin.
+            province,
+            employee.address1 || "",
+            employee.city || "",
+            employee.postal || "",
+            employee.po || "",
+            JSON.stringify(items),
+            total,
+            status,
+            paymentMethod,
+            "",
+            0,
+            0,
+            data.device || null,
+            idemKey,
+          ],
+        });
+        orderId = (result.lastInsertRowid as any) ?? null;
+      } catch (err) {
+        // Idempotent replay: if this key already produced an order (a prior
+        // attempt saved before the response was lost), reuse that same order
+        // instead of inserting a duplicate. Any other error propagates.
+        if (idemKey && /UNIQUE constraint failed/i.test(String((err as any)?.message ?? err))) {
+          const existing = await db.execute({
+            sql: "SELECT id FROM orders WHERE idempotency_key = ?",
+            args: [idemKey],
+          });
+          if (existing.rows.length > 0) {
+            orderId = (existing.rows[0] as any).id;
+            console.warn("Idempotent replay — reusing existing order for key", idemKey);
+          } else {
+            throw err;
+          }
+        } else {
+          throw err;
+        }
+      }
+
+      // Confirm the row actually persisted before telling the customer it went
+      // through — a silent non-write returns 0 rows and we fail loudly instead
+      // of showing a false success.
+      if (orderId == null) {
+        console.error("Insert returned no rowid — order not confirmed");
+        return fail(500, { message: "Order could not be confirmed. Please try again." });
+      }
+      const check = await db.execute({ sql: "SELECT id FROM orders WHERE id = ?", args: [orderId as any] });
+      if (check.rows.length === 0) {
+        console.error("Order row not found after insert — order not confirmed", orderId);
+        return fail(500, { message: "Order could not be confirmed. Please try again." });
+      }
       const seq = await db.execute({
         sql: "SELECT COUNT(*) AS n FROM orders WHERE vendor LIKE 'blackmcdonald%' AND id <= ?",
-        args: [insertedId as any],
+        args: [orderId as any],
       });
-      const n = Number((seq.rows[0] as any)?.n) || Number(insertedId);
+      const n = Number((seq.rows[0] as any)?.n) || Number(orderId);
       orderNumber = `BM-${n}`;
+    } catch (err) {
+      console.error("Failed to save order to database:", err);
+      return fail(500, { message: "Order could not be saved. Please try again." });
     }
-  } catch (err) {
-    console.error("Failed to save order to database:", err);
-    return fail(500, { message: "Order could not be saved. Please try again." });
-  }
 
-  // Send order confirmation email
-  if (!apiKey) {
-    console.warn("RESEND_API_KEY not configured — order saved but email not sent");
-    return { success: true };
-  }
+    const provinceName = PROVINCE_NAMES[province] || province;
+    const fromAddress = env.get("RESEND_FROM") || env.get("VITE_RESEND_FROM") || "Black & McDonald Apparel <onboarding@resend.dev>";
+    const staffAddresses = (env.get("ORDER_NOTIFY_TO") || env.get("VITE_ORDER_NOTIFY_TO") || "cs@safetyhouse.ca")
+      .split(",").map((a) => a.trim()).filter(Boolean);
 
-  const hasPrices = items.some((i) => Number(i.price) > 0);
-  const itemRows = items.map((i: any) =>
-    `<tr>
-      <td style="padding:6px 12px;border-bottom:1px solid #eee">${esc(i.name)}${i.code ? ` <span style="color:#999;font-size:12px">${esc(i.code)}</span>` : i.sku ? ` <span style="color:#999;font-size:12px">(${esc(i.sku)})</span>` : ""}</td>
-      <td style="padding:6px 12px;border-bottom:1px solid #eee">${i.color ? esc(cName(i.color)) + " / " : ""}${esc(i.size)}</td>
-      <td style="padding:6px 12px;border-bottom:1px solid #eee;text-align:center">${i.quantity}</td>
-      ${hasPrices ? `<td style="padding:6px 12px;border-bottom:1px solid #eee;text-align:right">$${(((Number(i.price) || 0) * i.quantity)).toFixed(2)}</td>` : ""}
-    </tr>`
-  ).join("");
+    // Absolute origin for the email logo (hosted raster, since email can't
+    // render the header's inline SVG). Prefer SITE_URL, fall back to request.
+    const emailLogoUrl = (() => {
+      let b = (env.get("SITE_URL") || url.origin || "").trim();
+      if (b && !/^https?:\/\//i.test(b)) b = "https://" + b;
+      let origin = url.origin;
+      try { origin = new URL(b).origin; } catch { origin = url.origin; }
+      return `${origin}/bm-logo-white.png`;
+    })();
 
-  const fromAddress = env.get("RESEND_FROM") || env.get("VITE_RESEND_FROM") || "Black & McDonald Apparel <onboarding@resend.dev>";
-  const toAddress = env.get("ORDER_NOTIFY_TO") || env.get("VITE_ORDER_NOTIFY_TO") || "cs@safetyhouse.ca";
+    const emailData: OrderEmailData = {
+      orderNumber, date, logoUrl: emailLogoUrl,
+      employee: {
+        name: employee.name, email: employee.email, phone: employee.phone,
+        department: employee.department, provinceName, provinceCode: province,
+        address1: employee.address1, city: employee.city, postal: employee.postal, po: employee.po,
+      },
+      items: items as any,
+      subtotal, taxPct, tax, total,
+    };
 
-  const html = `
-    <div style="font-family:sans-serif;max-width:600px;margin:0 auto">
-      <div style="background:#0a1a12;padding:20px 24px;border-radius:8px 8px 0 0">
-        <h1 style="color:#fff;margin:0;font-size:20px">Black & McDonald Apparel — Apparel Order</h1>
-        ${orderNumber ? `<p style="color:#cbd5c5;margin:6px 0 0;font-size:13px;letter-spacing:0.04em">Order ${esc(orderNumber)}</p>` : ""}
-      </div>
-      <div style="padding:24px;border:1px solid #e5e7eb;border-top:none;border-radius:0 0 8px 8px">
-        ${orderNumber ? `<p style="margin:0 0 4px"><strong>Order #:</strong> ${esc(orderNumber)}</p>` : ""}
-        <p style="margin:0 0 4px"><strong>Date:</strong> ${esc(date)}</p>
-        <p style="margin:0 0 4px"><strong>Employee:</strong> ${esc(employee.name)}</p>
-        ${employee.phone ? `<p style="margin:0 0 4px"><strong>Phone:</strong> ${esc(employee.phone)}</p>` : ""}
-        ${employee.department ? `<p style="margin:0 0 4px"><strong>Location:</strong> ${esc(employee.department)}</p>` : ""}
-        ${employee.po ? `<p style="margin:0 0 4px"><strong>PO #:</strong> ${esc(employee.po)}</p>` : ""}
-        <hr style="border:none;border-top:1px solid #e5e7eb;margin:16px 0">
-        <table style="width:100%;border-collapse:collapse;font-size:14px">
-          <thead>
-            <tr style="background:#f9fafb">
-              <th style="padding:8px 12px;text-align:left">Product</th>
-              <th style="padding:8px 12px;text-align:left">Details</th>
-              <th style="padding:8px 12px;text-align:center">Qty</th>
-              ${hasPrices ? `<th style="padding:8px 12px;text-align:right">Total</th>` : ""}
-            </tr>
-          </thead>
-          <tbody>${itemRows}</tbody>
-          ${hasPrices ? `
-          <tfoot>
-            <tr>
-              <td colspan="3" style="padding:6px 12px;text-align:right">Subtotal</td>
-              <td style="padding:6px 12px;text-align:right">$${subtotal.toFixed(2)}</td>
-            </tr>
-            <tr>
-              <td colspan="3" style="padding:6px 12px;text-align:right">Tax (13%)</td>
-              <td style="padding:6px 12px;text-align:right">$${tax.toFixed(2)}</td>
-            </tr>
-            <tr>
-              <td colspan="3" style="padding:10px 12px;text-align:right;font-weight:700">Total</td>
-              <td style="padding:10px 12px;text-align:right;font-weight:700;color:#00703c">$${total.toFixed(2)}</td>
-            </tr>
-          </tfoot>` : ""}
-        </table>
-      </div>
-    </div>
-  `;
+    if (skipEmail) {
+      console.warn(`[TEST PO] Order ${orderNumber} saved — skipping confirmation email (PO "${employee.po}").`);
+    } else if (apiKey) {
+      await sendConfirmationEmail({ apiKey, from: fromAddress, staffAddresses }, emailData);
+    } else {
+      console.warn("RESEND_API_KEY not configured — order saved but email not sent");
+    }
 
-  try {
-    const resend = new Resend(apiKey);
-    await resend.emails.send({
-      from: fromAddress,
-      to: [toAddress],
-      subject: `${orderNumber ? `${orderNumber} — ` : ""}Apparel Order — ${employee.name} — ${date}`,
-      html,
-    });
-  } catch (err) {
-    console.error("Failed to send order email:", err);
-    // Order was already saved — don't fail the whole action
-  }
-
-  return { success: true };
+    return { success: true, orderNumber };
   },
   zod$({
+    device: z.enum(["mobile", "tablet", "desktop"]).optional(),
     employee: z.object({
       name: z.string().min(1).max(120),
       email: z.string().email().max(254).or(z.literal("")),
       phone: z.string().max(40),
       department: z.string().max(120),
-      po: z.string().min(1).max(60),
+      province: z.string().length(2),
+      address1: z.string().min(1).max(200),
+      city: z.string().min(1).max(120),
+      postal: z.string().min(1).max(20),
+      po: z.string().max(60).optional().default(""),
     }),
     items: z
       .array(
@@ -319,13 +369,24 @@ export const useSubmitOrder = routeAction$(
           length: z.string().max(20).optional().nullable(),
           variant: z.string().max(40).optional().nullable(),
           code: z.string().max(40).optional().nullable(),
+          // Logo-feature products: customer's chosen placement + style. Declared
+          // here so Zod keeps them (it strips undeclared keys) — they then flow
+          // into the confirmation email and the order items JSON.
+          logoPosition: z.string().max(60).optional().nullable(),
+          logoStyle: z.string().max(40).optional().nullable(),
         }),
       )
       .min(1)
       .max(100),
     date: z.string().min(1).max(40),
+    idempotencyKey: z.string().max(80).optional().default(""),
   }),
 );
+
+function stripColorSuffix(name: string): string {
+  const i = name.lastIndexOf(" - ");
+  return i > -1 ? name.slice(0, i) : name;
+}
 
 interface CartItem {
   name: string;
@@ -339,54 +400,126 @@ interface CartItem {
   waist?: string;
   length?: string;
   variant?: string;
+  code?: string;
 }
-
-const colorKeyMap: Record<string, string> = {
-  "#00703c": "color.green",
-  "#1a1a18": "color.black",
-  "#ffffff": "color.white",
-  "#2c3e50": "color.navy",
-  "#94a3b8": "color.grey",
-  "#4a4a4a": "color.grey",
-  "#6b6b6b": "color.grey",
-  "#E6570C": "color.orange",
-  "#ff6600": "color.orange",
-  "#e4ba3f": "color.yellow",
-};
-
-const colorName = (hex: string, locale: Locale): string => {
-  const key = colorKeyMap[hex];
-  if (key) return t(key as TranslationKey, locale);
-  return hex;
-};
 
 export default component$(() => {
   const loc = useLocation();
+  const nav = useNavigate();
   const auth = useAuthCheck();
+  // Payment-return pages (Stripe success/cancelled). A customer coming back from
+  // Stripe is a cross-site navigation, and even with a SameSite=Lax cookie it can
+  // land un-recognised for that one request — which used to drop them onto the
+  // login wall instead of their confirmation. These pages must show regardless
+  // of auth, so exempt them from the login gate.
+  const isPaymentReturn = useComputed$(() => loc.url.pathname.includes("/checkout/"));
+  // Public routes that bypass the login overlay — direct, shareable product
+  // links that must render for logged-out visitors.
+  // No public (logged-out) routes on Black & McDonald.
+  const isPublicRoute = useComputed$(() => false);
+  // True only on the dedicated /checkout page. The cart drawer stays mounted
+  // (cartOpen) but is hidden here, so its overlay keeps covering the page
+  // during the cart → checkout nav — no flash of the PDP underneath.
+  const isCheckout = useComputed$(() => {
+    const p = loc.url.pathname;
+    return p === "/checkout" || p === "/checkout/";
+  });
   const loginAction = useLogin();
   const logoutAction = useLogout();
   const orderAction = useSubmitOrder();
 
-  const showLogin = useSignal(!auth.value.loggedIn);
+  const showLogin = useSignal(false);
   const overlayFading = useSignal(false);
+  // Login modal background carousel: cross-fade the two hero slides on the right
+  // pane while the login modal is open (autoplay wired up in a visible task).
+  // Autoplay runs every 6s and only pauses while the sign-in form is focused.
+  const loginHeroIndex = useSignal(0);
+  const loginVideoPaused = useSignal(false);
+  const loginCarouselPaused = useSignal(false);
+  const loginTypingTimer = useSignal(0);
+  // Pause the carousel while actively typing, then resume after a short idle —
+  // focusing the field alone shouldn't freeze it forever.
+  const pauseCarouselWhileTyping = $(() => {
+    loginCarouselPaused.value = true;
+    if (loginTypingTimer.value) clearTimeout(loginTypingTimer.value);
+    loginTypingTimer.value = setTimeout(() => {
+      loginCarouselPaused.value = false;
+    }, 4000) as unknown as number;
+  });
   const menuOpen = useSignal(false);
+  // Set when the menu closes because a search was committed from inside it, so
+  // the scroll-lock release lands on the results (top of the catalog) instead of
+  // restoring the scrolled-down position the menu was opened from.
+  const menuSearchScrollTop = useSignal(false);
   const savedLocale = useLocaleLoader();
   const locale = useSignal<Locale>(savedLocale.value);
 
+  // EN/FR language toggle (footer on tablet+desktop, menu drawer on mobile).
+  const toggleLocale = $(() => {
+    locale.value = locale.value === "en" ? "fr" : "en";
+    document.cookie = `${LOCALE_COOKIE}=${locale.value};path=/;max-age=31536000`;
+  });
+
+  // Mobile/tablet apparel search lives in the header (not the catalog tab
+  // strip). It relays keystrokes to the catalog via an "apparel-search" event.
+  const searchOpen = useSignal(false);
+  const searchValue = useSignal("");
+  // Phones use a shorter search placeholder ("Search...") than desktop
+  // ("Search apparel"); placeholder text can't be swapped by CSS, so track the
+  // breakpoint here. The mobile search field is hidden until tapped, so there's
+  // no flash before this settles.
+  const narrowSearch = useSignal(false);
+  // The catalog (and therefore search) is only rendered on the home page and
+  // the apparel listing — not on product detail or 404 pages.
+  // Search shows on the home page, the apparel listing, AND product pages. On a
+  // product page there's no catalog mounted, so the first keystroke navigates to
+  // the listing (see the input handlers) — the search bar itself stays put in
+  // the header the whole time.
+  const showSearch = useComputed$(
+    () =>
+      (loc.url.pathname === "/" || (!loc.url.pathname.startsWith("/privacy") && !loc.url.pathname.startsWith("/checkout"))) &&
+      // The public /toque page is a single-SKU showcase — no search.
+      loc.url.pathname.replace(/\/+$/, "") !== "/toque" &&
+      // Electrical has only a handful of products — no need for search.
+      auth.value.loginType !== "electrical",
+  );
+
   useContextProvider(LocaleContext, locale);
 
-  const loginType = useSignal(auth.value.loginType);
+  // Typed as string (not the "service" | "electrical" union): several views still
+  // compare against legacy portal values ("tech" / "safety"), and this also
+  // matches LoginTypeContext's Signal<string>. Keeps the type-check (part of the
+  // production build) from failing on those otherwise-narrowed comparisons.
+  const loginType = useSignal<string>(auth.value.loginType);
   useContextProvider(LoginTypeContext, loginType);
+
+  // Unified secondary-bar state (see SecondaryBarContext). Created here so the
+  // shell-level bar and the descendant ProductCatalog share one source of truth.
+  const barActiveCat = useSignal("All");
+  const barSearchQuery = useSignal("");
+  const barSearchOpen = useSignal(false);
+  const barVisibleCategories = useSignal<string[]>([]);
+  useContextProvider(SecondaryBarContext, {
+    activeCat: barActiveCat,
+    searchQuery: barSearchQuery,
+    searchOpen: barSearchOpen,
+    visibleCategories: barVisibleCategories,
+  });
 
   // Cart state
   const initialCartCount = useCartCountLoader();
   const cart = useStore<{ items: CartItem[] }>({ items: [] });
   const ssrCartCount = useSignal(initialCartCount.value);
+  // Once the client has loaded the real cart, the live count is authoritative —
+  // even when it drops to 0. Before that (SSR / first paint) we show the cookie
+  // count so the badge isn't blank on load.
+  const cartHydrated = useSignal(false);
   const cartOpen = useSignal(false);
   const orderSubmitted = useSignal(false);
+  const orderNum = useSignal("");
+  const submitting = useSignal(false);
   const checkoutOpen = useSignal(false);
   const checkoutStep = useSignal<"cart" | "details">("cart");
-  const summaryOpen = useSignal(true);
   const formError = useSignal("");
   const formTouched = useSignal(false);
   const empFirstName = useSignal("");
@@ -394,18 +527,47 @@ export default component$(() => {
   const empEmail = useSignal("");
   const empPhone = useSignal("");
   const empDept = useSignal("");
+  const empProvince = useSignal("");
+  const empAddress1 = useSignal("");
+  const empCity = useSignal("");
+  const empPostal = useSignal("");
   const empPO = useSignal("");
 
   const cartCount = useComputed$(() => {
     const count = cart.items.reduce((sum, i) => sum + i.quantity, 0);
-    return count > 0 ? count : ssrCartCount.value;
+    return cartHydrated.value ? count : ssrCartCount.value;
+  });
+  // Prices show unless this is the Tech login or nothing in the cart is priced
+  // (the company-supplied $0 FR line), as on the original Black & McDonald site.
+  const showPrices = useComputed$(() => loginType.value !== "tech" && cart.items.some((i: { price?: number | string }) => (Number(i.price) || 0) > 0));
+  const subtotal = useComputed$(() =>
+    cart.items.reduce((sum, i) => sum + (Number(i.price) || 0) * i.quantity, 0),
+  );
+  const taxRate = useComputed$(() => taxRateFor(empProvince.value));
+  const taxAmount = useComputed$(() => taxRate.value === undefined ? undefined : subtotal.value * taxRate.value);
+  const orderTotal = useComputed$(() => subtotal.value + (taxAmount.value ?? 0));
+  // Whether the order can be placed — every required field filled, including a
+  // PO number (purchase-order only). Drives the greyed-out state
+  // of the place-order button. Detailed email/phone FORMAT checks stay on
+  // submit so the button un-greys once the fields are simply filled in.
+  const canPlaceOrder = useComputed$(() => {
+    if (!empFirstName.value.trim() || !empLastName.value.trim() || !empEmail.value.trim()
+        || !empPhone.value.trim() || !empProvince.value) return false;
+    if (!empAddress1.value.trim() || !empCity.value.trim() || !empPostal.value.trim()) return false;
+    if (!empPO.value.trim()) return false;
+    return true;
+  });
+  const taxLabel = useComputed$(() => {
+    if (taxRate.value === undefined) return t("cart.invoice.tax", locale.value);
+    const pct = +(taxRate.value * 100).toFixed(3);
+    return `${t("cart.invoice.tax", locale.value)} (${empProvince.value} ${pct}%)`;
   });
   const headerScrolled = useSignal(false);
-
-  const toggleLocale = $(() => {
-    locale.value = locale.value === "en" ? "fr" : "en";
-    document.cookie = `${LOCALE_COOKIE}=${locale.value};path=/;max-age=31536000`;
-  });
+  // True once the catalog tab strip is stuck to the header (always true on the
+  // apparel route). Gates the header search icon so it only appears when the
+  // tabs are pinned — opening search from there needs no reposition, so the
+  // keyboard raises with no flash.
+  const tabsStuck = useSignal(false);
 
   // Load cart from localStorage — eager strategy to ensure it runs immediately
   // eslint-disable-next-line qwik/no-use-visible-task
@@ -425,6 +587,10 @@ export default component$(() => {
         document.cookie = `ce_cart_count=${count};path=/;max-age=31536000`;
         ssrCartCount.value = 0; // clear SSR fallback once real data loaded
       } catch { cart.items = []; }
+      // Client cart is now authoritative — even an empty cart must read as 0,
+      // not the stale cookie count. Set in a finally-style position so a parse
+      // error can't leave the badge stuck on the SSR number.
+      cartHydrated.value = true;
     };
     loadCart();
     window.addEventListener("cart-updated", loadCart);
@@ -441,8 +607,13 @@ export default component$(() => {
   });
 
   const updateQty = $(async (index: number, delta: number) => {
+    // A product with a minimum order quantity (e.g. the /toque product, MOQ 48)
+    // can't be set below its floor in the cart any more than on the PDP. Dropping
+    // below the floor removes the line — the same way "-" at qty 1 removes a
+    // normal item.
+    const floor = (cart.items[index] as any).moq ?? moqForSku(cart.items[index].sku);
     const newQty = cart.items[index].quantity + delta;
-    if (newQty < 1) {
+    if (newQty < floor) {
       cart.items = cart.items.filter((_, i) => i !== index);
     } else {
       cart.items = cart.items.map((item, i) => i === index ? { ...item, quantity: newQty } : item);
@@ -451,32 +622,43 @@ export default component$(() => {
     window.dispatchEvent(new CustomEvent("cart-updated"));
   });
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const submitOrder = $(async () => {
+    // Fail-safe: the button is disabled while greyed out, but never act on a
+    // click that somehow gets through when the order can't be placed / is sending.
+    if (!canPlaceOrder.value || submitting.value) return;
     formTouched.value = true;
-    if (!empFirstName.value || !empLastName.value || !empEmail.value || !empPhone.value || !empDept.value || !empPO.value) {
+    if (!empFirstName.value || !empLastName.value || !empAddress1.value || !empCity.value || !empPostal.value || !empEmail.value || !empPhone.value || !empProvince.value || !empPO.value) {
       formError.value = t("cart.error.required", locale.value);
       checkoutOpen.value = true;
       return;
     }
-    // Email format check (basic RFC-ish — anything@anything.tld)
+    // Field-format checks — collect ALL failures so every invalid field is
+    // reported together in one submit, not one at a time.
+    const fmtErrors: string[] = [];
+    // Email (basic RFC-ish — anything@anything.tld)
     const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRe.test(empEmail.value.trim())) {
-      formError.value = t("cart.error.email", locale.value);
-      checkoutOpen.value = true;
-      return;
-    }
-    // Phone format check — at least 7 digits, allow +, spaces, dashes, parens
+    if (!emailRe.test(empEmail.value.trim())) fmtErrors.push(t("cart.error.email", locale.value));
+    // Phone — full number (10 digits NANP, up to 15 for an intl. dialing
+    // prefix), allowing +, spaces, dashes, parens, dots.
     const phoneDigits = empPhone.value.replace(/[^\d]/g, "");
-    if (phoneDigits.length < 7 || phoneDigits.length > 15 || !/^[\d\s+()\-.]+$/.test(empPhone.value.trim())) {
-      formError.value = t("cart.error.phone", locale.value);
+    if (phoneDigits.length < 10 || phoneDigits.length > 15 || !/^[\d\s+()\-.]+$/.test(empPhone.value.trim())) fmtErrors.push(t("cart.error.phone", locale.value));
+    // Canadian postal code — A1A 1A1 (optional space/hyphen).
+    if (!/^[A-Za-z]\d[A-Za-z][ -]?\d[A-Za-z]\d$/.test(empPostal.value.trim())) fmtErrors.push(t("cart.error.postal", locale.value));
+    if (fmtErrors.length) {
+      formError.value = fmtErrors.join("\n");
       checkoutOpen.value = true;
       return;
     }
     formError.value = "";
 
+    // Which layout the order was placed on — viewport width against the site's
+    // own breakpoints (mobile <=600, tablet 601-1024, desktop >=1025).
+    const device: "mobile" | "tablet" | "desktop" = window.innerWidth <= 600 ? "mobile" : window.innerWidth <= 1024 ? "tablet" : "desktop";
     const orderData = {
-      employee: { name: `${empFirstName.value} ${empLastName.value}`, email: empEmail.value, phone: empPhone.value, department: empDept.value, po: empPO.value },
-      items: cart.items.map((i) => ({
+      device,
+      employee: { name: `${empFirstName.value} ${empLastName.value}`, email: empEmail.value, phone: empPhone.value, department: empDept.value, province: empProvince.value, address1: empAddress1.value, city: empCity.value, postal: empPostal.value, po: empPO.value },
+      items: cart.items.map((i: any) => ({
         name: i.name || "",
         sku: i.sku || "",
         color: i.color || "",
@@ -486,22 +668,28 @@ export default component$(() => {
         ...(i.waist ? { waist: i.waist } : {}),
         ...(i.length ? { length: i.length } : {}),
         ...(i.variant ? { variant: i.variant } : {}),
+        ...(i.logoPosition ? { logoPosition: i.logoPosition } : {}),
+        ...(i.logoStyle ? { logoStyle: i.logoStyle } : {}),
+        ...(i.code ? { code: i.code } : {}),
       })),
       date: new Date().toLocaleDateString("en-CA"),
     };
 
-    // Send order via server action
+    // Send order via server action. Show a spinner while the server saves the
+    // order to the DB — success is only shown after that write confirms.
+    submitting.value = true;
     let result: any;
     try {
       result = await orderAction.submit(orderData);
     } catch (err) {
       console.error("Order submit threw:", err);
-      formError.value = (err as Error)?.message || "Network error placing order";
+      formError.value = (err as Error)?.message || t("cart.error.network", locale.value);
+      submitting.value = false;
       return;
     }
-    console.log("Order submit result:", result);
     const v = result?.value as any;
     if (v?.failed) {
+      submitting.value = false;
       // Surface zod field errors, top-level form errors, or generic message
       let msg = v.message;
       if (!msg && v.fieldErrors) {
@@ -514,11 +702,12 @@ export default component$(() => {
         msg = flat.join(", ");
       }
       if (!msg && v.formErrors?.length) msg = v.formErrors.join(", ");
-      formError.value = msg || "Failed to place order. Please try again.";
+      formError.value = msg || t("cart.error.failed", locale.value);
       console.error("Order submission failed:", v);
       return;
     }
 
+    orderNum.value = v?.orderNumber || "";
     cart.items = [];
     await saveCart();
     window.dispatchEvent(new CustomEvent("cart-updated"));
@@ -529,8 +718,10 @@ export default component$(() => {
     empEmail.value = "";
     empPhone.value = "";
     empDept.value = "";
+    empProvince.value = "";
     empPO.value = "";
     formTouched.value = false;
+    submitting.value = false;
   });
 
 
@@ -546,32 +737,113 @@ export default component$(() => {
     cleanup(() => window.removeEventListener("open-cart", handler));
   }, { strategy: 'document-ready' });
 
-  // Sticky header on scroll (mobile landing page)
+  // Toggle the mobile menu from child pages (the hero cover's menu button) via a
+  // custom event, rather than a programmatic click on the header hamburger. The
+  // proxy click was fragile — on the home hero the hamburger is display:none /
+  // pointer-events:none until the overlay exists, and a not-yet-hydrated first
+  // tap could fall through to the content behind it (navigating to a product).
   // eslint-disable-next-line qwik/no-use-visible-task
   useVisibleTask$(({ cleanup }) => {
+    const handler = () => {
+      menuOpen.value = !menuOpen.value;
+      if (menuOpen.value) cartOpen.value = false;
+    };
+    window.addEventListener("toggle-menu", handler);
+    cleanup(() => window.removeEventListener("toggle-menu", handler));
+  }, { strategy: 'document-ready' });
+
+  // Settle the header's scroll-dependent state before the new route renders.
+  // Qwik commits the DOM and sets the scroll to the top in one synchronous
+  // block (see viewTransition={false} in root.tsx), so the new route's first
+  // frame is at the top — but --tabs-stuck (which gates the search button) and
+  // --hero-visible are driven by these signals, and if they were only updated
+  // in the post-paint scroll handler below they'd be a frame stale.
+  // Do NOT scroll here: this runs before the DOM swap, so it would drag the
+  // page you're leaving up to the top while it's still on screen.
+  useTask$(({ track }) => {
+    const path = track(() => loc.url.pathname);
+    // The catalog strip is sticky from the top of the apparel route, so its
+    // tabs are pinned there from the first frame.
+    tabsStuck.value = !path.startsWith("/privacy") && !path.startsWith("/checkout");
+    headerScrolled.value = false;
+    if (isBrowser) document.documentElement.classList.remove("scrolled");
+  });
+
+  // Sticky header on scroll (mobile landing page)
+  // eslint-disable-next-line qwik/no-use-visible-task
+  useVisibleTask$(({ cleanup, track }) => {
+    track(() => loc.url.pathname);
+    // Where the strip pins, read from the strip itself rather than a table of
+    // per-breakpoint header heights. Those were 64/67/66 literals, and they
+    // silently desynced the moment the header's height changed: --wt-header-h
+    // is built from the bar + seam + top padding, so widening any of them moves
+    // the pin, and the strip then rests one or two pixels BELOW the number this
+    // compared against. The test never passed, --tabs-stuck never got set, and
+    // the search button (gated on it in global.css) stopped appearing on the
+    // home route. The strip's own resolved `top` is the pin by definition.
+    const stickyTop = (strip: Element) => {
+      const top = parseFloat(getComputedStyle(strip).top);
+      return Number.isFinite(top) ? top : 64;
+    };
     const onScroll = () => {
       headerScrolled.value = window.scrollY > 60;
       document.documentElement.classList.toggle("scrolled", window.scrollY > 60);
+      // Search icon appears only once the catalog tab strip is stuck; always
+      // available on the apparel route (tabs sticky from the top).
+      if ((!loc.url.pathname.startsWith("/privacy") && !loc.url.pathname.startsWith("/checkout"))) {
+        tabsStuck.value = true;
+      } else {
+        const strip = document.querySelector(".home-catalog__header");
+        tabsStuck.value = !!strip && strip.getBoundingClientRect().top <= stickyTop(strip) + 1;
+      }
     };
     window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
     cleanup(() => window.removeEventListener("scroll", onScroll));
+  }, { strategy: 'document-ready' });
+
+  // Header search: close when clicking anywhere outside it; clear + close it
+  // whenever the category changes (tab bar or menu drawer). Mirrors cm.
+  // eslint-disable-next-line qwik/no-use-visible-task
+  useVisibleTask$(({ cleanup }) => {
+    const onDocClick = (e: MouseEvent) => {
+      if (!searchOpen.value) return;
+      const target = e.target as HTMLElement | null;
+      if (!target) return;
+      if (target.closest(".site-header__search") || target.closest(".site-header__search-btn")) return;
+      // Outside click closes the bar but KEEPS the filtered results. The search
+      // is only reset by a tab/category change or a route change.
+      searchOpen.value = false;
+    };
+    // Category change clears the header input and closes it. The catalog already
+    // resets its own filter/active tab, so we must NOT re-dispatch apparel-search
+    // here (that would override the newly selected category).
+    const onCategoryChange = () => {
+      searchValue.value = "";
+      searchOpen.value = false;
+    };
+    document.addEventListener("click", onDocClick);
+    window.addEventListener("select-category", onCategoryChange);
+    window.addEventListener("apparel-search-clear", onCategoryChange);
+    cleanup(() => {
+      document.removeEventListener("click", onDocClick);
+      window.removeEventListener("select-category", onCategoryChange);
+      window.removeEventListener("apparel-search-clear", onCategoryChange);
+    });
+  }, { strategy: 'document-ready' });
+
+  // Track the phone breakpoint so the header search can use a shorter
+  // placeholder there ("Search..." vs "Search apparel").
+  // eslint-disable-next-line qwik/no-use-visible-task
+  useVisibleTask$(({ cleanup }) => {
+    const update = () => { narrowSearch.value = window.innerWidth <= 600; };
+    update();
+    window.addEventListener("resize", update);
+    cleanup(() => window.removeEventListener("resize", update));
   }, { strategy: 'document-ready' });
 
   // Lock scroll when menu is open
   // eslint-disable-next-line qwik/no-use-visible-task
-  // eslint-disable-next-line qwik/no-use-visible-task
-  useVisibleTask$(({ track }) => {
-    track(() => loginType.value);
-    track(() => locale.value);
-    track(() => auth.value.loggedIn);
-    const title = !auth.value.loggedIn
-      ? "Black & McDonald Apparel"
-      : loginType.value === "electrical"
-        ? `${t("logo.electrical", locale.value)} - Black & McDonald`
-        : `${t("tab.goodcatch", locale.value)} - Black & McDonald`;
-    if (typeof document !== "undefined") document.title = title;
-  });
-
   useVisibleTask$(({ track }) => {
     track(() => menuOpen.value);
     if (menuOpen.value) {
@@ -584,15 +856,76 @@ export default component$(() => {
     } else {
       const scrollY = Math.abs(parseInt(document.body.style.top || "0", 10));
       document.body.style.cssText = "";
-      window.scrollTo({ top: scrollY, behavior: "instant" });
+      if (menuSearchScrollTop.value) {
+        // Search committed from the menu: don't restore the pre-menu scroll —
+        // land on the results at the top of the catalog (below the sticky
+        // header/tab bar). Deferred a frame so it runs after the body is
+        // unlocked (scrollTo is a no-op while body is position:fixed).
+        menuSearchScrollTop.value = false;
+        requestAnimationFrame(() => {
+          const catalog = document.querySelector(".home-catalog") as HTMLElement | null;
+          if (catalog) {
+            const headerH = window.innerWidth < 601 ? 64 : window.innerWidth <= 1024 ? 67 : 66;
+            const top = catalog.getBoundingClientRect().top + window.scrollY - headerH;
+            window.scrollTo({ top: Math.max(top, 0), behavior: "instant" });
+          } else {
+            window.scrollTo({ top: 0, behavior: "instant" });
+          }
+        });
+      } else {
+        window.scrollTo({ top: scrollY, behavior: "instant" });
+      }
     }
   }, { strategy: 'document-ready' });
 
-  // Close cart on navigation
+  // Back/forward should land at the top too — you left the catalog from a
+  // product, so you come back to the top of it.
+  //
+  // Qwik City restores the scroll position it saved on the history entry, at
+  // the moment it commits the new DOM. Correcting that afterwards would mean a
+  // visible jump, so instead zero the entry's saved position while the popstate
+  // is still in flight: Qwik reads it later (once the route's data has loaded)
+  // and scrolls to the top as part of the same atomic swap.
+  // eslint-disable-next-line qwik/no-use-visible-task
+  useVisibleTask$(({ cleanup }) => {
+    const onPopState = () => {
+      const state = history.state || {};
+      const scroll = state._qCityScroll;
+      history.replaceState({ ...state, _qCityScroll: { ...(scroll || {}), x: 0, y: 0 } }, "");
+    };
+    window.addEventListener("popstate", onPopState);
+    cleanup(() => window.removeEventListener("popstate", onPopState));
+  }, { strategy: 'document-ready' });
+
+  // Close the cart and the search bar on navigation. We do NOT clear the search
+  // filter here — closing the bar (click-away, scroll, X, nav) keeps the
+  // searched items, matching cm. The filter only resets on a tab/category
+  // change (see onCategoryChange) or because a cross-route nav remounts the
+  // catalog fresh.
+  // Only close on a REAL path change. A routeAction submit (order submit, etc.)
+  // re-runs this task with the SAME pathname; without the guard it slammed the
+  // cart shut mid-checkout and hid the order's error message behind the closed
+  // drawer — which is exactly how a failed card handoff looked like "success".
+  const prevPath = useSignal<string | null>(null);
   // eslint-disable-next-line qwik/no-use-visible-task
   useVisibleTask$(({ track }) => {
-    track(() => loc.url.pathname);
-    cartOpen.value = false;
+    const p = track(() => loc.url.pathname);
+    if (prevPath.value !== null && prevPath.value !== p) {
+      // "Back to Cart"/cart button on the /checkout route navigates here to RE-open
+      // the cart. This close-on-nav would otherwise slam it shut right after, so
+      // honour the flag and open the cart (at the cart step) instead of closing it.
+      let reopen = false;
+      try { reopen = sessionStorage.getItem("reopen-cart") === "1"; } catch { /* ignore */ }
+      if (reopen) {
+        try { sessionStorage.removeItem("reopen-cart"); } catch { /* ignore */ }
+        checkoutStep.value = "cart";
+        cartOpen.value = true;
+      } else {
+        cartOpen.value = false;
+      }
+      searchOpen.value = false;
+    }
+    prevPath.value = p;
   }, { strategy: 'document-ready' });
 
   // Lock scroll when cart is open
@@ -613,10 +946,15 @@ export default component$(() => {
     }
   }, { strategy: 'document-ready' });
 
-  // Auto-open login modal and lock scroll for unauthenticated users
+  // Auto-open login modal and lock scroll for unauthenticated users. Re-runs on
+  // route change (tracks isPublicRoute) so an SPA navigation OFF a public page
+  // (e.g. clicking the header logo on /toque while logged out → "/") shows the
+  // login overlay instead of a blank screen.
   // eslint-disable-next-line qwik/no-use-visible-task
-  useVisibleTask$(() => {
-    if (!auth.value.loggedIn) {
+  useVisibleTask$(({ track }) => {
+    track(() => isPublicRoute.value);
+    track(() => auth.value.loggedIn);
+    if (!auth.value.loggedIn && !isPaymentReturn.value && !isPublicRoute.value) {
       showLogin.value = true;
       document.documentElement.style.overflow = "hidden";
       document.body.style.position = "fixed";
@@ -624,6 +962,20 @@ export default component$(() => {
       document.body.style.overflow = "hidden";
     }
   }, { strategy: 'document-ready' });
+
+  // Login carousel autoplay: cross-fade the two hero slides every 6s while the
+  // login modal is open. Stops (and is torn down) once the modal closes.
+  // eslint-disable-next-line qwik/no-use-visible-task
+  useVisibleTask$(({ track, cleanup }) => {
+    if (!track(() => showLogin.value)) return;
+    loginCarouselPaused.value = false; // clear any stale pause when the modal opens
+    const id = setInterval(() => {
+      if (loginCarouselPaused.value) return;
+      loginHeroIndex.value = (loginHeroIndex.value + 1) % 2;
+    }, 10000);
+    cleanup(() => clearInterval(id));
+  }, { strategy: "document-ready" });
+
 
   // Close modal and unlock scroll on successful login
   // eslint-disable-next-line qwik/no-use-visible-task
@@ -642,12 +994,51 @@ export default component$(() => {
     }
   }, { strategy: 'document-ready' });
 
+  // Footer separator dots dangle at the end of a wrapped line (mobile). Flag each
+  // link whose next visible sibling drops to a new line so CSS drops its trailing dot.
+  // eslint-disable-next-line qwik/no-use-visible-task
+  useVisibleTask$(({ track, cleanup }) => {
+    track(() => locale.value);
+    track(() => loginType.value);
+    const update = () => requestAnimationFrame(() => {
+      document.querySelectorAll(".site-footer__links").forEach((nav) => {
+        const links = (Array.from(nav.querySelectorAll("a")) as HTMLElement[])
+          .filter((a) => a.offsetParent !== null);
+        links.forEach((a, i) => {
+          const next = links[i + 1];
+          a.classList.toggle("is-line-end", !next || next.offsetTop > a.offsetTop);
+        });
+      });
+    });
+    update();
+    window.addEventListener("resize", update);
+    cleanup(() => window.removeEventListener("resize", update));
+  }, { strategy: 'document-ready' });
+
   return (
     <>
+      {/* Mobile + tablet maintenance gate. Kept in the markup but hidden by CSS
+          now that the responsive layouts are live (see .mobile-coming-soon in
+          global.css) — flip it back on there if mobile/tablet ever needs to be
+          taken down again. */}
+      <div class="mobile-coming-soon" role="dialog" aria-label="Under maintenance">
+        <div class="mobile-coming-soon__inner">
+          <div class="mobile-coming-soon__brand">
+            <img class="mobile-coming-soon__logo" src="/bm-logo-white.webp" alt="Black & McDonald Apparel" width="288" height="143" loading="eager" decoding="sync" />
+            <span class="mobile-coming-soon__apparel">{t("logo.apparel", locale.value).toUpperCase()}</span>
+          </div>
+          <h1 class="mobile-coming-soon__title">Mobile &amp; Tablet mode under maintenance</h1>
+        </div>
+      </div>
+
       {/* Login Modal */}
-      {showLogin.value && (
+      {showLogin.value && !isPaymentReturn.value && !isPublicRoute.value && (
         <div class={`login-overlay ${overlayFading.value ? "login-overlay--fading" : ""}`} onClick$={() => { if (auth.value.loggedIn) showLogin.value = false; }}>
-          <div class="login-modal" onClick$={(e) => e.stopPropagation()}>
+          {/* Split login: sign-in on the left third,
+              a cross-fading carousel of the two hero slides on the right.
+              Fills the viewport at a 16:9 frame on desktop; the carousel goes
+              full-bleed behind the sign-in on tablet/mobile. */}
+          <div class="login-modal login-modal--split" onClick$={(e) => e.stopPropagation()}>
             {auth.value.loggedIn && (
               <button
                 class="login-modal__close"
@@ -657,77 +1048,233 @@ export default component$(() => {
                 &times;
               </button>
             )}
-            <div class="login-modal__header">
-              <img
-                src="/BlackMcDonald_Logo.webp"
-                alt="Black & McDonald"
-                class="login-modal__logo"
-                width="1633"
-                height="844"
-              />
-              <h2 class="login-modal__title">{t("login.title", locale.value)}</h2>
-              <p class="login-modal__subtitle">
-                {t("login.subtitle", locale.value)}
-              </p>
+            {/* Desktop: display:contents (no box). Mobile/tablet: the single framed
+                card holding the photo carousel above the sign-in. */}
+            <div class="login-modal__stack">
+            <div class="login-modal__form-pane">
+              <div class="login-card">
+                {/* The recessed, dot-textured brand panel (Black & McDonald logo,
+                    APPAREL, the Good Catch Awards plaque). */}
+                <div class="login-card__cover">
+                <button type="button" class="login-card__locale" onClick$={toggleLocale} aria-label="Toggle language">
+                  <span>{locale.value === "en" ? "FR" : "EN"}</span>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                </button>
+                <div class="login-card__brand brand-cluster" role="img" aria-label="Black & McDonald Apparel">
+                </div>
+                <div class="login-card__tagline">
+                  <div class="login-card__apparel">{t("nav.apparel", locale.value).toUpperCase()}</div>
+                  {/* Good Catch Awards plaque (the badge + program name). */}
+                  <div class="login-card__canada login-card__goodcatch">
+                    <img src="/good-catch-logo-en.jpg" alt="" width="130" height="130" loading="eager" class="login-card__goodcatch-badge" />
+                    <span class="login-card__goodcatch-text">{t("logo.apparel", locale.value)}</span>
+                  </div>
+                </div>
+                </div>
+                <Form
+                  action={loginAction}
+                  reloadDocument
+                  class="login-modal__form"
+                  onInput$={pauseCarouselWhileTyping}
+                  onKeyDown$={pauseCarouselWhileTyping}
+                >
+                  <p class="login-modal__subtitle">{t("login.subtitle", locale.value)}</p>
+                  {loginAction.value?.failed && (
+                    <div class={`login-modal__error ${(loginAction.value as { comingSoon?: boolean }).comingSoon ? "login-modal__error--info" : ""}`}>{loginAction.value.message}</div>
+                  )}
+                  {/* Username + password: the account decides the catalog
+                      (Good Catch, Tech or Electrical). */}
+                  <div class="login-modal__field">
+                    <label for="username">{t("login.username", locale.value)}</label>
+                    <input
+                      id="username"
+                      name="username"
+                      type="text"
+                      autoComplete="username"
+                      autoCapitalize="none"
+                      spellcheck={false}
+                      required
+                      placeholder={t("login.username.placeholder", locale.value)}
+                    />
+                  </div>
+                  <div class="login-modal__field">
+                    <label for="password">{t("login.password", locale.value)}</label>
+                    <input
+                      id="password"
+                      name="password"
+                      type="password"
+                      autoComplete="current-password"
+                      required
+                      placeholder={t("login.password.placeholder", locale.value)}
+                    />
+                  </div>
+                  <button type="submit" class="btn login-modal__submit">
+                    {loginAction.isRunning ? t("login.submitting", locale.value) : t("login.submit", locale.value)}
+                  </button>
+                </Form>
+              </div>
             </div>
-            <Form action={loginAction} reloadDocument class="login-modal__form">
-              {loginAction.value?.failed && (
-                <div class="login-modal__error">{loginAction.value.message}</div>
-              )}
-              <div class="login-modal__field">
-                <label for="username">{t("login.username", locale.value)}</label>
-                <input
-                  id="username"
-                  name="username"
-                  type="text"
-                  autoComplete="username"
-                  required
-                  placeholder={t("login.username.placeholder", locale.value)}
-                />
-              </div>
-              <div class="login-modal__field">
-                <label for="password">{t("login.password", locale.value)}</label>
-                <input
-                  id="password"
-                  name="password"
-                  type="password"
-                  autoComplete="current-password"
-                  required
-                  placeholder={t("login.password.placeholder", locale.value)}
-                />
-              </div>
-              <button type="submit" class="btn btn--green login-modal__submit">
-                {loginAction.isRunning ? t("login.submitting", locale.value) : t("login.submit", locale.value)}
+            {/* Black & McDonald hero video in the photo slot (autoplays muted on
+                loop; tap/click toggles play/pause, as on the original BM home). */}
+            <div class="login-modal__carousel login-modal__carousel--video"
+              onClick$={(_, el) => {
+                const v = el.querySelector("video") as HTMLVideoElement | null;
+                if (!v) return;
+                if (v.paused) { v.play().catch(() => {}); loginVideoPaused.value = false; }
+                else { v.pause(); loginVideoPaused.value = true; }
+              }}
+            >
+              <video src="/bm-herov2.mp4" poster="/bm-hero-poster.webp" autoplay muted loop playsInline preload="metadata"
+                     class="login-modal__slide login-modal__slide--wide login-modal__video is-active" />
+              <button type="button" class={`login-modal__video-toggle ${loginVideoPaused.value ? "is-paused" : ""}`}
+                      aria-label={loginVideoPaused.value ? "Play video" : "Pause video"}>
+                {loginVideoPaused.value ? (
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+                ) : (
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 4h4v16H6zM14 4h4v16h-4z"/></svg>
+                )}
               </button>
-            </Form>
+            </div>
+            </div>
           </div>
         </div>
       )}
 
-      {(auth.value.loggedIn || (loginAction.value && !loginAction.value.failed)) && <>
-      <header class={`site-header site-header--white ${cartOpen.value ? "site-header--cart-open" : ""} ${loc.url.pathname === "/" && !cartOpen.value && !headerScrolled.value ? "site-header--logo-hidden" : ""}`}>
+      {(auth.value.loggedIn || (loginAction.value && !loginAction.value.failed) || isPaymentReturn.value || isPublicRoute.value) && <>
+      <header class={`site-header site-header--white ${tabsStuck.value ? "site-header--tabs-stuck" : ""} ${searchOpen.value ? "site-header--search-open" : ""} ${cartOpen.value || isCheckout.value ? "site-header--cart-open" : ""}`}>
         <div class="site-header__inner">
-          <Link href="/" class={`site-header__logo ${loginType.value === "electrical" ? "site-header__logo--bm" : ""}`}>
-            {loginType.value === "electrical" ? (
-              <span class="site-header__logo-stack">
-                <img src="/BlackMcDonald_Logo.webp" alt="Black & McDonald" class="site-header__logo-img" width="1633" height="844" loading="eager" decoding="sync" />
-                <span class="site-header__logo-apparel">{t("logo.electrical", locale.value)}</span>
-              </span>
-            ) : (
-              <img src="/good-catch-logo-en.jpg" alt="Good Catch Awards" class="site-header__logo-img" width="200" height="200" loading="eager" decoding="sync" />
-            )}
+          <Link
+            href="/"
+            class="site-header__logo"
+            onClick$={(e) => {
+              // Already on the catalog home: clicking the logo resets the active
+              // collection back to "All" (rather than a no-op navigation to the
+              // same route that leaves a specific category selected).
+              if (loc.url.pathname === "/") {
+                e.preventDefault();
+                window.dispatchEvent(new CustomEvent("select-category", { detail: "All" }));
+                window.scrollTo({ top: 0, behavior: "instant" });
+              }
+            }}
+          >
+            {/* Black & McDonald logo + the catalog name beside it. */}
+            <img
+              src="/bm-logo.webp"
+              alt="Black & McDonald"
+              class="site-header__logo-img site-header__logo-img--bm"
+              width="1565"
+              height="775"
+              loading="eager"
+              decoding="sync"
+            />
+            <div class="site-header__logo-brand">
+              <span class="site-header__logo-apparel">{t("nav.apparel", locale.value)}</span>
+            </div>
           </Link>
-          <nav class="site-header__categories" />
-
+          <nav class="site-header__categories">
+            <Link href="/" class={loc.url.pathname === "/" ? "active" : ""}>{t("nav.home", locale.value)}</Link>
+            <Link href="/" class={(!loc.url.pathname.startsWith("/privacy") && !loc.url.pathname.startsWith("/checkout")) ? "active" : ""}>{loginType.value === "tech" ? t("cat.Work Wear", locale.value) : t("nav.apparel", locale.value)}</Link>
+          </nav>
           <nav class="site-header__nav">
-            <button class={`locale-btn ${cartOpen.value ? "locale-btn--cart-open" : ""}`} onClick$={toggleLocale} aria-label="Toggle language">
-              <span class="locale-btn__full">{locale.value === "en" ? "Français" : "English"}</span>
-              <span class="locale-btn__short">{locale.value === "en" ? "FR" : "EN"}</span>
-              <svg class="locale-btn__icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
-            </button>
-            <button class={`cart-btn ${cart.items.length > 0 ? "cart-btn--active" : ""}`} onClick$={() => { cartOpen.value = !cartOpen.value; if (!cartOpen.value) checkoutStep.value = "cart"; }}>
-              <span class="cart-btn__label">{t("cart.mycart", locale.value)}</span>
-              {cartOpen.value ? (
+            {showSearch.value && (
+              <button class="site-header__search-btn" onClick$={() => {
+                // If the cart drawer is open, close it first.
+                cartOpen.value = false;
+                const header = document.querySelector(".site-header") as (HTMLElement & { __pin?: (() => void) | null }) | null;
+                const catalog = document.querySelector(".home-catalog") as HTMLElement | null;
+                const headerH = stickyTop();
+                const stickyPos = catalog ? catalog.getBoundingClientRect().top + window.scrollY - headerH + 2 : 0;
+                // FLASH FIX: on the home page, before the catalog tabs have scrolled
+                // into their sticky position, opening the search animates the hero
+                // header in at the same instant the catalog jumps — a visible flash.
+                // A category-tab click in that same state repositions cleanly, so we
+                // mirror it: scroll the catalog under the tabs FIRST (which lets the
+                // header settle via the scroll listener), THEN open the search once
+                // it's pinned. In every other state nothing repositions, so we open
+                // synchronously (keeps the mobile keyboard opening on the first tap).
+                const needsReposition = !!catalog && loc.url.pathname === "/" && window.scrollY < stickyPos - 1;
+                const open = () => {
+                  searchOpen.value = true;
+                  header?.classList.add("site-header--search-open");
+                  // Reposition here only when we didn't already do it above,
+                  // and ONLY to pull the catalog UP to the bar when it sits
+                  // below it. Previously this scrolled to `top` unconditionally,
+                  // which yanked the page upward whenever the user opened search
+                  // already scrolled past the pinned position — the visible
+                  // "shift" on open. When already pinned (or scrolled past), the
+                  // header search field and sticky tabs are already in place, so
+                  // no scroll is needed.
+                  // "Already pinned" is the --tabs-stuck state, so test THAT
+                  // rather than re-deriving the pinned scroll position. The
+                  // derived `top` carries a +2 fudge and uses stickyTop(),
+                  // which drifts from the header's real height — so on a route
+                  // whose strip is always stuck (/) the comparison read
+                  // "a few px short" even when the catalog sat exactly under the
+                  // bar, and every open nudged the page ~6px. That nudge was the
+                  // shift around the tab strip.
+                  const alreadyPinned = !!header?.classList.contains("site-header--tabs-stuck");
+                  if (!needsReposition && catalog && !alreadyPinned) {
+                    const top = catalog.getBoundingClientRect().top + window.scrollY - headerH;
+                    // Only reposition for a MEANINGFUL gap. stickyTop() drifts a
+                    // few px from the header's real height, so with the old +2
+                    // fudge and a 1px threshold every open nudged the page ~5px
+                    // even when the catalog already sat under the bar (the visible
+                    // shift on /, where the strip is always pinned). An
+                    // 8px threshold absorbs that drift; genuine repositions (the
+                    // hero's full height) are far larger and still fire.
+                    if (window.scrollY < top - 8) window.scrollTo({ top, behavior: "instant" });
+                  }
+                  window.dispatchEvent(new CustomEvent("apparel-search-open"));
+                  // preventScroll stops the browser from scroll-jumping the field
+                  // into view.
+                  const input = document.querySelector(".site-header__search-input") as HTMLInputElement | null;
+                  input?.focus({ preventScroll: true });
+                  // Keep the fixed header visible over the keyboard by pinning it to
+                  // the visual viewport (iOS reports the keyboard offset via the
+                  // viewport "scroll" event).
+                  const vvp = window.visualViewport;
+                  if (vvp && header && loc.url.pathname === "/") {
+                    header.__pin?.();
+                    // Self-tears down once the search closes (via any path), so we
+                    // don't leak the pin and move the header when typing elsewhere.
+                    const pin = () => {
+                      if (!searchOpen.value) { header.__pin?.(); return; }
+                      header.style.top = `${vvp.offsetTop}px`;
+                    };
+                    pin();
+                    vvp.addEventListener("resize", pin);
+                    vvp.addEventListener("scroll", pin);
+                    header.__pin = () => {
+                      vvp.removeEventListener("resize", pin);
+                      vvp.removeEventListener("scroll", pin);
+                      header.style.top = "";
+                      header.__pin = null;
+                    };
+                  }
+                  // Close the search on the first scroll/drag (any contact), tearing
+                  // down the pin so scrolling is smooth.
+                  const onTouchMove = () => { header?.__pin?.(); input?.blur(); searchOpen.value = false; };
+                  window.addEventListener("touchmove", onTouchMove, { passive: true, once: true });
+                };
+                if (needsReposition) {
+                  // Reposition first (like a tab click), then open once it settles
+                  // — no flash.
+                  window.scrollTo({ top: stickyPos, behavior: "instant" });
+                  requestAnimationFrame(() => requestAnimationFrame(open));
+                } else {
+                  open();
+                }
+              }} aria-label="Search apparel">
+                <span class="site-header__search-label">{t("search.placeholder", locale.value)}</span>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+              </button>
+            )}
+            {/* EN/FR toggle moved to the footer. */}
+            {(
+            <button class={`cart-btn ${cart.items.length > 0 ? "cart-btn--active" : ""}`} onClick$={() => { if (isCheckout.value) { try { sessionStorage.setItem("reopen-cart", "1"); } catch { /* ignore */ } nav("/"); return; } cartOpen.value = !cartOpen.value; if (cartOpen.value) menuOpen.value = false; if (!cartOpen.value) checkoutStep.value = "cart"; }}>
+              <span class="cart-btn__label cart-btn__label-full">{t("cart.mycart", locale.value)}</span>
+              <span class="cart-btn__label-short">{t("cart.short", locale.value)}</span>
+              {cartOpen.value && !isCheckout.value ? (
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg>
               ) : (
                 <>
@@ -736,14 +1283,83 @@ export default component$(() => {
                 </>
               )}
             </button>
+            )}
+            {/* No logout on the public /toque page — it needs no login to view. */}
+            {!isPublicRoute.value && (
             <Form action={logoutAction} reloadDocument class="logout-form">
               <button type="submit" class="logout-btn" aria-label={t("login.logout", locale.value)}>
                 <span class="logout-btn__label">{t("login.logout", locale.value)}</span>
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
               </button>
             </Form>
-            <button class="hamburger-btn" onClick$={() => (menuOpen.value = !menuOpen.value)} aria-label="Menu">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h18"/><path d="M3 6h18"/><path d="M3 18h18"/></svg>
+            )}
+            {/* Search field lives INSIDE the nav, BEFORE the hamburger. On tablet
+                it absolutely overlays the nav (the buttons stay visibility:hidden
+                to hold the width → no shift); on mobile it's an in-flow flex
+                field that fills up to the hamburger (which stays at the far
+                right). */}
+            {showSearch.value && (
+              <div class="site-header__search">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+                <input
+                  type="text"
+                  class="site-header__search-input"
+                  aria-label="Search apparel"
+                  placeholder={narrowSearch.value ? "" : t("search.placeholder", locale.value)}
+                  value={searchValue.value}
+                  onInput$={(_, el) => {
+                    searchValue.value = el.value;
+                    // Live-filter only when the catalog GRID is the current view.
+                    // The catalog stays mounted on a product page (PDP mode), so a
+                    // "is .home-catalog present" check is true there too and would
+                    // move the sidebar while the grid isn't even shown. Gate on the
+                    // route instead (grid == home "/"); on a PDP, typing only fills
+                    // the field — nothing moves until Enter (see below).
+                    if (loc.url.pathname.replace(/\/+$/, "") === "") {
+                      window.dispatchEvent(new CustomEvent("apparel-search", { detail: el.value }));
+                    }
+                  }}
+                  onKeyDown$={(e, el) => {
+                    if (e.key === "Enter") {
+                      e.preventDefault();
+                      // Close the menu takeover so the filtered products are visible
+                      // (searching from inside the open menu otherwise did nothing).
+                      // Flag the close as a search commit so the scroll-lock release
+                      // lands on the results instead of restoring the scrolled-down
+                      // position the menu was opened at.
+                      menuSearchScrollTop.value = true;
+                      menuOpen.value = false;
+                      if (loc.url.pathname.replace(/\/+$/, "") === "") {
+                        // On the grid: commit the live-filtered results in place.
+                        window.dispatchEvent(new CustomEvent("apparel-search", { detail: el.value }));
+                        window.dispatchEvent(new CustomEvent("apparel-search-commit"));
+                      } else {
+                        // On a product page: apply the search to the catalog (kept
+                        // mounted by the shared shell) FIRST, then swap to the grid
+                        // so it opens straight on the results. A ?q= navigation
+                        // wouldn't work here — the mount-time query handler doesn't
+                        // re-run when the already-mounted catalog switches out of
+                        // PDP mode, which left the first Enter showing the previous
+                        // category and needing a second Enter.
+                        window.dispatchEvent(new CustomEvent("apparel-search", { detail: el.value }));
+                        window.dispatchEvent(new CustomEvent("apparel-search-commit"));
+                        nav("/");
+                      }
+                    }
+                    if (e.key === "Escape") { searchValue.value = ""; window.dispatchEvent(new CustomEvent("apparel-search", { detail: "" })); searchOpen.value = false; }
+                  }}
+                />
+                <button class="site-header__search-close" aria-label="Close search" onClick$={() => { searchOpen.value = false; }}>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg>
+                </button>
+              </div>
+            )}
+            <button class={`hamburger-btn ${menuOpen.value ? "hamburger-btn--open" : ""}`} onClick$={() => { menuOpen.value = !menuOpen.value; if (menuOpen.value) cartOpen.value = false; }} aria-label={menuOpen.value ? "Close menu" : "Menu"}>
+              {menuOpen.value ? (
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg>
+              ) : (
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h18"/><path d="M3 6h18"/><path d="M3 18h18"/></svg>
+              )}
             </button>
           </nav>
         </div>
@@ -753,41 +1369,126 @@ export default component$(() => {
       {menuOpen.value && (
         <div class="nav-drawer-overlay" onClick$={() => (menuOpen.value = false)}>
           <nav class="nav-drawer" onClick$={(e) => e.stopPropagation()}>
+            {/* Orange strip at the top of the menu takeover — the same "sign" bar
+                the catalog tabs, breadcrumb and cart header use. The close (X) is
+                the header hamburger, which toggles to an X while the menu is open
+                (like the cart button), so this strip carries no redundant close. */}
             <div class="nav-drawer__header">
-              <div class={`nav-drawer__brand ${loginType.value === "electrical" ? "nav-drawer__brand--electrical" : ""}`}>
-                {loginType.value === "electrical" ? (
-                  <span class="nav-drawer__logo-stack">
-                    <img src="/BlackMcDonald_Logo.webp" alt="Black & McDonald" class="nav-drawer__bm-logo" width="1633" height="844" />
-                    <span class="nav-drawer__apparel">{t("logo.electrical", locale.value)}</span>
-                  </span>
-                ) : (
-                  <>
-                    <img src="/good-catch-logo-en.jpg" alt="Good Catch Awards" class="nav-drawer__logo" width="200" height="200" />
-                    <span class="nav-drawer__apparel">{t("logo.apparel", locale.value)}</span>
-                  </>
-                )}
-              </div>
-              <button class="nav-drawer__close" onClick$={() => (menuOpen.value = false)} aria-label="Close">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg>
-              </button>
-            </div>
-            <div class="nav-drawer__links">
-              <a href="/" class={`nav-drawer__link ${loc.url.pathname === "/" ? "active" : ""}`} onClick$={() => (menuOpen.value = false)}>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+              <Link href="/" class="nav-drawer__title" onClick$={() => { menuOpen.value = false; requestAnimationFrame(() => window.scrollTo(0, 0)); }}>
                 {t("nav.home", locale.value)}
-              </a>
-            </div>
-            <div class="nav-drawer__footer">
-              <button class="nav-drawer__locale" onClick$={() => { toggleLocale(); }}>
+              </Link>
+              {/* Language toggle in the middle of the bar — an inline icon + FR/EN
+                  styled like the logout (no button chrome), not a pill button. */}
+              <button type="button" class="nav-drawer__header-logout nav-drawer__header-locale" onClick$={toggleLocale} aria-label="Toggle language">
+                <span>{locale.value === "en" ? "FR" : "EN"}</span>
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
-                {locale.value === "en" ? "Français" : "English"}
               </button>
-              <Form action={logoutAction} reloadDocument>
-                <button type="submit" class="nav-drawer__locale nav-drawer__logout">
+              {/* Logout rides the right end of the orange strip (moved out of a
+                  separate footer). */}
+              <Form action={logoutAction} reloadDocument class="nav-drawer__header-logout-form">
+                <button type="submit" class="nav-drawer__header-logout" aria-label={t("login.logout", locale.value)}>
+                  <span>{t("login.logout", locale.value)}</span>
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
-                  {t("login.logout", locale.value)}
                 </button>
               </Form>
+            </div>
+            <div class="nav-drawer__links">
+              {loginType.value === "tech" && (
+                <Link href="/" class={`nav-drawer__link ${(!loc.url.pathname.startsWith("/privacy") && !loc.url.pathname.startsWith("/checkout")) ? "active" : ""}`} onClick$={() => { menuOpen.value = false; window.dispatchEvent(new CustomEvent("select-category", { detail: "Work Wear" })); }}>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4M16 2v4M4 6h16v14a2 2 0 01-2 2H6a2 2 0 01-2-2V6z"/><path d="M4 6l-2 4v2h4V8"/><path d="M20 6l2 4v2h-4V8"/></svg>
+                  {t("cat.Work Wear", locale.value)}
+                </Link>
+              )}
+              {loginType.value === "safety" && (
+                <Link href="/" class={`nav-drawer__link ${(!loc.url.pathname.startsWith("/privacy") && !loc.url.pathname.startsWith("/checkout")) ? "active" : ""}`} onClick$={() => { menuOpen.value = false; window.dispatchEvent(new CustomEvent("select-category", { detail: "Flame Resistant" })); }}>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l8 4v6c0 5-3.5 9-8 10-4.5-1-8-5-8-10V6l8-4z"/><path d="M9 12l2 2 4-4"/></svg>
+                  {t("cat.Flame Resistant", locale.value)}
+                </Link>
+              )}
+              {loginType.value !== "tech" && (() => {
+                // Derived from the portal-aware category list the catalog
+                // publishes to SecondaryBarContext (barVisibleCategories) — so the
+                // menu's categories always match the tab bar, and a portal with no
+                // products in a category (e.g. Labourers with no Headwear) drops it
+                // here too. "All" is the tab bar's show-everything pill, not a
+                // drawer section, so it's filtered out. Icons + labels come from
+                // the same shared source the tabs use (CATEGORY_ICONS /
+                // categoryLabel), so the two can never drift apart.
+                const NAV_CATS = barVisibleCategories.value
+                  .filter((cat) => cat !== "All")
+                  .map((cat) => ({ cat, icon: CATEGORY_ICONS[cat] || "", label: categoryLabel(cat, locale.value) }));
+                const catMatches = (pCat: string, tabCat: string) =>
+                  tabCat === "Footwear"
+                    ? (pCat === "Safety Boots" || pCat === "Safety Shoes")
+                    : pCat === tabCat;
+                // If the menu is opened from a product page (/<sku>/), pre-open the
+                // accordion on that product's category so the drawer lands already
+                // focused where the user is (the open item gets the green selected
+                // state too). The drawer is re-created each time it opens, so this
+                // initial value is recomputed per open. Collapses to the tab-bar
+                // category: footwear SKUs map to the "Footwear" section.
+                const pdpSku = loc.url.pathname.replace(/^\/+|\/+$/g, "");
+                const pdpProduct = pdpSku ? allProducts.find((p) => p.sku === pdpSku) : undefined;
+                const pdpTabCat = pdpProduct
+                  ? (pdpProduct.category === "Safety Boots" || pdpProduct.category === "Safety Shoes"
+                      ? "Footwear"
+                      : pdpProduct.category)
+                  : undefined;
+                const openCat = pdpTabCat && NAV_CATS.some((c) => c.cat === pdpTabCat) ? pdpTabCat : undefined;
+                return (
+                  <Accordion.Root class="nav-drawer__accordion" collapsible value={openCat}>
+                    {NAV_CATS.map((c) => {
+                      const items = allProducts.filter((p) => catMatches(p.category, c.cat));
+                      return (
+                        <Accordion.Item key={c.cat} value={c.cat} class="nav-drawer__cat">
+                          <Accordion.Header as="h3">
+                            <Accordion.Trigger class="nav-drawer__cat-trigger">
+                              {/* When the category is already expanded, clicking
+                                  the name navigates to the full category view
+                                  (all products) instead of collapsing. When
+                                  collapsed, the click bubbles to the trigger and
+                                  expands the accordion as usual. */}
+                              <span
+                                class="nav-drawer__cat-label"
+                                onClick$={async (e, el) => {
+                                  const trigger = el.closest(".nav-drawer__cat-trigger");
+                                  if (trigger?.hasAttribute("data-open")) {
+                                    e.stopPropagation();
+                                    menuOpen.value = false;
+                                    window.dispatchEvent(new CustomEvent("select-category", { detail: c.cat }));
+                                    await nav(`/#${c.cat.toLowerCase().replace(/\s+/g, "-")}`);
+                                  }
+                                }}
+                              >
+                                <span class="nav-drawer__cat-icon" dangerouslySetInnerHTML={c.icon} />
+                                {c.label}
+                              </span>
+                              <svg class="nav-drawer__cat-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+                            </Accordion.Trigger>
+                          </Accordion.Header>
+                          <Accordion.Content class="nav-drawer__cat-content">
+                            {items.length === 0 ? (
+                              <span class="nav-drawer__cat-empty">—</span>
+                            ) : items.map((p) => (
+                              <a key={p.sku} href={`/${p.sku}/`} class="nav-drawer__cat-item" onClick$={() => (menuOpen.value = false)}>
+                                <img src={p.img} alt="" width="24" height="24" class="nav-drawer__cat-item-img" loading="lazy" decoding="async" />
+                                <span class="nav-drawer__cat-item-name">{p.name.replace(/#\S+/g, '').replace(/\s*-\s*$/, '').trim()}</span>
+                                {p.colors && p.colors.length > 0 && (
+                                  <span class="nav-drawer__cat-item-swatches" aria-hidden="true">
+                                    {sortColorsWhiteLast(p.colors).slice(0, 5).map((c) => (
+                                      <span key={c} class="nav-drawer__cat-item-swatch" style={{ background: c }} />
+                                    ))}
+                                  </span>
+                                )}
+                              </a>
+                            ))}
+                          </Accordion.Content>
+                        </Accordion.Item>
+                      );
+                    })}
+                  </Accordion.Root>
+                );
+              })()}
             </div>
           </nav>
         </div>
@@ -799,35 +1500,51 @@ export default component$(() => {
 
       <footer class="site-footer">
         <div class="site-footer__inner">
-          {loginType.value !== "electrical" && !loc.url.pathname.startsWith("/print") && (
-          <nav class="site-footer__links site-footer__links--print">
-            <Link href="/print/">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
-              {t("nav.download.print.catalog", locale.value)}
-            </Link>
+          <div class="site-footer__brand brand-cluster" role="img" aria-label="Black & McDonald Apparel">
+          </div>
+          <div class="site-footer__col">
+          {loginType.value === "safety" && (
+          <nav class="site-footer__links">
+            <Link href="/#fr" onClick$={(e) => { if (loc.url.pathname === "/") { e.preventDefault(); } window.dispatchEvent(new CustomEvent("select-category", { detail: "Flame Resistant" })); const headerH = stickyTop(); const catalog = document.querySelector('.home-catalog'); if (catalog) { const top = catalog.getBoundingClientRect().top + window.scrollY - headerH + 2; window.scrollTo({ top, behavior: 'instant' }); } }}>{t("cat.Flame Resistant", locale.value)}</Link>
+            <Link href="/#shirts" onClick$={(e) => { if (loc.url.pathname === "/") { e.preventDefault(); } window.dispatchEvent(new CustomEvent("select-category", { detail: "Shirts" })); const headerH = stickyTop(); const catalog = document.querySelector('.home-catalog'); if (catalog) { const top = catalog.getBoundingClientRect().top + window.scrollY - headerH + 2; window.scrollTo({ top, behavior: 'instant' }); } }}>{t("cat.Shirts", locale.value)}</Link>
+            <Link href="/#hats" onClick$={(e) => { if (loc.url.pathname === "/") { e.preventDefault(); } window.dispatchEvent(new CustomEvent("select-category", { detail: "Hats" })); const headerH = stickyTop(); const catalog = document.querySelector('.home-catalog'); if (catalog) { const top = catalog.getBoundingClientRect().top + window.scrollY - headerH + 2; window.scrollTo({ top, behavior: 'instant' }); } }}>{t("cat.Hats", locale.value)}</Link>
+            <Link class="site-footer__links-privacy" href="/privacy/">{t("footer.privacypolicy", locale.value)}</Link>
           </nav>
           )}
-          <div class="site-footer__contact site-footer__contact--stacked">
-            <span class="site-footer__contact-label">{t("footer.contact", locale.value)}</span>
-            <a href="mailto:info@blackandmcdonaldapparel.ca">info@blackandmcdonaldapparel.ca</a>
+          {(loginType.value !== "tech" && loginType.value !== "safety") && (
+          <nav class="site-footer__links">
+            <Link href="/#shirts" onClick$={(e) => { if (loc.url.pathname === "/") { e.preventDefault(); } window.dispatchEvent(new CustomEvent("select-category", { detail: "Shirts" })); const headerH = stickyTop(); const catalog = document.querySelector('.home-catalog'); if (catalog) { const top = catalog.getBoundingClientRect().top + window.scrollY - headerH + 2; window.scrollTo({ top, behavior: 'instant' }); } }}>{t("cat.Shirts", locale.value)}</Link>
+            <Link href="/#jackets" onClick$={(e) => { if (loc.url.pathname === "/") { e.preventDefault(); } window.dispatchEvent(new CustomEvent("select-category", { detail: "Jackets" })); const headerH = stickyTop(); const catalog = document.querySelector('.home-catalog'); if (catalog) { const top = catalog.getBoundingClientRect().top + window.scrollY - headerH + 2; window.scrollTo({ top, behavior: 'instant' }); } }}>{t("cat.Jackets", locale.value)}</Link>
+            <Link href="/#hats" onClick$={(e) => { if (loc.url.pathname === "/") { e.preventDefault(); } window.dispatchEvent(new CustomEvent("select-category", { detail: "Hats" })); const headerH = stickyTop(); const catalog = document.querySelector('.home-catalog'); if (catalog) { const top = catalog.getBoundingClientRect().top + window.scrollY - headerH + 2; window.scrollTo({ top, behavior: 'instant' }); } }}>{t("cat.Hats", locale.value)}</Link>
+            <Link href="/#swag" onClick$={(e) => { if (loc.url.pathname === "/") { e.preventDefault(); } window.dispatchEvent(new CustomEvent("select-category", { detail: "SWAG" })); const headerH = stickyTop(); const catalog = document.querySelector('.home-catalog'); if (catalog) { const top = catalog.getBoundingClientRect().top + window.scrollY - headerH + 2; window.scrollTo({ top, behavior: 'instant' }); } }}>{t("cat.SWAG", locale.value)}</Link>
+            <Link href="/#new-hire-kit" onClick$={(e) => { if (loc.url.pathname === "/") { e.preventDefault(); } window.dispatchEvent(new CustomEvent("select-category", { detail: "New Hire Kit" })); const headerH = stickyTop(); const catalog = document.querySelector('.home-catalog'); if (catalog) { const top = catalog.getBoundingClientRect().top + window.scrollY - headerH + 2; window.scrollTo({ top, behavior: 'instant' }); } }}>{t("cat.New Hire Kit", locale.value)}</Link>
+            <Link class="site-footer__links-privacy" href="/privacy/">{t("footer.privacypolicy", locale.value)}</Link>
+          </nav>
+          )}
+          <div class="site-footer__contact-block">
+            <div class="site-footer__contact site-footer__contact--inline">
+              <svg class="site-footer__contact-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+              <a href="mailto:info@blackandmcdonaldapparel.ca">info@blackandmcdonaldapparel.ca</a>
+            </div>
+            <div class="site-footer__legal-row">
+              <Link class="site-footer__privacy-link" href="/privacy/">{t("footer.privacypolicy", locale.value)}</Link>
+              <button type="button" class="site-footer__locale locale-btn locale-btn--footer" onClick$={toggleLocale} aria-label="Toggle language">
+                <svg class="locale-btn__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
+                <span>{locale.value === "en" ? "Français" : "English"}</span>
+              </button>
+            </div>
+          </div>
           </div>
         </div>
       </footer>
 
       {/* Cart Drawer */}
-      {cartOpen.value && (
-        <div class="modal-overlay" onClick$={() => (cartOpen.value = false)}>
+      {cartOpen.value && !isCheckout.value && (
+        <div class="modal-overlay" onClick$={() => { if (checkoutStep.value !== "details") cartOpen.value = false; }}>
           <div class="drawer cart-drawer" onClick$={(e) => e.stopPropagation()}>
             <div class="cart-drawer__site-header">
-              <Link href="/" class={`site-header__logo ${loginType.value === "electrical" ? "site-header__logo--bm" : ""}`}>
-                {loginType.value === "electrical" ? (
-                  <span class="site-header__logo-stack">
-                    <img src="/BlackMcDonald_Logo.webp" alt="Black & McDonald" class="site-header__logo-img" width="1633" height="844" loading="eager" decoding="sync" />
-                    <span class="site-header__logo-apparel">{t("logo.electrical", locale.value)}</span>
-                  </span>
-                ) : (
-                  <img src="/good-catch-logo-en.jpg" alt="Good Catch Awards" class="site-header__logo-img" width="200" height="200" loading="eager" decoding="sync" />
-                )}
+              <Link href="/" class="site-header__logo">
+                <img src="/bm-logo.webp" alt="Black & McDonald" class="site-header__logo-img" width="1565" height="775" style="width:auto;height:30px;object-fit:contain" loading="eager" decoding="sync" />
               </Link>
               <nav class="site-header__nav">
                 <button class="cart-btn" onClick$={() => (cartOpen.value = false)}>
@@ -841,11 +1558,25 @@ export default component$(() => {
               <button class="modal__close cart-drawer__close-desktop" onClick$={() => (cartOpen.value = false)}>x</button>
             </div>
             {cart.items.length === 0 ? (
-              <div class="cart-drawer__empty">
-                <p>{t("cart.empty", locale.value)}</p>
-                <a href="/apparel/" class="cart-drawer__back-link" onClick$={() => (cartOpen.value = false)}>{t("cart.backtoapparel", locale.value)}</a>
+              <div class="cart-drawer__items cart-drawer__items--empty">
+                {/* Keep the same grey PRODUCT/QTY/TOTAL secondary bar the populated
+                    cart shows, so the empty cart reads as the same view with no
+                    rows rather than the header floating on the empty message. */}
+                <table class="cart-table">
+                  <thead>
+                    <tr>
+                      <th class="cart-table__th-product">{t("cart.invoice.product", locale.value)}</th>
+                      <th class="cart-table__th-qty">{t("cart.invoice.qty", locale.value)}</th>
+                      {showPrices.value && <th class="cart-table__th-total"><span class="cart-table__th-qty-inline">{t("cart.invoice.qty", locale.value)} / </span>{t("cart.invoice.total", locale.value)}</th>}
+                    </tr>
+                  </thead>
+                </table>
+                <div class="cart-drawer__empty">
+                  <p>{t("cart.empty", locale.value)}</p>
+                  <Link href="/" class="cart-drawer__back-link" onClick$={() => (cartOpen.value = false)}>{t("cart.backtoapparel", locale.value)}</Link>
+                </div>
               </div>
-            ) : checkoutStep.value === "cart" ? (
+            ) : (
               <>
                 <div class="cart-drawer__items">
                   <table class="cart-table">
@@ -853,6 +1584,7 @@ export default component$(() => {
                       <tr>
                         <th class="cart-table__th-product">{t("cart.invoice.product", locale.value)}</th>
                         <th class="cart-table__th-qty">{t("cart.invoice.qty", locale.value)}</th>
+                        {showPrices.value && <th class="cart-table__th-total"><span class="cart-table__th-qty-inline">{t("cart.invoice.qty", locale.value)} / </span>{t("cart.invoice.total", locale.value)}</th>}
                       </tr>
                     </thead>
                     <tbody>
@@ -860,12 +1592,15 @@ export default component$(() => {
                         <tr key={`${item.name}-${item.size}-${item.color}-${item.quantity}`}>
                           <td class="cart-table__product">
                             <div class="cart-table__product-row">
-                            <img src={cartItemImg(item.sku, item.img)} alt={item.name} width="40" height="30" class="cart-table__img" />
+                            <img src={item.img} alt={item.name} width="40" height="30" class="cart-table__img" />
                             <div>
-                            <Link href={item.sku ? `/apparel/${item.sku}/` : "/apparel/"} class="cart-table__name-link">{stripColorSuffix(item.name)}</Link>
+                            <Link href={item.sku ? `/${item.sku}/` : "/"} class="cart-table__name-link">{stripColorSuffix(item.name)}</Link>
                             <div class="cart-table__meta">
-                              {item.color && <span class="cart-table__swatch" style={{ background: item.color }} aria-hidden="true" />}
-                              <span>{item.color ? `${colorName(item.color, locale.value)} / ` : ""}{item.size}</span>
+                              {item.color && item.color.startsWith("#") && <span class="cart-table__swatch" style={{ background: item.color }} aria-hidden="true" />}
+                              <span>{item.color ? `${item.color.startsWith("#") ? colorName(item.color, locale.value) : item.color} / ` : ""}{item.size}</span>
+                              {(item as any).logoPosition && (
+                                <span class="cart-table__logo-meta">(Logo: {(item as any).logoPosition}{(item as any).logoStyle ? ` · ${(item as any).logoStyle}` : ""})</span>
+                              )}
                             </div>
                             </div>
                             </div>
@@ -877,115 +1612,47 @@ export default component$(() => {
                               <button class="cart-table__qty-btn" aria-label={`Increase quantity of ${item.name}`} onClick$={() => updateQty(i, 1)}>+</button>
                             </div>
                           </td>
+                          {showPrices.value && <td class="cart-table__total">${(((Number(item.price) || 0) * item.quantity)).toFixed(2)}</td>}
                         </tr>
                       ))}
                     </tbody>
+                    {showPrices.value && (
+                      <tfoot>
+                        <tr>
+                          <td colSpan={2} class="cart-table__subtotal-label">{t("cart.invoice.subtotal", locale.value)}</td>
+                          <td class="cart-table__subtotal-val">${subtotal.value.toFixed(2)}</td>
+                        </tr>
+                        {empProvince.value ? (
+                          <>
+                            <tr>
+                              <td colSpan={2} class="cart-table__subtotal-label">{taxLabel.value}</td>
+                              <td class="cart-table__subtotal-val">${(taxAmount.value ?? 0).toFixed(2)}</td>
+                            </tr>
+                            <tr>
+                              <td colSpan={2} class="cart-table__subtotal-label" style={{ fontWeight: 700 }}>{t("cart.invoice.total", locale.value)}</td>
+                              <td class="cart-table__subtotal-val" style={{ fontWeight: 700 }}>${orderTotal.value.toFixed(2)}</td>
+                            </tr>
+                          </>
+                        ) : (
+                          <tr>
+                            <td colSpan={2} class="cart-table__subtotal-label">+ {t("cart.invoice.tax", locale.value)}</td>
+                            <td class="cart-table__subtotal-val">—</td>
+                          </tr>
+                        )}
+                      </tfoot>
+                    )}
                   </table>
                 </div>
                 <div class="cart-drawer__footer">
                   <span class="cart-drawer__total">
-                    {cartCount.value} {cartCount.value !== 1 ? t("cart.items", locale.value) : t("cart.item", locale.value)}
+                    {cartCount.value} {cartCount.value !== 1 ? t("cart.items", locale.value) : t("cart.item", locale.value)}{showPrices.value && (empProvince.value ? ` — $${orderTotal.value.toFixed(2)}` : ` — $${subtotal.value.toFixed(2)} + ${t("cart.invoice.tax", locale.value).toLowerCase()}`)}
                   </span>
                   <button
                     class="btn btn--primary cart-drawer__order-btn"
-                    onClick$={() => { summaryOpen.value = cart.items.length <= 4; checkoutStep.value = "details"; }}
+                    onClick$={() => { nav("/checkout/"); }}
                   >
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
                     {t("cart.checkout", locale.value)}
-                  </button>
-                </div>
-              </>
-            ) : (
-              <>
-                <div class="cart-drawer__details-step">
-                  <button class="cart-drawer__back-btn" onClick$={() => { checkoutStep.value = "cart"; }}>
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
-                    {t("cart.backtocart", locale.value)}
-                  </button>
-                  <Collapsible.Root class="cart-drawer__summary" bind:open={summaryOpen}>
-                    <Collapsible.Trigger class="cart-drawer__checkout-title">
-                      {t("cart.ordersummary", locale.value)} — {cartCount.value} {cartCount.value !== 1 ? t("cart.items", locale.value) : t("cart.item", locale.value)}
-                    </Collapsible.Trigger>
-                    <Collapsible.Content>
-                      <div class="cart-drawer__summary-list">
-                        {cart.items.map((item) => (
-                          <div key={`${item.name}-${item.size}`} class="cart-drawer__summary-item">
-                            <span>
-                              {item.color && <span class="cart-drawer__summary-swatch" style={{ background: item.color }} aria-hidden="true" />}
-                              {item.quantity}x {stripColorSuffix(item.name)}{(item.color || item.size) ? ` — ${item.color ? colorName(item.color, locale.value) : ""}${item.color && item.size ? " / " : ""}${item.size || ""}` : ""}
-                            </span>
-                          </div>
-                        ))}
-                      </div>
-                    </Collapsible.Content>
-                  </Collapsible.Root>
-                  <div class="checkout-modal__form">
-                    <h3 class="checkout-modal__form-title">{t("cart.orderdetails", locale.value)}</h3>
-                    <div class="checkout-modal__row">
-                      <div class={`checkout-modal__field ${formTouched.value && !empFirstName.value ? "checkout-modal__field--error" : ""}`}>
-                        <label>{t("cart.firstname", locale.value)}</label>
-                        <input
-                          type="text"
-                          value={empFirstName.value}
-                          onInput$={(_, el) => { empFirstName.value = el.value; formError.value = ""; }}
-                        />
-                      </div>
-                      <div class={`checkout-modal__field ${formTouched.value && !empLastName.value ? "checkout-modal__field--error" : ""}`}>
-                        <label>{t("cart.lastname", locale.value)}</label>
-                        <input
-                          type="text"
-                          value={empLastName.value}
-                          onInput$={(_, el) => { empLastName.value = el.value; formError.value = ""; }}
-                        />
-                      </div>
-                    </div>
-                    <div class={`checkout-modal__field ${formTouched.value && !empPhone.value ? "checkout-modal__field--error" : ""}`}>
-                      <label>{t("cart.phone", locale.value)}</label>
-                      <input
-                        type="tel"
-                        value={empPhone.value}
-                        onInput$={(_, el) => { empPhone.value = el.value; formError.value = ""; }}
-                      />
-                    </div>
-                    <div class={`checkout-modal__field ${formTouched.value && !empEmail.value ? "checkout-modal__field--error" : ""}`}>
-                      <label>{t("cart.email", locale.value)}</label>
-                      <input
-                        type="email"
-                        value={empEmail.value}
-                        onInput$={(_, el) => { empEmail.value = el.value; formError.value = ""; }}
-                      />
-                    </div>
-                    <div class={`checkout-modal__field ${formTouched.value && !empDept.value ? "checkout-modal__field--error" : ""}`}>
-                      <label>{t("cart.location", locale.value)}</label>
-                      <input
-                        type="text"
-                        value={empDept.value}
-                        onInput$={(_, el) => (empDept.value = el.value)}
-                      />
-                    </div>
-                    <div class={`checkout-modal__field ${formTouched.value && !empPO.value ? "checkout-modal__field--error" : ""}`}>
-                      <label>{t("cart.po", locale.value)}</label>
-                      <input
-                        type="text"
-                        value={empPO.value}
-                        onInput$={(_, el) => (empPO.value = el.value)}
-                      />
-                    </div>
-                  </div>
-                </div>
-                {formError.value && (
-                  <div class="cart-drawer__error" role="alert">{formError.value}</div>
-                )}
-                <div class="cart-drawer__footer">
-                  <span class="cart-drawer__total">
-                    {cartCount.value} {cartCount.value !== 1 ? t("cart.items", locale.value) : t("cart.item", locale.value)}
-                  </span>
-                  <button
-                    class="btn btn--primary cart-drawer__order-btn"
-                    onClick$={submitOrder}
-                  >
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
-                    {t("cart.createorder", locale.value)}
                   </button>
                 </div>
               </>
@@ -998,9 +1665,19 @@ export default component$(() => {
       <Modal.Root bind:show={orderSubmitted} closeOnBackdropClick={true}>
         <Modal.Panel class="modal-overlay">
           <div class="modal order-confirm">
+            <div class="order-confirm__badge" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+            </div>
             <h2 class="order-confirm__title">{t("order.title", locale.value)}</h2>
+            {orderNum.value && (
+              <p class="order-confirm__order">{locale.value === "fr" ? "Commande" : "Order"} #{orderNum.value}</p>
+            )}
             <p class="order-confirm__text">{t("order.text", locale.value)}</p>
-            <a href="/" class="btn btn--primary">{t("order.continue", locale.value)}</a>
+            {/* Plain <a> (full page load), not <Link>: this modal lives in the
+                persistent layout, so an SPA nav would leave orderSubmitted=true
+                and the success modal stuck open. A real navigation re-mounts the
+                app and clears the flag. */}
+            <a href="/" class="btn btn--primary order-confirm__btn">{t("order.continue", locale.value)}</a>
           </div>
         </Modal.Panel>
       </Modal.Root>

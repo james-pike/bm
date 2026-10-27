@@ -1,6 +1,6 @@
 import { component$, $ } from "@builder.io/qwik";
 import { type DocumentHead, routeLoader$ } from "@builder.io/qwik-city";
-import { allProducts } from "../apparel/products";
+import { allProducts, colorName } from "../apparel/products";
 
 export const usePrintAuthGuard = routeLoader$(({ cookie, redirect }) => {
   const val = cookie.get("ce_auth")?.value;
@@ -63,16 +63,22 @@ export default component$(() => {
           </div>
         </header>
         <div class="print-page__grid">
-          {allProducts.filter((p) => p.sku.startsWith("BMGC-")).map((p) => {
-            const lastDash = p.name.lastIndexOf(" - ");
-            const baseName = lastDash > -1 ? p.name.slice(0, lastDash) : p.name;
-            const color = lastDash > -1 ? p.name.slice(lastDash + 3) : "";
+          {allProducts
+            .filter((p) => p.sku.startsWith("BMGC-"))
+            // One printed card per colour (multi-colour products were merged into
+            // a single catalog entry with a swatch per colour).
+            .flatMap((p) => (p.colors.length > 1
+              ? p.colors.map((hex, i) => ({ p, hex, img: p.imgs[i] || p.img, key: `${p.sku}-${i}` }))
+              : [{ p, hex: p.colors[0] || "", img: p.img, key: p.sku }]))
+            .map(({ p, hex, img, key }) => {
+            const baseName = p.name;
+            const color = hex ? colorName(hex, "en") : "";
             const codeMatch = p.details.match(/#[A-Za-z0-9]+/);
             const itemCode = codeMatch ? codeMatch[0] : "";
             return (
-              <article key={p.sku} class="print-card">
+              <article key={key} class="print-card">
                 <div class="print-card__image">
-                  <img src={SKU_IMG_OVERRIDE[p.sku] || p.img || CATEGORY_FALLBACK_IMG[p.category] || "/truck2.webp"} alt={p.name} />
+                  <img src={img || SKU_IMG_OVERRIDE[p.sku] || CATEGORY_FALLBACK_IMG[p.category] || "/truck2.webp"} alt={p.name} />
                 </div>
                 <div class="print-card__body">
                   <h3 class="print-card__name">{baseName}{itemCode && <span class="print-card__code"> {itemCode}</span>}</h3>

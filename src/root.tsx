@@ -12,15 +12,25 @@ export default component$(() => {
    * Don't remove the `<head>` and `<body>` elements.
    */
 
+  // viewTransition={false}: Qwik City otherwise wraps every SPA navigation in
+  // document.startViewTransition(), which cross-fades a snapshot of the old page
+  // into the new one. Navigating from a scrolled catalog, that fades the old
+  // scrolled viewport into the new page at the top — the header and the tab /
+  // breadcrumb strip visibly flash even though they are identical on both routes.
+  // From an unscrolled page the two snapshots match, so nothing shows. Without
+  // it, Qwik commits the DOM and sets the scroll in one synchronous block, so the
+  // swap paints once.
   return (
-    <QwikCityProvider>
+    <QwikCityProvider viewTransition={false}>
       <head>
         <meta charset="utf-8" />
         <meta name="theme-color" content="#ffffff" />
         <meta name="google" content="notranslate" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+        {/* Black & McDonald mark. */}
+        <link rel="icon" href="/favicon.ico" />
+        {/* Self-hosted Montserrat (variable, latin subset). Preloaded so it's
+            ready at first paint — the @font-face lives in global.css. */}
+        <link rel="preload" href="/fonts/montserrat-latin.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
 
         {!isDev && (
           <link
@@ -34,10 +44,11 @@ export default component$(() => {
           body.loading{opacity:0}
           body.ready{opacity:1;transition:opacity 0.1s ease}
         `} />
+        {/* Hero intro animations play on every home-page render — no session gate. */}
       </head>
       <body lang="en" translate="no" class="notranslate loading">
         <RouterOutlet />
-        <script dangerouslySetInnerHTML="window.addEventListener('load',function(){document.body.classList.remove('loading');document.body.classList.add('ready')})" />
+        <script dangerouslySetInnerHTML="(function(){function r(){document.body.classList.remove('loading');document.body.classList.add('ready')}if(document.readyState!=='loading'){r()}else{document.addEventListener('DOMContentLoaded',r)}})()" />
       </body>
     </QwikCityProvider>
   );

@@ -14,10 +14,8 @@ export const RouterHead = component$(() => {
 
       <link rel="canonical" href={loc.url.href} />
       <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
-      <link rel="icon" type="image/webp" href="/BlackMcDonald_Logo.webp" />
-      <link rel="preconnect" href="https://fonts.googleapis.com" />
-      <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
-      <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+      {/* Font: self-hosted Montserrat is preloaded once in root.tsx; its
+          @font-face lives in global.css. */}
 
       {head.meta.map((m) => (
         <meta key={m.key} {...m} />
