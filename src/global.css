@@ -18218,3 +18218,42 @@ html body .login-modal--split .login-modal__carousel::after {
     background: linear-gradient(to bottom, rgba(0, 0, 0, 0.18) 0%, transparent 16%, transparent 60%, rgba(239, 239, 237, 0.85) 100%) !important;
   }
 }
+
+/* ---- Phones: logo as wide as the login fields; screen split in thirds ----
+   Top third: the photo/video. Middle third: the logo (centred). Bottom third:
+   the sign-in form (centred). */
+@media (max-width: 600px) {
+  html body .login-modal--split .login-modal__carousel {
+    flex: 0 0 33.333% !important;
+    height: 33.333% !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    margin-bottom: 0 !important;
+  }
+  html body .login-modal--split .login-card__brand.brand-cluster {
+    width: var(--lw) !important;   /* the login fields' width */
+    margin: auto !important;
+    height: auto !important;
+  }
+  html body .login-modal--split .login-card__brand.brand-cluster::before {
+    width: var(--lw) !important;
+    height: calc(var(--lw) * 775 / 1565) !important;
+    flex: 0 0 auto !important;
+    background-position: center !important;
+  }
+  html body .login-modal--split .login-card__brand .login-card__apparel--inbar {
+    left: 0 !important;
+    width: 100% !important;
+    height: 33.5% !important;
+    aspect-ratio: auto !important;
+    font-size: calc(var(--lw) * 0.072) !important;
+    letter-spacing: 0.24em !important;
+  }
+  html body .login-modal--split .login-modal__form {
+    flex: 0 0 33.333% !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    justify-content: center !important;
+    min-height: 0;
+  }
+}
