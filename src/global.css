@@ -18257,3 +18257,37 @@ html body .login-modal--split .login-modal__carousel::after {
     min-height: 0;
   }
 }
+/* Phones: show the video plainly — no fade-out mask or tint around it. */
+@media (max-width: 600px) {
+  html body .login-modal--split .login-modal__carousel {
+    -webkit-mask-image: none !important;
+    mask-image: none !important;
+  }
+  html body .login-modal--split .login-modal__carousel::before,
+  html body .login-modal--split .login-modal__carousel::after {
+    background: none !important;
+    box-shadow: none !important;
+  }
+}
+/* Tablets: the logo fills the cover panel's width (inside its padding); the
+   panel grows to fit. cqw = 1% of the cover's content width. */
+@media (min-width: 601px) and (max-width: 1024px) {
+  html body .login-modal--split .login-card__cover { container-type: inline-size; }
+  html body .login-modal--split .login-card__brand.brand-cluster {
+    width: 100cqw !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    align-self: stretch !important;
+    height: auto !important;
+  }
+  html body .login-modal--split .login-card__brand.brand-cluster::before {
+    width: 100cqw !important;
+    height: calc(100cqw * 775 / 1565) !important;
+    flex: 0 0 auto !important;
+    margin-left: 0 !important;
+  }
+  html body .login-modal--split .login-card__brand .login-card__apparel--inbar {
+    font-size: 7.2cqw !important;
+    letter-spacing: 0.24em !important;
+  }
+}
