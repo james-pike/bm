@@ -77,8 +77,8 @@ export const useLocaleLoader = routeLoader$(({ cookie }) => {
 });
 
 // Black & McDonald logins: the Good Catch catalog ("clothing"), Tech
-// ("tech", Work Wear) and Electrical ("electrical", the FR line). Each is a
-// username + password pair from the environment.
+// ("tech", Work Wear) and Electrical ("electrical", the FR line). Each has its own
+// password in the environment; the password alone picks the catalog.
 export type LoginType = "clothing" | "tech" | "electrical" | null;
 
 export function getLoginType(cookie: Cookie): LoginType {
@@ -109,18 +109,21 @@ function timingSafeEq(a: string, b: string): boolean {
 }
 
 export const useLogin = routeAction$(
-  ({ username, password }, { cookie, fail, env }) => {
-    const accounts: { type: Exclude<LoginType, null>; user: string; pass: string | undefined }[] = [
-      { type: "electrical", user: env.get("ELECTRICAL_USERNAME") || "electrical", pass: env.get("ELECTRICAL_PASSWORD") },
-      { type: "tech", user: env.get("TECH_USERNAME") || "tech", pass: env.get("TECH_PASSWORD") },
-      { type: "clothing", user: env.get("APP_USERNAME") || "admin", pass: env.get("APP_PASSWORD") || env.get("VITE_APP_PASSWORD") },
+  ({ password }, { cookie, fail, env }) => {
+    // Password-only sign-in: each catalog has its own password, so the password
+    // typed decides the catalog (Good Catch / Electrical / Tech). They must stay
+    // distinct — if two matched, the first in this list would win.
+    const accounts: { type: Exclude<LoginType, null>; pass: string | undefined }[] = [
+      { type: "electrical", pass: env.get("ELECTRICAL_PASSWORD") },
+      { type: "tech", pass: env.get("TECH_PASSWORD") },
+      { type: "clothing", pass: env.get("APP_PASSWORD") || env.get("VITE_APP_PASSWORD") },
     ];
     if (!accounts.some((a) => a.pass)) {
       return fail(500, { message: "Login not configured" });
     }
-    const match = accounts.find((a) => a.pass && timingSafeEq(username, a.user) && timingSafeEq(password, a.pass));
+    const match = accounts.find((a) => a.pass && timingSafeEq(password, a.pass));
     if (!match) {
-      return fail(401, { message: "Invalid username or password" });
+      return fail(401, { message: "Invalid password" });
     }
     cookie.set(AUTH_COOKIE, match.type, {
       path: "/",
@@ -132,7 +135,6 @@ export const useLogin = routeAction$(
     return { success: true };
   },
   zod$({
-    username: z.string().min(1).max(64),
     password: z.string().min(1).max(128),
   }),
 );
@@ -1054,21 +1056,16 @@ export default component$(() => {
             <div class="login-modal__form-pane">
               <div class="login-card">
                 {/* The recessed, dot-textured brand panel (Black & McDonald logo,
-                    APPAREL, the Good Catch Awards plaque). */}
+                    APPAREL). The Good Catch patch shows in the header after a
+                    Good Catch sign-in, not here. */}
                 <div class="login-card__cover">
                 <button type="button" class="login-card__locale" onClick$={toggleLocale} aria-label="Toggle language">
                   <span>{locale.value === "en" ? "FR" : "EN"}</span>
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
                 </button>
                 <div class="login-card__brand brand-cluster" role="img" aria-label="Black & McDonald Apparel">
-                </div>
-                <div class="login-card__tagline">
-                  <div class="login-card__apparel">{t("nav.apparel", locale.value).toUpperCase()}</div>
-                  {/* Good Catch Awards plaque (the badge + program name). */}
-                  <div class="login-card__canada login-card__goodcatch">
-                    <img src="/good-catch-logo-en.jpg" alt="" width="130" height="130" loading="eager" class="login-card__goodcatch-badge" />
-                    <span class="login-card__goodcatch-text">{t("logo.apparel", locale.value)}</span>
-                  </div>
+                  {/* APPAREL in white, inside the logo's green band (as in the header). */}
+                  <span class="login-card__apparel login-card__apparel--inbar" aria-hidden="true">{t("nav.apparel", locale.value).toUpperCase()}</span>
                 </div>
                 </div>
                 <Form
@@ -1084,19 +1081,6 @@ export default component$(() => {
                   )}
                   {/* Username + password: the account decides the catalog
                       (Good Catch, Tech or Electrical). */}
-                  <div class="login-modal__field">
-                    <label for="username">{t("login.username", locale.value)}</label>
-                    <input
-                      id="username"
-                      name="username"
-                      type="text"
-                      autoComplete="username"
-                      autoCapitalize="none"
-                      spellcheck={false}
-                      required
-                      placeholder={t("login.username.placeholder", locale.value)}
-                    />
-                  </div>
                   <div class="login-modal__field">
                     <label for="password">{t("login.password", locale.value)}</label>
                     <input
@@ -1171,6 +1155,10 @@ export default component$(() => {
               <span class="site-header__logo-apparel">{t("nav.apparel", locale.value)}</span>
             </div>
           </Link>
+          {/* Good Catch Awards patch: only for the Good Catch login. */}
+          {loginType.value === "clothing" && (
+            <img src="/good-catch-logo-en.webp" alt="Good Catch Awards" class="site-header__goodcatch" width="130" height="130" loading="eager" decoding="sync" />
+          )}
           <nav class="site-header__categories">
             <Link href="/" class={loc.url.pathname === "/" ? "active" : ""}>{t("nav.home", locale.value)}</Link>
             <Link href="/" class={(!loc.url.pathname.startsWith("/privacy") && !loc.url.pathname.startsWith("/checkout")) ? "active" : ""}>{loginType.value === "tech" ? t("cat.Work Wear", locale.value) : t("nav.apparel", locale.value)}</Link>
