@@ -18376,3 +18376,23 @@ html body:not(#bm-a):not(#bm-b):not(#bm-c) .site-header .site-header__inner > .s
 @media (min-width: 601px) and (max-width: 1024px) {
   html body .site-footer .site-footer__brand { display: none !important; }
 }
+
+/* Desktop: the logo fills its panel's width (same padding left and right).
+   cqw = 1% of the login pane; the panel is ~97.3cqw wide and the logo keeps
+   the (4cqw + 8px) inset on both sides. */
+@media (min-width: 1025px) {
+  html body .login-modal--split .login-card__brand.brand-cluster {
+    --bm-logo-w: calc(92.2cqw - 16px);
+  }
+  html body .login-modal--split .login-card__brand.brand-cluster::before {
+    width: var(--bm-logo-w) !important;
+    height: calc(var(--bm-logo-w) * 775 / 1565) !important;
+    flex: 0 0 auto !important;
+  }
+  html body .login-modal--split .login-card__brand .login-card__apparel--inbar {
+    width: var(--bm-logo-w) !important;
+    height: calc(var(--bm-logo-w) * 775 / 1565 * 0.335) !important;
+    font-size: calc(var(--bm-logo-w) * 0.072) !important;
+    letter-spacing: 0.24em !important;
+  }
+}
