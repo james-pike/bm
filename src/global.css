@@ -2,12 +2,12 @@
 :root {
   /* Accent blue = the header sign blue (was a brighter #2563eb). All blue accents
      — prices, links, active states, selected borders — track the header now. */
-  --ce-green: #00703c;
-  --ce-green-dark: #00532b;
-  --ce-green-light: #4a9e73;
+  --ce-green: #00a84f;
+  --ce-green-dark: #008c42;
+  --ce-green-light: #4fc283;
   --ce-orange: #E6570C;
   --ce-orange-light: #F27D13;
-  --ce-gold: #00703c;
+  --ce-gold: #00a84f;
 
   --ce-white: #ffffff;
   /* Product image panel. Images multiply onto this, so their baked-in white
@@ -6632,7 +6632,7 @@ details[open] > .cart-drawer__checkout-title::after {
   margin: 0 auto 1.4rem;
   border-radius: 50%;
   background: radial-gradient(120% 120% at 50% 18%, var(--ce-green), var(--ce-green-dark));
-  box-shadow: 0 8px 24px rgba(0, 83, 43, 0.35);
+  box-shadow: 0 8px 24px rgba(0, 140, 66, 0.35);
   overflow: hidden;
   color: #fff;
 }
@@ -15562,7 +15562,7 @@ body:has(.checkout-page) .site-footer { display: none; }
 }
 .product-modal__qty-input::-webkit-outer-spin-button,
 .product-modal__qty-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
-.product-modal__qty-input:focus { border-color: var(--ce-green); box-shadow: 0 0 0 2px rgba(0,112,60,0.12); }
+.product-modal__qty-input:focus { border-color: var(--ce-green); box-shadow: 0 0 0 2px rgba(0,168,79,0.15); }
 
 /* Carmichael add-to-cart swoosh (the production cm animation) — replaces the
    Carmichael mark. Two strokes (orange upper, yellow lower) sit behind
