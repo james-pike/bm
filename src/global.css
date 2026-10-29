@@ -18291,3 +18291,8 @@ html body .login-modal--split .login-modal__carousel::after {
     letter-spacing: 0.24em !important;
   }
 }
+
+/* Header logo flush with the header's left edge on every device (no grey
+   inset beside it). */
+html body .site-header__inner:has(> .site-header__logo .site-header__logo-img--bm) { padding-left: 0 !important; }
+html body:not(#bm-a):not(#bm-b):not(#bm-c) .site-header .site-header__inner > .site-header__logo:has(.site-header__logo-img--bm) { margin-left: 0 !important; padding-left: 0 !important; }
