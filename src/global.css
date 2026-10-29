@@ -18330,3 +18330,7 @@ html body:not(#bm-a):not(#bm-b):not(#bm-c) .site-header .site-header__inner > .s
     width: auto !important;
   }
 }
+@media (max-width: 600px) {
+  /* Thin gap between the video and the logo. */
+  html body .login-modal--split .login-card__brand.brand-cluster { margin-top: 8px !important; }
+}
