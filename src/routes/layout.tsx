@@ -1078,7 +1078,10 @@ export default component$(() => {
                   {/* Username + password: the account decides the catalog
                       (Good Catch, Tech or Electrical). */}
                   <div class="login-modal__field">
-                    <label for="password">{t("login.password", locale.value)}</label>
+                    <label for="password">
+                      <span class="login-label--wide">{t("login.password", locale.value)}</span>
+                      <span class="login-label--phone">{t("login.label.phone", locale.value)}</span>
+                    </label>
                     <input
                       id="password"
                       name="password"

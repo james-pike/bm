@@ -18321,7 +18321,7 @@ html body:not(#bm-a):not(#bm-b):not(#bm-c) .site-header .site-header__inner > .s
   }
   html body .login-overlay .login-modal__stack { height: 100% !important; max-height: none !important; row-gap: 0 !important; }
   html body .login-modal--split .login-card__brand.brand-cluster {
-    --bm-logo-w: calc(100vw - 4px - 24px);
+    --bm-logo-w: calc(100vw - 4px - 18px);
     width: var(--bm-logo-w) !important;
     margin: 0 auto auto !important;   /* no gap under the video */
   }
@@ -18336,14 +18336,14 @@ html body:not(#bm-a):not(#bm-b):not(#bm-c) .site-header .site-header__inner > .s
 @media (max-width: 600px) {
   /* Video inset 12px each side, lining up with the logo's edges. */
   html body .login-modal--split .login-modal__carousel {
-    margin-left: 12px !important;
-    margin-right: 12px !important;
+    margin-left: 9px !important;
+    margin-right: 9px !important;
     width: auto !important;
   }
 }
 @media (max-width: 600px) {
-  /* Thin gap between the video and the logo. */
-  html body .login-modal--split .login-card__brand.brand-cluster { margin-top: 8px !important; }
+  /* Thin 4px gap between the video and the logo. */
+  html body .login-modal--split .login-card__brand.brand-cluster { margin-top: 4px !important; }
 }
 
 /* Phones: no strip above the header logo — flush with the top edge (as on
@@ -18355,18 +18355,18 @@ html body:not(#bm-a):not(#bm-b):not(#bm-c) .site-header .site-header__inner > .s
 /* Narrow phones (<=400px): 6px side margins instead of 12px — video, logo and
    the login fields all share the same width. */
 @media (max-width: 400px) {
-  html body .login-overlay .login-modal__stack { --lw: calc(100vw - 4px - 12px); }
-  html body .login-modal--split .login-card__brand.brand-cluster { --bm-logo-w: calc(100vw - 4px - 12px); }
+  html body .login-overlay .login-modal__stack { --lw: calc(100vw - 4px - 8px); }
+  html body .login-modal--split .login-card__brand.brand-cluster { --bm-logo-w: calc(100vw - 4px - 8px); }
   html body .login-modal--split .login-modal__carousel {
-    margin-left: 6px !important;
-    margin-right: 6px !important;
+    margin-left: 4px !important;
+    margin-right: 4px !important;
   }
 }
 /* Phones: video flush with the top of the screen (no white strip above it). */
 @media (max-width: 600px) {
   html body .login-overlay .login-modal.login-modal--split { padding-top: 0 !important; }
   /* 8px above the video — the same as the gate's 8px side margins. */
-  html body .login-modal--split .login-modal__carousel { margin-top: 8px !important; }
+  html body .login-modal--split .login-modal__carousel { margin-top: 6px !important; }
 }
 /* Short phones (e.g. 320x454): keep the same 8px margin under LOGIN — the video
    gives up height so the logo and the form always fit on screen. */
@@ -18440,5 +18440,21 @@ html body:not(#bm-a):not(#bm-b):not(#bm-c) .site-header .site-header__inner > .s
     height: calc(100cqw * 775 / 1565 * 0.335);
     font-size: 7.2cqw !important;
     letter-spacing: 0.24em !important;
+  }
+}
+
+/* Login field label: "Login" on phones, "Password" on tablet/desktop. */
+.login-label--phone { display: none; }
+@media (max-width: 600px) {
+  .login-label--wide { display: none; }
+  .login-label--phone { display: inline; }
+}
+/* Short phones: the login form sits in the middle of the light area under the
+   logo — equal 14px above (to the logo) and below (to the screen edge, incl.
+   the 2px frame). The video gives up the height. */
+@media (max-width: 600px) and (max-height: 520px) {
+  html body .login-modal--split .login-modal__form {
+    margin-top: 14px !important;
+    margin-bottom: 12px !important;
   }
 }

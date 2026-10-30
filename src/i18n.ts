@@ -48,6 +48,7 @@ const translations = {
   "login.portal.service": { en: "Service", fr: "Service" },
   "login.portal.electrical": { en: "Electrical", fr: "Électrique" },
   "login.password": { en: "Password", fr: "Mot de passe" },
+  "login.label.phone": { en: "Login", fr: "Connexion" },
   "login.password.placeholder": { en: "Enter password", fr: "Entrez le mot de passe" },
   "login.submit": { en: "Login", fr: "Se connecter" },
   "login.submitting": { en: "Signing in...", fr: "Connexion..." },
