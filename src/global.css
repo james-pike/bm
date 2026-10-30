@@ -18321,7 +18321,7 @@ html body:not(#bm-a):not(#bm-b):not(#bm-c) .site-header .site-header__inner > .s
   }
   html body .login-overlay .login-modal__stack { height: 100% !important; max-height: none !important; row-gap: 0 !important; }
   html body .login-modal--split .login-card__brand.brand-cluster {
-    --bm-logo-w: calc(100vw - 4px - 18px);
+    --bm-logo-w: calc(100vw - 4px - 8px);
     width: var(--bm-logo-w) !important;
     margin: 0 auto auto !important;   /* no gap under the video */
   }
@@ -18336,8 +18336,8 @@ html body:not(#bm-a):not(#bm-b):not(#bm-c) .site-header .site-header__inner > .s
 @media (max-width: 600px) {
   /* Video inset 12px each side, lining up with the logo's edges. */
   html body .login-modal--split .login-modal__carousel {
-    margin-left: 9px !important;
-    margin-right: 9px !important;
+    margin-left: 4px !important;
+    margin-right: 4px !important;
     width: auto !important;
   }
 }
