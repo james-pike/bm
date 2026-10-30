@@ -18355,7 +18355,7 @@ html body:not(#bm-a):not(#bm-b):not(#bm-c) .site-header .site-header__inner > .s
 /* Narrow phones (<=400px): 6px side margins instead of 12px — video, logo and
    the login fields all share the same width. */
 @media (max-width: 400px) {
-  html body .login-overlay .login-modal__stack { --lw: calc(100vw - 4px - 28px); } /* login fields: 16px in from each side */
+  html body .login-overlay .login-modal__stack { --lw: calc(100vw - 4px - 40px); } /* login fields: ~26px in from each side */
   html body .login-modal--split .login-card__brand.brand-cluster { --bm-logo-w: calc(100vw - 4px - 8px); }
   html body .login-modal--split .login-modal__carousel {
     margin-left: 4px !important;
