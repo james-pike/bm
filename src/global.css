@@ -18708,3 +18708,8 @@ html body:not(#bm-a):not(#bm-b):not(#bm-c) .site-header .site-header__inner > .s
 @media (max-width: 600px) {
   html body .login-modal--split .login-modal__carousel { border-radius: 6px 6px 0 0 !important; }
 }
+/* Wide phones: more side padding inside the login panel (26px). */
+@media (min-width: 401px) and (max-width: 600px) {
+  html body .login-overlay .login-modal__stack { --lw: calc(100vw - 66px) !important; }
+  html body .login-modal--split .login-modal__form { padding-left: 26px !important; padding-right: 26px !important; }
+}
