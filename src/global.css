@@ -18862,3 +18862,9 @@ html body .login-modal__video-toggle { border-radius: 0 !important; }
 @media (min-width: 601px) and (max-width: 1024px) {
   html body .login-modal--split .login-modal__field input::placeholder { color: transparent !important; opacity: 0 !important; }
 }
+/* Phones: the login video takes taps again (the template made the old photo
+   slot non-interactive) — so the play/pause button works. */
+@media (max-width: 600px) {
+  html body .login-modal--split .login-modal__carousel.login-modal__carousel--video,
+  html body .login-modal--split .login-modal__carousel--video .login-modal__video-toggle { pointer-events: auto !important; }
+}
