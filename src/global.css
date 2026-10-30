@@ -18858,3 +18858,7 @@ html body .login-modal__video-toggle { border-radius: 0 !important; }
 @media (max-width: 400px) {
   html body .login-modal--split .login-modal__form { padding-top: 9px !important; padding-bottom: 15px !important; }
 }
+/* Tablets: no "Enter password" placeholder — the label above names the field. */
+@media (min-width: 601px) and (max-width: 1024px) {
+  html body .login-modal--split .login-modal__field input::placeholder { color: transparent !important; opacity: 0 !important; }
+}
