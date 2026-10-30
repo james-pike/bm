@@ -18719,3 +18719,10 @@ html body:not(#bm-a):not(#bm-b):not(#bm-c) .site-header .site-header__inner > .s
 }
 /* Video play/pause button: square corners. */
 html body .login-modal__video-toggle { border-radius: 0 !important; }
+/* Phones: the strip between the logo and the login panel reads the same as the
+   one above the logo (the panel's inset outline and the video's lift make
+   equal gaps look unequal); the video is square on all four corners. */
+@media (max-width: 600px) {
+  html body .login-modal--split .login-modal__form { margin-top: 8px !important; }
+  html body .login-modal--split .login-modal__carousel { border-radius: 0 !important; }
+}
