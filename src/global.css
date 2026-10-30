@@ -18469,13 +18469,13 @@ html body:not(#bm-a):not(#bm-b):not(#bm-c) .site-header .site-header__inner > .s
   }
   html body .login-modal--split .login-modal__form { background: transparent !important; }
 }
-/* Phones: the gate keeps the tablet/desktop frame — white edge, a 1px grey
-   border with rounded corners and the soft shadow — just scaled down. Content
+/* Phones: the gate keeps the tablet/desktop frame — a 1px grey border with
+   rounded corners at the screen edge (no white gap outside it). Content
    sits 5px inside the frame (3px margin + the 2px padding). */
 @media (max-width: 600px) {
-  html body .login-overlay.login-overlay { padding: 4px !important; }
+  html body .login-overlay.login-overlay { padding: 0 !important; }
   html body .login-overlay .login-modal.login-modal--split {
-    height: calc(100dvh - 8px) !important;
+    height: 100dvh !important;
     border: 1px solid #d9dbd9 !important;
     border-radius: 10px !important;
     box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.12), 0 4px 18px rgba(0, 0, 0, 0.16) !important;
@@ -18485,5 +18485,5 @@ html body:not(#bm-a):not(#bm-b):not(#bm-c) .site-header .site-header__inner > .s
     margin-left: 3px !important;
     margin-right: 3px !important;
   }
-  html body .login-modal--split .login-card__brand.brand-cluster { --bm-logo-w: calc(100vw - 20px) !important; }
+  html body .login-modal--split .login-card__brand.brand-cluster { --bm-logo-w: calc(100vw - 12px) !important; }
 }
