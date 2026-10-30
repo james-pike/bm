@@ -18762,3 +18762,47 @@ html body .login-modal__video-toggle { border-radius: 0 !important; }
     box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.12), 0 2px 8px rgba(0, 0, 0, 0.14) !important;
   }
 }
+/* Phones: a 2px white edge outside the frame (as on tablet) so its depth reads. */
+@media (max-width: 600px) {
+  html body .login-overlay.login-overlay { padding: 2px !important; background: #ffffff !important; }
+  html body .login-overlay .login-modal.login-modal--split {
+    height: calc(100dvh - 4px) !important;
+    border: 1px solid #d9dbd9 !important;
+    border-radius: 8px !important;
+  }
+  html body .login-modal--split .login-card__brand.brand-cluster { --bm-logo-w: calc(100vw - 18px) !important; }
+}
+@media (min-width: 401px) and (max-width: 600px) {
+  html body .login-overlay .login-modal__stack { --lw: calc(100vw - 70px) !important; }
+}
+@media (max-width: 400px) {
+  html body .login-overlay.login-overlay { padding: 2px !important; }
+  html body .login-overlay .login-modal.login-modal--split { height: calc(100dvh - 4px) !important; }
+  html body .login-modal--split .login-card__brand.brand-cluster { --bm-logo-w: calc(100vw - 18px) !important; }
+  html body .login-overlay .login-modal__stack { --lw: calc(100vw - 42px) !important; }
+}
+/* DEPTH-OPTION:start */
+/* Option 2 — tinted background outside the frame (contrast instead of shadow). */
+@media (max-width: 1024px) {
+  html body .login-overlay.login-overlay { background: #d3d6d9 !important; }
+  html body .login-overlay .login-modal.login-modal--split {
+    border-color: #c7cacc !important;
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.35) !important;
+  }
+}
+/* DEPTH-OPTION:end */
+/* Phones: the strip outside the frame is 1px (tablets keep 2px). */
+@media (max-width: 600px) {
+  html body .login-overlay.login-overlay { padding: 1px !important; }
+  html body .login-overlay .login-modal.login-modal--split { height: calc(100dvh - 2px) !important; }
+  html body .login-modal--split .login-card__brand.brand-cluster { --bm-logo-w: calc(100vw - 16px) !important; }
+}
+@media (min-width: 401px) and (max-width: 600px) {
+  html body .login-overlay .login-modal__stack { --lw: calc(100vw - 68px) !important; }
+}
+@media (max-width: 400px) {
+  html body .login-overlay.login-overlay { padding: 1px !important; }
+  html body .login-overlay .login-modal.login-modal--split { height: calc(100dvh - 2px) !important; }
+  html body .login-modal--split .login-card__brand.brand-cluster { --bm-logo-w: calc(100vw - 16px) !important; }
+  html body .login-overlay .login-modal__stack { --lw: calc(100vw - 40px) !important; }
+}
