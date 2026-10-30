@@ -18854,3 +18854,7 @@ html body .login-modal__video-toggle { border-radius: 0 !important; }
   html body .login-modal--split .login-modal__subtitle { font-size: 20.5px !important; }
   html body .login-modal--split .login-modal__form label { font-size: 13.5px !important; }
 }
+/* Narrow phones: lift the login content a touch so it reads centred. */
+@media (max-width: 400px) {
+  html body .login-modal--split .login-modal__form { padding-top: 9px !important; padding-bottom: 15px !important; }
+}
