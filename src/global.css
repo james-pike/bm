@@ -18815,3 +18815,24 @@ html body .login-modal__video-toggle { border-radius: 0 !important; }
 @media (min-width: 900px) and (max-width: 1024px) {
   html body .login-modal--split .login-card__cover { padding-top: 62px !important; padding-bottom: 62px !important; }
 }
+/* Tablets: the logo panel and the login panel split their column 50/50
+   (equal heights); each centres its content. */
+@media (min-width: 601px) and (max-width: 1024px) {
+  html body .login-overlay .login-modal__stack { grid-template-rows: 1fr 1fr !important; }
+  html body .login-modal--split .login-card__cover { padding-top: 40px !important; padding-bottom: 40px !important; }
+  html body .login-modal--split .login-modal__form {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+  }
+}
+@media (min-width: 900px) and (max-width: 1024px) {
+  html body .login-modal--split .login-card__cover { padding-top: 29px !important; padding-bottom: 29px !important; }
+}
+/* Tablets: more side padding inside the login panel (a bit on narrow, more on wide). */
+@media (min-width: 601px) and (max-width: 1024px) {
+  html body .login-modal--split .login-modal__form { padding-left: 28px !important; padding-right: 28px !important; }
+}
+@media (min-width: 900px) and (max-width: 1024px) {
+  html body .login-modal--split .login-modal__form { padding-left: 40px !important; padding-right: 40px !important; }
+}
