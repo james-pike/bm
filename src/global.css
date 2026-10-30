@@ -18845,3 +18845,12 @@ html body .login-modal__video-toggle { border-radius: 0 !important; }
 @media (min-width: 601px) and (max-width: 899px) {
   html body .login-modal--split .login-modal__form { padding-left: 34px !important; padding-right: 34px !important; }
 }
+/* Tablets: the "Login to access apparel" heading and the field label a touch larger. */
+@media (min-width: 601px) and (max-width: 899px) {
+  html body .login-modal--split .login-modal__subtitle { font-size: 19px !important; }
+  html body .login-modal--split .login-modal__form label { font-size: 12.5px !important; }
+}
+@media (min-width: 900px) and (max-width: 1024px) {
+  html body .login-modal--split .login-modal__subtitle { font-size: 20.5px !important; }
+  html body .login-modal--split .login-modal__form label { font-size: 13.5px !important; }
+}
