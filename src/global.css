@@ -18488,67 +18488,6 @@ html body:not(#bm-a):not(#bm-b):not(#bm-c) .site-header .site-header__inner > .s
   html body .login-modal--split .login-card__brand.brand-cluster { --bm-logo-w: calc(100vw - 12px) !important; }
 }
 
-/* ---- Tablets: stacked like phones — video (full width), then the logo
-   panel, then the sign-in — each taking a third of the screen height. ---- */
-@media (min-width: 601px) and (max-width: 1024px) {
-  html body .login-overlay .login-modal.login-modal--split {
-    height: calc(100dvh - 12px) !important;
-    max-height: none !important;
-  }
-  html body .login-overlay .login-modal__stack {
-    display: grid !important;
-    grid-template-columns: 1fr !important;
-    grid-template-rows: 1fr 1fr 1fr !important;
-    row-gap: 10px !important;
-    height: 100% !important;
-    max-height: none !important;
-  }
-  html body .login-modal--split .login-modal__carousel {
-    grid-column: 1 !important;
-    grid-row: 1 !important;
-    height: auto !important;
-    min-height: 0 !important;
-    margin: 0 !important;
-  }
-  html body .login-modal--split .login-modal__slide--wide { object-position: 50% 40% !important; }
-  html body .login-modal--split .login-card__cover {
-    grid-column: 1 !important;
-    grid-row: 2 !important;
-    container-type: size !important;
-    min-height: 0 !important;
-    padding: 0 !important;
-    justify-content: center !important;
-    align-items: center !important;
-  }
-  /* Logo as big as the panel allows (8% breathing room), centred. */
-  html body .login-modal--split .login-card__brand.brand-cluster {
-    --tl: min(92cqw, calc(84cqh * 1565 / 775));
-    width: var(--tl) !important;
-    height: auto !important;
-    margin: auto !important;
-    align-self: center !important;
-  }
-  html body .login-modal--split .login-card__brand.brand-cluster::before {
-    width: var(--tl) !important;
-    height: calc(var(--tl) * 775 / 1565) !important;
-    margin: 0 !important;
-  }
-  html body .login-modal--split .login-card__brand .login-card__apparel--inbar {
-    left: 0 !important;
-    width: 100% !important;
-    height: 33.5% !important;
-    font-size: calc(var(--tl) * 0.072) !important;
-    letter-spacing: 0.24em !important;
-  }
-  html body .login-modal--split .login-modal__form {
-    grid-column: 1 !important;
-    grid-row: 3 !important;
-    min-height: 0 !important;
-    margin: 0 !important;
-    justify-content: center !important;
-    padding-inline: 18% !important;
-  }
-}
 /* Narrow phones: slightly tighter 3px gap between the video and the logo. */
 @media (max-width: 400px) {
   html body .login-modal--split .login-card__brand.brand-cluster { margin-top: 3px !important; }
