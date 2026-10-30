@@ -18806,3 +18806,12 @@ html body .login-modal__video-toggle { border-radius: 0 !important; }
   html body .login-modal--split .login-card__brand.brand-cluster { --bm-logo-w: calc(100vw - 16px) !important; }
   html body .login-overlay .login-modal__stack { --lw: calc(100vw - 40px) !important; }
 }
+/* Tablets: the logo sits vertically centred in its panel (equal space above
+   and below; same panel height as before). */
+@media (min-width: 601px) and (max-width: 1024px) {
+  html body .login-modal--split .login-card__brand.brand-cluster { margin-bottom: 0 !important; }
+  html body .login-modal--split .login-card__cover { padding-top: 59px !important; padding-bottom: 59px !important; }
+}
+@media (min-width: 900px) and (max-width: 1024px) {
+  html body .login-modal--split .login-card__cover { padding-top: 62px !important; padding-bottom: 62px !important; }
+}
