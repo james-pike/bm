@@ -18383,6 +18383,32 @@ html body:not(#bm-a):not(#bm-b):not(#bm-c) .site-header .site-header__inner > .s
     margin-bottom: 6px !important;   /* + the 2px frame = 8px to the screen edge */
   }
 }
+/* Short phones: video, logo and login form each get an equal third of the
+   screen. Fixed space = 8px above the video + 8px gaps either side of the logo
+   + 8px under LOGIN (6px margin + the 2px frame). The logo shrinks just enough
+   to fit its third and is centred in it. */
+@media (max-width: 600px) and (max-height: 520px) {
+  html body .login-overlay .login-modal__stack { --third: calc((100dvh - 32px) / 3); }
+  html body .login-modal--split .login-modal__carousel {
+    flex: 0 0 var(--third) !important;
+    height: var(--third) !important;
+  }
+  html body .login-modal--split .login-card__brand.brand-cluster {
+    --bm-logo-w: min(calc(100vw - 28px), calc(var(--third) * 1565 / 775));
+    margin-top: calc(8px + (var(--third) - var(--bm-logo-w) * 775 / 1565) / 2) !important;
+    margin-bottom: calc(8px + (var(--third) - var(--bm-logo-w) * 775 / 1565) / 2) !important;
+  }
+  html body .login-modal--split .login-modal__form {
+    flex: 0 0 var(--third) !important;
+    height: var(--third) !important;
+    justify-content: center !important;
+  }
+}
+@media (max-width: 400px) and (max-height: 520px) {
+  html body .login-modal--split .login-card__brand.brand-cluster {
+    --bm-logo-w: min(calc(100vw - 16px), calc(var(--third) * 1565 / 775));
+  }
+}
 /* Tablets: no logo in the footer (desktop keeps it). */
 @media (min-width: 601px) and (max-width: 1024px) {
   html body .site-footer .site-footer__brand { display: none !important; }
