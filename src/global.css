@@ -18608,3 +18608,56 @@ html body:not(#bm-a):not(#bm-b):not(#bm-c) .site-header .site-header__inner > .s
 @media (max-width: 400px) {
   html body .login-modal--split .login-modal__carousel { box-shadow: 0 5px 0 0 #ffffff !important; }
 }
+
+/* ==== Phones: the same framed structure as tablet/desktop ====================
+   One continuous grey frame (tablet's gradient, 1px border, rounded) holding
+   three distinct boxes — the video, the logo, the login panel — with the
+   frame showing 6px around and between them. Supersedes the edge-to-edge
+   video / even-white phone rules above. */
+@media (max-width: 600px) {
+  html body .login-overlay .login-modal.login-modal--split {
+    padding: 6px !important;
+    overflow: hidden !important;
+    border: 1px solid #d9dbd9 !important;
+    border-radius: 12px !important;
+    background: linear-gradient(165deg, #f6f6f4 0%, #efefed 45%, #e6e7e5 100%) !important;
+  }
+  html body .login-overlay .login-modal__stack { padding-bottom: 0 !important; }
+  /* Video: its own box inside the frame. */
+  html body .login-modal--split .login-modal__carousel {
+    margin: 0 !important;
+    border: 1px solid rgba(0, 0, 0, 0.1) !important;
+    border-radius: 6px !important;
+    box-shadow: none !important;
+    overflow: hidden;
+  }
+  /* Logo: the frame shows 6px above it. */
+  html body .login-modal--split .login-card__brand.brand-cluster {
+    --bm-logo-w: calc(100vw - 30px) !important;
+    margin-top: 6px !important;
+    margin-bottom: 0 !important;
+  }
+  /* Login: its own lighter panel (tablet's form panel). */
+  html body .login-modal--split .login-modal__form {
+    background: rgba(255, 255, 255, 0.55) !important;
+    border-radius: 6px !important;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05), inset 0 0 0 1px rgba(0, 0, 0, 0.12) !important;
+    margin: 6px 0 0 !important;
+    padding: 14px !important;
+  }
+  html body .login-overlay .login-modal__stack { --lw: calc(100vw - 58px) !important; }
+}
+@media (max-width: 400px) {
+  html body .login-modal--split .login-card__brand.brand-cluster { --bm-logo-w: calc(100vw - 26px) !important; }
+  html body .login-overlay .login-modal__stack { --lw: calc(100vw - 50px) !important; }
+  html body .login-modal--split .login-modal__form { padding: 12px !important; }
+}
+/* Wide phones: the login panel takes the rest of the height, so the frame
+   shows the same 6px at the bottom as everywhere else. */
+@media (min-width: 401px) and (max-width: 600px) {
+  html body .login-modal--split .login-modal__form {
+    flex: 1 1 auto !important;
+    height: auto !important;
+    justify-content: center !important;
+  }
+}
