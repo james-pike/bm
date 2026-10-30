@@ -18726,3 +18726,7 @@ html body .login-modal__video-toggle { border-radius: 0 !important; }
   html body .login-modal--split .login-modal__form { margin-top: 8px !important; }
   html body .login-modal--split .login-modal__carousel { border-radius: 0 !important; }
 }
+/* Wide phones: tighter gap between the password field and the LOGIN button. */
+@media (min-width: 401px) and (max-width: 600px) {
+  html body .login-modal--split .login-modal__field { margin-bottom: 0 !important; }
+}
