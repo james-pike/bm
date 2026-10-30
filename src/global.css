@@ -18576,3 +18576,13 @@ html body:not(#bm-a):not(#bm-b):not(#bm-c) .site-header .site-header__inner > .s
 @media (max-width: 600px) and (max-height: 520px) {
   html body .login-modal--split .login-modal__form { margin-bottom: 8px !important; }
 }
+/* Phones: no padding inside the frame — the video and logo run right up to
+   its border; the video's top corners follow the frame's rounding. */
+@media (max-width: 600px) {
+  html body .login-overlay .login-modal.login-modal--split { padding: 0 !important; overflow: hidden !important; }
+  html body .login-modal--split .login-modal__carousel {
+    margin: 0 !important;
+    border-radius: 11px 11px 0 0 !important;
+  }
+  html body .login-modal--split .login-card__brand.brand-cluster { --bm-logo-w: calc(100vw - 14px) !important; }
+}
