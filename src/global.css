@@ -18661,3 +18661,20 @@ html body:not(#bm-a):not(#bm-b):not(#bm-c) .site-header .site-header__inner > .s
     justify-content: center !important;
   }
 }
+/* Phones: no white margin outside the frame — the frame runs to the screen
+   edges (square outer corners; the boxes inside keep theirs). */
+@media (max-width: 600px) {
+  html body .login-overlay.login-overlay { padding: 0 !important; }
+  html body .login-overlay .login-modal.login-modal--split {
+    height: 100dvh !important;
+    border-radius: 0 !important;
+  }
+  html body .login-modal--split .login-card__brand.brand-cluster { --bm-logo-w: calc(100vw - 14px) !important; }
+  html body .login-overlay .login-modal__stack { --lw: calc(100vw - 42px) !important; }
+}
+@media (max-width: 400px) {
+  html body .login-overlay.login-overlay { padding: 0 !important; }
+  html body .login-overlay .login-modal.login-modal--split { height: 100dvh !important; }
+  html body .login-modal--split .login-card__brand.brand-cluster { --bm-logo-w: calc(100vw - 14px) !important; }
+  html body .login-overlay .login-modal__stack { --lw: calc(100vw - 38px) !important; }
+}
