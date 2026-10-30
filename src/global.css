@@ -18868,3 +18868,7 @@ html body .login-modal__video-toggle { border-radius: 0 !important; }
   html body .login-modal--split .login-modal__carousel.login-modal__carousel--video,
   html body .login-modal--split .login-modal__carousel--video .login-modal__video-toggle { pointer-events: auto !important; }
 }
+/* Phones: the login panel is square at the top, rounded only at the bottom. */
+@media (max-width: 600px) {
+  html body .login-modal--split .login-modal__form { border-radius: 0 0 6px 6px !important; }
+}
