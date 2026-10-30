@@ -18561,7 +18561,7 @@ html body:not(#bm-a):not(#bm-b):not(#bm-c) .site-header .site-header__inner > .s
 }
 /* Wide phones (401-600px): the login form scaled up to suit the larger screen. */
 @media (min-width: 401px) and (max-width: 600px) {
-  html body .login-modal--split .login-modal__form label { font-size: 13px !important; margin-bottom: 8px !important; }
+  html body .login-modal--split .login-modal__form label { font-size: 15px !important; margin-bottom: 9px !important; }
   html body .login-modal--split .login-modal__field input {
     height: 54px !important;
     font-size: 18px !important;
