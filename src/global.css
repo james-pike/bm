@@ -17772,10 +17772,10 @@ html body .login-modal__video-toggle {
   backdrop-filter: blur(4px);
 }
 html body .login-modal__video-toggle:hover { background: rgba(0, 0, 0, 0.55); }
-/* Phones: the photo is the top of the brand panel and fades into it — the
-   toggle rides the top-left corner (the slide dots' spot on Carmichael). */
+/* Phones: a slightly smaller toggle in the bottom-right corner (as on tablet
+   and desktop). */
 @media (max-width: 600px) {
-  html body .login-modal__video-toggle { top: 0.7rem; left: 0.7rem; right: auto; bottom: auto; width: 30px; height: 30px; }
+  html body .login-modal__video-toggle { top: auto; left: auto; right: 0.7rem; bottom: 0.7rem; width: 30px; height: 30px; }
 }
 
 /* ---- Order confirmation badge: just the check on the green disc ------- */
