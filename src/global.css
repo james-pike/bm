@@ -18532,3 +18532,10 @@ html body:not(#bm-a):not(#bm-b):not(#bm-c) .site-header .site-header__inner > .s
 @media (max-width: 400px) {
   html body .login-overlay .login-modal__stack { --lw: calc(100vw - 38px) !important; }
 }
+/* Phones: a little less space above the LOGIN label. */
+@media (max-width: 600px) {
+  html body .login-modal--split .login-modal__form { padding-bottom: 20px !important; }
+}
+@media (max-width: 600px) and (max-height: 520px) {
+  html body .login-modal--split .login-modal__form { margin-top: 10px !important; padding-bottom: 0 !important; }
+}
