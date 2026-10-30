@@ -17742,6 +17742,17 @@ html body .login-modal--split .login-modal__carousel--video .login-modal__video 
   opacity: 1;
   padding: 0;
 }
+/* Softer frame around the login video: a light hairline (the panel's dark
+   green no longer shows through the border) and a gentler inner shadow. */
+html body .login-modal--split .login-modal__carousel.login-modal__carousel--video {
+  border-color: rgba(0, 0, 0, 0.1);
+  background-clip: padding-box;
+}
+html body .login-modal--split .login-modal__carousel.login-modal__carousel--video::after {
+  box-shadow:
+    inset 0 2px 6px rgba(0, 0, 0, 0.12),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+}
 html body .login-modal__video-toggle {
   position: absolute;
   z-index: 4;
@@ -18398,6 +18409,36 @@ html body:not(#bm-a):not(#bm-b):not(#bm-c) .site-header .site-header__inner > .s
     width: var(--bm-logo-w) !important;
     height: calc(var(--bm-logo-w) * 775 / 1565 * 0.335) !important;
     font-size: calc(var(--bm-logo-w) * 0.072) !important;
+    letter-spacing: 0.24em !important;
+  }
+}
+
+/* Desktop login gate: the logo spans the grey brand panel's full width (no side
+   inset), the way tablets already do. cqw = 1% of the panel's width. */
+@media (min-width: 1025px) {
+  html body .login-modal--split .login-card__cover { container-type: inline-size; }
+  html body .login-modal--split .login-card__brand.brand-cluster {
+    width: 100cqw !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    align-self: stretch !important;
+    height: auto !important;
+  }
+  html body .login-modal--split .login-card__brand.brand-cluster::before {
+    width: 100cqw !important;
+    height: calc(100cqw * 775 / 1565) !important;
+    flex: 0 0 auto !important;
+    margin-left: 0 !important;
+  }
+  html body .login-modal--split .login-card__brand .login-card__apparel--inbar {
+    left: 0;
+    bottom: 0;
+    top: auto;
+    width: 100cqw;
+    height: calc(100cqw * 775 / 1565 * 0.335);
+    font-size: 7.2cqw !important;
     letter-spacing: 0.24em !important;
   }
 }
