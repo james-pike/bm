@@ -18886,3 +18886,16 @@ html body .login-modal__video-toggle { border-radius: 0 !important; }
     border: 1px solid rgba(0, 0, 0, 0.07) !important;
   }
 }
+/* Desktop: centre the logo vertically in its panel (the panel's top/bottom
+   padding and the logo's own margins were uneven). */
+@media (min-width: 1025px) {
+  html body .login-modal--split .login-card__cover {
+    padding-top: 3cqw !important;
+    padding-bottom: 3cqw !important;
+    justify-content: center !important;
+  }
+  html body .login-modal--split .login-card__brand.brand-cluster {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+  }
+}
