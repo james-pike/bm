@@ -18899,3 +18899,31 @@ html body .login-modal__video-toggle { border-radius: 0 !important; }
     margin-bottom: 0 !important;
   }
 }
+/* Desktop: same grey outer margin as tablet/phone (instead of white), and a
+   thinner one. */
+@media (min-width: 1025px) {
+  html body .login-overlay.login-overlay {
+    background: rgb(211, 214, 217) !important;
+    padding: 2px !important;
+    overflow-y: auto !important;
+    /* The page reserves a scrollbar gutter on the right; cover it too so the
+       margin is even on all four sides. */
+    left: 0 !important;
+    right: auto !important;
+    width: 100vw !important;
+  }
+  html body .login-overlay .login-modal.login-modal--split {
+    height: calc(100dvh - 4px) !important;
+    max-height: none !important;
+  }
+}
+/* More side padding inside the sign-in panel (field + LOGIN button). */
+@media (max-width: 400px) {
+  html body .login-overlay .login-modal--split .login-modal__form { padding-left: 20px !important; padding-right: 20px !important; }
+}
+@media (min-width: 401px) and (max-width: 600px) {
+  html body .login-overlay .login-modal--split .login-modal__form { padding-left: 40px !important; padding-right: 40px !important; }
+}
+@media (min-width: 601px) and (max-width: 1024px) {
+  html body .login-overlay .login-modal--split .login-modal__form { padding-left: clamp(48px, 6vw, 62px) !important; padding-right: clamp(48px, 6vw, 62px) !important; }
+}
