@@ -416,6 +416,9 @@ export const ProductCard = component$<{ item: Product; sku: string; index: numbe
     .replace(/\b(?:men|women|ladies|unisex)['’]?s?\s+/gi, "")
     .replace(/\bLong[-\s]Sleeve\b/gi, "LS")
     .replace(/\bShort[-\s]Sleeve\b/gi, "SS")
+    // Gallery cards drop "Hi Vis" from titles (the Electrical FR line); the
+    // product page keeps the full name.
+    .replace(/\bHi[-\s]?Vis\b/gi, "")
     .replace(/\s{2,}/g, " ");
   if (singleColorEn) {
     displayName = displayName.replace(new RegExp(`\\s*[-–]\\s*${singleColorEn.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\s*$`, "i"), "");
