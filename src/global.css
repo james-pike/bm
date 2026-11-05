@@ -18927,3 +18927,14 @@ html body .login-modal__video-toggle { border-radius: 0 !important; }
 @media (min-width: 601px) and (max-width: 1024px) {
   html body .login-overlay .login-modal--split .login-modal__form { padding-left: clamp(36px, calc(8vw - 22px), 62px) !important; padding-right: clamp(36px, calc(8vw - 22px), 62px) !important; }
 }
+
+/* Desktop: warmer, sandier grey for the sidebar, the store panel behind it and
+   the product-card title strips, so they stand apart from the near-white page
+   background around the store. */
+@media (min-width: 1025px) {
+  html body:not(#bm-a):not(#bm-b):not(#bm-c) .home-catalog__inner,
+  html body:not(#bm-a):not(#bm-b):not(#bm-c) .home-catalog__filters,
+  html body:not(#bm-a):not(#bm-b):not(#bm-c) .product-card .product-card__info,
+  html body:not(#bm-a):not(#bm-b):not(#bm-c) .product-card .product-card__name-row,
+  html body:not(#bm-a):not(#bm-b):not(#bm-c) .product-card .product-card__color-size-row { background: #e9e6df !important; }
+}

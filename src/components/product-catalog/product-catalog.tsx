@@ -570,12 +570,18 @@ export const ProductCard = component$<{ item: Product; sku: string; index: numbe
                   {extra > 0 && (
                     <span class="product-card__color-more" aria-label={`+${extra} more colours`}>+{extra}</span>
                   )}
-                  {(hoverColorName.value || singleColorName) && (
-                    // Use the hover overlay whenever a swatch is hovered — including
-                    // single-colour products — so the colour label shows on hover
-                    // there too (the persistent single-colour label is non-overlay).
-                    <span class={`product-card__color-name${hoverColorName.value ? " product-card__color-name--overlay" : ""}`}>{hoverColorName.value || singleColorName}</span>
-                  )}
+                  {(() => {
+                    // Persistent label: the single colour, or — on multi-colour
+                    // products — the selected colour (the card's default image
+                    // colour until a swatch is clicked). Hovering a swatch shows
+                    // that swatch's name in the overlay instead.
+                    const sel = activeColor.value || (item.colors?.[0] ?? "");
+                    const selName = sel ? (sel.startsWith("#") ? colorName(sel, locale.value) : sel) : "";
+                    const label = hoverColorName.value || singleColorName || selName;
+                    return label ? (
+                      <span class={`product-card__color-name${hoverColorName.value ? " product-card__color-name--overlay" : ""}`}>{label}</span>
+                    ) : null;
+                  })()}
                 </div>
               ) : <span />;
             })()}
