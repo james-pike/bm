@@ -637,9 +637,6 @@ export const ProductCatalog = component$<{ class?: string }>(({ "class": cls }) 
   // any deeper path under this (shop) layout is a product page. The sidebar +
   // header stay mounted, so there is no shift between the catalog and PDP.
   const isPdp = useComputed$(() => loc.url.pathname.replace(/\/+$/, "") !== "");
-  // The public /toque page is a single-SKU showcase: no search, no category tabs,
-  // no "more products" carousel — just that one product.
-  const isToque = useComputed$(() => loc.url.pathname.replace(/^\/+|\/+$/g, "") === "toque");
   // On a product page, clicking the empty page margins / gutters around the detail
   // panel (any of the structural background layers, never the header/panel/links)
   // returns to the catalog. A document listener is used because a per-element
@@ -648,9 +645,6 @@ export const ProductCatalog = component$<{ class?: string }>(({ "class": cls }) 
     "click",
     $((ev: Event) => {
       if (!isPdp.value) return;
-      // The public /toque page is a standalone showcase — clicking the margins
-      // must NOT bounce out to the (login-gated) catalog.
-      if (isToque.value) return;
       const tg = ev.target as HTMLElement | null;
       if (!tg || !tg.classList) return;
       const bg = ["home-catalog", "home-catalog__inner", "home-catalog__pdp-main", "apparel-catalog", "apparel-page", "dot-pattern"];
@@ -661,6 +655,9 @@ export const ProductCatalog = component$<{ class?: string }>(({ "class": cls }) 
   const isTech = useComputed$(() => loginType.value === "tech");
   const isSafety = useComputed$(() => loginType.value === "safety");
   const isElectrical = useComputed$(() => loginType.value === "electrical");
+  // Search (sidebar field, desktop field, tab-bar search) is Tech-only: the
+  // Electrical and Good Catch catalogs are small enough to browse.
+  const showCatalogSearch = useComputed$(() => loginType.value !== "electrical" && loginType.value !== "clothing");
   const isSingleCat = useComputed$(() => isTech.value);
   // Tab/search state is owned by the shell (SecondaryBarContext) so the unified
   // secondary bar and this catalog stay in lockstep. These are the same signals,
@@ -875,9 +872,6 @@ export const ProductCatalog = component$<{ class?: string }>(({ "class": cls }) 
   const ALWAYS_SHOW = new Set(["All", "New Hire Kit"]);
 
   const visibleCategories = useComputed$(() => {
-    // The public /toque page shows a single "Headwear" entry in the sidebar nav
-    // (the tab strip there is the breadcrumb, so this only affects the sidebar).
-    if (isToque.value) return ["Hats"];
     if (isTech.value) return ["Work Wear"];
     // Electrical: show every category its products actually span (not limited to
     // the standard clothing tabs).
@@ -995,7 +989,7 @@ export const ProductCatalog = component$<{ class?: string }>(({ "class": cls }) 
         <div class={`home-catalog__header ${tabsAtEnd.value ? "home-catalog__header--tabs-end" : ""}`}>
           <h2 class="home-catalog__title">{t("nav.apparel", locale.value)}</h2>
           {/* Catalog/list view mode removed — the gallery grid only. */}
-          {!isToque.value && (
+          {showCatalogSearch.value && (
           <div class="home-catalog__sidebar-search">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
             <input
@@ -1048,7 +1042,7 @@ export const ProductCatalog = component$<{ class?: string }>(({ "class": cls }) 
               </button>
             ))}
           </div>
-          {!isToque.value && (
+          {showCatalogSearch.value && (
           <div class="home-catalog__right">
             <div class="apparel-titlebar__search home-catalog__search-desktop">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
@@ -1074,7 +1068,7 @@ export const ProductCatalog = component$<{ class?: string }>(({ "class": cls }) 
             </button>
           </div>
           )}
-          {!isToque.value && searchOpen.value && (
+          {showCatalogSearch.value && searchOpen.value && (
             <div class="home-catalog__tabbar-search">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
               <input
@@ -1102,9 +1096,8 @@ export const ProductCatalog = component$<{ class?: string }>(({ "class": cls }) 
           aria-label="Filter products"
           onClick$={() => {
             // On a product page the sidebar has no grid to filter, so any click
-            // in it returns to the catalog (SPA nav keeps the shell mounted) —
-            // except on the standalone /toque page, which must stay put.
-            if (isPdp.value && !isToque.value) nav("/");
+            // in it returns to the catalog (SPA nav keeps the shell mounted).
+            if (isPdp.value) nav("/");
           }}
         >
           {/* Desktop category nav — the collection titles moved out of the
@@ -1113,13 +1106,13 @@ export const ProductCatalog = component$<{ class?: string }>(({ "class": cls }) 
           {!isSingleCat.value && (
             <nav class="home-catalog__catnav" aria-label="Collections">
               <div class="home-catalog__catnav-head">
-                <div class="home-catalog__catnav-title">{isElectrical.value ? t("login.portal.electrical", locale.value) : t("filter.collections", locale.value)}</div>
+                <div class="home-catalog__catnav-title">{isElectrical.value ? t("login.portal.electrical", locale.value) : loginType.value === "clothing" ? t("logo.apparel", locale.value) : t("filter.collections", locale.value)}</div>
               </div>
               {visibleCategories.value.map((cat) => (
                 <button
                   key={cat}
-                  class={`home-catalog__catnav-item ${activeCat.value === cat || isToque.value ? "active" : ""}`}
-                  onClick$={() => { if (isToque.value) return; selectCat(cat); }}
+                  class={`home-catalog__catnav-item ${activeCat.value === cat ? "active" : ""}`}
+                  onClick$={() => selectCat(cat)}
                 >
                   <span class="home-catalog__catnav-icon" dangerouslySetInnerHTML={CATEGORY_ICONS[cat]} />
                   <span class="home-catalog__catnav-label">
@@ -1127,7 +1120,7 @@ export const ProductCatalog = component$<{ class?: string }>(({ "class": cls }) 
                       ? t("apparel.all", locale.value)
                       : (FULL_CAT_KEYS[cat] ? t(FULL_CAT_KEYS[cat] as any, locale.value) : categoryLabel(cat, locale.value))}
                   </span>
-                  <span class="home-catalog__catnav-count">{isToque.value ? 1 : (categoryCounts.value[cat] ?? 0)}</span>
+                  <span class="home-catalog__catnav-count">{categoryCounts.value[cat] ?? 0}</span>
                 </button>
               ))}
             </nav>
@@ -1196,7 +1189,6 @@ export const ProductCatalog = component$<{ class?: string }>(({ "class": cls }) 
               // to the catalog. Only the structural containers' own areas count
               // (this column's gutter, or the .apparel-catalog padding/backdrop),
               // never the panel content, breadcrumb, or related-item links inside.
-              if (isToque.value) return; // standalone page — don't bounce out
               const t = e.target as HTMLElement;
               if (t === el || t.classList.contains("apparel-catalog")) nav("/");
             }}

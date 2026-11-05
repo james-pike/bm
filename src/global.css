@@ -1,4 +1,4 @@
-/* ===== Carmichael Apparel Brand Theme ===== */
+/* ===== brand Apparel Brand Theme ===== */
 :root {
   /* Accent blue = the header sign blue (was a brighter #2563eb). All blue accents
      — prices, links, active states, selected borders — track the header now. */
@@ -18,7 +18,7 @@
      being semi-transparent, rendered ~rgb(228) over the greige page — a touch
      dark. Now the same solid neutral as the PDP thumbnail strip so all these
      panels read identically, and never darken over a tinted backdrop. */
-  --cm-panel: #e9e6df;
+  --cm-panel: #efece6;
   /* The single control for every SECONDARY bar (category tab strip, breadcrumb,
      cart table head, cart back bar, menu-drawer header). Set to the sidebar /
      product-card panel colour so the bars read as the same light blue-gray. */
@@ -3504,9 +3504,9 @@ body:has(.nav-drawer-overlay) .site-header .hamburger-btn { pointer-events: auto
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 @keyframes slideUp { from { opacity: 0; transform: translateY(24px) scale(0.97); } to { opacity: 1; transform: translateY(0) scale(1); } }
 
-/* ═══ Split login — Carmichael green sign pane + single hero image ═════════════
+/* ═══ Split login — brand green sign pane + single hero image ═════════════
    Sign-in on the LEFT third over the green iron-textured sign surface (the same
-   treatment as the header/hero bars); a single Carmichael hero photo fills the
+   treatment as the header/hero bars); a single brand hero photo fills the
    RIGHT two-thirds. Framed in a white sign-edge ring at a 12:5 ratio on
    desktop/tablet; stacks (form over a short photo band) on mobile. */
 /* Desktop: lock the shape to 12:5 so the right image pane holds ~16:10
@@ -3529,11 +3529,11 @@ body:has(.nav-drawer-overlay) .site-header .hamburger-btn { pointer-events: auto
    further left, so shift it right to line up with where APPAREL begins. */
 /* Sits above the password field, on the green pane. */
 
-/* Submit — the Carmichael green button on the dark pane. */
+/* Submit — the brand green button on the dark pane. */
 
 /* Language toggle pinned to the top of the login pane. */
 
-/* Right pane — a single static Carmichael hero image (no carousel). */
+/* Right pane — a single static brand hero image (no carousel). */
 
 /* Mobile + tablet: stack the form over a shorter image band. Both get the same
    full-screen stacked login; the desktop side-by-side split is ≥1281px only.
@@ -3563,7 +3563,7 @@ body:has(.nav-drawer-overlay) .site-header .hamburger-btn { pointer-events: auto
      portals and fields line up with the wider logo. */
   /* Localization chip to the top-right of the whole card (over the image band),
      not above the logo. The image band above the form pane is 190px tall. Solid
-     Carmichael green (instead of the translucent white) so it reads clearly over
+     brand green (instead of the translucent white) so it reads clearly over
      the photo. */
   /* APPAREL / VÊTEMENTS kicker scales with viewport width like the logo image,
      so it stops overflowing on narrow phones (capped at the desktop 1.5rem). */
@@ -4329,7 +4329,7 @@ body:has(.nav-drawer-overlay) .site-header .hamburger-btn { pointer-events: auto
 .locale-btn__full { display: inline; }
 
 /* Language toggle — coloured by the language it switches TO, using the Modern
-   Carmichael logo palette: brand blue when offering Français, the lighter brand
+   brand logo palette: brand blue when offering Français, the lighter brand
    red when offering English. !important so the fill survives the white-header,
    hero-visible and responsive overrides (same approach as .cart-btn--active). */
 .locale-btn--to-fr {
@@ -5611,7 +5611,7 @@ body:has(.home-catalog) .site-header .cart-btn .cart-btn__label { color: #ffffff
 }
 
 /* ===== Branded action buttons =====
-   Both the Add-to-Cart and Order-Now CTAs carry the Carmichael
+   Both the Add-to-Cart and Order-Now CTAs carry the brand
    mark mark in a white chip on the left, plus a fancier finish:
    a soft brand-coloured edge, a triangle-tinted glow on hover, and a
    gentle lift. The colour treatment differs (filled vs. ghost) so the
@@ -6305,7 +6305,7 @@ details[open] > .cart-drawer__checkout-title::after {
     /* Match the product info panel's exact rendered shade. The info panel is
        --reference-panel over greige (= rgb(232, 229, 223)); the checkout sits on a white
        drawer, so use that effective colour as a solid to match it. */
-    background: rgb(233, 233, 232) !important;
+    background: #efece6 !important;
     border: none !important;
     /* Desktop lays these out in a 2-col grid; drop the per-panel margins and
        let a single uniform grid gap + step padding space them, so the gap
@@ -6636,7 +6636,7 @@ details[open] > .cart-drawer__checkout-title::after {
   overflow: hidden;
   color: #fff;
 }
-/* The Carmichael brandmark scales + fades in large, around/behind the check. */
+/* The brand brandmark scales + fades in large, around/behind the check. */
 .order-confirm__brandmark {
   position: absolute;
   top: 50%;
@@ -6874,7 +6874,7 @@ details[open] > .cart-drawer__checkout-title::after {
      extra height. */
   .site-header .brand-cluster--small .brand-cluster__word { font-size: 1.24rem; }
   .site-header .brand-cluster__words { gap: 0; line-height: 0.92; }
-  /* Trim the font's leading above the first line (CARMICHAEL) and below the
+  /* Trim the font's leading above the first line (BRAND) and below the
      last (APPAREL) so the lockup hugs the header tightly. */
   .site-header .brand-cluster__words .brand-cluster__word:first-child { margin-top: -0.16em; }
   .site-header .brand-cluster__words .brand-cluster__word:last-child { margin-bottom: -0.16em; }
@@ -7846,7 +7846,7 @@ details[open] > .cart-drawer__checkout-title::after {
   .site-header__logo-text { height: 28px; }
   .site-header .brand-cluster--small .brand-cluster__word { font-size: 1.24rem; }
   .site-header .brand-cluster__words { gap: 0; line-height: 0.92; }
-  /* Trim the font's leading above CARMICHAEL and below APPAREL so the
+  /* Trim the font's leading above BRAND and below APPAREL so the
      lockup hugs the header tightly. */
   .site-header .brand-cluster__words .brand-cluster__word:first-child { margin-top: -0.16em; }
   .site-header .brand-cluster__words .brand-cluster__word:last-child { margin-bottom: -0.16em; }
@@ -8881,13 +8881,13 @@ details[open] > .cart-drawer__checkout-title::after {
   filter: blur(8px);
   /* Each line fades fully inside its 1/3 window of the brandmark's
      ~1.48s triangle cascade:
-       CARMICHAEL   0      → 0.45s  (1st third 0-0.49s)
+       BRAND   0      → 0.45s  (1st third 0-0.49s)
        APPAREL 0.49s → 0.94s  (2nd third 0.49-0.98s)
        APPAREL          per-letter, see .hero__title-letter:nth-child
                         rules below — last letter finishes at 1.48s. */
   animation: hero-word-reveal 0.45s cubic-bezier(0.45, 0.05, 0.55, 0.95) forwards;
 }
-/* CARMICHAEL — fade only (no translateY / blur bump). Starts at 0s so
+/* BRAND — fade only (no translateY / blur bump). Starts at 0s so
    the fade is already in progress when triangle 1 appears, and finishes
    inside the first 1/3 window. */
 .hero__upper .hero__text .hero__title-word:nth-child(1) {
@@ -8975,16 +8975,16 @@ details[open] > .cart-drawer__checkout-title::after {
   white-space: nowrap !important;
   display: block !important;
 }
-/* CARMICHAEL share one line. */
+/* BRAND share one line. */
 .hero__upper .hero__text .hero__title-word-part {
   display: inline !important;
   text-align: left !important;
 }
-/* All three title lines share CARMICHAEL's plain opacity fade (no
+/* All three title lines share BRAND's plain opacity fade (no
    translate, no blur, no per-letter cascade), with a tight stagger so the
    last line completes inside the brandmark triangle cascade above (which
    finishes at ~1.48s).
-     CARMICHAEL    0    → 0.45s
+     BRAND    0    → 0.45s
      APPAREL 0.35 → 0.80s
      APPAREL           0.70 → 1.15s
    Applies on every breakpoint — mobile, tablet, and desktop. */
@@ -8997,7 +8997,7 @@ details[open] > .cart-drawer__checkout-title::after {
    (so the per-letter cascade can drive the reveal). CSS animations sit
    *below* !important in the cascade, so we can't fade the parent — instead
    animate the letters themselves with one synchronised fade so APPAREL
-   reads as a single block (matching CARMICHAEL's style). */
+   reads as a single block (matching BRAND's style). */
 .hero__upper .hero__text .hero__title-letter {
   opacity: 0;
   transform: none;
@@ -9022,7 +9022,7 @@ details[open] > .cart-drawer__checkout-title::after {
     left: 5vw !important;
     transform: none !important;
     height: 100% !important;
-    /* Widened from 33.333vw so CARMICHAEL fits on a single line at
+    /* Widened from 33.333vw so BRAND fits on a single line at
        the original 4.1vw font size with breathing room. */
     width: 42vw !important;
     aspect-ratio: auto !important;
@@ -9061,12 +9061,12 @@ details[open] > .cart-drawer__checkout-title::after {
   /* Chained class to outspecificity the base
      `.hero__title-word.hero__title-word--sub { font-weight: 600 }` rule
      so APPAREL sits at 500 (matching APPAREL) rather than
-     the heavier 600 of CARMICHAEL. */
+     the heavier 600 of BRAND. */
   .hero__upper .hero__text .hero__title-word.hero__title-word--sub {
     font-size: min(4.6vw, 7.7vh) !important;
     font-weight: 500 !important;
   }
-  /* CARMICHAEL on a single line, scaled up to fill more of the
+  /* BRAND on a single line, scaled up to fill more of the
      widened desktop panel. */
   .hero__upper .hero__text .hero__title-word:nth-child(1) {
     font-size: min(4.6vw, 7.7vh) !important;
@@ -9206,7 +9206,7 @@ details[open] > .cart-drawer__checkout-title::after {
     margin-top: 0 !important;
     align-self: center !important;
   }
-  /* APPAREL + APPAREL match the CARMICHAEL size (8vw),
+  /* APPAREL + APPAREL match the BRAND size (8vw),
      same as the equal-size treatment on desktop and mobile. */
   .hero__upper .hero__text .hero__title-word {
     font-size: 8vw !important;
@@ -9214,7 +9214,7 @@ details[open] > .cart-drawer__checkout-title::after {
   .hero__upper .hero__text .hero__title-word--sub {
     font-size: 8vw !important;
   }
-  /* CARMICHAEL on a single line — sized to fill the tablet cluster
+  /* BRAND on a single line — sized to fill the tablet cluster
      width (95vw container) similarly to how mobile fills its width. */
   .hero__upper .hero__text .hero__title-word:nth-child(1) {
     font-size: 8vw !important;
@@ -9262,13 +9262,13 @@ details[open] > .cart-drawer__checkout-title::after {
   .hero__upper .hero__text .hero__title-word { font-size: 9.05vw !important; }
   .hero__upper .hero__text .hero__title-word--sub {
     font-size: 9.05vw !important;
-    /* APPAREL is 16 chars vs CARMICHAEL's 14, so it needs a
+    /* APPAREL is 16 chars vs BRAND's 14, so it needs a
        tighter letter-spacing to render at the same visual line length as
        the headline above. -0.18em compresses the longer line just enough
-       to line up with CARMICHAEL's right edge. */
+       to line up with BRAND's right edge. */
     letter-spacing: -0.18em !important;
   }
-  /* CARMICHAEL on a single line — sized to fill the cluster width
+  /* BRAND on a single line — sized to fill the cluster width
      with minimal horizontal padding while still avoiding clipping. */
   .hero__upper .hero__text .hero__title-word:nth-child(1) {
     font-size: 9.05vw !important;
@@ -9354,7 +9354,7 @@ details[open] > .cart-drawer__checkout-title::after {
 }
 .brand-cluster__word {
   font-size: 0.95rem;
-  /* CARMICHAEL reads heavier in the brand lockup. The --sub and
+  /* BRAND reads heavier in the brand lockup. The --sub and
      --muted variants below pull their own weight back down so they sit
      visually subordinate to the main word. */
   font-weight: 700;
@@ -9365,7 +9365,7 @@ details[open] > .cart-drawer__checkout-title::after {
 .brand-cluster__word--muted {
   opacity: 0.55;
   font-weight: 500;
-  /* APPAREL is lighter (500) than the bolder CARMICHAEL (700) so its
+  /* APPAREL is lighter (500) than the bolder BRAND (700) so its
      line-box carries more whitespace at the top — pull it up so the visual
      gap above APPAREL matches the gap above APPAREL. */
   margin-top: -2px;
@@ -9385,7 +9385,7 @@ details[open] > .cart-drawer__checkout-title::after {
 .site-footer .brand-cluster__word--sub { color: rgba(255,255,255,0.55); }
 .site-footer .brand-cluster__word--muted { color: rgba(255,255,255,0.55); opacity: 1; }
 /* Mobile header: condense APPAREL (more characters + wider tracking
-   than CARMICHAEL) so it's no wider than the line above it, freeing
+   than BRAND) so it's no wider than the line above it, freeing
    horizontal room for the search field when it expands. */
 @media (max-width: 600px) {
   .site-header .brand-cluster--small .brand-cluster__word--sub {
@@ -9447,8 +9447,8 @@ details[open] > .cart-drawer__checkout-title::after {
 }
 
 /* ============================================================
-   Blue brand theme — Carmichael header colour (var(--ce-green))
-   with the white "Carmichael" wordmark logo.
+   Blue brand theme — brand header colour (var(--ce-green))
+   with the white "brand" wordmark logo.
    Applies to every device header, the mobile menu drawer, and the
    login modal. Appended last so it wins over the stateful rules above.
    ============================================================ */
@@ -9457,14 +9457,14 @@ details[open] > .cart-drawer__checkout-title::after {
      ratio (÷1.618) → #3b6581, so the header sits a φ step below the tab bar just
      like the 64/40 height ratio between them. Both blues were lightened + softened
      a step (from #2b556f / #4689b3) so they read gentler against the pale page. */
-  /* Header/footer/bar colour — a silvery slate grey (was the carmichael blue var(--ce-green)),
+  /* Header/footer/bar colour — a silvery slate grey (was the brand blue var(--ce-green)),
      kept dark enough that the white logo + labels stay legible. */
   --wt-orange: #e6e3dd;
   --wt-orange-dark: #d1cec8;
   --wt-orange-hi: #dbeafe;
   /* Darker overlay box behind the logo + buttons on the mobile/tablet look:
      ~30% black over the bar → ~#14285f. */
-  /* The Carmichael "pressed sign" 30% black overlay — removed (transparent) so the
+  /* The brand "pressed sign" 30% black overlay — removed (transparent) so the
      bars, boxes and buttons show their true base blue instead of a darkened,
      muddied version of it. */
   --wt-box: rgba(0,0,0,0);
@@ -9505,7 +9505,7 @@ details[open] > .cart-drawer__checkout-title::after {
 }
 
 /* ---- "APPAREL" clean uppercase label next to the script logo ----
-   Pairs a sans cap-label with the cursive "Carmichael" wordmark (echoing the
+   Pairs a sans cap-label with the cursive "brand" wordmark (echoing the
    logo's own script + "TRANSFER LIMITED" caps pairing) rather than a
    second cursive. */
 .brand-apparel {
@@ -10275,9 +10275,9 @@ details[open] > .cart-drawer__checkout-title::after {
 /* ---- Login modal: white wordmark on an orange banner ---- */
 
 /* ============================================================
-   Hero cover — Carmichael wordmark logo + APPAREL, side-by-side in the same
+   Hero cover — brand wordmark logo + APPAREL, side-by-side in the same
    format as the header lockup (APPAREL overlapping the wordmark's tail),
-   scaled up. Replaces the old Carmichael mark + text.
+   scaled up. Replaces the old brand mark + text.
    ============================================================ */
 .hero__upper .hero__text.hero__text--brand {
   flex-direction: row !important;
@@ -10557,7 +10557,7 @@ details[open] > .cart-drawer__checkout-title::after {
   /* Solid blue header — no white sign-frame band below the bar. The header
      background is a light off-white "sign frame" and the blue __inner bar sat
      1px short of the header's bottom edge, so that 1px of off-white read as a
-     white border below the header. Fill the header with the carmichael blue, drop the
+     white border below the header. Fill the header with the brand blue, drop the
      white ring cap (::before), and zero the inner's top/bottom margins so the
      blue bar reaches the header edges. */
   .site-header.site-header--white,
@@ -11883,24 +11883,24 @@ details[open] > .cart-drawer__checkout-title::after {
 }
 
 /* ============================================================
-   Add to Cart — Carmichael button, Carmichael palette
+   Add to Cart — brand button, brand palette
    ------------------------------------------------------------
-   Keeps the Carmichael button wholesale: the mark chip, the staggered
+   Keeps the brand button wholesale: the mark chip, the staggered
    fade-in of the triangles, the square->diamond rotate, the travelling sheen,
    the cart->check crossfade. Only the COLOUR changes.
    Was: a var(--ce-green) -> #4689b3 gradient with the triangles staggering through a
    spread of reds, greens, blue and yellow — none of which appear anywhere
    else in this app.
    Now: the sign palette. The ramp is one warm family (cream -> orange ->
-   burnt brown) so the triangles read as the Carmichael orange catching light at
+   burnt brown) so the triangles read as the brand orange catching light at
    different angles, rather than eight unrelated brand colours.
    The mark artwork itself is being replaced — these fills are per-polygon and
    will carry over to whatever shape lands, as long as it keeps 8 polygons.
    ============================================================ */
 :root {
-  /* The original Carmichael mark colours (match the add-to-cart SVG's
+  /* The original brand mark colours (match the add-to-cart SVG's
      polygon fills, in nth-child order) — restored so the Add to Cart button's
-     triangles read as the Carmichael logo rather than the brand sign palette. */
+     triangles read as the brand logo rather than the brand sign palette. */
   --wt-pin-1: #ffe2a6;
   --wt-pin-2: #ae1f2a;
   --wt-pin-3: #d43950;
@@ -13010,7 +13010,7 @@ body:has(.product-fullscreen) { overflow: hidden; }
 /* ============================================================
    Phones: no wordmark in the footer.
 
-   The header carries the same Carmichael + APPAREL lockup ~two thumb-scrolls up,
+   The header carries the same brand + APPAREL lockup ~two thumb-scrolls up,
    and on a 430px viewport the footer's copy of it is the tallest thing in the
    bar for no informational gain. Drop the whole lockup rather than just the
    image — pulling only the logo would strand the "Apparel" word beside it —
@@ -13449,7 +13449,7 @@ body:has(.product-fullscreen) { overflow: hidden; }
    ============================================================ */
 
 /* ============================================================
-   Phones: nudge the Carmichael + APPAREL lockup left a few px to free space on the
+   Phones: nudge the brand + APPAREL lockup left a few px to free space on the
    right of the header, and let the APPAREL wordmark grow taller — there's
    headroom in the bar. Placed last so it wins over the ≤600 / ≤767 lockup
    rules above.
@@ -13662,11 +13662,11 @@ body:has(.product-fullscreen) { overflow: hidden; }
 }
 
 /* ============================================================
-   Carmichael two-tone bars.
+   brand two-tone bars.
    The header and all chrome bars (header, nav-drawer, login modal,
    cart drawer, footer) carry the deep brand blue set on --wt-orange
    in :root. Each PAGE's secondary bar — the category tab strip and
-   the product breadcrumb — takes Carmichael's lighter brand blue.
+   the product breadcrumb — takes brand's lighter brand blue.
    The shared iron texture overlays whichever blue the bar scopes.
    ============================================================ */
 /* All five secondary bars take the milder/lighter blue (#73a1bf) — a softened,
@@ -13693,7 +13693,7 @@ body:has(.product-fullscreen) { overflow: hidden; }
 @media (min-width: 1000px) {
   /* Full-width login-style split hero: a solid steel-blue brand pane on the LEFT
      and the photo carousel on the RIGHT (the same layout as the login window),
-     sized to ~82vh like the carmichael.ca banner so the catalog peeks in just below. */
+     sized to ~82vh like the brand.ca banner so the catalog peeks in just below. */
   .hero { height: 82vh !important; min-height: 480px !important; }
   .hero__upper {
     height: 100% !important;
@@ -13817,7 +13817,7 @@ body:has(.product-fullscreen) { overflow: hidden; }
 }
 
 /* ============================================================
-   Carmichael — mobile/tablet: the brand "sign" framed each bar in a greige
+   brand — mobile/tablet: the brand "sign" framed each bar in a greige
    surround (--wt-frame) with a white edge strip. With the blue header + lighter
    blue tab bar, the surround should just read as a plain white page margin, not
    a greige/white sign frame. Whiten the surround variable (covers the header AND
@@ -13893,7 +13893,7 @@ body:has(.product-fullscreen) { overflow: hidden; }
 }
 
 /* ============================================================
-   Carmichael mobile header polish
+   brand mobile header polish
    ============================================================ */
 @media (max-width: 999px) {
   /* Thin the white strip ABOVE the bar to match the ~2px seam below it. Keep the
@@ -13912,7 +13912,7 @@ body:has(.product-fullscreen) { overflow: hidden; }
 }
 
 /* ============================================================
-   Carmichael — unify the five secondary bars to ONE height, set at the
+   brand — unify the five secondary bars to ONE height, set at the
    golden ratio with the header bar (64px ÷ 1.618 ≈ 40px). One variable drives
    the tab bar, PDP/privacy breadcrumb, menu-drawer header, cart PRODUCT/TOTAL
    strip and the checkout back bar — plus the content offsets under the fixed
@@ -13964,7 +13964,7 @@ body:has(.product-fullscreen) { overflow: hidden; }
   body .site-header .logout-btn svg { width: 22px !important; height: 22px !important; stroke: #fff !important; }
   .site-header .cart-btn,
   .site-header .site-header__search-btn { height: 100% !important; min-height: 0 !important; border-radius: 0 !important; }
-  /* My Cart button — Carmichael blue (var(--ce-green)) with white text, the site's
+  /* My Cart button — brand blue (var(--ce-green)) with white text, the site's
      primary CTA colour. Uses the :has(.home-catalog) specificity so it beats the
      rule that dissolves the button to transparent on the catalog route. */
   body .site-header .site-header__search-btn,
@@ -14065,7 +14065,7 @@ body:has(.product-fullscreen) { overflow: hidden; }
 }
 
 /* ============================================================
-   Carmichael mobile — content x-padding + card info tint
+   brand mobile — content x-padding + card info tint
    ============================================================ */
 @media (max-width: 999px) {
   /* Product card info strip (under the image): the neutral panel colour like the
@@ -14264,7 +14264,7 @@ body:has(.nav-drawer-overlay) .site-header__logo {
 body:has(.home-catalog) .site-header .cart-btn svg { stroke: #fff !important; }
 .site-header .cart-btn__label,
 body:has(.home-catalog) .site-header .cart-btn .cart-btn__label { color: #fff !important; }
-/* Cart button is Carmichael blue (carmichael CTA), so its icon + label stay white
+/* Cart button is brand blue (brand CTA), so its icon + label stay white
    for contrast — matches the white-icon rule above (logout/hamburger too). */
 .site-header .cart-btn svg,
 body:has(.home-catalog) .site-header .cart-btn svg { stroke: #ffffff !important; }
@@ -14460,7 +14460,7 @@ body:has(.cart-drawer) .pdp-breadcrumb {
      uses semi-transparent --reference-panel over greige; the thumbs sit over white, so
      the same var would read lighter. Use the info's effective solid colour. */
   .product-thumbs {
-    background: rgb(233, 233, 232);
+    background: #efece6;
     padding: 8px;
     /* Square strip, matching the squared image panels and cards on the PDP. */
     border-radius: 0;
@@ -14478,7 +14478,7 @@ body:has(.cart-drawer) .pdp-breadcrumb {
 }
 @media (min-width: 1000px) {
   .cart-drawer__items {
-    background: rgb(233, 233, 232) !important;
+    background: #efece6 !important;
   }
 }
 
@@ -14712,10 +14712,10 @@ body .site-header__inner { border-top-left-radius: 0 !important; border-top-righ
   }
 }
 
-/* ═══ Desktop: carmichael theme finishing pass ═══════════════════════════════════════
+/* ═══ Desktop: brand theme finishing pass ═══════════════════════════════════════
    (Placed last so it wins over the earlier per-state header/cart rules.) */
 @media (min-width: 1000px) {
-  /* My Cart — the Carmichael blue CTA (var(--ce-green)) with white icon + label. */
+  /* My Cart — the brand blue CTA (var(--ce-green)) with white icon + label. */
   body .site-header .cart-btn,
   body:has(.home-catalog) .site-header .cart-btn,
   body .site-header--hero-visible .cart-btn,
@@ -14810,7 +14810,7 @@ body .site-header__inner { border-top-left-radius: 0 !important; border-top-righ
 .site-header .logout-btn svg { stroke: #2b2f34 !important; color: #2b2f34 !important; }
 /* The hamburger glyph reads dark on the light header bar, like logout. */
 .site-header .hamburger-btn svg { stroke: #2b2f34 !important; color: #2b2f34 !important; }
-/* Cart stays Carmichael blue (white text/icon set in its own rules). */
+/* Cart stays brand blue (white text/icon set in its own rules). */
 /* Header bar: drop the heavy weathered dark edge shadows for a clean light bar. */
 .site-header__inner {
   box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.10) !important;
@@ -15063,7 +15063,7 @@ html { background: rgb(230, 227, 221) !important; }
     justify-content: center;
     padding: 2rem 1.5rem;
     text-align: center;
-    /* Pre-reference Carmichael green iron "sign" surface (matches the login pane / header),
+    /* Pre-reference brand green iron "sign" surface (matches the login pane / header),
        instead of the reference dark steel-blue. */
     background:
       var(--wt-iron) left top / 1400px auto repeat,
@@ -15380,8 +15380,8 @@ body:has(.checkout-page) .site-footer { display: none; }
 }
 
 /* ===================================================================
-   Carmichael rebrand — brand-cluster shows the Carmichael lockup
-   (black text) in place of the Carmichael mark + wordmark,
+   brand rebrand — brand-cluster shows the brand lockup
+   (black text) in place of the brand mark + wordmark,
    wherever .brand-cluster appears (header, footer, login left).
    =================================================================== */
 .brand-cluster__mark,
@@ -15390,18 +15390,18 @@ body:has(.checkout-page) .site-footer { display: none; }
   content: "";
   flex: 0 0 auto;
   align-self: center;
-  background: url("/carmichael-lockup-green.webp") no-repeat left center;
+  background: none no-repeat left center;
   background-size: contain;
   /* lockup aspect ≈ 2.81:1 */
   height: 46px;
   width: 129px;
 }
-/* Footer brand: the colourful swoosh emblem (carmichael-logo.png) stacked ABOVE
-   the wordmark (logo-carmichael1.png) — the same two assets the header uses, so
+/* Footer brand: the colourful swoosh emblem (brand-logo.png) stacked ABOVE
+   the wordmark (the wordmark image) — the same two assets the header uses, so
    the wordmark green matches the header exactly while the emblem returns above it
    (the old single lockup image rendered the wordmark in a lighter green). */
 .site-footer__brand.brand-cluster::before {
-  background-image: url("/carmichael-logo.png"), url("/logo-carmichael1.png");
+  background-image: none, none;
   background-repeat: no-repeat, no-repeat;
   /* Swoosh emblem sits at the top-right of the wordmark (matching the login
      lockup), nudged down toward it; wordmark flush bottom-left. */
@@ -15415,19 +15415,19 @@ body:has(.checkout-page) .site-footer { display: none; }
   transform: translateY(-10px);
 }
 /* Header logo: the HORIZONTAL lockup (swoosh emblem to the LEFT of the
-   "carmichael" wordmark) rather than the stacked version used in the footer/login.
-   Both header + footer use the GREEN-wordmark variant (carmichael green text). */
+   "brand" wordmark) rather than the stacked version used in the footer/login.
+   Both header + footer use the GREEN-wordmark variant (brand green text). */
 .brand-cluster--small::before {
-  background-image: url("/carmichael-lockup-horizontal-green.webp");
+  background-image: none;
   height: 30px;
   width: 157px;
 }
 /* Login left sits on a dark green pane — use the WHITE-wordmark stacked lockup
-   (coloured swoosh + white "carmichael") so the wordmark reads, and size it up
+   (coloured swoosh + white "brand") so the wordmark reads, and size it up
    to anchor the big APPAREL block below it. */
 
 /* ============================================================
-   Carmichael feature CSS (kept from cm)
+   brand feature CSS (kept from template)
    ============================================================ */
 
 /* Invisible padding around the swatch: a wider hit target so the smaller dot is
@@ -15446,7 +15446,7 @@ body:has(.checkout-page) .site-footer { display: none; }
 }
 
 
-/* Bottom accent: solid Carmichael green (replaces the Carmichael colour bar). */
+/* Bottom accent: solid brand green (replaces the brand colour bar). */
 .site-footer::after {
   content: "";
   position: absolute;
@@ -15471,7 +15471,7 @@ body:has(.checkout-page) .site-footer { display: none; }
   border-radius: var(--radius-sm);
 }
 
-/* Live logo-overlay slide: a blank garment image with the Carmichael logo composited at
+/* Live logo-overlay slide: a blank garment image with the brand logo composited at
    runtime (see LogoSlide). The base image keeps the same contain + multiply
    treatment as a normal slide; the logo sits on top with normal blending. */
 .logo-slide {
@@ -15564,8 +15564,8 @@ body:has(.checkout-page) .site-footer { display: none; }
 .product-modal__qty-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
 .product-modal__qty-input:focus { border-color: var(--ce-green); box-shadow: 0 0 0 2px rgba(0,168,79,0.15); }
 
-/* Carmichael add-to-cart swoosh (the production cm animation) — replaces the
-   Carmichael mark. Two strokes (orange upper, yellow lower) sit behind
+/* brand add-to-cart swoosh (the production template animation) — replaces the
+   brand mark. Two strokes (orange upper, yellow lower) sit behind
    the cart glyph and, on click ("Added"), wipe in directionally, hold, then wipe
    back out. Click-driven only (same on every device). */
 .product-modal__add-logo {
@@ -15608,7 +15608,7 @@ body:has(.checkout-page) .site-footer { display: none; }
   100% { opacity: 0; clip-path: inset(0 100% 0 0); }
 }
 
-/* Carmichael swoosh timing: the cart glyph snaps back after the 1.68s swoosh. */
+/* brand swoosh timing: the cart glyph snaps back after the 1.68s swoosh. */
 .product-modal__add-glyph { transition: opacity 0.12s ease; }
 .product-modal__add--added .product-modal__add-glyph { transition: opacity 0.2s ease; }
 
@@ -15622,7 +15622,7 @@ body:has(.checkout-page) .site-footer { display: none; }
 }
 
 @media (min-width: 1025px) {
-  /* No zoom-in cursor where enlarging is disabled (the /toque single showcase). */
+  /* No zoom-in cursor where enlarging is disabled (single-SKU showcase). */
   .product-detail--no-zoom .product-carousel { cursor: default; }
 }
 
@@ -15668,7 +15668,7 @@ body:has(.checkout-page) .site-footer { display: none; }
     color: #2b2f34 !important;
   }
   /* Per-button tones (light header): search + log-out are faint neutral cells,
-     the cart is the solid Carmichael green CTA — the same language as the
+     the cart is the solid brand green CTA — the same language as the
      desktop header (grey search field, green My Cart, neutral log-out). */
   body .site-header .site-header__search-btn,
   body:has(.home-catalog) .site-header .site-header__search-btn,
@@ -15957,67 +15957,67 @@ body:has(.checkout-page) .site-footer { display: none; }
 }
 
 /* ============================================================
-   Carmichael — light-header overrides for the TM mobile/tablet structure.
-   TM's header bar is green with white icons; Carmichael's is the light
+   brand — light-header overrides for the template mobile/tablet structure.
+   template's header bar is green with white icons; brand's is the light
    silver bar, so the header glyphs read dark (#2b2f34) on it.
    ============================================================ */
 @media (max-width: 600px) {
-  html body:not(#cm) .site-header .site-header__search-btn,
-  html body:not(#cm) .site-header .cart-btn,
-  html body:not(#cm) .site-header .cart-btn.cart-btn--active,
-  html body:not(#cm) .site-header .logout-btn,
-  html body:not(#cm) .site-header .hamburger-btn,
-  html body:not(#cm):has(.home-catalog) .site-header .site-header__search-btn,
-  html body:not(#cm):has(.home-catalog) .site-header .cart-btn,
-  html body:not(#cm):has(.home-catalog) .site-header .cart-btn.cart-btn--active,
-  html body:not(#cm):has(.home-catalog) .site-header .logout-btn { color: #2b2f34 !important; }
-  html body:not(#cm) .site-header .site-header__search-btn svg,
-  html body:not(#cm) .site-header .cart-btn svg,
-  html body:not(#cm) .site-header .logout-btn svg,
-  html body:not(#cm) .site-header .hamburger-btn svg,
-  html body:not(#cm):has(.home-catalog) .site-header .site-header__search-btn svg,
-  html body:not(#cm):has(.home-catalog) .site-header .cart-btn svg,
-  html body:not(#cm):has(.home-catalog) .site-header .logout-btn svg { stroke: #2b2f34 !important; color: #2b2f34 !important; }
+  html body:not(#bm) .site-header .site-header__search-btn,
+  html body:not(#bm) .site-header .cart-btn,
+  html body:not(#bm) .site-header .cart-btn.cart-btn--active,
+  html body:not(#bm) .site-header .logout-btn,
+  html body:not(#bm) .site-header .hamburger-btn,
+  html body:not(#bm):has(.home-catalog) .site-header .site-header__search-btn,
+  html body:not(#bm):has(.home-catalog) .site-header .cart-btn,
+  html body:not(#bm):has(.home-catalog) .site-header .cart-btn.cart-btn--active,
+  html body:not(#bm):has(.home-catalog) .site-header .logout-btn { color: #2b2f34 !important; }
+  html body:not(#bm) .site-header .site-header__search-btn svg,
+  html body:not(#bm) .site-header .cart-btn svg,
+  html body:not(#bm) .site-header .logout-btn svg,
+  html body:not(#bm) .site-header .hamburger-btn svg,
+  html body:not(#bm):has(.home-catalog) .site-header .site-header__search-btn svg,
+  html body:not(#bm):has(.home-catalog) .site-header .cart-btn svg,
+  html body:not(#bm):has(.home-catalog) .site-header .logout-btn svg { stroke: #2b2f34 !important; color: #2b2f34 !important; }
 }
 /* Tablet: search + log-out glyphs dark on their neutral cells; the cart keeps
    its white glyph on the solid green cell. */
 @media (min-width: 601px) and (max-width: 1024px) {
-  html body:not(#cm) .site-header .site-header__search-btn svg,
-  html body:not(#cm) .site-header .logout-btn svg,
-  html body:not(#cm):has(.home-catalog) .site-header .site-header__search-btn svg,
-  html body:not(#cm):has(.home-catalog) .site-header .logout-btn svg { stroke: #2b2f34 !important; color: #2b2f34 !important; }
-  html body:not(#cm) .site-header .site-header__search-btn,
-  html body:not(#cm) .site-header .logout-btn,
-  html body:not(#cm):has(.home-catalog) .site-header .site-header__search-btn,
-  html body:not(#cm):has(.home-catalog) .site-header .logout-btn { color: #2b2f34 !important; }
+  html body:not(#bm) .site-header .site-header__search-btn svg,
+  html body:not(#bm) .site-header .logout-btn svg,
+  html body:not(#bm):has(.home-catalog) .site-header .site-header__search-btn svg,
+  html body:not(#bm):has(.home-catalog) .site-header .logout-btn svg { stroke: #2b2f34 !important; color: #2b2f34 !important; }
+  html body:not(#bm) .site-header .site-header__search-btn,
+  html body:not(#bm) .site-header .logout-btn,
+  html body:not(#bm):has(.home-catalog) .site-header .site-header__search-btn,
+  html body:not(#bm):has(.home-catalog) .site-header .logout-btn { color: #2b2f34 !important; }
 }
 /* Mobile search field on the light bar: a faint neutral well with a soft edge,
-   dark glyphs (TM's version is a translucent white well on green). */
+   dark glyphs (template's version is a translucent white well on green). */
 @media (max-width: 600px) {
-  html body:not(#cm) .site-header .site-header__search,
-  html body:not(#cm) .site-header .site-header__search:focus-within {
+  html body:not(#bm) .site-header .site-header__search,
+  html body:not(#bm) .site-header .site-header__search:focus-within {
     border-color: rgba(0, 0, 0, 0.14) !important;
     background: rgba(0, 0, 0, 0.05) !important;
   }
-  html body:not(#cm) .site-header .site-header__search-close { color: rgba(43, 47, 52, 0.65) !important; }
+  html body:not(#bm) .site-header .site-header__search-close { color: rgba(43, 47, 52, 0.65) !important; }
 }
 
 /* ============================================================
-   Login gate — Carmichael lockup.
-   The white stacked lockup (swoosh above a white "carmichael") with a
-   Montserrat APPAREL beneath, left-aligned to the wordmark — CM's own
-   login treatment, sized to carry the same weight as TM's wordmark.
+   Login gate — brand lockup.
+   The white stacked lockup (swoosh above a white "brand") with a
+   Montserrat APPAREL beneath, left-aligned to the wordmark — template's own
+   login treatment, sized to carry the same weight as template's wordmark.
    ============================================================ */
 @media (max-width: 1280px) {
   /* The card's base fill shows as a thin frame around the dark pane. */
 }
 
-/* Structural bits from TM's header/footer theme block (the colour parts of that
-   block are Carmichael-only and stay out). */
+/* Structural bits from template's header/footer theme block (the colour parts of that
+   block are brand-only and stay out). */
 .site-footer { margin-bottom: 1.25rem; position: relative; }
 .home-catalog__catnav-title { padding-bottom: 0.32rem !important; margin-bottom: 0.05rem; }
 
-/* Header logo scales down on narrow phones (like TM's clamp) so search + cart +
+/* Header logo scales down on narrow phones (like template's clamp) so search + cart +
    menu always fit; unchanged from ~430px up. */
 @media (max-width: 600px) {
   .site-header .site-header__logo-img { height: clamp(34px, 10.7vw, 46px); }
@@ -16026,9 +16026,9 @@ body:has(.checkout-page) .site-footer { display: none; }
 }
 
 /* ============================================================
-   Login screen — production Carmichael (split login card, lockup,
-   Proudly Canadian badge, hero carousel). Restored verbatim from cm master;
-   every TM login rule was removed above so the two don't mix.
+   Login screen — production brand (split login card, lockup,
+   Proudly Canadian badge, hero carousel). Restored verbatim from template master;
+   every template login rule was removed above so the two don't mix.
    ============================================================ */
 
 .login-overlay, .login-modal { -webkit-user-select: none; user-select: none; }
@@ -16134,7 +16134,7 @@ body:has(.checkout-page) .site-footer { display: none; }
   flex: 1 1 66%;
   position: relative;
   overflow: hidden;
-  /* Carmichael-green backdrop — shows through the cut-out car slide, and sits
+  /* brand-green backdrop — shows through the cut-out car slide, and sits
      behind the (opaque) van photo. */
   background: radial-gradient(circle at 50% 42%, #0e5a34 0%, #073d24 55%, #042a18 100%);
   cursor: default;   /* clickable to advance, but keep the normal cursor */
@@ -16299,7 +16299,7 @@ body:has(.checkout-page) .site-footer { display: none; }
   text-align: left;
   gap: 0.85rem;
   /* Match the lockup width and centre the whole block, so its left edge lines up
-     with the centred "carmichael" logotext above — APPAREL reads left-aligned to
+     with the centred "brand" logotext above — APPAREL reads left-aligned to
      the logo rather than centred in the pane. */
   width: clamp(281px, 29.5vw, 421px);
   max-width: 100%;
@@ -16312,7 +16312,7 @@ body:has(.checkout-page) .site-footer { display: none; }
   font-size: clamp(1.69rem, 3.49vw, 2.93rem);
   line-height: 0.95;
   letter-spacing: 0.1em;
-  text-indent: 0; /* flush left — aligns with the "carmichael" logotext above */
+  text-indent: 0; /* flush left — aligns with the "brand" logotext above */
   /* Muted grey to match the "Apparel" label in the production master header
      (var(--ce-gray-400)) rather than solid white. */
   color: #a8a8a1;
@@ -16574,7 +16574,7 @@ body:has(.checkout-page) .site-footer { display: none; }
   .login-modal--split .login-card__apparel,
   .login-modal--split .login-card__slogan {
     /* Track the lockup's left whitespace (0.13 of its width) in the SAME cqw unit
-       as the lockup above, so APPAREL stays locked under "carmichael" at every
+       as the lockup above, so APPAREL stays locked under "brand" at every
        width instead of drifting once the old vw clamp capped. */
     margin-left: calc(72cqw * 0.129);
   }
@@ -16623,7 +16623,7 @@ body:has(.checkout-page) .site-footer { display: none; }
   letter-spacing: 0.01em;
 }
 .login-card__brand.brand-cluster::before {
-  background-image: url("/carmichael-lockup-white.webp");
+  background-image: none;
   /* left (not center) so the wordmark hugs the box's left edge and lines up with
      APPAREL/slogan when the lockup is left-aligned. */
   background-position: left center;
@@ -16871,7 +16871,7 @@ body:has(.checkout-page) .site-footer { display: none; }
     height: auto;
     min-height: 0;
   }
-  /* Tall crop: keep the Carmichael branding on the van's side in view. */
+  /* Tall crop: keep the brand branding on the van's side in view. */
   .login-modal--split .login-modal__slide--wide { object-position: 30% 70%; }
   .login-modal--split .login-modal__form { grid-column: 1; grid-row: 2; padding-inline: 1rem; }
 }
@@ -17055,7 +17055,7 @@ body:has(.checkout-page) .site-footer { display: none; }
 
 /* Phones: the lockup, APPAREL and the plaque all size from one width (--lw),
    a share of the screen width, so they scale together, APPAREL stays locked
-   under "carmichael", and the panel shows less of the photo above the logo so
+   under "brand", and the panel shows less of the photo above the logo so
    the lockup sits around the top third of the screen. */
 @media (max-width: 600px) {
   .login-modal__stack {
@@ -17279,7 +17279,7 @@ body:has(.checkout-page) .site-footer { display: none; }
 }
 
 /* Phones: APPAREL a touch larger with tighter tracking; left edge stays
-   locked under the "c" of carmichael. */
+   locked under the "c" of brand. */
 @media (max-width: 600px) {
   .login-modal--split .login-card__apparel {
     font-size: calc(var(--lw) * 0.108);
@@ -17345,7 +17345,7 @@ body:has(.checkout-page) .site-footer { display: none; }
 
 /* Desktop: the lockup (::before, 72cqw wide) is centred in the brand's content
    box, so APPAREL and the plaque are positioned from that same centred left
-   edge — they stay locked under the "c" of carmichael at every window width. */
+   edge — they stay locked under the "c" of brand at every window width. */
 @media (min-width: 1025px) {
   .login-modal--split .login-card__tagline {
     padding-left: calc(4cqw + 8px);
@@ -17512,33 +17512,33 @@ body:has(.checkout-page) .site-footer { display: none; }
   :root { --wt-box-h: 60px; }
 }
 /* Header search: hover/focus turns the field white with a soft edge, as in
-   production (the redesign had TM's dark-green hover). */
+   production (the redesign had template's dark-green hover). */
 @media (min-width: 1000px) {
-  html body:not(#cm) .site-header .site-header__search:hover,
-  html body:not(#cm) .site-header .site-header__search:focus-within {
+  html body:not(#bm) .site-header .site-header__search:hover,
+  html body:not(#bm) .site-header .site-header__search:focus-within {
     background: #ffffff !important;
     color: var(--ce-gray-900) !important;
     box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.18) !important;
   }
-  html body:not(#cm) .site-header .site-header__search:hover .site-header__search-input,
-  html body:not(#cm) .site-header .site-header__search:focus-within .site-header__search-input {
+  html body:not(#bm) .site-header .site-header__search:hover .site-header__search-input,
+  html body:not(#bm) .site-header .site-header__search:focus-within .site-header__search-input {
     color: var(--ce-gray-900) !important;
   }
-  html body:not(#cm) .site-header .site-header__search:hover > svg,
-  html body:not(#cm) .site-header .site-header__search:focus-within > svg {
+  html body:not(#bm) .site-header .site-header__search:hover > svg,
+  html body:not(#bm) .site-header .site-header__search:focus-within > svg {
     color: rgba(0, 0, 0, 0.55) !important;
   }
 }
 /* Production's lighter panel greys: sidebar + product cards #f2f2f2,
-   product-page details panel #e9e9e8. */
-html body:not(#cm) .home-catalog__filters,
-html body:not(#cm) .product-card,
-html body:not(#cm) .product-card__info { background-color: #f2f2f2; }
-html body:not(#cm) .product-modal__details,
-html body:not(#cm) .product-detail .product-modal__details { background-color: #e9e9e8; }
+   product-page details panel #efece6. */
+html body:not(#bm) .home-catalog__filters,
+html body:not(#bm) .product-card,
+html body:not(#bm) .product-card__info { background-color: #f2f2f2; }
+html body:not(#bm) .product-modal__details,
+html body:not(#bm) .product-detail .product-modal__details { background-color: #efece6; }
 
 /* Proudly Canadian badge: no box around it on any device. */
-html body:not(#cm) .login-modal--split .login-card__canada.login-card__canada {
+html body:not(#bm) .login-modal--split .login-card__canada.login-card__canada {
   border: none;
   background: none;
   box-shadow: none;
@@ -17546,8 +17546,8 @@ html body:not(#cm) .login-modal--split .login-card__canada.login-card__canada {
 /* The hover colour-name label sits on the card panel, so it takes the card
    colour (it still had the old grey and showed as a darker patch). The card
    info strip is forced to the card colour on every size. */
-html body:not(#cm) .product-card__color-name--overlay { background: #f2f2f2; }
-html body:not(#cm) .product-card__info { background: #f2f2f2 !important; }
+html body:not(#bm) .product-card__color-name--overlay { background: #f2f2f2; }
+html body:not(#bm) .product-card__info { background: #f2f2f2 !important; }
 /* Desktop login: logo cluster very slightly smaller. */
 @media (min-width: 1025px) {
   .login-modal--split .login-card { --dlw: 74cqw; }
@@ -17555,62 +17555,62 @@ html body:not(#cm) .product-card__info { background: #f2f2f2 !important; }
 
 /* Phone menu: category names a little larger and lighter. */
 @media (max-width: 600px) {
-  html body:not(#cm) .nav-drawer__cat-trigger,
-  html body:not(#cm) .nav-drawer__cat-label,
-  html body:not(#cm) .nav-drawer__cat-trigger[data-open] .nav-drawer__cat-label {
+  html body:not(#bm) .nav-drawer__cat-trigger,
+  html body:not(#bm) .nav-drawer__cat-label,
+  html body:not(#bm) .nav-drawer__cat-trigger[data-open] .nav-drawer__cat-label {
     font-size: 18.5px !important;
     font-weight: 500 !important;
   }
 }
 /* Menu drawer's secondary bar (Home / FR / Logout): the same light grey as the
    desktop sidebar (#f2f2f2) so it separates from the header above it. */
-html body:not(#cm) .nav-drawer__header { background: #f2f2f2 !important; }
+html body:not(#bm) .nav-drawer__header { background: #f2f2f2 !important; }
 
 /* Header "APPAREL" under the wordmark: a bit larger on every size. */
 @media (max-width: 600px) {
-  html body:not(#cm) .site-header .site-header__logo-apparel { font-size: clamp(0.66rem, 3.2vw, 0.86rem) !important; }
+  html body:not(#bm) .site-header .site-header__logo-apparel { font-size: clamp(0.66rem, 3.2vw, 0.86rem) !important; }
 }
 @media (min-width: 601px) {
-  html body:not(#cm) .site-header .site-header__logo-apparel { font-size: 13.8px !important; }
+  html body:not(#bm) .site-header .site-header__logo-apparel { font-size: 13.8px !important; }
 }
 
 /* Header logo a touch further left on every size (more on tablet-wide/desktop). */
 @media (max-width: 600px) {
-  html body:not(#cm) .site-header .site-header__logo { margin-left: -6px !important; }
+  html body:not(#bm) .site-header .site-header__logo { margin-left: -6px !important; }
 }
 @media (min-width: 601px) and (max-width: 999px) {
-  html body:not(#cm) .site-header .site-header__logo { margin-left: -4px !important; }
+  html body:not(#bm) .site-header .site-header__logo { margin-left: -4px !important; }
 }
 @media (min-width: 1000px) {
-  html body:not(#cm) .site-header .site-header__logo { margin-left: 0 !important; }
+  html body:not(#bm) .site-header .site-header__logo { margin-left: 0 !important; }
 }
 /* Narrow phones: a shorter header to match the smaller logo. */
 @media (max-width: 400px) {
   :root { --wt-box-h: 52px; }
 }
 @media (max-width: 400px) {
-  html body:not(#cm) .site-header .site-header__logo { margin-left: 1px !important; }
+  html body:not(#bm) .site-header .site-header__logo { margin-left: 1px !important; }
 }
 
 /* Secondary bars — tab bar, breadcrumb, menu drawer, cart/checkout header rows
    and back-to-cart bar — all use the sidebar grey (#f2f2f2) so they separate
    from the header (#e7e4de). The highlight pill (active tab / current category)
    moves to a slightly lighter-than-header grey so it still reads on the bar. */
-html body:not(#cm) .home-catalog__tabs,
-html body:not(#cm) .home-catalog__header,
-html body:not(#cm) .pdp-breadcrumb,
-html body:not(#cm) .pdp-sidebar,
-html body:not(#cm) .nav-drawer,
-html body:not(#cm) .nav-drawer__header,
-html body:not(#cm) .nav-drawer__links,
-html body:not(#cm) .nav-drawer__link,
-html body:not(#cm) .cart-drawer__back-btn,
-html body:not(#cm) .cart-table thead,
-html body:not(#cm) .cart-table thead tr { background: #f2f2f2 !important; }
+html body:not(#bm) .home-catalog__tabs,
+html body:not(#bm) .home-catalog__header,
+html body:not(#bm) .pdp-breadcrumb,
+html body:not(#bm) .pdp-sidebar,
+html body:not(#bm) .nav-drawer,
+html body:not(#bm) .nav-drawer__header,
+html body:not(#bm) .nav-drawer__links,
+html body:not(#bm) .nav-drawer__link,
+html body:not(#bm) .cart-drawer__back-btn,
+html body:not(#bm) .cart-table thead,
+html body:not(#bm) .cart-table thead tr { background: #f2f2f2 !important; }
 :root { --cm-bar-hi: #eae7e1; }
 /* Tablet-wide + desktop: header logo a bit further left. */
 @media (min-width: 1000px) {
-  html body:not(#cm) .site-header .site-header__logo { margin-left: -7px !important; }
+  html body:not(#bm) .site-header .site-header__logo { margin-left: -7px !important; }
 }
 /* Narrow phones: shorter header still, to suit the smaller logo. */
 @media (max-width: 400px) {
@@ -17619,25 +17619,25 @@ html body:not(#cm) .cart-table thead tr { background: #f2f2f2 !important; }
 /* Narrow phones: smaller header search text (16px is the floor — below it
    iOS Safari zooms the page when the field is focused). */
 @media (max-width: 400px) {
-  html body:not(#cm) .site-header .site-header__search-input { font-size: 16px !important; }
+  html body:not(#bm) .site-header .site-header__search-input { font-size: 16px !important; }
 }
 /* Phones + tablets: a softer edge on the open/selected search field — one faint
    hairline and a gentle glow instead of a border plus an inner line. */
 @media (max-width: 999px) {
-  html body:not(#cm) .site-header .site-header__search,
-  html body:not(#cm) .site-header .site-header__search:focus-within {
+  html body:not(#bm) .site-header .site-header__search,
+  html body:not(#bm) .site-header .site-header__search:focus-within {
     border: 1px solid rgba(0, 0, 0, 0.07) !important;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05) !important;
   }
 }
 /* The search field's clear (×) icon: dark grey on the light field (an older
    rule stroked it white for a dark header). */
-html body:not(#cm) .site-header .site-header__search-close,
-html body:not(#cm) .site-header .site-header__search-close svg {
+html body:not(#bm) .site-header .site-header__search-close,
+html body:not(#bm) .site-header .site-header__search-close svg {
   color: rgba(43, 47, 52, 0.6) !important;
   stroke: rgba(43, 47, 52, 0.6) !important;
 }
-html body:not(#cm) .site-header .site-header__search-close:hover svg {
+html body:not(#bm) .site-header .site-header__search-close:hover svg {
   stroke: rgba(43, 47, 52, 0.9) !important;
 }
 
@@ -17648,18 +17648,18 @@ html body:not(#cm) .site-header .site-header__search-close:hover svg {
 .product-card__color-dot { position: relative; }
 
 /* Product titles render with the card (no hidden-until-measured state). */
-html body:not(#cm) .product-card__name { opacity: 1 !important; transition: none !important; }
+html body:not(#bm) .product-card__name { opacity: 1 !important; transition: none !important; }
 
 /* ==========================================================================
    Black & McDonald — brand layer.
-   Everything above this block is the Carmichael suite, unchanged. This block
+   Everything above this block is the brand suite, unchanged. This block
    only swaps the logos, puts the BM hero video in the login photo slot, and
    styles the Good Catch Awards badge that replaces the Proudly Canadian plaque.
    ========================================================================== */
 
 /* ---- Logos painted by .brand-cluster::before (login, footer, small) ------
    Same boxes as before; the BM logo is drawn with `contain`, anchored left, so
-   it sits exactly where the Carmichael lockup's wordmark started and APPAREL /
+   it sits exactly where the brand lockup's wordmark started and APPAREL /
    the badge stay aligned under it. */
 html body .brand-cluster::before {
   background-image: url("/bm-logo.webp") !important;
@@ -18073,12 +18073,12 @@ html body .site-header .site-header__logo:has(.site-header__logo-img--bm) {
   padding-top: 0 !important;
   padding-bottom: 0 !important;
 }
-html body:not(#cm):not(#bm) .site-header .site-header__logo-img.site-header__logo-img--bm {
+html body:not(#bm):not(#bm) .site-header .site-header__logo-img.site-header__logo-img--bm {
   height: 100% !important;
   max-height: none !important;
   align-self: stretch;
 }
-html body:not(#cm):not(#bm) .site-header .site-header__logo:has(.site-header__logo-img--bm) .site-header__logo-brand {
+html body:not(#bm):not(#bm) .site-header .site-header__logo:has(.site-header__logo-img--bm) .site-header__logo-brand {
   position: absolute;
   left: 0;
   right: 0;
@@ -18090,7 +18090,7 @@ html body:not(#cm):not(#bm) .site-header .site-header__logo:has(.site-header__lo
   justify-content: center;
   pointer-events: none;
 }
-html body:not(#cm):not(#bm) .site-header .site-header__logo:has(.site-header__logo-img--bm) .site-header__logo-apparel {
+html body:not(#bm):not(#bm) .site-header .site-header__logo:has(.site-header__logo-img--bm) .site-header__logo-apparel {
   color: #ffffff !important;
   font-size: 11.5px !important;
   font-weight: 700 !important;
@@ -18102,13 +18102,13 @@ html body:not(#cm):not(#bm) .site-header .site-header__logo:has(.site-header__lo
   transform: none !important;
 }
 @media (min-width: 601px) and (max-width: 999px) {
-  html body:not(#cm):not(#bm) .site-header .site-header__logo:has(.site-header__logo-img--bm) .site-header__logo-apparel { font-size: 12.5px !important; }
+  html body:not(#bm):not(#bm) .site-header .site-header__logo:has(.site-header__logo-img--bm) .site-header__logo-apparel { font-size: 12.5px !important; }
 }
 @media (max-width: 600px) {
-  html body:not(#cm):not(#bm) .site-header .site-header__logo:has(.site-header__logo-img--bm) .site-header__logo-apparel { font-size: 11px !important; letter-spacing: 0.2em !important; }
+  html body:not(#bm):not(#bm) .site-header .site-header__logo:has(.site-header__logo-img--bm) .site-header__logo-apparel { font-size: 11px !important; letter-spacing: 0.2em !important; }
 }
 @media (max-width: 400px) {
-  html body:not(#cm):not(#bm) .site-header .site-header__logo:has(.site-header__logo-img--bm) .site-header__logo-apparel { font-size: 9px !important; letter-spacing: 0.18em !important; }
+  html body:not(#bm):not(#bm) .site-header .site-header__logo:has(.site-header__logo-img--bm) .site-header__logo-apparel { font-size: 9px !important; letter-spacing: 0.18em !important; }
 }
 
 /* ---- Login gate: APPAREL in white inside the logo's green band ----------
@@ -18383,10 +18383,8 @@ html body:not(#bm-a):not(#bm-b):not(#bm-c) .site-header .site-header__inner > .s
     margin-bottom: 6px !important;   /* + the 2px frame = 8px to the screen edge */
   }
 }
-/* Tablets: no logo in the footer (desktop keeps it). */
-@media (min-width: 601px) and (max-width: 1024px) {
-  html body .site-footer .site-footer__brand { display: none !important; }
-}
+/* No logo in the footer at any size (every portal): the header carries it. */
+html body .site-footer .site-footer__brand { display: none !important; }
 
 /* Desktop: the logo fills its panel's width (same padding left and right).
    cqw = 1% of the login pane; the panel is ~97.3cqw wide and the logo keeps
@@ -18936,5 +18934,11 @@ html body .login-modal__video-toggle { border-radius: 0 !important; }
   html body:not(#bm-a):not(#bm-b):not(#bm-c) .home-catalog__filters,
   html body:not(#bm-a):not(#bm-b):not(#bm-c) .product-card .product-card__info,
   html body:not(#bm-a):not(#bm-b):not(#bm-c) .product-card .product-card__name-row,
-  html body:not(#bm-a):not(#bm-b):not(#bm-c) .product-card .product-card__color-size-row { background: #e9e6df !important; }
+  html body:not(#bm-a):not(#bm-b):not(#bm-c) .product-card .product-card__color-size-row { background: #efece6 !important; }
 }
+
+/* Header + footer: a touch darker sandy grey than the (lighter) sidebar and
+   panels, so the bars read as distinct from the content. */
+html body:not(#bm-a):not(#bm-b):not(#bm-c) .site-header,
+html body:not(#bm-a):not(#bm-b):not(#bm-c) .site-header .site-header__inner,
+html body:not(#bm-a):not(#bm-b):not(#bm-c) .site-footer { background-color: #dbd7ce !important; }

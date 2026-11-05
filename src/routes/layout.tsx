@@ -180,7 +180,7 @@ export const useSubmitOrder = routeAction$(
       return fail(400, { message: "A PO number is required for purchase-order checkout." });
     }
     // Test PO: an order placed with this PO number is saved to the DB exactly
-    // like a real order (so the round-trip to cm-admin can be verified) but
+    // like a real order (so the round-trip to the admin can be verified) but
     // sends NO confirmation / staff-notification email. Lets us test that an
     // order reaches the admin without emailing anyone. The sentinel is matched
     // trimmed + case-insensitively; it can be overridden with TEST_NO_EMAIL_PO.
@@ -485,10 +485,10 @@ export default component$(() => {
   const showSearch = useComputed$(
     () =>
       (loc.url.pathname === "/" || (!loc.url.pathname.startsWith("/privacy") && !loc.url.pathname.startsWith("/checkout"))) &&
-      // The public /toque page is a single-SKU showcase — no search.
-      loc.url.pathname.replace(/\/+$/, "") !== "/toque" &&
-      // Electrical has only a handful of products — no need for search.
-      auth.value.loginType !== "electrical",
+      // Electrical and Good Catch ("clothing") have only a handful of products
+      // each — no search; only the Tech catalog keeps it.
+      auth.value.loginType !== "electrical" &&
+      auth.value.loginType !== "clothing",
   );
 
   useContextProvider(LocaleContext, locale);
@@ -614,8 +614,8 @@ export default component$(() => {
   });
 
   const updateQty = $(async (index: number, delta: number) => {
-    // A product with a minimum order quantity (e.g. the /toque product, MOQ 48)
-    // can't be set below its floor in the cart any more than on the PDP. Dropping
+    // A product with a minimum order quantity (see src/moq.ts; none configured
+    // for Black & McDonald) can't be set below its floor in the cart any more than on the PDP. Dropping
     // below the floor removes the line — the same way "-" at qty 1 removes a
     // normal item.
     const floor = (cart.items[index] as any).moq ?? moqForSku(cart.items[index].sku);
@@ -810,7 +810,7 @@ export default component$(() => {
   }, { strategy: 'document-ready' });
 
   // Header search: close when clicking anywhere outside it; clear + close it
-  // whenever the category changes (tab bar or menu drawer). Mirrors cm.
+  // whenever the category changes (tab bar or menu drawer).
   // eslint-disable-next-line qwik/no-use-visible-task
   useVisibleTask$(({ cleanup }) => {
     const onDocClick = (e: MouseEvent) => {
@@ -906,7 +906,7 @@ export default component$(() => {
 
   // Close the cart and the search bar on navigation. We do NOT clear the search
   // filter here — closing the bar (click-away, scroll, X, nav) keeps the
-  // searched items, matching cm. The filter only resets on a tab/category
+  // searched items. The filter only resets on a tab/category
   // change (see onCategoryChange) or because a cross-route nav remounts the
   // catalog fresh.
   // Only close on a REAL path change. A routeAction submit (order submit, etc.)
@@ -953,10 +953,8 @@ export default component$(() => {
     }
   }, { strategy: 'document-ready' });
 
-  // Auto-open login modal and lock scroll for unauthenticated users. Re-runs on
-  // route change (tracks isPublicRoute) so an SPA navigation OFF a public page
-  // (e.g. clicking the header logo on /toque while logged out → "/") shows the
-  // login overlay instead of a blank screen.
+  // Auto-open login modal and lock scroll for unauthenticated users (re-runs
+  // when the login state changes).
   // eslint-disable-next-line qwik/no-use-visible-task
   useVisibleTask$(({ track }) => {
     track(() => isPublicRoute.value);
@@ -1276,7 +1274,7 @@ export default component$(() => {
               )}
             </button>
             )}
-            {/* No logout on the public /toque page — it needs no login to view. */}
+            {/* Logout (hidden on public routes; Black & McDonald has none). */}
             {!isPublicRoute.value && (
             <Form action={logoutAction} reloadDocument class="logout-form">
               <button type="submit" class="logout-btn" aria-label={t("login.logout", locale.value)}>

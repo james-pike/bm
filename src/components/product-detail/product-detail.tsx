@@ -172,10 +172,10 @@ interface ProductDetailPanelProps {
       breadcrumb, and related items switch the panel in place instead of navigating. */
   onClose$?: QRL<() => void>;
   onSelectSku$?: QRL<(sku: string) => void>;
-  /** Single-SKU showcase (the public /toque page): suppress the "more
+  /** Single-SKU showcase page: suppress the "more
       products" carousel so only this one product is shown. */
   single?: boolean;
-  /** Route-specific price override (the public /toque page prices the toque at
+  /** Route-specific price override (a single-SKU showcase page may price the item at
       $13.25, while the same SKU is $15.25 in the logged-in catalog). */
   priceOverride?: number;
 }
@@ -206,7 +206,7 @@ export const ProductDetailPanel = component$<ProductDetailPanelProps>((props) =>
   const selectedSize = useSignal("");
   const selectedColor = useSignal("");
   // The minimum-order quantity only applies in the single-product showcase
-  // (the /toque route, props.single). On the regular catalog PDP the same SKU
+  // (a single-SKU showcase route, props.single). On the regular catalog PDP the same SKU
   // behaves like any other product (min 1).
   const moq = props.single ? (MOQ_BY_SKU[props.sku] ?? 1) : 1;
   const selectedQty = useSignal(moq);
@@ -461,7 +461,7 @@ export const ProductDetailPanel = component$<ProductDetailPanelProps>((props) =>
           price: props.priceOverride ?? p.price,
           img: colorImg,
           // Carry the MOQ that applied where this was added, so the cart floor is
-          // per-line (toque adds carry 48; the regular route carries 1).
+          // per-line (a showcase route can carry its MOQ; the regular route carries 1).
           moq,
         };
         if (codeMatch) item.code = codeMatch[0];
@@ -660,7 +660,7 @@ export const ProductDetailPanel = component$<ProductDetailPanelProps>((props) =>
                 }
               }}
               onClick$={() => {
-                // The public /toque showcase (single) doesn't enlarge the image —
+                // A single-SKU showcase (single) doesn't enlarge the image —
                 // its short page clipped the fullscreen viewer. Clicking just
                 // advances to the next photo.
                 if (!props.single && window.innerWidth > 1024) {
@@ -959,7 +959,7 @@ export const ProductDetailPanel = component$<ProductDetailPanelProps>((props) =>
                   value={selectedQty.value}
                   onInput$={(_, el) => {
                     // Allow free typing (digits only); clamp to the minimum on blur
-                    // so e.g. the toque buyer can type 100/200 directly.
+                    // so a bulk buyer can type 100/200 directly.
                     const n = parseInt(el.value.replace(/[^0-9]/g, ""), 10);
                     if (!Number.isNaN(n)) selectedQty.value = n;
                   }}
