@@ -1,4 +1,5 @@
 import { component$, useSignal, useComputed$, useContext, $, useTask$, useVisibleTask$, useOnDocument, Slot, type QRL } from "@builder.io/qwik";
+import { SHOW_PRICES } from "../../lib/pricing";
 import { useLocation, useNavigate } from "@builder.io/qwik-city";
 import { LocaleContext, t } from "../../i18n";
 import { allProducts, categoryLabel, colorName } from "../../routes/apparel/products";
@@ -484,7 +485,7 @@ export const ProductCard = component$<{ item: Product; sku: string; index: numbe
           <div class="product-card__price-group">
             {/* No price on $0 items (the company-supplied FR line), as on the
                 original Black & McDonald catalog. */}
-            {!isTech && (Number(item.price) || 0) > 0 && (() => {
+            {SHOW_PRICES && !isTech && (Number(item.price) || 0) > 0 && (() => {
               const p = Number(item.price) || 0;
               const dollars = Math.floor(p);
               const cents = Math.round((p - dollars) * 100).toString().padStart(2, "0");

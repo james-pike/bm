@@ -5,6 +5,7 @@
  * privacy policy.
  */
 import { Resend } from "resend";
+import { SHOW_PRICES } from "./pricing";
 import { colorName as colorLabel } from "../routes/apparel/products";
 
 export interface OrderItem {
@@ -65,7 +66,7 @@ export function buildOrderEmailHtml(o: OrderEmailData): string {
       <td style="padding:6px 12px;border-bottom:1px solid #eee">${esc(i.name)}${i.code ? ` <span style="color:#000;font-weight:600;font-size:14px">${esc(i.code)}</span>` : i.sku ? ` <span style="color:#000;font-weight:600;font-size:14px">(${esc(i.sku)})</span>` : ""}${i.logoPosition ? `<br><span style="color:#999;font-size:12px">Logo: ${esc(i.logoPosition)}${i.logoStyle ? ` · ${esc(i.logoStyle)}` : ""}</span>` : ""}</td>
       <td style="padding:6px 12px;border-bottom:1px solid #eee">${i.color ? esc(i.color.startsWith("#") ? colorName(i.color) : i.color) + " / " : ""}${esc(i.size)}</td>
       <td style="padding:6px 12px;border-bottom:1px solid #eee;text-align:center">${i.quantity}</td>
-      <td style="padding:6px 12px;border-bottom:1px solid #eee;text-align:right">$${(((Number(i.price) || 0) * i.quantity)).toFixed(2)}</td>
+      ${SHOW_PRICES ? `<td style="padding:6px 12px;border-bottom:1px solid #eee;text-align:right">$${(((Number(i.price) || 0) * i.quantity)).toFixed(2)}</td>` : ""}
     </tr>`
   ).join("");
 
@@ -102,11 +103,11 @@ export function buildOrderEmailHtml(o: OrderEmailData): string {
               <th style="padding:8px 12px;text-align:left">Product</th>
               <th style="padding:8px 12px;text-align:left">Details</th>
               <th style="padding:8px 12px;text-align:center">Qty</th>
-              <th style="padding:8px 12px;text-align:right">Total</th>
+              ${SHOW_PRICES ? `<th style="padding:8px 12px;text-align:right">Total</th>` : ""}
             </tr>
           </thead>
           <tbody>${itemRows}</tbody>
-          <tfoot>
+          ${SHOW_PRICES ? `<tfoot>
             <tr>
               <td colspan="3" style="padding:6px 12px;text-align:right">Subtotal</td>
               <td style="padding:6px 12px;text-align:right">$${o.subtotal.toFixed(2)}</td>
@@ -119,7 +120,7 @@ export function buildOrderEmailHtml(o: OrderEmailData): string {
               <td colspan="3" style="padding:10px 12px;text-align:right;font-weight:700">Total</td>
               <td style="padding:10px 12px;text-align:right;font-weight:700;color:#39627c">$${o.total.toFixed(2)}</td>
             </tr>
-          </tfoot>
+          </tfoot>` : ""}
         </table>
       </div>
     </div>

@@ -10,6 +10,7 @@
  * matching the rest of the store.
  */
 import { component$, useSignal, useStore, useComputed$, useContext, useVisibleTask$, $ } from "@builder.io/qwik";
+import { SHOW_PRICES } from "../../lib/pricing";
 import { Link, useNavigate } from "@builder.io/qwik-city";
 import type { DocumentHead } from "@builder.io/qwik-city";
 import { Modal, Collapsible } from "@qwik-ui/headless";
@@ -82,7 +83,7 @@ export default component$(() => {
   const cartCount = useComputed$(() => cart.items.reduce((sum, i) => sum + i.quantity, 0));
   // Prices show unless this is the Tech login or nothing in the cart is priced
   // (the company-supplied $0 FR line), as on the original Black & McDonald site.
-  const showPrices = useComputed$(() => loginType.value !== "tech" && cart.items.some((i: { price?: number | string }) => (Number(i.price) || 0) > 0));
+  const showPrices = useComputed$(() => SHOW_PRICES && loginType.value !== "tech" && cart.items.some((i: { price?: number | string }) => (Number(i.price) || 0) > 0));
   const subtotal = useComputed$(() => cart.items.reduce((sum, i) => sum + (Number(i.price) || 0) * i.quantity, 0));
   const taxRate = useComputed$(() => taxRateFor(empProvince.value));
   const taxAmount = useComputed$(() => (taxRate.value === undefined ? undefined : subtotal.value * taxRate.value));

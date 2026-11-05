@@ -1,4 +1,5 @@
 import { component$, useSignal, useComputed$, useTask$, useVisibleTask$, $, useContext, type QRL } from "@builder.io/qwik";
+import { SHOW_PRICES } from "../../lib/pricing";
 import { Carousel } from "@qwik-ui/headless";
 import { Link, useLocation } from "@builder.io/qwik-city";
 import { LocaleContext, t } from "../../i18n";
@@ -189,7 +190,7 @@ interface ProductDetailPanelProps {
 export const ProductDetailPanel = component$<ProductDetailPanelProps>((props) => {
   const locale = useContext(LocaleContext);
   const loginType = useContext(LoginTypeContext);
-  const hidePrice = loginType.value === "tech";
+  const hidePrice = !SHOW_PRICES || loginType.value === "tech";
   const inFrame = !!props.onClose$;
 
   // Reference props.sku directly inside computed/tasks so they re-track when the
