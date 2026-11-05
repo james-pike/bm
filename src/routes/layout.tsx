@@ -326,7 +326,7 @@ export const useSubmitOrder = routeAction$(
       if (b && !/^https?:\/\//i.test(b)) b = "https://" + b;
       let origin = url.origin;
       try { origin = new URL(b).origin; } catch { origin = url.origin; }
-      return `${origin}/bm-logo-white.png`;
+      return `${origin}/bm-logo-email.png`;
     })();
 
     const emailData: OrderEmailData = {
