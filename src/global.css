@@ -18920,7 +18920,7 @@ html body .login-modal__video-toggle { border-radius: 0 !important; }
   html body .login-overlay .login-modal--split .login-modal__form { padding-left: 23px !important; padding-right: 23px !important; }
 }
 @media (min-width: 401px) and (max-width: 600px) {
-  html body .login-overlay .login-modal--split .login-modal__form { padding-left: 40px !important; padding-right: 40px !important; }
+  html body .login-overlay .login-modal--split .login-modal__form { padding-left: 34px !important; padding-right: 34px !important; }
 }
 @media (min-width: 601px) and (max-width: 1024px) {
   html body .login-overlay .login-modal--split .login-modal__form { padding-left: clamp(36px, calc(8vw - 22px), 62px) !important; padding-right: clamp(36px, calc(8vw - 22px), 62px) !important; }
@@ -18942,3 +18942,29 @@ html body .login-modal__video-toggle { border-radius: 0 !important; }
 html body:not(#bm-a):not(#bm-b):not(#bm-c) .site-header,
 html body:not(#bm-a):not(#bm-b):not(#bm-c) .site-header .site-header__inner,
 html body:not(#bm-a):not(#bm-b):not(#bm-c) .site-footer { background-color: #dbd7ce !important; }
+
+/* Header logo: EXPLICIT pixel heights per breakpoint (same sizes as before).
+   It used height:100% of a stretched flex item, which Safari/iOS can't resolve —
+   the logo then renders at its natural 1565px width and pushes the cart / menu
+   buttons off the screen on phones. Width follows from the aspect ratio. */
+html body:not(#bm-a):not(#bm-b):not(#bm-c) .site-header .site-header__logo-img.site-header__logo-img--bm {
+  height: 65px !important;
+  width: auto !important;
+  max-width: none !important;
+  aspect-ratio: 1565 / 775;
+  flex: 0 0 auto !important;
+}
+html body:not(#bm-a):not(#bm-b):not(#bm-c) .site-header .site-header__logo:has(.site-header__logo-img--bm) { flex: 0 0 auto !important; min-width: 0; }
+@media (min-width: 601px) and (max-width: 999px) {
+  html body:not(#bm-a):not(#bm-b):not(#bm-c) .site-header .site-header__logo-img.site-header__logo-img--bm { height: 70px !important; }
+}
+@media (min-width: 401px) and (max-width: 600px) {
+  html body:not(#bm-a):not(#bm-b):not(#bm-c) .site-header .site-header__logo-img.site-header__logo-img--bm { height: 64px !important; }
+}
+@media (max-width: 400px) {
+  html body:not(#bm-a):not(#bm-b):not(#bm-c) .site-header .site-header__logo-img.site-header__logo-img--bm { height: 52px !important; }
+}
+/* Phones: a touch more vertical padding in the footer. */
+@media (max-width: 600px) {
+  html body:not(#bm-a):not(#bm-b):not(#bm-c) .site-footer { padding-top: 26px !important; padding-bottom: 26px !important; }
+}

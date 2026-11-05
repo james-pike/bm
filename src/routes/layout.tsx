@@ -16,6 +16,7 @@ import type { Cookie } from "@builder.io/qwik-city";
 import { createClient } from "@libsql/client";
 import { LocaleContext, t } from "../i18n";
 import { SecondaryBarContext } from "../context/secondary-bar";
+import { isSkuInLineup } from "../components/product-catalog/product-catalog";
 import type { Locale } from "../i18n";
 import { allProducts, colorName, categoryLabel } from "./apparel/products";
 import { sortColorsWhiteLast } from "./apparel/utils";
@@ -1428,7 +1429,8 @@ export default component$(() => {
                 return (
                   <Accordion.Root class="nav-drawer__accordion" collapsible value={openCat}>
                     {NAV_CATS.map((c) => {
-                      const items = allProducts.filter((p) => catMatches(p.category, c.cat));
+                      // Only this login's lineup (Good Catch / Electrical / Tech).
+                      const items = allProducts.filter((p) => catMatches(p.category, c.cat) && isSkuInLineup(loginType.value, p as { sku: string; category: string; portals?: string[] }));
                       return (
                         <Accordion.Item key={c.cat} value={c.cat} class="nav-drawer__cat">
                           <Accordion.Header as="h3">
