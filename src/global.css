@@ -18,15 +18,15 @@
      being semi-transparent, rendered ~rgb(228) over the greige page — a touch
      dark. Now the same solid neutral as the PDP thumbnail strip so all these
      panels read identically, and never darken over a tinted backdrop. */
-  --cm-panel: rgb(233, 233, 232);
+  --cm-panel: #e9e6df;
   /* The single control for every SECONDARY bar (category tab strip, breadcrumb,
      cart table head, cart back bar, menu-drawer header). Set to the sidebar /
      product-card panel colour so the bars read as the same light blue-gray. */
-  --cm-bar-bg: #e0e3e6;
+  --cm-bar-bg: #e7e4de;
   /* A touch darker than --reference-bar-bg: the subtle "highlight" fill for selected /
      control chips on the light secondary bars (active tab, breadcrumb category,
      Catalog toggle) — a gentle gray highlight, NOT the dark silver-blue. */
-  --cm-bar-hi: #cfd5d9;
+  --cm-bar-hi: #d8d5cf;
   /* Single hairline-border token for card/panel/input edges — replaces the
      scattered rgba(0,0,0,0.08)/0.12/0.15 + 1px/1.5px mix so every thin edge
      reads identically. (The card DROP-SHADOW ring uses 0.14 and stays separate.)
@@ -1694,7 +1694,7 @@ body:has(.nav-drawer-overlay) .site-header .hamburger-btn { display: flex !impor
   width: 300px;
   /* Off-white grey body (matches the catalog secondary bar) — white category
      bars sit on it; the open category highlights green. */
-  background: #E0E3E6;
+  background: #e7e4de;
   box-shadow: 4px 0 24px rgba(0,0,0,0.15);
   display: flex;
   flex-direction: column;
@@ -1744,7 +1744,7 @@ body:has(.nav-drawer-overlay) .site-header .hamburger-btn { pointer-events: auto
        showed through beneath the short card, since --wt-surround is only defined
        on desktop and fell through to transparent here). Clicking it closes the
        menu (layout.tsx). */
-    background: #e9eff4;
+    background: #f3f0ea;
     animation: fade-in 0.15s ease;
   }
   .nav-drawer {
@@ -1854,7 +1854,7 @@ body:has(.nav-drawer-overlay) .site-header .hamburger-btn { pointer-events: auto
   .nav-drawer__links {
     flex: 0 0 auto;
     overflow-y: visible;
-    background: #E0E3E6;
+    background: #e7e4de;
     /* Sit close under the bar (1px seam) so the bar's bottom border reads the
        same thin weight as the other pages' orange bars, and keep the link rows
        tight — less greige showing between the white containers. */
@@ -2529,7 +2529,7 @@ body:has(.nav-drawer-overlay) .site-header .hamburger-btn { pointer-events: auto
   color: var(--ce-gray-700);
   text-transform: capitalize;
   text-decoration: none;
-  background: #e0e3e6;
+  background: #e7e4de;
   border-radius: 2px;
   transition: background 0.15s ease, color 0.15s ease;
   position: relative;
@@ -4554,7 +4554,7 @@ body:has(.nav-drawer-overlay) .site-header .hamburger-btn { pointer-events: auto
   justify-content: center;
   box-shadow: inset 0 1px 4px rgba(0,0,0,0.08), inset 0 0 6px rgba(0,0,0,0.04);
 }
-@media (hover: hover) { .cart-btn:hover { border-color: var(--ce-gold); background: #eaf3fa; color: var(--ce-green-dark); } .cart-btn:hover svg { stroke: var(--ce-green-dark); } }
+@media (hover: hover) { .cart-btn:hover { border-color: var(--ce-gold); background: #f6f3ed; color: var(--ce-green-dark); } .cart-btn:hover svg { stroke: var(--ce-green-dark); } }
 .cart-btn svg { stroke: var(--ce-gray-700); width: 17px; height: 17px; }
 .cart-btn--active {
   border-color: var(--ce-green);
@@ -4624,7 +4624,7 @@ body:has(.home-catalog) .site-header .cart-btn .cart-btn__label { color: #ffffff
 }
 .logout-btn svg { stroke: var(--ce-gray-700); width: 17px; height: 17px; }
 @media (hover: hover) {
-  .logout-btn:hover { border-color: var(--ce-gold); background: #eaf3fa; color: var(--ce-green-dark); }
+  .logout-btn:hover { border-color: var(--ce-gold); background: #f6f3ed; color: var(--ce-green-dark); }
   .logout-btn:hover svg { stroke: var(--ce-green-dark); }
 }
 /* ===== Mobile Apparel Link ===== */
@@ -5073,7 +5073,7 @@ body:has(.home-catalog) .site-header .cart-btn .cart-btn__label { color: #ffffff
   bottom: 1.5rem;
   left: 50%;
   transform: translateX(-50%) translateY(0.75rem);
-  background: #eaf3fa;
+  background: #f6f3ed;
   color: var(--ce-green-dark);
   border: 1px solid var(--ce-gold);
   padding: 0.6rem 1.5rem;
@@ -6089,7 +6089,7 @@ body:has(.home-catalog) .site-header .cart-btn .cart-btn__label { color: #ffffff
   color: var(--ce-green);
 }
 .cart-drawer__error {
-  background: #eaf3fa;
+  background: #f6f3ed;
   border: 1px solid var(--ce-gold);
   color: var(--ce-green-dark);
   padding: 8px 12px;
@@ -6129,7 +6129,7 @@ body:has(.home-catalog) .site-header .cart-btn .cart-btn__label { color: #ffffff
 .checkout-modal__field--error input,
 .checkout-modal__field--error select {
   border-color: #d97706;
-  background: #eaf3fa;
+  background: #f6f3ed;
 }
 .checkout-modal__field--error input:focus,
 .checkout-modal__field--error select:focus {
@@ -6303,7 +6303,7 @@ details[open] > .cart-drawer__checkout-title::after {
   .checkout-modal__form,
   .checkout-modal__pay {
     /* Match the product info panel's exact rendered shade. The info panel is
-       --reference-panel over greige (= rgb(223,230,232)); the checkout sits on a white
+       --reference-panel over greige (= rgb(232, 229, 223)); the checkout sits on a white
        drawer, so use that effective colour as a solid to match it. */
     background: rgb(233, 233, 232) !important;
     border: none !important;
@@ -9459,8 +9459,8 @@ details[open] > .cart-drawer__checkout-title::after {
      a step (from #2b556f / #4689b3) so they read gentler against the pale page. */
   /* Header/footer/bar colour — a silvery slate grey (was the carmichael blue var(--ce-green)),
      kept dark enough that the white logo + labels stay legible. */
-  --wt-orange: #dfe2e6;
-  --wt-orange-dark: #c9cdd1;
+  --wt-orange: #e6e3dd;
+  --wt-orange-dark: #d1cec8;
   --wt-orange-hi: #dbeafe;
   /* Darker overlay box behind the logo + buttons on the mobile/tablet look:
      ~30% black over the bar → ~#14285f. */
@@ -10210,7 +10210,7 @@ details[open] > .cart-drawer__checkout-title::after {
   /* The full height below the links reads a very off-white blue tint (the greige
      links container only covers the rows themselves; everything under it is
      this tint). */
-  background: #e9eff4 !important;
+  background: #f3f0ea !important;
   box-shadow: none !important;
 }
 /* Link + category rows read as white panels PRESSED into the orange sign —
@@ -10563,7 +10563,7 @@ details[open] > .cart-drawer__checkout-title::after {
   .site-header.site-header--white,
   .site-header.site-header--hero-visible,
   .site-header.site-header--solid {
-    background-color: #dfe2e6 !important;
+    background-color: #e6e3dd !important;
     background-image: none !important;
   }
   .site-header::before { display: none !important; }
@@ -11765,7 +11765,7 @@ details[open] > .cart-drawer__checkout-title::after {
     align-self: stretch;
     flex: 0 0 82px;
     border: none;
-    border-right: 1px solid #d7dbdf;
+    border-right: 1px solid #dfdcd6;
     border-radius: 0;
     overflow: hidden;
     background: #ffffff;
@@ -14102,7 +14102,7 @@ body:has(.product-fullscreen) { overflow: hidden; }
    than the lighter tab-bar blue, so the active tab reads as the header colour.
    Scoped --wt-orange resolves inside the active tab's background gradient (and
    its ::before, which inherits the variable). */
-.home-catalog__tabs .apparel-titlebar__tab.active { --wt-orange: #dfe2e6; }
+.home-catalog__tabs .apparel-titlebar__tab.active { --wt-orange: #e6e3dd; }
 
 /* ============================================================
    Desktop: header a golden step TALLER than the secondary bars.
@@ -14226,7 +14226,7 @@ body:has(.nav-drawer-overlay) .site-header__logo {
 /* Header: the darker blue sign (a φ-step below the lighter tab-bar blue) with the
    iron texture + restored pressed/raised depth. Deep bg → white content (below). */
 .site-header__inner {
-  --wt-orange: #dfe2e6;
+  --wt-orange: #e6e3dd;
   /* Dots fade toward the centre (a solid-blue overlay peaks at 50% and eases to
      transparent at both ends), so the dot texture reads strongest at the left/
      right edges and clears through the middle. */
@@ -14909,7 +14909,7 @@ body:has(.home-catalog--electrical) .apparel-page:not(.privacy-page) { min-heigh
    background is set to the footer's own tone, so anything below the footer reads
    as an extension of it rather than a strip. (The x-margin frame is a separate
    dot-pattern layer and is unaffected.) */
-html { background: rgb(223, 226, 230) !important; }
+html { background: rgb(230, 227, 221) !important; }
 
 /* ============================================================
    ONE border around each route page — no doubled/darker lines.
@@ -14996,7 +14996,7 @@ html { background: rgb(223, 226, 230) !important; }
 /* ============================================================
    Only the OUTSIDE area below the footer gets the greige dot field.
 
-   That area was a flat cool grey (--wt-orange = #dfe2e6, set on <html> as "the
+   That area was a flat cool grey (--wt-orange = #e6e3dd, set on <html> as "the
    footer's tone") which read as a stray grey band under the page. It's the html
    background — the page's own sections (header, footer, catalog, product) all
    paint their own opaque fills on top, so this shows ONLY where nothing else
@@ -15442,7 +15442,7 @@ body:has(.checkout-page) .site-footer { display: none; }
 /* White swatches: a slightly darker border (between the default and gray-400) so
    they don't vanish against the light card without looking heavy-handed. */
 .product-card__color-dot--white {
-  border-color: var(--ce-gray-300, #c7cace);
+  border-color: var(--ce-gray-300, #cecbc5);
 }
 
 
@@ -16128,7 +16128,7 @@ body:has(.checkout-page) .site-footer { display: none; }
   /* Centre the brand + hint + form as one connected group in the full-height pane. */
   justify-content: center;
   padding: clamp(1.5rem, 4vh, 2.75rem) clamp(1rem, 1.75vw, 1.5rem);
-  color: #eef4f8;
+  color: #f7f4ee;
 }
 .login-modal__carousel {
   flex: 1 1 66%;
@@ -17594,7 +17594,7 @@ html body:not(#cm) .nav-drawer__header { background: #f2f2f2 !important; }
 
 /* Secondary bars — tab bar, breadcrumb, menu drawer, cart/checkout header rows
    and back-to-cart bar — all use the sidebar grey (#f2f2f2) so they separate
-   from the header (#e0e3e6). The highlight pill (active tab / current category)
+   from the header (#e7e4de). The highlight pill (active tab / current category)
    moves to a slightly lighter-than-header grey so it still reads on the bar. */
 html body:not(#cm) .home-catalog__tabs,
 html body:not(#cm) .home-catalog__header,
@@ -17607,7 +17607,7 @@ html body:not(#cm) .nav-drawer__link,
 html body:not(#cm) .cart-drawer__back-btn,
 html body:not(#cm) .cart-table thead,
 html body:not(#cm) .cart-table thead tr { background: #f2f2f2 !important; }
-:root { --cm-bar-hi: #e3e6e9; }
+:root { --cm-bar-hi: #eae7e1; }
 /* Tablet-wide + desktop: header logo a bit further left. */
 @media (min-width: 1000px) {
   html body:not(#cm) .site-header .site-header__logo { margin-left: -7px !important; }
@@ -18210,7 +18210,7 @@ html body .login-modal--split .login-modal__field label { color: #2b2f34 !import
 html body .login-modal--split .login-modal__field label { opacity: 0.75; }
 html body .login-modal--split .login-modal__field input {
   background: #ffffff !important;
-  border: 1px solid #cfd3d6 !important;
+  border: 1px solid #d7d4ce !important;
   color: #1f2326 !important;
 }
 html body .login-modal--split .login-modal__field input::placeholder { color: #8a9095 !important; }
@@ -18784,9 +18784,9 @@ html body .login-modal__video-toggle { border-radius: 0 !important; }
 /* DEPTH-OPTION:start */
 /* Option 2 — tinted background outside the frame (contrast instead of shadow). */
 @media (max-width: 1024px) {
-  html body .login-overlay.login-overlay { background: #d3d6d9 !important; }
+  html body .login-overlay.login-overlay { background: #dad7d1 !important; }
   html body .login-overlay .login-modal.login-modal--split {
-    border-color: #c7cacc !important;
+    border-color: #cecbc5 !important;
     box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.35) !important;
   }
 }
@@ -18903,7 +18903,7 @@ html body .login-modal__video-toggle { border-radius: 0 !important; }
    thinner one. */
 @media (min-width: 1025px) {
   html body .login-overlay.login-overlay {
-    background: rgb(211, 214, 217) !important;
+    background: rgb(218, 215, 209) !important;
     padding: 2px !important;
     overflow-y: auto !important;
     /* The page reserves a scrollbar gutter on the right; cover it too so the
