@@ -79,6 +79,10 @@ export const useLocaleLoader = routeLoader$(({ cookie }) => {
 // Black & McDonald logins: the Good Catch catalog ("clothing"), Tech
 // ("tech", Work Wear) and Electrical ("electrical", the FR line). Each has its own
 // password in the environment; the password alone picks the catalog.
+// Login-gate hero video: false = starts paused (poster + play button) until
+// clicked. Set to true to autoplay it again.
+const LOGIN_VIDEO_AUTOPLAY = false;
+
 export type LoginType = "clothing" | "tech" | "electrical" | null;
 
 export function getLoginType(cookie: Cookie): LoginType {
@@ -436,7 +440,7 @@ export default component$(() => {
   // pane while the login modal is open (autoplay wired up in a visible task).
   // Autoplay runs every 6s and only pauses while the sign-in form is focused.
   const loginHeroIndex = useSignal(0);
-  const loginVideoPaused = useSignal(false);
+  const loginVideoPaused = useSignal(!LOGIN_VIDEO_AUTOPLAY);
   const loginCarouselPaused = useSignal(false);
   const loginTypingTimer = useSignal(0);
   // Pause the carousel while actively typing, then resume after a short idle —
@@ -1097,8 +1101,8 @@ export default component$(() => {
                 </Form>
               </div>
             </div>
-            {/* Black & McDonald hero video in the photo slot (autoplays muted on
-                loop; tap/click toggles play/pause, as on the original BM home). */}
+            {/* Black & McDonald hero video in the photo slot (muted, looping; starts
+                paused unless LOGIN_VIDEO_AUTOPLAY; tap/click toggles play/pause). */}
             <div class="login-modal__carousel login-modal__carousel--video"
               onClick$={(_, el) => {
                 const v = el.querySelector("video") as HTMLVideoElement | null;
@@ -1107,7 +1111,7 @@ export default component$(() => {
                 else { v.pause(); loginVideoPaused.value = true; }
               }}
             >
-              <video src="/bm-herov2.mp4" poster="/bm-hero-poster.webp" autoplay muted loop playsInline preload="metadata"
+              <video src="/bm-herov2.mp4" poster="/bm-hero-poster.webp" autoplay={LOGIN_VIDEO_AUTOPLAY} muted loop playsInline preload="metadata"
                      class="login-modal__slide login-modal__slide--wide login-modal__video is-active" />
               <button type="button" class={`login-modal__video-toggle ${loginVideoPaused.value ? "is-paused" : ""}`}
                       aria-label={loginVideoPaused.value ? "Play video" : "Pause video"}>
