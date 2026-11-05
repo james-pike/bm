@@ -18872,3 +18872,17 @@ html body .login-modal__video-toggle { border-radius: 0 !important; }
 @media (max-width: 600px) {
   html body .login-modal--split .login-modal__form { border-radius: 0 0 6px 6px !important; }
 }
+
+/* Tablet + desktop: more contrast between the logo panel and the sign-in
+   panel below it — the logo panel steps down to a mid grey (the logo's white
+   row stands out on it), the sign-in panel is near-white. */
+@media (min-width: 601px) {
+  html body .login-modal--split .login-card__cover {
+    background: linear-gradient(180deg, #dcdedd 0%, #d1d3d2 100%) !important;
+    border-color: rgba(0, 0, 0, 0.08) !important;
+  }
+  html body .login-modal--split .login-modal__form {
+    background: #fbfbfa !important;
+    border: 1px solid rgba(0, 0, 0, 0.07) !important;
+  }
+}
