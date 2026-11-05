@@ -18925,5 +18925,5 @@ html body .login-modal__video-toggle { border-radius: 0 !important; }
   html body .login-overlay .login-modal--split .login-modal__form { padding-left: 40px !important; padding-right: 40px !important; }
 }
 @media (min-width: 601px) and (max-width: 1024px) {
-  html body .login-overlay .login-modal--split .login-modal__form { padding-left: clamp(48px, 6vw, 62px) !important; padding-right: clamp(48px, 6vw, 62px) !important; }
+  html body .login-overlay .login-modal--split .login-modal__form { padding-left: clamp(36px, calc(8vw - 22px), 62px) !important; padding-right: clamp(36px, calc(8vw - 22px), 62px) !important; }
 }
