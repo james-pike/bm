@@ -144,7 +144,7 @@ const translations = {
   "color.navy": { en: "Navy", fr: "Marine" },
   "color.grey": { en: "Grey", fr: "Gris" },
   "color.orange": { en: "Orange", fr: "Orange" },
-  "color.safetyorange": { en: "Safety Orange", fr: "Orange sécurité" },
+  "color.safetyorange": { en: "Hi Vis Orange", fr: "Orange haute visibilité" },
   "color.yellow": { en: "Yellow", fr: "Jaune" },
   "color.red": { en: "Red", fr: "Rouge" },
   "color.purple": { en: "Purple", fr: "Violet" },

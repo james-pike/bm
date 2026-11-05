@@ -154,7 +154,7 @@ const colorNames: Record<string, Record<string, string>> = {
   "#2c3e50": { en: "Navy", fr: "Marine" },
   "#6e6e6e": { en: "Grey", fr: "Gris" },
   "#a1a8b0": { en: "Grey", fr: "Gris" }, // towel grey (matches the SM blank swatch)
-  "#ff6600": { en: "Safety Orange", fr: "Orange sécurité" },
+  "#ff6600": { en: "Hi Vis Orange", fr: "Orange haute visibilité" },
   "#94a3b8": { en: "Silver", fr: "Argent" },
   "#4a4a4a": { en: "Grey", fr: "Gris" },
   "#6b8bb0": { en: "Solace Blue", fr: "Bleu Solace" },
