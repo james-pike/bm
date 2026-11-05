@@ -10,15 +10,15 @@ export const usePrintAuthGuard = routeLoader$(({ cookie, redirect }) => {
 });
 
 const SKU_IMG_OVERRIDE: Record<string, string> = {
-  "BMGC-1": "/100617_001_MF25_e_w.png",
-  "BMGC-2": "/100617_026_MS25_e.png",
-  "BMGC-3": "/102208_001_MF22_V2.png",
-  "BMGC-4": "/102286_001_MF22_e_1.png",
-  "BMGC-5": "/104277_BLK_MF22_e.png",
-  "BMGC-6": "/duckgrey.png",
-  "BMGC-7": "/105294_BLK_MF22_e.png",
-  "BMGC-8": "/backpack-black.png",
-  "BMGC-9": "/cooler-black.png",
+  "BM-14": "/100617_001_MF25_e_w.png",
+  "BM-15": "/100617_026_MS25_e.png",
+  "BM-16": "/102208_001_MF22_V2.png",
+  "BM-17": "/102286_001_MF22_e_1.png",
+  "BM-18": "/104277_BLK_MF22_e.png",
+  "BM-19": "/duckgrey.png",
+  "BM-20": "/105294_BLK_MF22_e.png",
+  "BM-21": "/backpack-black.png",
+  "BM-22": "/cooler-black.png",
 };
 
 const CATEGORY_FALLBACK_IMG: Record<string, string> = {
@@ -28,13 +28,13 @@ const CATEGORY_FALLBACK_IMG: Record<string, string> = {
 };
 
 const TALL_SIZES: Record<string, string> = {
-  "BMGC-1": "L - 3XL",
-  "BMGC-2": "L - 3XL",
-  "BMGC-3": "L - 2XL",
-  "BMGC-4": "L - 2XL",
-  "BMGC-5": "M - 4XL",
-  "BMGC-6": "L - 4XL",
-  "BMGC-7": "L - 3XL",
+  "BM-14": "L - 3XL",
+  "BM-15": "L - 3XL",
+  "BM-16": "L - 2XL",
+  "BM-17": "L - 2XL",
+  "BM-18": "M - 4XL",
+  "BM-19": "L - 4XL",
+  "BM-20": "L - 3XL",
 };
 
 export default component$(() => {
@@ -64,7 +64,7 @@ export default component$(() => {
         </header>
         <div class="print-page__grid">
           {allProducts
-            .filter((p) => p.sku.startsWith("BMGC-"))
+            .filter((p) => !!(p as { portals?: string[] }).portals?.includes("clothing"))
             // One printed card per colour (multi-colour products were merged into
             // a single catalog entry with a swatch per colour).
             .flatMap((p) => (p.colors.length > 1

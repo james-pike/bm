@@ -79,13 +79,14 @@ export function swatchOrder(colors: readonly string[]): string[] {
     .map(([c]) => c);
 }
 
-// Per-login lineups. Black & McDonald: the Good Catch login sees the BMGC-
-// products, the Electrical login the flame-resistant BMFR- products, and the
-// Tech login only Work Wear. Lineup membership is by SKU prefix.
+// Per-login lineups. Black & McDonald: the Good Catch login sees the products
+// tagged portals=["clothing"] in the DB, the Electrical login the flame-resistant
+// ones tagged portals=["electrical"], and the Tech login only Work Wear.
+// (SKUs are a plain BM-n sequence, so membership comes from the portals tag.)
 export const ELECTRICAL_SKUS: string[] = [];
-const ELECTRICAL_SKU_SET = new Set(ELECTRICAL_SKUS);
-const isElectricalSku = (sku: string) => sku.startsWith("BMFR-");
-const isGoodCatchSku = (sku: string) => sku.startsWith("BMGC-");
+type PortalTagged = { portals?: string[] | null };
+const isElectricalProduct = (p: PortalTagged) => !!p.portals?.includes("electrical");
+const isGoodCatchProduct = (p: PortalTagged) => !!p.portals?.includes("clothing");
 
 const SAFETY_SKUS = new Set<string>();
 export const SAFETY_CATEGORIES = ["All"];
@@ -99,11 +100,11 @@ export const isSkuInLineup = (
   loginType: string | null,
   product: { sku: string; category: string; portals?: string[] },
 ): boolean => {
-  const { sku, category } = product;
-  if (loginType === "electrical") return isElectricalSku(sku);
+  const { category } = product;
+  if (loginType === "electrical") return isElectricalProduct(product);
   if (loginType === "tech") return category === "Work Wear";
   // Good Catch (clothing) login.
-  return isGoodCatchSku(sku);
+  return isGoodCatchProduct(product);
 };
 
 // Colors hidden from catalog-card swatches (still visible on product detail page).
@@ -183,8 +184,8 @@ const CARD_TITLE_OVERRIDE: Record<string, string> = {};
 function brandOf(p: Product): string | null {
   if (BRAND_BY_SKU[p.sku]) return BRAND_BY_SKU[p.sku];
   // Good Catch garments are Carhartt; the FR line is Atlas Guardian.
-  if (p.sku.startsWith("BMGC-")) return "Carhartt";
-  if (p.sku.startsWith("BMFR-")) return "Atlas";
+  if (isGoodCatchProduct(p as PortalTagged)) return "Carhartt";
+  if (isElectricalProduct(p as PortalTagged)) return "Atlas";
   const n = p.name.toLowerCase();
   for (const b of BRAND_LIST) if (n.includes(b.toLowerCase())) return b;
   return null;
@@ -710,20 +711,8 @@ export const ProductCatalog = component$<{ class?: string }>(({ "class": cls }) 
   const baseProducts = useComputed$(() => {
     if (isElectrical.value) {
       // Electrical membership is DB-driven (products.portals includes
-      // "electrical"), falling back to the legacy hardcoded ELECTRICAL_SKUS so
-      // nothing breaks until every row is backfilled. Order: legacy SKUs keep
-      // their curated ELECTRICAL_SKUS order first; DB-only additions follow in
-      // sort_order (their order in allProducts).
-      const inElectrical = (p: (typeof allProducts)[number]) =>
-        isElectricalSku(p.sku) || ELECTRICAL_SKU_SET.has(p.sku);
-      const rank = (sku: string) => {
-        const i = ELECTRICAL_SKUS.indexOf(sku);
-        return i === -1 ? ELECTRICAL_SKUS.length : i;
-      };
-      return allProducts
-        .filter(inElectrical)
-        .slice()
-        .sort((a, b) => rank(a.sku) - rank(b.sku));
+      // "electrical"), in sort_order (their order in allProducts).
+      return allProducts.filter((p) => isElectricalProduct(p as PortalTagged));
     }
     if (isTech.value) return allProducts.filter((p) => p.category === "Work Wear");
     if (isSafety.value) {
@@ -741,7 +730,7 @@ export const ProductCatalog = component$<{ class?: string }>(({ "class": cls }) 
     const isFootwear = (c: string) => c === "Safety Boots" || c === "Safety Shoes" || c === "Footwear";
     const clothing = allProducts
       // The Good Catch lineup.
-      .filter((p) => isGoodCatchSku(p.sku))
+      .filter((p) => isGoodCatchProduct(p as PortalTagged))
       .map((p) => (isFootwear(p.category) ? { ...p, category: "Footwear" } : p));
     // Order the "All" grid to follow the sidebar/tab category order, so the
     // display matches the sidebar. Stable sort keeps each category's products in

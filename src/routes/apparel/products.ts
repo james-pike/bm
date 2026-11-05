@@ -4,7 +4,7 @@ import type { Locale } from "../../i18n";
 
 export const allProducts = [
   {
-    "sku": "BMGC-1",
+    "sku": "BM-14",
     "name": "Paxton 1/4-Zip Sweatshirt",
     "category": "Sweatshirts",
     "sizes": "S - 4XL",
@@ -20,10 +20,13 @@ export const allProducts = [
       "/100617_026_MS25_e.png"
     ],
     "material": "13-ounce, 75% cotton / 25% polyester blend, Rain Defender DWR finish",
-    "details": "Rain Defender durable water repellent, Three-piece jersey-lined hood with drawcord, Mock neck collar with antique-finish brass zipper, Rib-knit cuffs and waist, Front handwarmer pocket with hidden security pocket, Carhartt patch on pocket, Loose fit, #100617"
+    "details": "Rain Defender durable water repellent, Three-piece jersey-lined hood with drawcord, Mock neck collar with antique-finish brass zipper, Rib-knit cuffs and waist, Front handwarmer pocket with hidden security pocket, Carhartt patch on pocket, Loose fit, #100617",
+    "portals": [
+      "clothing"
+    ]
   },
   {
-    "sku": "BMGC-4",
+    "sku": "BM-17",
     "name": "Gilliam Vest",
     "category": "Vests",
     "sizes": "S - 3XL",
@@ -37,10 +40,13 @@ export const allProducts = [
       "/102286_001_MF22_e_1.png"
     ],
     "material": "1.75-ounce, 100% nylon Cordura® with DWR coating, quilted nylon lining with 100g polyester insulation",
-    "details": "Cordura® fabric resists tears scuffs and abrasions, Rain Defender durable water repellent, Left-chest map pocket, Lower snap-button pockets, Inner zip and hook-and-loop pockets, Drawcord-adjustable droptail hem, #102286"
+    "details": "Cordura® fabric resists tears scuffs and abrasions, Rain Defender durable water repellent, Left-chest map pocket, Lower snap-button pockets, Inner zip and hook-and-loop pockets, Drawcord-adjustable droptail hem, #102286",
+    "portals": [
+      "clothing"
+    ]
   },
   {
-    "sku": "BMGC-5",
+    "sku": "BM-18",
     "name": "Washed Duck Mock Neck Vest",
     "category": "Vests",
     "sizes": "S - 5XL",
@@ -56,10 +62,13 @@ export const allProducts = [
       "/duckgrey.png"
     ],
     "material": "12-ounce, 100% ringspun washed cotton duck exterior, 100% polyester boucle sherpa lining",
-    "details": "Sherpa lining for warmth, Map pocket on left chest with zipper closure, Two large sherpa-lined front pockets, Two inside pockets, Droptail hem for added coverage, Machine washable cold gentle cycle, #104277"
+    "details": "Sherpa lining for warmth, Map pocket on left chest with zipper closure, Two large sherpa-lined front pockets, Two inside pockets, Droptail hem for added coverage, Machine washable cold gentle cycle, #104277",
+    "portals": [
+      "clothing"
+    ]
   },
   {
-    "sku": "BMGC-3",
+    "sku": "BM-16",
     "name": "Gilliam Jacket",
     "category": "Jackets",
     "sizes": "S - 3XL / LT - 2XLT",
@@ -73,10 +82,13 @@ export const allProducts = [
       "/102208_001_MF22_V2.png"
     ],
     "material": "1.75-ounce, 100% nylon Cordura® shell, 100g polyester insulation quilted to outer shell, nylon lining",
-    "details": "Rain Defender durable water repellent, Wind Fighter windproof technology, Mock-neck collar, Left-chest map pocket, Two lower-front pockets with hidden snap closure, Two inside pockets (one zippered one hook-and-loop), Hook-and-loop adjustable cuffs, Drawcord adjustable hem, Triple-stitched main seams, Relaxed fit, #102208"
+    "details": "Rain Defender durable water repellent, Wind Fighter windproof technology, Mock-neck collar, Left-chest map pocket, Two lower-front pockets with hidden snap closure, Two inside pockets (one zippered one hook-and-loop), Hook-and-loop adjustable cuffs, Drawcord adjustable hem, Triple-stitched main seams, Relaxed fit, #102208",
+    "portals": [
+      "clothing"
+    ]
   },
   {
-    "sku": "BMGC-7",
+    "sku": "BM-20",
     "name": "Marquette 1/4-Zip Mock Neck Sweatshirt",
     "category": "Sweatshirts",
     "sizes": "S - 4XL",
@@ -90,10 +102,13 @@ export const allProducts = [
       "/105294_BLK_MF22_e.png"
     ],
     "material": "10.5-ounce, 59% cotton / 41% polyester blend",
-    "details": "Mock neck collar, Quarter-length zipper with storm flap, Front handwarmer pocket, Stretchable spandex-reinforced rib-knit cuffs and waistband, Carhartt label sewn on pocket, Imported, #105294"
+    "details": "Mock neck collar, Quarter-length zipper with storm flap, Front handwarmer pocket, Stretchable spandex-reinforced rib-knit cuffs and waistband, Carhartt label sewn on pocket, Imported, #105294",
+    "portals": [
+      "clothing"
+    ]
   },
   {
-    "sku": "BMGC-8",
+    "sku": "BM-21",
     "name": "21L Classic Backpack",
     "category": "Accessories",
     "sizes": "One Size",
@@ -107,10 +122,13 @@ export const allProducts = [
       "/backpack-black.png"
     ],
     "material": "600-denier polyester with Rain Defender durable water repellent",
-    "details": "Large main compartment with dedicated 15-inch laptop sleeve, Front zippered compartment with organization, Reflective edge binding on sides, Reflective zipper puller, One side pocket, Comfort shoulder straps, Padded back panel, Dimensions 12 x 17.5 x 8 inches, #CB0280"
+    "details": "Large main compartment with dedicated 15-inch laptop sleeve, Front zippered compartment with organization, Reflective edge binding on sides, Reflective zipper puller, One side pocket, Comfort shoulder straps, Padded back panel, Dimensions 12 x 17.5 x 8 inches, #CB0280",
+    "portals": [
+      "clothing"
+    ]
   },
   {
-    "sku": "BMFR-5",
+    "sku": "BM-5",
     "name": "Atlas Guardian FR/AR OHSA Hi Vis Pant",
     "category": "Bibs & Pants",
     "sizes": "W/L",
@@ -126,10 +144,13 @@ export const allProducts = [
       "/4052kk.png"
     ],
     "material": "FR/AR Hi-Vis fabric, OHSA compliant",
-    "details": "UL Certified to NFPA 2112, #405NB"
+    "details": "UL Certified to NFPA 2112, #405NB",
+    "portals": [
+      "electrical"
+    ]
   },
   {
-    "sku": "BMGC-9",
+    "sku": "BM-22",
     "name": "Insulated 12 Can Lunch Cooler",
     "category": "Accessories",
     "sizes": "One Size",
@@ -143,10 +164,13 @@ export const allProducts = [
       "/cooler-black.png"
     ],
     "material": "600-denier polyester with Rain Defender durable water repellent, PEVA liner",
-    "details": "Fully insulated main compartment keeps contents cool up to 8 hours, Insulated top compartment for food separation, Front velcro pocket for condiments and utensils, Adjustable shoulder strap and top handle, Dimensions 10.5 x 9 x 6.5 inches, #B0000546"
+    "details": "Fully insulated main compartment keeps contents cool up to 8 hours, Insulated top compartment for food separation, Front velcro pocket for condiments and utensils, Adjustable shoulder strap and top handle, Dimensions 10.5 x 9 x 6.5 inches, #B0000546",
+    "portals": [
+      "clothing"
+    ]
   },
   {
-    "sku": "BMFR-1",
+    "sku": "BM-1",
     "name": "Atlas Guardian FR/AR OHSA Hi Vis Spring Jacket",
     "category": "Jackets",
     "sizes": "XS - 7XL",
@@ -158,10 +182,13 @@ export const allProducts = [
     "img": "/5242.png",
     "imgs": [],
     "material": "FR/AR Hi-Vis fabric, OHSA compliant, orange high-visibility",
-    "details": "UL Certified to NFPA 2112, #5242OR"
+    "details": "UL Certified to NFPA 2112, #5242OR",
+    "portals": [
+      "electrical"
+    ]
   },
   {
-    "sku": "BMFR-3",
+    "sku": "BM-3",
     "name": "Atlas Guardian FR/AR Hi Vis OHSA Parka",
     "category": "Jackets",
     "sizes": "XS - 7XL",
@@ -173,10 +200,13 @@ export const allProducts = [
     "img": "/2151.png",
     "imgs": [],
     "material": "FR/AR Hi-Vis fabric, OHSA compliant, orange high-visibility",
-    "details": "UL Certified to NFPA 2112, #2151OR"
+    "details": "UL Certified to NFPA 2112, #2151OR",
+    "portals": [
+      "electrical"
+    ]
   },
   {
-    "sku": "BMFR-4",
+    "sku": "BM-4",
     "name": "Atlas Guardian FR/AR OHSA Hi Vis Insulated Bibs",
     "category": "Bibs & Pants",
     "sizes": "XS - 7XL",
@@ -188,10 +218,13 @@ export const allProducts = [
     "img": "/2152.png",
     "imgs": [],
     "material": "FR/AR Hi-Vis fabric, OHSA compliant, orange high-visibility",
-    "details": "UL Certified to NFPA 2112, #2152OR"
+    "details": "UL Certified to NFPA 2112, #2152OR",
+    "portals": [
+      "electrical"
+    ]
   },
   {
-    "sku": "BMFR-6",
+    "sku": "BM-6",
     "name": "Atlas Guardian FR/AR OHSA Hi Vis Coveralls",
     "category": "Coveralls",
     "sizes": "XS - 7XL",
@@ -203,10 +236,13 @@ export const allProducts = [
     "img": "/1052.png",
     "imgs": [],
     "material": "FR/AR Hi-Vis fabric, OHSA compliant, orange high-visibility",
-    "details": "UL Certified to NFPA 2112, #1052OR"
+    "details": "UL Certified to NFPA 2112, #1052OR",
+    "portals": [
+      "electrical"
+    ]
   },
   {
-    "sku": "BMFR-7",
+    "sku": "BM-7",
     "name": "Atlas Guardian FR/AR OHSA Hi Vis Summer Bibs",
     "category": "Bibs & Pants",
     "sizes": "XS - 7XL",
@@ -218,10 +254,13 @@ export const allProducts = [
     "img": "/3052.png",
     "imgs": [],
     "material": "FR/AR Hi-Vis fabric, OHSA compliant, orange high-visibility",
-    "details": "UL Certified to NFPA 2112, #3052O"
+    "details": "UL Certified to NFPA 2112, #3052O",
+    "portals": [
+      "electrical"
+    ]
   },
   {
-    "sku": "BMFR-8",
+    "sku": "BM-8",
     "name": "Atlas Guardian FR/AR OHSA Hi Vis Pullover Hoodie",
     "category": "Hoodies",
     "sizes": "XS - 7XL",
@@ -233,10 +272,13 @@ export const allProducts = [
     "img": "/501.png",
     "imgs": [],
     "material": "FR/AR Hi-Vis fabric, OHSA compliant, orange high-visibility",
-    "details": "UL Certified to NFPA 2112, #501OR"
+    "details": "UL Certified to NFPA 2112, #501OR",
+    "portals": [
+      "electrical"
+    ]
   },
   {
-    "sku": "BMFR-9",
+    "sku": "BM-9",
     "name": "Atlas Guardian FR/AR OHSA Hi Vis Zip Up Hoodie",
     "category": "Hoodies",
     "sizes": "XS - 7XL",
@@ -248,10 +290,13 @@ export const allProducts = [
     "img": "/502.png",
     "imgs": [],
     "material": "FR/AR Hi-Vis fabric, OHSA compliant, orange high-visibility",
-    "details": "UL Certified to NFPA 2112, #502OR"
+    "details": "UL Certified to NFPA 2112, #502OR",
+    "portals": [
+      "electrical"
+    ]
   },
   {
-    "sku": "BMFR-10",
+    "sku": "BM-10",
     "name": "Atlas Guardian FR/AR OHSA Hi Vis Henley Shirt",
     "category": "Shirts",
     "sizes": "XS - 7XL",
@@ -263,10 +308,13 @@ export const allProducts = [
     "img": "/503.png",
     "imgs": [],
     "material": "FR/AR Hi-Vis fabric, OHSA compliant, orange high-visibility",
-    "details": "UL Certified to NFPA 2112, #503OR"
+    "details": "UL Certified to NFPA 2112, #503OR",
+    "portals": [
+      "electrical"
+    ]
   },
   {
-    "sku": "BMFR-11",
+    "sku": "BM-11",
     "name": "Atlas Guardian FR/AR OHSA Hi Vis Work Shirt",
     "category": "Shirts",
     "sizes": "XS - 7XL",
@@ -278,10 +326,13 @@ export const allProducts = [
     "img": "/504.png",
     "imgs": [],
     "material": "FR/AR Hi-Vis fabric, OHSA compliant, orange high-visibility",
-    "details": "UL Certified to NFPA 2112, #504OR"
+    "details": "UL Certified to NFPA 2112, #504OR",
+    "portals": [
+      "electrical"
+    ]
   },
   {
-    "sku": "BMFR-12",
+    "sku": "BM-12",
     "name": "Atlas Guardian FR/AR OHSA Hi Vis T-Shirt",
     "category": "Shirts",
     "sizes": "XS - 7XL",
@@ -293,10 +344,13 @@ export const allProducts = [
     "img": "/506.png",
     "imgs": [],
     "material": "FR/AR Hi-Vis fabric, OHSA compliant, orange high-visibility",
-    "details": "UL Certified to NFPA 2112, #506OR"
+    "details": "UL Certified to NFPA 2112, #506OR",
+    "portals": [
+      "electrical"
+    ]
   },
   {
-    "sku": "BMFR-13",
+    "sku": "BM-13",
     "name": "Atlas Guardian FR/AR OHSA Hi Vis Long Sleeve T-Shirt",
     "category": "Shirts",
     "sizes": "XS - 7XL",
@@ -308,10 +362,13 @@ export const allProducts = [
     "img": "/507.png",
     "imgs": [],
     "material": "FR/AR Hi-Vis fabric, OHSA compliant, orange high-visibility",
-    "details": "UL Certified to NFPA 2112, #507OR"
+    "details": "UL Certified to NFPA 2112, #507OR",
+    "portals": [
+      "electrical"
+    ]
   },
   {
-    "sku": "BMFR-2",
+    "sku": "BM-2",
     "name": "Atlas Guardian FR/AR OHSA Hi Vis Bomber Jacket",
     "category": "Jackets",
     "sizes": "XS - 7XL",
@@ -323,7 +380,10 @@ export const allProducts = [
     "img": "/2153.png",
     "imgs": [],
     "material": "FR/AR Hi-Vis fabric, OHSA compliant, orange high-visibility",
-    "details": "UL Certified to NFPA 2112, #2153OR"
+    "details": "UL Certified to NFPA 2112, #2153OR",
+    "portals": [
+      "electrical"
+    ]
   }
 ];
 

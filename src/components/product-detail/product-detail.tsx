@@ -76,28 +76,28 @@ function variantMapFromSizes(sizes: string): Record<string, string[]> | null {
 }
 
 // SKUs whose sizing is a waist × length grid (their own picker), never fit variants.
-const waistLengthSkus = new Set(["BMFR-5"]);
+const waistLengthSkus = new Set(["BM-5"]);
 
 // Explicit fit-variant size maps. Any product not listed here still gets fit
 // variants automatically when its sizes string encodes them (variantMapFromSizes),
 // so this is only for overrides that can't be derived from the sizes string.
 const variantSizesBySku: Record<string, Record<string, string[]>> = {
   // Black & McDonald Regular / Tall fits (as on the original BM product page).
-  "BMGC-1": { "Regular": ["S", "M", "L", "XL", "2XL", "3XL", "4XL"], "Tall": ["L", "XL", "2XL", "3XL"] },
-  "BMGC-3": { "Regular": ["S", "M", "L", "XL", "2XL", "3XL"], "Tall": ["L", "XL", "2XL"] },
-  "BMGC-4": { "Regular": ["S", "M", "L", "XL", "2XL", "3XL"], "Tall": ["L", "XL", "2XL"] },
-  "BMGC-5": { "Regular": ["S", "M", "L", "XL", "2XL", "3XL", "4XL", "5XL"], "Tall": ["M", "L", "XL", "2XL", "3XL", "4XL"] },
-  "BMGC-7": { "Regular": ["S", "M", "L", "XL", "2XL", "3XL", "4XL"], "Tall": ["L", "XL", "2XL", "3XL"] },
-  "BMFR-1": { "Regular": ["XS", "S", "M", "L", "XL", "2XL", "3XL", "4XL", "5XL", "6XL", "7XL"], "Tall": ["XS", "S", "M", "L", "XL", "2XL", "3XL", "4XL", "5XL", "6XL", "7XL"] },
-  "BMFR-2": { "Regular": ["XS", "S", "M", "L", "XL", "2XL", "3XL", "4XL", "5XL", "6XL", "7XL"], "Tall": ["XS", "S", "M", "L", "XL", "2XL", "3XL", "4XL", "5XL", "6XL", "7XL"] },
-  "BMFR-3": { "Regular": ["XS", "S", "M", "L", "XL", "2XL", "3XL", "4XL", "5XL", "6XL", "7XL"], "Tall": ["XS", "S", "M", "L", "XL", "2XL", "3XL", "4XL", "5XL", "6XL", "7XL"] },
-  "BMFR-4": { "Regular": ["XS", "S", "M", "L", "XL", "2XL", "3XL", "4XL", "5XL", "6XL", "7XL"], "Tall": ["XS", "S", "M", "L", "XL", "2XL", "3XL", "4XL", "5XL", "6XL", "7XL"] },
-  "BMFR-6": { "Regular": ["XS", "S", "M", "L", "XL", "2XL", "3XL", "4XL", "5XL", "6XL", "7XL"], "Tall": ["XS", "S", "M", "L", "XL", "2XL", "3XL", "4XL", "5XL", "6XL", "7XL"] },
-  "BMFR-7": { "Regular": ["XS", "S", "M", "L", "XL", "2XL", "3XL", "4XL", "5XL", "6XL", "7XL"], "Tall": ["XS", "S", "M", "L", "XL", "2XL", "3XL", "4XL", "5XL", "6XL", "7XL"] },
-  "BMFR-10": { "Regular": ["XS", "S", "M", "L", "XL", "2XL", "3XL", "4XL", "5XL", "6XL", "7XL"], "Tall": ["XS", "S", "M", "L", "XL", "2XL", "3XL", "4XL", "5XL", "6XL", "7XL"] },
-  "BMFR-11": { "Regular": ["XS", "S", "M", "L", "XL", "2XL", "3XL", "4XL", "5XL", "6XL", "7XL"], "Tall": ["XS", "S", "M", "L", "XL", "2XL", "3XL", "4XL", "5XL", "6XL", "7XL"] },
-  "BMFR-12": { "Regular": ["XS", "S", "M", "L", "XL", "2XL", "3XL", "4XL", "5XL", "6XL", "7XL"], "Tall": ["XS", "S", "M", "L", "XL", "2XL", "3XL", "4XL", "5XL", "6XL", "7XL"] },
-  "BMFR-13": { "Regular": ["XS", "S", "M", "L", "XL", "2XL", "3XL", "4XL", "5XL", "6XL", "7XL"], "Tall": ["XS", "S", "M", "L", "XL", "2XL", "3XL", "4XL", "5XL", "6XL", "7XL"] },
+  "BM-14": { "Regular": ["S", "M", "L", "XL", "2XL", "3XL", "4XL"], "Tall": ["L", "XL", "2XL", "3XL"] },
+  "BM-16": { "Regular": ["S", "M", "L", "XL", "2XL", "3XL"], "Tall": ["L", "XL", "2XL"] },
+  "BM-17": { "Regular": ["S", "M", "L", "XL", "2XL", "3XL"], "Tall": ["L", "XL", "2XL"] },
+  "BM-18": { "Regular": ["S", "M", "L", "XL", "2XL", "3XL", "4XL", "5XL"], "Tall": ["M", "L", "XL", "2XL", "3XL", "4XL"] },
+  "BM-20": { "Regular": ["S", "M", "L", "XL", "2XL", "3XL", "4XL"], "Tall": ["L", "XL", "2XL", "3XL"] },
+  "BM-1": { "Regular": ["XS", "S", "M", "L", "XL", "2XL", "3XL", "4XL", "5XL", "6XL", "7XL"], "Tall": ["XS", "S", "M", "L", "XL", "2XL", "3XL", "4XL", "5XL", "6XL", "7XL"] },
+  "BM-2": { "Regular": ["XS", "S", "M", "L", "XL", "2XL", "3XL", "4XL", "5XL", "6XL", "7XL"], "Tall": ["XS", "S", "M", "L", "XL", "2XL", "3XL", "4XL", "5XL", "6XL", "7XL"] },
+  "BM-3": { "Regular": ["XS", "S", "M", "L", "XL", "2XL", "3XL", "4XL", "5XL", "6XL", "7XL"], "Tall": ["XS", "S", "M", "L", "XL", "2XL", "3XL", "4XL", "5XL", "6XL", "7XL"] },
+  "BM-4": { "Regular": ["XS", "S", "M", "L", "XL", "2XL", "3XL", "4XL", "5XL", "6XL", "7XL"], "Tall": ["XS", "S", "M", "L", "XL", "2XL", "3XL", "4XL", "5XL", "6XL", "7XL"] },
+  "BM-6": { "Regular": ["XS", "S", "M", "L", "XL", "2XL", "3XL", "4XL", "5XL", "6XL", "7XL"], "Tall": ["XS", "S", "M", "L", "XL", "2XL", "3XL", "4XL", "5XL", "6XL", "7XL"] },
+  "BM-7": { "Regular": ["XS", "S", "M", "L", "XL", "2XL", "3XL", "4XL", "5XL", "6XL", "7XL"], "Tall": ["XS", "S", "M", "L", "XL", "2XL", "3XL", "4XL", "5XL", "6XL", "7XL"] },
+  "BM-10": { "Regular": ["XS", "S", "M", "L", "XL", "2XL", "3XL", "4XL", "5XL", "6XL", "7XL"], "Tall": ["XS", "S", "M", "L", "XL", "2XL", "3XL", "4XL", "5XL", "6XL", "7XL"] },
+  "BM-11": { "Regular": ["XS", "S", "M", "L", "XL", "2XL", "3XL", "4XL", "5XL", "6XL", "7XL"], "Tall": ["XS", "S", "M", "L", "XL", "2XL", "3XL", "4XL", "5XL", "6XL", "7XL"] },
+  "BM-12": { "Regular": ["XS", "S", "M", "L", "XL", "2XL", "3XL", "4XL", "5XL", "6XL", "7XL"], "Tall": ["XS", "S", "M", "L", "XL", "2XL", "3XL", "4XL", "5XL", "6XL", "7XL"] },
+  "BM-13": { "Regular": ["XS", "S", "M", "L", "XL", "2XL", "3XL", "4XL", "5XL", "6XL", "7XL"], "Tall": ["XS", "S", "M", "L", "XL", "2XL", "3XL", "4XL", "5XL", "6XL", "7XL"] },
 };
 
 // A product has fit variants when it's explicitly configured OR its sizes string

@@ -11,7 +11,19 @@ import { getLoginType } from "../../layout";
 // session may only open a SKU that its catalogue actually lists (e.g. Service
 // can't open an FR / Electrical-only SKU, and Electrical can't open a
 // Service SKU). Enforced server-side so it can't be bypassed by editing the URL.
+// SKUs were renumbered (Nov 2026) from BMFR-n / BMGC-n to one BM-n sequence:
+// Electrical BMFR-1..13 -> BM-1..13, Good Catch BMGC-1..9 -> BM-14..22. Old
+// links and bookmarks redirect to the new address.
+const legacySku = (sku: string): string | null => {
+  const m = /^BM(FR|GC)-(\d+)$/i.exec(sku);
+  if (!m) return null;
+  const n = Number(m[2]);
+  return `BM-${m[1].toUpperCase() === "FR" ? n : 13 + n}`;
+};
+
 export const useProductGuard = routeLoader$((ev) => {
+  const renamed = legacySku(ev.params.sku);
+  if (renamed) throw ev.redirect(301, `/${renamed}/`);
   const product = allProducts.find((p) => p.sku === ev.params.sku);
   if (!product) throw ev.redirect(302, "/");
   const lt = getLoginType(ev.cookie);

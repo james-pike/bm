@@ -25,25 +25,25 @@ async function fetchAndWrite() {
     // Black & McDonald: product photos (the DB rows have no img) and the
     // garment category each product is grouped under in the catalog tabs.
     // The login lineup (Good Catch vs Electrical) is decided by the SKU prefix
-    // (BMGC- / BMFR-), not the category — see isSkuInLineup.
-    "BMGC-3": { img: "/102208_001_MF22_V2.png", category: "Jackets" },   // Gilliam Jacket
-    "BMGC-4": { img: "/102286_001_MF22_e_1.png", category: "Vests" },    // Gilliam Vest
-    "BMGC-7": { img: "/105294_BLK_MF22_e.png", category: "Sweatshirts" }, // Marquette 1/4-Zip
-    "BMGC-8": { img: "/backpack-black.png", category: "Accessories" },   // 21L Classic Backpack
-    "BMGC-9": { img: "/cooler-black.png", category: "Accessories" },     // 12 Can Lunch Cooler
-    "BMFR-1":  { img: "/5242.png",  category: "Jackets" },     // Spring Jacket
-    "BMFR-2":  { img: "/2153.png",  category: "Jackets" },     // Bomber Jacket
-    "BMFR-3":  { img: "/2151.png",  category: "Jackets" },     // Parka
-    "BMFR-4":  { img: "/2152.png",  category: "Bibs & Pants" }, // Insulated Bibs
-    "BMFR-5":  { img: "/405nb.png", category: "Bibs & Pants" }, // Pant
-    "BMFR-6":  { img: "/1052.png",  category: "Coveralls" },   // Coveralls
-    "BMFR-7":  { img: "/3052.png",  category: "Bibs & Pants" }, // Summer Bibs
-    "BMFR-8":  { img: "/501.png",   category: "Hoodies" },     // Pullover Hoodie
-    "BMFR-9":  { img: "/502.png",   category: "Hoodies" },     // Zip Up Hoodie
-    "BMFR-10": { img: "/503.png",   category: "Shirts" },      // Henley Shirt
-    "BMFR-11": { img: "/504.png",   category: "Shirts" },      // Work Shirt
-    "BMFR-12": { img: "/506.png",   category: "Shirts" },      // T-Shirt
-    "BMFR-13": { img: "/507.png",   category: "Shirts" },      // Long Sleeve T-Shirt
+    // (the DB portals tag), not the category — see isSkuInLineup.
+    "BM-16": { img: "/102208_001_MF22_V2.png", category: "Jackets" },   // Gilliam Jacket
+    "BM-17": { img: "/102286_001_MF22_e_1.png", category: "Vests" },    // Gilliam Vest
+    "BM-20": { img: "/105294_BLK_MF22_e.png", category: "Sweatshirts" }, // Marquette 1/4-Zip
+    "BM-21": { img: "/backpack-black.png", category: "Accessories" },   // 21L Classic Backpack
+    "BM-22": { img: "/cooler-black.png", category: "Accessories" },     // 12 Can Lunch Cooler
+    "BM-1":  { img: "/5242.png",  category: "Jackets" },     // Spring Jacket
+    "BM-2":  { img: "/2153.png",  category: "Jackets" },     // Bomber Jacket
+    "BM-3":  { img: "/2151.png",  category: "Jackets" },     // Parka
+    "BM-4":  { img: "/2152.png",  category: "Bibs & Pants" }, // Insulated Bibs
+    "BM-5":  { img: "/405nb.png", category: "Bibs & Pants" }, // Pant
+    "BM-6":  { img: "/1052.png",  category: "Coveralls" },   // Coveralls
+    "BM-7":  { img: "/3052.png",  category: "Bibs & Pants" }, // Summer Bibs
+    "BM-8":  { img: "/501.png",   category: "Hoodies" },     // Pullover Hoodie
+    "BM-9":  { img: "/502.png",   category: "Hoodies" },     // Zip Up Hoodie
+    "BM-10": { img: "/503.png",   category: "Shirts" },      // Henley Shirt
+    "BM-11": { img: "/504.png",   category: "Shirts" },      // Work Shirt
+    "BM-12": { img: "/506.png",   category: "Shirts" },      // T-Shirt
+    "BM-13": { img: "/507.png",   category: "Shirts" },      // Long Sleeve T-Shirt
   };
 
   try {
@@ -77,10 +77,10 @@ async function fetchAndWrite() {
     const FOLDS: { keep: string; name?: string; category?: string; merge?: string[]; defaultHex?: string; colors: { hex: string; img: string }[] }[] = [
       {
         // The black + grey Paxton rows are one product with two colours.
-        keep: "BMGC-1",
+        keep: "BM-14",
         name: "Paxton 1/4-Zip Sweatshirt",
         category: "Sweatshirts",
-        merge: ["BMGC-1", "BMGC-2"],
+        merge: ["BM-14", "BM-15"],
         colors: [
           { hex: "#1a1a18", img: "/100617_001_MF25_e_w.png" }, // Black
           { hex: "#4a4a4a", img: "/100617_026_MS25_e.png" },   // Grey
@@ -88,10 +88,10 @@ async function fetchAndWrite() {
       },
       {
         // The black + grey Washed Duck vests are one product with two colours.
-        keep: "BMGC-5",
+        keep: "BM-18",
         name: "Washed Duck Mock Neck Vest",
         category: "Vests",
-        merge: ["BMGC-5", "BMGC-6"],
+        merge: ["BM-18", "BM-19"],
         colors: [
           { hex: "#1a1a18", img: "/104277_BLK_MF22_e.png" }, // Black
           { hex: "#4a4a4a", img: "/duckgrey.png" },          // Grey
