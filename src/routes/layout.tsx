@@ -83,7 +83,7 @@ export const useLocaleLoader = routeLoader$(({ cookie }) => {
 // password in the environment; the password alone picks the catalog.
 // Login-gate hero video: false = starts paused (poster + play button) until
 // clicked. Set to true to autoplay it again.
-const LOGIN_VIDEO_AUTOPLAY = false;
+const LOGIN_VIDEO_AUTOPLAY = true;
 
 export type LoginType = "clothing" | "tech" | "electrical" | null;
 
