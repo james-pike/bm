@@ -72,13 +72,13 @@ export function buildOrderEmailHtml(o: OrderEmailData): string {
 
   return `
     <div style="font-family:sans-serif;max-width:600px;margin:0 auto">
-      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#e9e6df" style="background-color:#e9e6df;border-radius:8px 8px 0 0;-webkit-print-color-adjust:exact;print-color-adjust:exact">
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#dcdee2" style="background-color:#dcdee2;border:1px solid #e5e7eb;border-bottom:none;border-radius:8px 8px 0 0;-webkit-print-color-adjust:exact;print-color-adjust:exact">
         <tr>
-          <td bgcolor="#e9e6df" style="background-color:#e9e6df;padding:18px 24px;-webkit-print-color-adjust:exact;print-color-adjust:exact">
-            <table role="presentation" cellpadding="0" cellspacing="0" border="0"><tr>
+          <td bgcolor="#dcdee2" style="background-color:#dcdee2;padding:0 24px;-webkit-print-color-adjust:exact;print-color-adjust:exact">
+            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
               ${o.logoUrl ? `<td style="padding-right:18px;vertical-align:middle"><img src="${esc(o.logoUrl)}" alt="Black &amp; McDonald Apparel" width="144" height="71" style="display:block;width:144px;height:71px;border:0"></td>` : ""}
-              <td style="vertical-align:middle">
-                ${o.orderNumber ? `<p style="color:#1f2326;margin:0;font-size:20px;font-weight:700;letter-spacing:0.04em">Order #${esc(o.orderNumber)}</p>` : ""}
+              <td align="right" style="vertical-align:middle;text-align:right">
+                ${o.orderNumber ? `<p style="color:#1f2326;margin:0;font-size:20px;font-weight:500;letter-spacing:0.015em">Order #${esc(o.orderNumber)}</p>` : ""}
               </td>
             </tr></table>
           </td>
